@@ -1,0 +1,18 @@
+spring:
+  application:
+    name: pomina-erp
+
+  profiles:
+    active: dev
+
+  logging:
+    level:
+      root: INFO
+      org.springframework: DEBUG
+    file:
+      name: logs/app.log
+
+mybatis:
+  config-location: classpath:/mybatis/configuration/mybatis-config.xml
+  mapper-locations: classpath:/mybatis/mapper/**/*.xml
+  type-aliases-package: com.pomina.erpapp.appbaohanh.product_warranty_activation.entity

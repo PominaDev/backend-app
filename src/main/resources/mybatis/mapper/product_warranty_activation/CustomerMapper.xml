@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pomina.erpapp.appbaohanh.product_warranty_activation.mapper.CustomerMapper">
+
+    <resultMap id="CustomerResultMap" type="com.pomina.erpapp.appbaohanh.product_warranty_activation.entity.Customer">
+        <id column="id" property="id"/>
+        <result column="name" property="name"/>
+        <result column="phone_number" property="phoneNumber"/>
+        <result column="address" property="address"/>
+        <result column="status" property="status"/>
+        <result column="note" property="note"/>
+        <result column="create_at" property="createdAt"/>
+        <result column="created_by" property="createdBy"/>
+        <result column="update_at" property="updatedAt"/>
+        <result column="update_by" property="updatedBy"/>
+        <result column="is_deleted" property="isDeleted"/>
+    </resultMap>
+
+    <select id="findById">
+        SELECT id,
+               name,
+               phone_number,
+               address,
+               status,
+               note,
+               created_at,
+               created_by,
+               updated_at,
+               updated_by,
+               is_deleted
+        FROM customer
+        WHERE id = #{id}
+    </select>
+
+    <select id="findAll">
+        SELECT id,
+               name,
+               phone_number,
+               address,
+               status,
+               note,
+               created_at,
+               created_by,
+               updated_at,
+               updated_by,
+               is_deleted
+        FROM customer
+    </select>
+
+    <select id="findAllPaged">
+        SELECT id,
+               name,
+               phone_number,
+               address,
+               status,
+               note,
+               created_at,
+               created_by,
+               updated_at,
+               updated_by,
+               is_deleted
+        FROM customer
+        <if test="paging != null">
+            ORDER BY ${paging.orderByClause}
+        </if>
+        LIMIT #{limit} OFFSET #{offset}
+    </select>
+
+    <insert id="insert">
+        INSERT INTO customer(name,
+                             phone_number,
+                             address,
+                             status,
+                             note,
+                             created_at,
+                             created_by,
+                             updated_at,
+                             updated_by,
+                             is_deleted)
+        VALUES (#{name},
+                #{phoneNumber},
+                #{address},
+                #{status},
+                #{note},
+                #{createdAt},
+                #{createdBy},
+                #{updatedAt},
+                #{updatedBy},
+                #{isDeleted})
+    </insert>
+
+    <update id="update">
+        UPDATE customer
+        SET name = #{name},
+            phone_number = #{phoneNumber},
+            address = #{address},
+            status = #{status},
+            note = #{note},
+            created_at = #{createdAt},
+            created_by = #{createdBy},
+            updated_at = #{updatedAt},
+            updated_by = #{updatedBy},
+            is_deleted = #{isDeleted}
+        WHERE id = #{id}
+    </update>
+
+    <delete id="deleteById">
+        DELETE FROM customer
+        WHERE id = #{id}
+    </delete>
+
+    <delete id="softDeleteById">
+        UPDATE customer
+        SET is_deleted = TRUE
+        WHERE id = #{id}
+    </delete>
+
+    <select id="existsById">
+        SELECT EXISTS(
+            SELECT 1
+            FROM customer
+            WHERE id = #{id}
+        )
+    </select>
+
+    <select id="countAll">
+        SELECT COUNT(id)
+        FROM customer
+    </select>
+</mapper>

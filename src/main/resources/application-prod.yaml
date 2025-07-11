@@ -1,0 +1,8 @@
+server:
+  port: 8082
+
+logging:
+  level:
+    root: INFO
+    com.pomina.erpapp.appbaohanh.product_warranty_activation: INFO
+

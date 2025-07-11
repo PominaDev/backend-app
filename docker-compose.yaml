@@ -1,0 +1,14 @@
+version: '3.8'
+
+services:
+  mariadb:
+    image: mariadb:lts-ubi9
+    container_name: mariadb_container
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root123
+      MYSQL_DATABASE: pomina
+      MYSQL_USER: root
+      MYSQL_PASSWORD: root123
+    ports:
+      - "3306:3306"

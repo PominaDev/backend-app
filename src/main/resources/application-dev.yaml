@@ -1,0 +1,21 @@
+server:
+  port: 8089
+
+spring:
+  datasource:
+    url: jdbc:mariadb://localhost:3307/pomina_erp?useUnicode=true&characterEncoding=utf8mb4&serverTimezone=Asia/Ho_Chi_Minh
+    username: root
+    password: root123
+    driver-class-name: org.mariadb.jdbc.Driver
+    hikari:
+      minimum-idle: 5
+      maximum-pool-size: 20
+      idle-timeout: 30000
+      pool-name: HikariCP
+      max-lifetime: 1800000
+      connection-timeout: 30000
+      validation-timeout: 5000
+
+security:
+  jwt:
+    secret-key: oB1Zvsn1261tfh0msDaGCP63l+rYq15F/O+ksyqZWe4qWqHRwvvz5pHs3qgHBhYi
