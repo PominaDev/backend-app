@@ -1,7 +1,6 @@
 package com.pomina.erpapp.appbaohanh.product_warranty_activation.dto.request;
 
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 

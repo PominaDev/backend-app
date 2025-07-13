@@ -1,9 +1,10 @@
-version: '3.8'
+version: "3"
 
 services:
-  mariadb:
+  mariadb-master:
     image: mariadb:lts-ubi9
-    container_name: mariadb_container
+    container_name: mariadb-master
+    command: --server-id=1 --log-bin=mysql-bin --binlog-format=row
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: root123
@@ -12,3 +13,30 @@ services:
       MYSQL_PASSWORD: root123
     ports:
       - "3306:3306"
+    volumes:
+      - ./data/master:/var/lib/mysql
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - replication
+
+  mariadb-slave:
+    image: mariadb:lts-ubi9
+    container_name: mariadb-slave
+    depends_on:
+      - mariadb-master
+    command: --server-id=2 --log-bin=mysql-bin --binlog-format=row
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root123
+      MYSQL_DATABASE: pomina
+      MYSQL_USER: root
+      MYSQL_PASSWORD: root123
+    ports:
+      - "3307:3306"
+    volumes:
+      - ./data/slave:/var/lib/mysql
+    networks:
+      - replication
+
+networks:
+  replication:

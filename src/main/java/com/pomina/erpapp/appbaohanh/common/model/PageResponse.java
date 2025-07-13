@@ -25,4 +25,8 @@ public class PageResponse<T> {
         int totalPages = (int) Math.ceil((double) totalElements / size);
         return new PageResponse<>(content, page, size, totalElements, totalPages);
     }
+
+    public static <T> PageResponse<T> empty(int page, int size) {
+        return new PageResponse<>(List.of(), page, size, 0, 0);
+    }
 }

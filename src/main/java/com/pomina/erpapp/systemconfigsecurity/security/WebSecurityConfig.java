@@ -32,12 +32,7 @@ public class WebSecurityConfig {
     private final CustomAccessDeniedHandler customAccessDeniedHandler;
 
     private static final String[] WHITE_LIST = {
-            "/auth/login",
-            "/swagger-ui/**",
-            "/v3/api-docs/**",
-            "/swagger-resources/**",
-            "/swagger-ui.html",
-            "***"
+            "/**"
     };
 
     @Bean
@@ -49,11 +44,11 @@ public class WebSecurityConfig {
                 .csrf().disable()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.ALWAYS)
                 .and()
-                //.formLogin().loginPage("/login").permitAll()
-                //.defaultSuccessUrl("/user/loginSuccess", true)
-                //.failureUrl("/login?success=false")
-                //.successForwardUrl("/user/login-success")
-                //.and()
+                .formLogin().loginPage("/login").permitAll()
+                .defaultSuccessUrl("/user/loginSuccess", true)
+                .failureUrl("/login?success=false")
+                .successForwardUrl("/user/login-success")
+                .and()
                 .logout()
                 .invalidateHttpSession(true)
                 .clearAuthentication(true)
@@ -89,7 +84,7 @@ public class WebSecurityConfig {
 
     @Bean
     WebSecurityCustomizer webSecurityCustomizer() {
-        return (web) -> web.ignoring().requestMatchers("/static/**", "/user/**");
+        return web -> web.ignoring().requestMatchers("/static/**", "/user/**");
     }
 
     @Bean

@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pomina.erpapp.appbaohanh.client_managerment.mapper.ClientUserMapper">
+
+    <resultMap id="SysUserResultMap" type="com.pomina.erpapp.appbaohanh.client_managerment.entity.SysUser">
+        <id column="user_id" property="userId"/>
+        <result column="username" property="username"/>
+        <result column="phone_number" property="phoneNumber"/>
+        <result column="password" property="password"/>
+        <result column="full_name" property="fullName"/>
+        <result column="tax_code" property="taxCode"/>
+        <result column="address_1" property="address1"/>
+        <result column="address_2" property="address2"/>
+        <result column="address_3" property="address3"/>
+        <result column="address_4" property="address4"/>
+        <result column="address_5" property="address5"/>
+        <result column="city" property="city"/>
+        <result column="location_code" property="locationCode"/>
+        <result column="bank_name" property="bankName"/>
+        <result column="bank_number" property="bankNumber"/>
+        <result column="description" property="description"/>
+        <result column="role_id" property="roleId"/>
+        <result column="is_active" property="isActive"/>
+        <association property="role" javaType="com.pomina.erpapp.appbaohanh.client_managerment.entity.SysRole">
+            <id column="role_id" property="id"/>
+            <result column="role_name" property="roleName"/>
+        </association>
+    </resultMap>
+
+    <select id="findById" resultMap="SysUserResultMap">
+        SELECT u.user_id,
+               u.username,
+               u.phone_number,
+               u.password,
+               u.full_name,
+               u.tax_code,
+               u.address_1,
+               u.address_2,
+               u.address_3,
+               u.address_4,
+               u.address_5,
+               u.city,
+               u.location_code,
+               u.bank_name,
+               u.bank_number,
+               u.description,
+               u.role_id,
+               r.role_name,
+               u.is_active
+        FROM sys_user u
+                 LEFT JOIN sys_role r ON u.role_id = r.id
+        WHERE u.user_id = #{id}
+    </select>
+
+    <select id="findAll">
+        SELECT u.user_id,
+               u.username,
+               u.phone_number,
+               u.password,
+               u.full_name,
+               u.tax_code,
+               u.address_1,
+               u.address_2,
+               u.address_3,
+               u.address_4,
+               u.address_5,
+               u.city,
+               u.location_code,
+               u.bank_name,
+               u.bank_number,
+               u.description,
+               u.role_id,
+               r.role_name,
+               u.is_active
+        FROM sys_user u
+                 LEFT JOIN sys_role r ON u.role_id = r.id
+    </select>
+
+    <select id="findAllPaged">
+        SELECT u.user_id,
+        u.username,
+        u.phone_number,
+        u.password,
+        u.full_name,
+        u.tax_code,
+        u.address_1,
+        u.address_2,
+        u.address_3,
+        u.address_4,
+        u.address_5,
+        u.city,
+        u.location_code,
+        u.bank_name,
+        u.bank_number,
+        u.description,
+        u.role_id,
+        r.role_name,
+        u.is_active
+        FROM sys_user u
+        LEFT JOIN sys_role r ON u.role_id = r.id
+        <if test="paging != null">
+            ORDER BY ${paging.orderByClause}
+        </if>
+        LIMIT #{limit} OFFSET #{offset}
+    </select>
+
+    <insert id="insert">
+        INSERT INTO sys_user(user_id,
+                             username,
+                             phone_number,
+                             password,
+                             full_name,
+                             tax_code,
+                             address_1,
+                             address_2,
+                             address_3,
+                             address_4,
+                             address_5,
+                             city,
+                             location_code,
+                             bank_name,
+                             bank_number,
+                             description,
+                             role_id,
+                             is_active)
+        VALUES (#{id},
+                #{username},
+                #{phoneNumber},
+                #{password},
+                #{fullName},
+                #{taxCode},
+                #{address1},
+                #{address2},
+                #{address3},
+                #{address4},
+                #{address5},
+                #{city},
+                #{locationCode},
+                #{bankName},
+                #{bankNumber},
+                #{description},
+                #{roleId},
+                #{isActive})
+    </insert>
+
+    <update id="update">
+        UPDATE sys_user
+        SET username      = #{username},
+            phone_number  = #{phoneNumber},
+            password      = #{password},
+            full_name     = #{fullName},
+            tax_code      = #{taxCode},
+            address_1     = #{address1},
+            address_2     = #{address2},
+            address_3     = #{address3},
+            address_4     = #{address4},
+            address_5     = #{address5},
+            city          = #{city},
+            location_code = #{locationCode},
+            bank_name     = #{bankName},
+            bank_number   = #{bankNumber},
+            description   = #{description},
+            role_id       = #{roleId},
+            is_active     = #{isActive}
+        WHERE user_id = #{id}
+    </update>
+
+    <delete id="deleteById">
+        DELETE
+        FROM sys_user
+        WHERE user_id = #{id}
+    </delete>
+
+    <delete id="softDeleteById">
+        UPDATE sys_user
+        SET is_active = FALSE
+        WHERE user_id = #{id}
+    </delete>
+
+    <select id="existsById">
+        SELECT EXISTS(SELECT 1
+                      FROM sys_user
+                      WHERE user_id = #{id})
+    </select>
+
+    <select id="countAll">
+        SELECT COUNT(user_id)
+        FROM sys_user
+    </select>
+
+</mapper>

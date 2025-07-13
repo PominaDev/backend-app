@@ -1,8 +1,10 @@
 package com.pomina.erpapp.appbaohanh.product_warranty_activation.service.impl;
 
+import com.pomina.erpapp.appbaohanh.common.config.datasource.DataSource;
+import com.pomina.erpapp.appbaohanh.common.config.datasource.DataSourceType;
 import com.pomina.erpapp.appbaohanh.common.model.PageRequest;
 import com.pomina.erpapp.appbaohanh.common.model.PageResponse;
-import com.pomina.erpapp.appbaohanh.common.util.AuditUtil;
+import com.pomina.erpapp.appbaohanh.common.utils.AuditUtil;
 import com.pomina.erpapp.appbaohanh.product_warranty_activation.converter.CustomerConverter;
 import com.pomina.erpapp.appbaohanh.product_warranty_activation.dto.request.CustomerRequestDto;
 import com.pomina.erpapp.appbaohanh.product_warranty_activation.dto.response.CustomerResponseDto;
@@ -11,9 +13,7 @@ import com.pomina.erpapp.appbaohanh.product_warranty_activation.mapper.CustomerM
 import com.pomina.erpapp.appbaohanh.product_warranty_activation.service.CustomerService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -25,31 +25,21 @@ public class CustomerServiceImpl implements CustomerService {
     private final CustomerConverter customerConverter;
 
     @Override
-    @Transactional
+    @DataSource(DataSourceType.MASTER)
     public int create(CustomerRequestDto dto) {
         Customer customer = customerConverter.toEntity(dto);
-        customer.setCreatedAt(AuditUtil.now());
-        customer.setCreatedBy(AuditUtil.getCurrentUser());
-        customer.setUpdatedAt(AuditUtil.now());
-        customer.setUpdatedBy(AuditUtil.getCurrentUser());
-        customer.setIsDeleted(AuditUtil.getDefaultIsDeleted());
-        customer.setStatus(AuditUtil.getDefaultStatus());
-        int result = customerMapper.insert(customer);
-        return result > 0 ? 1: 0;
+        return customerMapper.insert(customer);
     }
 
     @Override
-    @Transactional
+    @DataSource(DataSourceType.MASTER)
     public int update(Integer id, CustomerRequestDto dto) {
         Customer customer = customerConverter.toEntity(dto);
-        customer.setId(Long.valueOf(id));
-        customer.setUpdatedAt(AuditUtil.now());
-        customer.setUpdatedBy(AuditUtil.getCurrentUser());
-        int result = customerMapper.update(customer);
-        return result > 0 ? 1: 0;
+        return customerMapper.update(customer);
     }
 
     @Override
+    @DataSource(DataSourceType.SLAVE)
     public CustomerResponseDto getById(Integer id) {
 
         Customer customerInfo = customerMapper.findById(id);
@@ -62,6 +52,7 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
+    @DataSource(DataSourceType.SLAVE)
     public PageResponse<CustomerResponseDto> search(PageRequest pageRequest) {
 
         List<Customer> customerList = customerMapper.findAllPaged(pageRequest.getOffset(),
@@ -79,9 +70,9 @@ public class CustomerServiceImpl implements CustomerService {
         return PageResponse.createPaged(customerResponse, pageRequest.getPage(), pageRequest.getSize(), totalElements);
     }
 
+    @DataSource(DataSourceType.MASTER)
     @Override
     public int delete(Integer id) {
-        int result = customerMapper.softDeleteById(id);
-        return result > 0 ? 1: 0;
+        return customerMapper.deleteById(id);
     }
 }

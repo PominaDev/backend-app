@@ -9,6 +9,7 @@ import java.util.List;
  * @param <E> Entity
  */
 public interface BaseConverter<REQ, RES, E> {
+
     E toEntity(REQ requestDto);
 
     RES toResponse(E entity);

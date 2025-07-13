@@ -6,6 +6,8 @@ import org.springframework.http.ResponseEntity;
 
 public class ResponseHandler {
 
+    private ResponseHandler() {}
+
     public static <T> ResponseEntity<ApiResponse<T>> success(T data) {
         return ResponseEntity.ok(new ApiResponse<>(true, "SUCCESS", null, data));
     }
