@@ -1,10 +1,9 @@
 package com.pomina.erpapp.appbaohanh.product_warranty_activation.service.impl;
 
-import com.pomina.erpapp.appbaohanh.common.config.datasource.DataSource;
+import com.pomina.erpapp.appbaohanh.common.config.datasource.CustomDataSource;
 import com.pomina.erpapp.appbaohanh.common.config.datasource.DataSourceType;
 import com.pomina.erpapp.appbaohanh.common.model.PageRequest;
 import com.pomina.erpapp.appbaohanh.common.model.PageResponse;
-import com.pomina.erpapp.appbaohanh.common.utils.AuditUtil;
 import com.pomina.erpapp.appbaohanh.product_warranty_activation.converter.CustomerConverter;
 import com.pomina.erpapp.appbaohanh.product_warranty_activation.dto.request.CustomerRequestDto;
 import com.pomina.erpapp.appbaohanh.product_warranty_activation.dto.response.CustomerResponseDto;
@@ -25,21 +24,21 @@ public class CustomerServiceImpl implements CustomerService {
     private final CustomerConverter customerConverter;
 
     @Override
-    @DataSource(DataSourceType.MASTER)
+    @CustomDataSource(DataSourceType.MASTER)
     public int create(CustomerRequestDto dto) {
         Customer customer = customerConverter.toEntity(dto);
         return customerMapper.insert(customer);
     }
 
     @Override
-    @DataSource(DataSourceType.MASTER)
+    @CustomDataSource(DataSourceType.MASTER)
     public int update(Integer id, CustomerRequestDto dto) {
         Customer customer = customerConverter.toEntity(dto);
         return customerMapper.update(customer);
     }
 
     @Override
-    @DataSource(DataSourceType.SLAVE)
+    @CustomDataSource(DataSourceType.SLAVE)
     public CustomerResponseDto getById(Integer id) {
 
         Customer customerInfo = customerMapper.findById(id);
@@ -52,7 +51,7 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    @DataSource(DataSourceType.SLAVE)
+    @CustomDataSource(DataSourceType.SLAVE)
     public PageResponse<CustomerResponseDto> search(PageRequest pageRequest) {
 
         List<Customer> customerList = customerMapper.findAllPaged(pageRequest.getOffset(),
@@ -70,7 +69,7 @@ public class CustomerServiceImpl implements CustomerService {
         return PageResponse.createPaged(customerResponse, pageRequest.getPage(), pageRequest.getSize(), totalElements);
     }
 
-    @DataSource(DataSourceType.MASTER)
+    @CustomDataSource(DataSourceType.MASTER)
     @Override
     public int delete(Integer id) {
         return customerMapper.deleteById(id);

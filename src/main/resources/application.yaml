@@ -3,7 +3,7 @@ spring:
     name: pomina-erp
 
   profiles:
-    active: dev
+    active: prod
 
   logging:
     level:
@@ -15,4 +15,6 @@ spring:
 mybatis:
   config-location: classpath:/mybatis/configuration/mybatis-config.xml
   mapper-locations: classpath:/mybatis/mapper/**/*.xml
-  type-aliases-package: com.pomina.erpapp.appbaohanh.**.entity
+  type-aliases-package:
+    com.pomina.erpapp.appbaohanh.client_managerment.entity,
+    com.pomina.erpapp.appbaohanh.product_warranty_activation.entity

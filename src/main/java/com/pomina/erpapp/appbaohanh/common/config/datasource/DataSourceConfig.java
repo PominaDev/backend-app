@@ -18,6 +18,7 @@ import java.util.Map;
 @EnableTransactionManagement
 public class DataSourceConfig {
 
+    @Primary
     @Bean
     @ConfigurationProperties("spring.datasource.master")
     public DataSourceProperties masterDataSourceProperties() {
@@ -30,6 +31,7 @@ public class DataSourceConfig {
         return new DataSourceProperties();
     }
 
+    @Primary
     @Bean
     public DataSource masterDataSource() {
         return masterDataSourceProperties()

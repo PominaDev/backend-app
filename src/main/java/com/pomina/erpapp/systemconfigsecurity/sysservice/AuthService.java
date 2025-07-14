@@ -31,6 +31,10 @@ public class AuthService {
                 .build());
         return LoginResponse.builder()
                 .accessToken(token)
+                .username(userPrincipal.getUsername())
+                .hoVaTen(userPrincipal.getHoVaTen())
+                .phoneNumber(userPrincipal.getPhoneNumber())
+                .roleName(userPrincipal.getAuthorities().stream().map(GrantedAuthority::getAuthority).toList())
                 .build();
     }
 }

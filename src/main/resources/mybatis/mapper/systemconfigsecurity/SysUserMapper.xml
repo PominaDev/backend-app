@@ -6,6 +6,8 @@
                id="userLoginResultMap">
         <id column="user_id" property="userId"/>
         <result column="username" property="username"/>
+        <result column="ho_va_ten" property="hoVaTen"/>
+        <result column="phone_number" property="phoneNumber"/>
         <result column="password" property="password"/>
         <result column="role_name" property="roleName"/>
     </resultMap>
@@ -13,11 +15,13 @@
     <select id="getUserLogin" resultMap="userLoginResultMap">
         SELECT u.user_id,
                u.username,
+               u.ho_va_ten,
+               u.phone_number,
                u.password,
                r.role_name
         FROM sys_user u
                  LEFT JOIN sys_role r ON u.role_id = r.id
-        WHERE u.username LIKE #{username}
+        WHERE u.phone_number LIKE #{username}
           AND u.is_active = TRUE
     </select>
 </mapper>

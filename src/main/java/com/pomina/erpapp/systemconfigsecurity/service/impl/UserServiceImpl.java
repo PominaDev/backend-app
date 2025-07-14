@@ -1,6 +1,6 @@
 package com.pomina.erpapp.systemconfigsecurity.service.impl;
 
-import com.pomina.erpapp.appbaohanh.common.config.datasource.DataSource;
+import com.pomina.erpapp.appbaohanh.common.config.datasource.CustomDataSource;
 import com.pomina.erpapp.appbaohanh.common.config.datasource.DataSourceType;
 import com.pomina.erpapp.systemconfigsecurity.mapper.SysUserMapper;
 import com.pomina.erpapp.systemconfigsecurity.model.SysUser;
@@ -16,7 +16,7 @@ import java.util.Optional;
 public class UserServiceImpl implements UserService {
     private final SysUserMapper userMapper;
 
-    @DataSource(DataSourceType.SLAVE)
+    @CustomDataSource(DataSourceType.SLAVE)
     @Override
     public Optional<SysUser> findByUserName(String userName) {
         SysUser userLogin = userMapper.getUserLogin(userName);

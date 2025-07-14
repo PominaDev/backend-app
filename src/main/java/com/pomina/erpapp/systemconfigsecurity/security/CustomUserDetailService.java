@@ -23,6 +23,8 @@ public class CustomUserDetailService implements UserDetailsService {
                 .sysUser(user)
                 .userId(user.getUserId())
                 .userName(user.getUsername())
+                .hoVaTen(user.getHoVaTen())
+                .phoneNumber(user.getPhoneNumber())
                 .password(user.getPassword())
                 .authorities(List.of(new SimpleGrantedAuthority(user.getRoleName())))
                 .build()

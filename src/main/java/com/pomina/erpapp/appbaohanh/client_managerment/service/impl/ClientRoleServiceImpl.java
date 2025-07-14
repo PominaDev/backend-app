@@ -6,17 +6,15 @@ import com.pomina.erpapp.appbaohanh.client_managerment.dto.response.RoleResponse
 import com.pomina.erpapp.appbaohanh.client_managerment.entity.SysRole;
 import com.pomina.erpapp.appbaohanh.client_managerment.mapper.ClientRoleMapper;
 import com.pomina.erpapp.appbaohanh.client_managerment.service.ClientRoleService;
-import com.pomina.erpapp.appbaohanh.common.config.datasource.DataSource;
+import com.pomina.erpapp.appbaohanh.common.config.datasource.CustomDataSource;
 import com.pomina.erpapp.appbaohanh.common.config.datasource.DataSourceType;
 import com.pomina.erpapp.appbaohanh.common.model.PageRequest;
 import com.pomina.erpapp.appbaohanh.common.model.PageResponse;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-@RequiredArgsConstructor
 public class ClientRoleServiceImpl implements ClientRoleService {
 
     // Dependency Injection
@@ -24,14 +22,19 @@ public class ClientRoleServiceImpl implements ClientRoleService {
 
     private final RoleConverter roleConverter;
 
-    @DataSource(DataSourceType.MASTER)
+    public ClientRoleServiceImpl(ClientRoleMapper clientRoleMapper, RoleConverter roleConverter) {
+        this.clientRoleMapper = clientRoleMapper;
+        this.roleConverter = roleConverter;
+    }
+
+    @CustomDataSource(DataSourceType.MASTER)
     @Override
     public int create(RoleRequestDto dto) {
         SysRole role = roleConverter.toEntity(dto);
         return clientRoleMapper.insert(role);
     }
 
-    @DataSource(DataSourceType.MASTER)
+    @CustomDataSource(DataSourceType.MASTER)
     @Override
     public int update(Integer id, RoleRequestDto dto) {
         SysRole role = roleConverter.toEntity(dto);
@@ -39,14 +42,14 @@ public class ClientRoleServiceImpl implements ClientRoleService {
         return clientRoleMapper.update(role);
     }
 
-    @DataSource(DataSourceType.SLAVE)
+    @CustomDataSource(DataSourceType.SLAVE)
     @Override
     public RoleResponseDto getById(Integer id) {
         SysRole role = clientRoleMapper.findById(id);
         return role != null ? roleConverter.toResponse(role) : null;
     }
 
-    @DataSource(DataSourceType.SLAVE)
+    @CustomDataSource(DataSourceType.SLAVE)
     @Override
     public PageResponse<RoleResponseDto> search(PageRequest pageRequest) {
         List<SysRole> roleList = clientRoleMapper.findAllPaged(pageRequest.getOffset(),
@@ -64,7 +67,7 @@ public class ClientRoleServiceImpl implements ClientRoleService {
         return PageResponse.createPaged(roleResponse, pageRequest.getPage(), pageRequest.getSize(), totalElements);
     }
 
-    @DataSource(DataSourceType.MASTER)
+    @CustomDataSource(DataSourceType.MASTER)
     @Override
     public int delete(Integer id) {
         return clientRoleMapper.deleteById(id);

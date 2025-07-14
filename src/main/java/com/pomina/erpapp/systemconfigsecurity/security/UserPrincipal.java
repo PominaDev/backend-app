@@ -16,9 +16,13 @@ public class UserPrincipal implements UserDetails {
      * This class is not a user, this be like an id card of user
      */
     private final SysUser sysUser;
-    //
     private final Long userId;
     private final String userName;
+
+    // User information
+    private final String hoVaTen;
+    private final String phoneNumber;
+
     @JsonIgnore
     private final String password;
     private final Collection<? extends GrantedAuthority> authorities;

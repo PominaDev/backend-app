@@ -9,9 +9,9 @@ import org.springframework.stereotype.Component;
 @Component
 public class DataSourceAspect {
 
-    @Before(value = "@annotation(dataSource)")
-    public void dataSourcePoint(DataSource dataSource) {
-        DynamicDataSourceHolder.putDataSource(dataSource.value());
+    @Before(value = "@annotation(customDataSource)")
+    public void dataSourcePoint(CustomDataSource customDataSource) {
+        DynamicDataSourceHolder.putDataSource(customDataSource.value());
     }
 
     @After(value = "@annotation(dataSource)")

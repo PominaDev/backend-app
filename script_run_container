@@ -1,0 +1,19 @@
+#!/bin/bash
+
+# 💥 Xóa các container cụ thể trong dự án
+podman rm -f mariadb-master mariadb-slave springboot-app || true
+
+# 🧹 Xóa network và volume
+podman network rm replication || true
+podman volume rm pomina_master_data pomina_slave_data || true
+
+# 📉 Tắt Docker Compose stack (giúp cleanup các container phụ nếu có)
+podman compose down --volumes --remove-orphans
+
+# 🔨 Rebuild lại toàn bộ container từ Dockerfile
+podman compose build --no-cache
+
+# 🚀 Khởi động lại toàn bộ stack
+podman compose up -d
+
+# podman / docker

@@ -8,14 +8,14 @@ services:
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: root123
-      MYSQL_DATABASE: pomina
+      MYSQL_DATABASE: pomina_master_db
       MYSQL_USER: root
       MYSQL_PASSWORD: root123
     ports:
       - "3306:3306"
     volumes:
-      - ./data/master:/var/lib/mysql
-      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+      - pomina_master_data:/var/lib/mysql
+      - ./script_init_database/ddl_pomina_master_db.sql:/docker-entrypoint-initdb.d/init.sql
     networks:
       - replication
 
@@ -28,15 +28,32 @@ services:
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: root123
-      MYSQL_DATABASE: pomina
+      MYSQL_DATABASE: pomina_slave_db
       MYSQL_USER: root
       MYSQL_PASSWORD: root123
     ports:
       - "3307:3306"
     volumes:
-      - ./data/slave:/var/lib/mysql
+      - pomina_slave_data:/var/lib/mysql
+      - ./script_init_database/ddl_pomina_slave_db.sql:/docker-entrypoint-initdb.d/init.sql
     networks:
       - replication
+
+  springboot-app:
+    build: .
+    container_name: springboot-app
+    depends_on:
+      - mariadb-master
+    ports:
+      - "8080:8080"
+    networks:
+      - replication
+    environment:
+      SPRING_PROFILES_ACTIVE: prod
+
+volumes:
+  pomina_master_data:
+  pomina_slave_data:
 
 networks:
   replication:

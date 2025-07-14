@@ -47,7 +47,7 @@
         FROM customer
     </select>
 
-    <select id="findAllPaged">
+    <select id="findAllPaged" resultMap="CustomerResultMap">
         SELECT id,
                name,
                phone_number,
