@@ -6,6 +6,8 @@ import com.pomina.erpapp.appbaohanh.client_managerment.dto.response.UserResponse
 import com.pomina.erpapp.appbaohanh.client_managerment.entity.SysUser;
 import com.pomina.erpapp.appbaohanh.client_managerment.mapper.ClientUserMapper;
 import com.pomina.erpapp.appbaohanh.client_managerment.service.ClientUserService;
+import com.pomina.erpapp.appbaohanh.common.config.datasource.CustomDataSource;
+import com.pomina.erpapp.appbaohanh.common.config.datasource.DataSourceType;
 import com.pomina.erpapp.appbaohanh.common.model.PageRequest;
 import com.pomina.erpapp.appbaohanh.common.model.PageResponse;
 import lombok.RequiredArgsConstructor;
@@ -22,13 +24,14 @@ public class ClientUserServiceImpl implements ClientUserService {
 
     private final UserConverter userConverter;
 
-
+    @CustomDataSource(DataSourceType.MASTER)
     @Override
     public int create(UserRequestDto dto) {
         SysUser user = userConverter.toEntity(dto);
         return clientUserMapper.insert(user);
     }
 
+    @CustomDataSource(DataSourceType.MASTER)
     @Override
     public int update(Integer userId, UserRequestDto dto) {
         SysUser user = userConverter.toEntity(dto);
@@ -36,12 +39,14 @@ public class ClientUserServiceImpl implements ClientUserService {
         return clientUserMapper.update(user);
     }
 
+    @CustomDataSource(DataSourceType.SLAVE)
     @Override
     public UserResponseDto getById(Integer userId) {
         SysUser user = clientUserMapper.findById(userId);
         return user != null ? userConverter.toResponse(user) : null;
     }
 
+    @CustomDataSource(DataSourceType.SLAVE)
     @Override
     public PageResponse<UserResponseDto> search(PageRequest pageRequest) {
         List<SysUser> userList = clientUserMapper.findAllPaged(pageRequest.getOffset(),
@@ -59,6 +64,7 @@ public class ClientUserServiceImpl implements ClientUserService {
         return PageResponse.createPaged(userResponse, pageRequest.getPage(), pageRequest.getSize(), totalElements);
     }
 
+    @CustomDataSource(DataSourceType.MASTER)
     @Override
     public int delete(Integer userId) {
         return clientUserMapper.deleteById(userId);

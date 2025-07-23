@@ -12,7 +12,11 @@ public class UserResponseDto {
     private String fullName;
     private String taxCode;
 
-    private String fullAddress;
+    private String address1;
+    private String address2;
+    private String address3;
+    private String address4;
+    private String address5;
     private String city;
     private String locationCode;
 
@@ -20,7 +24,7 @@ public class UserResponseDto {
     private String bankNumber;
     private String description;
 
-    // JOIN từ sys_role
+    // JOIN sys_role
     private String roleName;
     private Boolean isActive;
 }

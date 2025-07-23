@@ -1,5 +1,6 @@
 package com.pomina.erpapp.appbaohanh.client_managerment.entity;
 
+import com.pomina.erpapp.appbaohanh.common.model.BaseEntity;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -9,7 +10,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class SysRole {
+public class SysRole extends BaseEntity {
     private Integer id;
     private String roleName;
     private String description;

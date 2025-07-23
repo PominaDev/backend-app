@@ -18,3 +18,4 @@ mybatis:
   type-aliases-package:
     com.pomina.erpapp.appbaohanh.client_managerment.entity,
     com.pomina.erpapp.appbaohanh.product_warranty_activation.entity
+    com.pomina.erpapp.appbaohanh.location_validation.entity

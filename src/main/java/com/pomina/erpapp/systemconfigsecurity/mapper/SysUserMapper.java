@@ -7,4 +7,10 @@ import org.apache.ibatis.annotations.Param;
 @Mapper
 public interface SysUserMapper {
     SysUser getUserLogin(@Param("username") String username);
+
+    SysUser findByUserName(@Param("username") String username);
+
+    SysUser findByUserId(@Param("userId") Long userId);
+
+    int insert(SysUser sysUser);
 }

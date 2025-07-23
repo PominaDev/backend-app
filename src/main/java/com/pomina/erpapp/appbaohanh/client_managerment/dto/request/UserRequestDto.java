@@ -13,7 +13,7 @@ public class UserRequestDto {
     private Long userId;
 
     private String username;
-    private String phoneNumber;
+    private String phoneNumberNormalize;
     private String password;
 
     private String fullName;

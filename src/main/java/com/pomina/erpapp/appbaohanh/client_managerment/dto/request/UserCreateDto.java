@@ -24,7 +24,7 @@ public class UserCreateDto {
 
     @NotBlank(message = "Phone number is required")
     @Pattern(regexp = "^\\d{10,15}$", message = "Phone number must be 10 to 15 digits")
-    private String phoneNumber;
+    private String phoneNumberNormalize;
 
     @NotBlank(message = "Password is required")
     @Size(min = 6, message = "Password must be at least 6 characters")

@@ -17,7 +17,7 @@ public class CustomerCreateDto {
     private String name;
 
     @Size(max = 20, message = "Phone number must not exceed 20 characters")
-    private String phoneNumber;
+    private String phoneNumberNormalize;
 
     private String address;
 

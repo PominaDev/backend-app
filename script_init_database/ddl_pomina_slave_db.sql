@@ -8,7 +8,7 @@ USE pomina_slave_db;
 -- Create table sys_user
 CREATE TABLE sys_user
 (
-    user_id       INT PRIMARY KEY,
+    user_id       BIGINT AUTO_INCREMENT PRIMARY KEY,
     username      VARCHAR(255),
     phone_number  VARCHAR(20),
     password      VARCHAR(255),
@@ -26,11 +26,11 @@ CREATE TABLE sys_user
     description   VARCHAR(255),
     role_id       INT,
     is_active     INT,
-    created_at DATETIME    DEFAULT CURRENT_TIMESTAMP,
-    created_by VARCHAR(100),
-    updated_at DATETIME    DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    updated_by VARCHAR(100),
-    is_deleted TINYINT     DEFAULT 0
+    created_at    DATETIME DEFAULT CURRENT_TIMESTAMP,
+    created_by    VARCHAR(100),
+    updated_at    DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    updated_by    VARCHAR(100),
+    is_deleted    TINYINT  DEFAULT 0
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4
   COLLATE = utf8mb4_unicode_ci;
@@ -38,13 +38,17 @@ CREATE TABLE sys_user
 INSERT INTO sys_user (user_id, username, phone_number, password, ho_va_ten, ma_so_thue, dia_chi_1, dia_chi_2, dia_chi_3,
                       dia_chi_4, dia_chi_5, city, location_code, bank_name, bank_number, description, role_id,
                       is_active)
-VALUES (1, 'quocdat', '0964192032', '$2a$12$N1Dt.E77XHbNFVA4qQI4S.HFz25UC7zsPO8CbPXx7gCKjikK8b1aS', 'Bùi Quốc Đạt', '86527428', 'Tổ 11', 'Ấp 2', 'Xã Thanh Sơn',
+VALUES (1, 'quocdat', '0964192032', '$2a$12$N1Dt.E77XHbNFVA4qQI4S.HFz25UC7zsPO8CbPXx7gCKjikK8b1aS', 'Bùi Quốc Đạt',
+        '86527428', 'Tổ 11', 'Ấp 2', 'Xã Thanh Sơn',
         'Huyện Định Quán', 'Tỉnh Đồng Nai', NULL, NULL, NULL, NULL, 'User Test', 1, 1),
-       (2, 'xuanngoc', '0332425253', '$2a$12$N1Dt.E77XHbNFVA4qQI4S.HFz25UC7zsPO8CbPXx7gCKjikK8b1aS', 'Lê Xuân Ngọc', '96227389', 'Tổ 11', 'Eaka', 'Eaka', 'Huyện Eaka',
+       (2, 'xuanngoc', '0332425253', '$2a$12$N1Dt.E77XHbNFVA4qQI4S.HFz25UC7zsPO8CbPXx7gCKjikK8b1aS', 'Lê Xuân Ngọc',
+        '96227389', 'Tổ 11', 'Eaka', 'Eaka', 'Huyện Eaka',
         'Tỉnh Đắk Lắk', NULL, NULL, NULL, NULL, 'User Test', 1, 1),
-       (3, 'minhnam', '0862308110', '$2a$12$N1Dt.E77XHbNFVA4qQI4S.HFz25UC7zsPO8CbPXx7gCKjikK8b1aS', 'Nguyễn Minh Nam', '96227389', 'Tổ 11', 'Ấp 2', 'Xã Thanh Sơn',
+       (3, 'minhnam', '0862308110', '$2a$12$N1Dt.E77XHbNFVA4qQI4S.HFz25UC7zsPO8CbPXx7gCKjikK8b1aS', 'Nguyễn Minh Nam',
+        '96227389', 'Tổ 11', 'Ấp 2', 'Xã Thanh Sơn',
         'Tp Thủ Dầu 1', 'Tình Bình Dương', NULL, NULL, NULL, NULL, 'User Test', 1, 1),
-       (4, 'bienngoc', '0918080855', '$2a$12$N1Dt.E77XHbNFVA4qQI4S.HFz25UC7zsPO8CbPXx7gCKjikK8b1aS', 'CÔNG TY TNHH SẮT THÉP NGỌC BIỂN', '96227389', 'Lô Số 22 Song Hành',
+       (4, 'bienngoc', '0918080855', '$2a$12$N1Dt.E77XHbNFVA4qQI4S.HFz25UC7zsPO8CbPXx7gCKjikK8b1aS',
+        'CÔNG TY TNHH SẮT THÉP NGỌC BIỂN', '96227389', 'Lô Số 22 Song Hành',
         'KCN Tân Tạo', 'Phường Tân Tạo A', 'Quận Bình Tân', 'TP HCM',
         'Lô Số 22 Song Hành, KCN Tân Tạo, Phường Tân Tạo A, Quận Bình Tân, TP HCM', '56', NULL, NULL, NULL, NULL, NULL);
 -- Create table sys_role
@@ -53,11 +57,11 @@ CREATE TABLE sys_role
     id          INT PRIMARY KEY,
     role_name   VARCHAR(255) NOT NULL,
     description VARCHAR(255),
-    created_at DATETIME    DEFAULT CURRENT_TIMESTAMP,
-    created_by VARCHAR(100),
-    updated_at DATETIME    DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    updated_by VARCHAR(100),
-    is_deleted TINYINT     DEFAULT 0
+    created_at  DATETIME DEFAULT CURRENT_TIMESTAMP,
+    created_by  VARCHAR(100),
+    updated_at  DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    updated_by  VARCHAR(100),
+    is_deleted  TINYINT  DEFAULT 0
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4
   COLLATE = utf8mb4_unicode_ci;
@@ -337,3 +341,16 @@ VALUES ('#99', '2025-06-17', '2030-06-17', '2035-06-17', 1, 1, 1, 'admin', 'admi
        ('#44', '2023-09-06', NULL, '2033-09-06', 45, 49, 7, 'admin', 'admin'),
        ('#42', '2023-09-06', '2031-09-06', '2035-09-06', 46, 50, 7, 'admin', 'admin'),
        ('#43', '2023-09-06', '2031-09-06', '2035-09-06', 47, 51, 12, 'admin', 'admin');
+
+CREATE TABLE locations
+(
+    id           BIGINT AUTO_INCREMENT PRIMARY KEY,
+    user_id      BIGINT NOT NULL,
+    latitude     DOUBLE       NOT NULL,
+    longitude    DOUBLE       NOT NULL,
+    road         VARCHAR(255),
+    city         VARCHAR(255),
+    country      VARCHAR(255),
+    country_code VARCHAR(10),
+    radius       DOUBLE       NOT NULL
+);

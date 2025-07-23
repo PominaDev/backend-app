@@ -13,11 +13,15 @@ services:
       MYSQL_PASSWORD: root123
     ports:
       - "3306:3306"
-    volumes:
-      - pomina_master_data:/var/lib/mysql
-      - ./script_init_database/ddl_pomina_master_db.sql:/docker-entrypoint-initdb.d/init.sql
+#    volumes:
+#      - pomina_master_data:/var/lib/mysql
+#      - ./script_init_database/ddl_pomina_master_db.sql:/docker-entrypoint-initdb.d/init.sql
     networks:
       - replication
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      retries: 3
 
   mariadb-slave:
     image: mariadb:lts-ubi9
@@ -33,9 +37,35 @@ services:
       MYSQL_PASSWORD: root123
     ports:
       - "3307:3306"
-    volumes:
-      - pomina_slave_data:/var/lib/mysql
-      - ./script_init_database/ddl_pomina_slave_db.sql:/docker-entrypoint-initdb.d/init.sql
+#    volumes:
+#      - pomina_slave_data:/var/lib/mysql
+#      - ./script_init_database/ddl_pomina_slave_db.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - replication
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      retries: 3
+
+  # maxscale:
+  #   image: mariadb/maxscale:latest
+  #   container_name: maxscale
+  #   ports:
+  #     - "4006:4006"
+  #   volumes:
+  #     - ./maxscale.cnf:/etc/maxscale.cnf
+  #   networks:
+  #     - replication
+  #   depends_on:
+  #     - mariadb-master
+  #     - mariadb-slave
+
+  redis:
+    image: redis:7.2-alpine
+    container_name: redis-container
+    ports:
+      - "6379:6379"
+    restart: unless-stopped
     networks:
       - replication
 
@@ -43,7 +73,10 @@ services:
     build: .
     container_name: springboot-app
     depends_on:
+      # - maxscale
       - mariadb-master
+      - mariadb-slave
+      - redis
     ports:
       - "8080:8080"
     networks:
@@ -51,9 +84,9 @@ services:
     environment:
       SPRING_PROFILES_ACTIVE: prod
 
-volumes:
-  pomina_master_data:
-  pomina_slave_data:
+#volumes:
+#  pomina_master_data:
+#  pomina_slave_data:
 
 networks:
   replication:

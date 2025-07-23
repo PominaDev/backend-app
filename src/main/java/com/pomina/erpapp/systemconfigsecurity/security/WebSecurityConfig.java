@@ -9,11 +9,8 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
@@ -31,37 +28,38 @@ public class WebSecurityConfig {
 
     private final CustomAccessDeniedHandler customAccessDeniedHandler;
 
-    private static final String[] WHITE_LIST = {
-            "/**"
+    private final CustomPasswordEncoder passwordEncoder;
+
+    private static final String[] WHITE_LIST_ENDPOINTS = {
+            "/api/v1/auth/login",
+            "/api/v1/auth/logout",
+            "/api/v1/auth/register",
+            "/api/v1/auth/refresh-token",
+            "/api/v1/auth/otp/send",
+            "/api/v1/auth/otp/verify",
     };
+
+    private static final List<String> WHITE_LIST_CORS = List.of(
+            "http://localhost:7777",
+            "https://pomina-flat-steel.vercel.app",
+            "https://d8b0b708bf2f.ngrok-free.app"
+    );
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.addFilterBefore(jwtAuthentication, UsernamePasswordAuthenticationFilter.class);
         http
-                .cors()
-                .and()
+                .cors().and()
                 .csrf().disable()
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.ALWAYS)
+                .formLogin().disable()
+                .logout().disable()
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
-                .formLogin().loginPage("/login").permitAll()
-                .defaultSuccessUrl("/user/loginSuccess", true)
-                .failureUrl("/login?success=false")
-                .successForwardUrl("/user/login-success")
+                .exceptionHandling().accessDeniedHandler(customAccessDeniedHandler)
                 .and()
-                .logout()
-                .invalidateHttpSession(true)
-                .clearAuthentication(true)
-                .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-                .logoutSuccessUrl("/login?logout")
-                .permitAll()
-                .and()
-                .exceptionHandling()
-                .accessDeniedHandler(customAccessDeniedHandler)
-                .and()
-                .securityMatcher("/**")
                 .authorizeHttpRequests(registry -> registry
-                        .requestMatchers(WHITE_LIST).permitAll()
+                        .requestMatchers(WHITE_LIST_ENDPOINTS)
+                        .permitAll()
                         .anyRequest()
                         .authenticated()
                 )
@@ -72,10 +70,10 @@ public class WebSecurityConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(List.of("*"));
+        configuration.setAllowedOrigins(WHITE_LIST_CORS);
         configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE"));
         configuration.setAllowedHeaders(List.of("*"));
-        configuration.setAllowCredentials(false);
+        configuration.setAllowCredentials(true);
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
@@ -83,21 +81,11 @@ public class WebSecurityConfig {
     }
 
     @Bean
-    WebSecurityCustomizer webSecurityCustomizer() {
-        return web -> web.ignoring().requestMatchers("/static/**", "/user/**");
-    }
-
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
-
-    @Bean
     public AuthenticationManager authenticationManager(HttpSecurity http) throws Exception {
         var builder = http.getSharedObject(AuthenticationManagerBuilder.class);
         builder
                 .userDetailsService(customUserDetailService)
-                .passwordEncoder(passwordEncoder());
+                .passwordEncoder(passwordEncoder.passwordEncoder());
         return builder.build();
     }
 }

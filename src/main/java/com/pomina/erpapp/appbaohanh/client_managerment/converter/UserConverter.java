@@ -16,7 +16,6 @@ import java.util.stream.Stream;
 public interface UserConverter extends BaseConverter<UserRequestDto, UserResponseDto, SysUser> {
 
     @Override
-    @Mapping(target = "fullAddress", expression = "java(buildFullAddress(entity))")
     @Mapping(source = "role.roleName", target = "roleName")
     UserResponseDto toResponse(SysUser entity);
 
@@ -35,17 +34,4 @@ public interface UserConverter extends BaseConverter<UserRequestDto, UserRespons
 
     // UpdateDto to RequestDto
     UserRequestDto toUserRequestDto(UserUpdateDto updateDto);
-
-    default String buildFullAddress(SysUser entity) {
-        return Stream.of(
-                entity.getAddress1(),
-                entity.getAddress2(),
-                entity.getAddress3(),
-                entity.getAddress4(),
-                entity.getAddress5()
-            )
-            .filter(addr -> addr != null && !addr.isBlank())
-            .reduce((a, b) -> a + ", " + b)
-            .orElse("");
-    }
 }

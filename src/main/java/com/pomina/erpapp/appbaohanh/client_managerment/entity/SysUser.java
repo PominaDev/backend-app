@@ -1,6 +1,7 @@
 package com.pomina.erpapp.appbaohanh.client_managerment.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.pomina.erpapp.appbaohanh.common.model.BaseEntity;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -10,7 +11,7 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class SysUser {
+public class SysUser extends BaseEntity {
     private Long userId;
     @JsonIgnore
     private String username;

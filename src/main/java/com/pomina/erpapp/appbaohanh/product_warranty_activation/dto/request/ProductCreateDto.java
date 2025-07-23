@@ -23,10 +23,4 @@ public class ProductCreateDto {
 
     private String name;
     private String coilType;
-
-    @NotNull(message = "Status is mandatory")
-    private String status;
-
-    private String note;
-    private String createdBy;
 }
