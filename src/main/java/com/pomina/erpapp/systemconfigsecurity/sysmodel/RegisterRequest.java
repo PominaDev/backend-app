@@ -31,7 +31,7 @@ public class RegisterRequest {
 
     private Integer roleId = 6; // ROLE_USER
 
-    private Integer isActive = 1; // TRUE
+    private Boolean isActive = true; // TRUE
 
     // Register location
     private LocationRequestDto location;

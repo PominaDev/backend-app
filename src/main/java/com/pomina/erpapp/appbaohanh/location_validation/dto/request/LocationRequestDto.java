@@ -11,7 +11,7 @@ import lombok.Setter;
 @Setter
 public class LocationRequestDto {
 
-    private Long userId;
+    private Integer userId;
 
     @NotNull
     @Min(-90)

@@ -12,11 +12,29 @@ import lombok.Setter;
 @NoArgsConstructor
 public class Customer extends BaseEntity {
 
-    private Long id;
+    private Integer userId;
 
-    private String name;
+    private String username;
+
+    private String password;
+
+    private String hoVaTen;
 
     private String phoneNumber;
 
-    private String address;
+    private String maSoThue;
+
+    private String masterLocationCode;
+
+    private String bankName;
+
+    private String bankNumber;
+
+    private String description;
+
+    private Integer roleId;
+
+    private Boolean isActive;
+
+    private String oldId;
 }

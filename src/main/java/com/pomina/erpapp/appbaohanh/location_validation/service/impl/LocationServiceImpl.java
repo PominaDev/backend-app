@@ -30,8 +30,6 @@ public class LocationServiceImpl implements LocationService {
 
     private final LocationMapper locationMapper;
 
-    private final LocationConverter locationConverter;
-
     @Override
     public int create(LocationRequestDto dto) {
         return 0;
@@ -76,9 +74,9 @@ public class LocationServiceImpl implements LocationService {
         location.setLongitude(request.getLongitude());
         location.setRadius(request.getRadius());
         if (nominatimResponse.getAddress() != null) {
-            location.setRoad(nominatimResponse.getAddress().getRoad());
-            location.setCity(nominatimResponse.getAddress().getCity());
-            location.setCountry(nominatimResponse.getAddress().getCountry());
+            location.setAddress01(nominatimResponse.getAddress().getRoad());
+            location.setAddress04(nominatimResponse.getAddress().getCity());
+            location.setAddress05(nominatimResponse.getAddress().getCountry());
             location.setCountryCode(nominatimResponse.getAddress().getCountryCode());
         }
 
@@ -90,9 +88,9 @@ public class LocationServiceImpl implements LocationService {
         locationResponse.setUserId(location.getUserId());
         locationResponse.setLatitude(location.getLatitude());
         locationResponse.setLongitude(location.getLongitude());
-        locationResponse.setRoad(location.getRoad());
-        locationResponse.setCity(location.getCity());
-        locationResponse.setCountry(location.getCountry());
+        locationResponse.setRoad(location.getAddress01());
+        locationResponse.setCity(location.getAddress04());
+        locationResponse.setCountry(location.getAddress05());
         locationResponse.setCountryCode(location.getCountryCode());
 
         return locationResponse;
@@ -107,7 +105,7 @@ public class LocationServiceImpl implements LocationService {
         }
 
         // Nếu không truyền thì lấy từ context
-        Long userId = request.getUserId();
+        Integer userId = request.getUserId();
         if (userId == null) {
             Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
             UserPrincipal principal = (UserPrincipal) authentication.getPrincipal();
@@ -134,9 +132,9 @@ public class LocationServiceImpl implements LocationService {
         locationResponse.setUserId(registeredLocation.getUserId());
         locationResponse.setLatitude(registeredLocation.getLatitude());
         locationResponse.setLongitude(registeredLocation.getLongitude());
-        locationResponse.setRoad(registeredLocation.getRoad());
-        locationResponse.setCity(registeredLocation.getCity());
-        locationResponse.setCountry(registeredLocation.getCountry());
+        locationResponse.setRoad(registeredLocation.getAddress01());
+        locationResponse.setCity(registeredLocation.getAddress04());
+        locationResponse.setCountry(registeredLocation.getAddress05());
         locationResponse.setCountryCode(registeredLocation.getCountryCode());
 
         CheckLocationResponse response = new CheckLocationResponse();

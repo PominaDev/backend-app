@@ -11,31 +11,19 @@ import lombok.Setter;
 @NoArgsConstructor
 public class SysUser {
 
-    private Long userId;
+    private Integer userId;
 
     private String username;
-
-    private String phoneNumber;
 
     private String password;
 
     private String hoVaTen;
 
+    private String phoneNumber;
+
     private String maSoThue;
 
-    private String diaChi1;
-
-    private String diaChi2;
-
-    private String diaChi3;
-
-    private String diaChi4;
-
-    private String diaChi5;
-
-    private String city;
-
-    private String locationCode;
+    private String masterLocationCode;
 
     private String bankName;
 
@@ -43,9 +31,11 @@ public class SysUser {
 
     private String description;
 
-    private int roleId;
+    private Integer roleId;
 
-    private int isActive;
+    private Boolean isActive;
+
+    private String oldId;
 
     // JOIN
     private String roleName;

@@ -12,21 +12,25 @@ import lombok.Setter;
 @NoArgsConstructor
 public class Location extends BaseEntity {
 
-    private Long id;
+    private Integer locationId;
 
-    private Long userId;
+    private Integer userId;            // FK to SysUser
 
     private Double latitude;
 
     private Double longitude;
 
-    private String road;
+    private String address01;          // Đường
 
-    private String city;
+    private String address02;          // Xã/Phường
 
-    private String country;
+    private String address03;          // Huyện/Quận
 
-    private String countryCode;
+    private String address04;          // Tỉnh/Thành phố
 
-    private Double radius;
+    private String address05;          // Quốc gia
+
+    private String countryCode;        // Mã quốc gia
+
+    private Double radius;             // Bán kính
 }

@@ -12,15 +12,15 @@ import lombok.Setter;
 @NoArgsConstructor
 public class Product extends BaseEntity {
 
-    private Long id;
+    private Integer id;
 
     private String coilCode;
 
-    private Integer lengthFrom;
+    private Double lengthFrom;
 
-    private Integer lengthTo;
+    private Double lengthTo;
 
-    private Integer length;
+    private Double length;
 
     private String name;
 

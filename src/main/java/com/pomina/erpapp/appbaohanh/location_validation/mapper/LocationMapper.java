@@ -7,5 +7,5 @@ import org.apache.ibatis.annotations.Param;
 
 @Mapper
 public interface LocationMapper extends BaseMapper<Location> {
-    Location findByUserId(@Param("userId") Long userId);
+    Location findByUserId(@Param("userId") Integer userId);
 }

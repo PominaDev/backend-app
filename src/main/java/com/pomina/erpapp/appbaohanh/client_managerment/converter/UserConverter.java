@@ -16,14 +16,12 @@ import java.util.stream.Stream;
 public interface UserConverter extends BaseConverter<UserRequestDto, UserResponseDto, SysUser> {
 
     @Override
-    @Mapping(source = "role.roleName", target = "roleName")
     UserResponseDto toResponse(SysUser entity);
 
     @Override
     List<UserResponseDto> toResponseList(List<SysUser> entityList);
 
     @Override
-    @Mapping(target = "role", ignore = true)
     SysUser toEntity(UserRequestDto dto);
 
     @Override

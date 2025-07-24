@@ -16,7 +16,7 @@ public class UserPrincipal implements UserDetails {
      * This class is not a user, this be like an id card of user
      */
     private final SysUser sysUser;
-    private final Long userId;
+    private final Integer userId;
     private final String userName;
 
     // User information

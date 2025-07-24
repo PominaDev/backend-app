@@ -10,7 +10,7 @@ public interface SysUserMapper {
 
     SysUser findByUserName(@Param("username") String username);
 
-    SysUser findByUserId(@Param("userId") Long userId);
+    SysUser findByUserId(@Param("userId") Integer userId);
 
     int insert(SysUser sysUser);
 }

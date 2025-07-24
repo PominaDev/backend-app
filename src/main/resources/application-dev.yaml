@@ -12,14 +12,14 @@ spring:
       validation-timeout: 5000
 
     master:
-      url: jdbc:mariadb://localhost:3306/pomina_master_db?connectionCollation=utf8mb4_unicode_ci&serverTimezone=Asia/Ho_Chi_Minh
+      url: jdbc:mariadb://54.221.149.89:3333/pomina_dev_db?useUnicode=true&characterEncoding=utf8mb4&serverTimezone=Asia/Ho_Chi_Minh
       username: root
       password: root123
       driver-class-name: org.mariadb.jdbc.Driver
       type: com.zaxxer.hikari.HikariDataSource
 
     slave:
-      url: jdbc:mariadb://localhost:3307/pomina_slave_db?connectionCollation=utf8mb4_unicode_ci&serverTimezone=Asia/Ho_Chi_Minh
+      url: jdbc:mariadb://54.221.149.89:3333/pomina_dev_db?useUnicode=true&characterEncoding=utf8mb4&serverTimezone=Asia/Ho_Chi_Minh
       username: root
       password: root123
       driver-class-name: org.mariadb.jdbc.Driver

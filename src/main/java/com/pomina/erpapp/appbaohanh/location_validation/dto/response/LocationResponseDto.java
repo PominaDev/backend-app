@@ -7,7 +7,7 @@ import lombok.Setter;
 @Setter
 public class LocationResponseDto {
 
-    private Long userId;
+    private Integer userId;
 
     private Double latitude;
 

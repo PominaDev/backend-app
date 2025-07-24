@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "288102412407",
+    "project_id": "pomina-c6e9e",
+    "storage_bucket": "pomina-c6e9e.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:288102412407:android:e89c44f0d3b8eb7ccd5672",
+        "android_client_info": {
+          "package_name": "com.pomina.project"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBlDMgiKh-kDgs--voFuI88sXGzrsYrm2g"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

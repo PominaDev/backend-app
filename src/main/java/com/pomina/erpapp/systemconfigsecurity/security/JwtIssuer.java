@@ -73,7 +73,7 @@ public class JwtIssuer {
     @Getter
     @Builder
     public static class Request {
-        private final Long userId;
+        private final Integer userId;
         private final String userName;
         private final String fullName;
         private final String phoneNumber;

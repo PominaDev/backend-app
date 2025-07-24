@@ -35,7 +35,7 @@ public class ClientUserServiceImpl implements ClientUserService {
     @Override
     public int update(Integer userId, UserRequestDto dto) {
         SysUser user = userConverter.toEntity(dto);
-        user.setUserId(userId.longValue());
+        user.setUserId(userId);
         return clientUserMapper.update(user);
     }
 

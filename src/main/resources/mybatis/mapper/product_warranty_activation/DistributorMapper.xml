@@ -2,7 +2,8 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.pomina.erpapp.appbaohanh.product_warranty_activation.mapper.DistributorMapper">
 
-    <resultMap id="DistributorResultMap" type="com.pomina.erpapp.appbaohanh.product_warranty_activation.entity.Distributor">
+    <resultMap id="DistributorResultMap"
+               type="com.pomina.erpapp.appbaohanh.product_warranty_activation.entity.Distributor">
         <id column="id" property="id"/>
         <result column="name" property="name"/>
         <result column="status" property="status"/>
@@ -14,7 +15,7 @@
         <result column="is_deleted" property="isDeleted"/>
     </resultMap>
 
-    <select id="findById">
+    <select id="findById" resultMap="DistributorResultMap">
         SELECT id,
                name,
                status,
@@ -25,10 +26,11 @@
                updated_by,
                is_deleted
         FROM distributor
-        WHERE id = #{id} AND is_deleted = 0
+        WHERE id = #{id}
+          AND is_deleted = 0
     </select>
 
-    <select id="findAll">
+    <select id="findAll" resultMap="DistributorResultMap">
         SELECT id,
                name,
                status,
@@ -42,16 +44,16 @@
         WHERE is_deleted = 0
     </select>
 
-    <select id="findAllPaged">
+    <select id="findAllPaged" resultMap="DistributorResultMap">
         SELECT id,
-               name,
-               status,
-               note,
-               created_at,
-               created_by,
-               updated_at,
-               updated_by,
-               is_deleted
+        name,
+        status,
+        note,
+        created_at,
+        created_by,
+        updated_at,
+        updated_by,
+        is_deleted
         FROM distributor
         WHERE is_deleted = 0
         <if test="paging != null and paging.orderByClause != null">
@@ -71,11 +73,13 @@
             status     = #{status},
             note       = #{note},
             updated_by = #{updatedBy}
-        WHERE id = #{id} AND is_deleted = 0
+        WHERE id = #{id}
+          AND is_deleted = 0
     </update>
 
     <delete id="deleteById">
-        DELETE FROM distributor
+        DELETE
+        FROM distributor
         WHERE id = #{id}
     </delete>
 
@@ -86,11 +90,10 @@
     </update>
 
     <select id="existsById" resultType="boolean">
-        SELECT EXISTS(
-            SELECT 1
-            FROM distributor
-            WHERE id = #{id} AND is_deleted = 0
-        )
+        SELECT EXISTS(SELECT 1
+                      FROM distributor
+                      WHERE id = #{id}
+                        AND is_deleted = 0)
     </select>
 
     <select id="countAll" resultType="int">

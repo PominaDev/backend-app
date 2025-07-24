@@ -5,22 +5,19 @@
     <resultMap id="SysUserResultMap" type="com.pomina.erpapp.systemconfigsecurity.model.SysUser">
         <id column="user_id" property="userId"/>
         <result column="username" property="username"/>
-        <result column="phone_number" property="phoneNumber"/>
         <result column="password" property="password"/>
         <result column="ho_va_ten" property="hoVaTen"/>
+        <result column="phone_number" property="phoneNumber"/>
         <result column="ma_so_thue" property="maSoThue"/>
-        <result column="dia_chi_1" property="diaChi1"/>
-        <result column="dia_chi_2" property="diaChi2"/>
-        <result column="dia_chi_3" property="diaChi3"/>
-        <result column="dia_chi_4" property="diaChi4"/>
-        <result column="dia_chi_5" property="diaChi5"/>
-        <result column="city" property="city"/>
-        <result column="location_code" property="locationCode"/>
+        <result column="master_location_code" property="masterLocationCode"/>
         <result column="bank_name" property="bankName"/>
         <result column="bank_number" property="bankNumber"/>
         <result column="description" property="description"/>
         <result column="role_id" property="roleId"/>
         <result column="is_active" property="isActive"/>
+        <result column="old_id" property="oldId"/>
+        <result column="status" property="status"/>
+        <result column="noted" property="noted"/>
         <result column="created_at" property="createdAt"/>
         <result column="created_by" property="createdBy"/>
         <result column="updated_at" property="updatedAt"/>
@@ -58,23 +55,10 @@
                password,
                ho_va_ten,
                ma_so_thue,
-               dia_chi_1,
-               dia_chi_2,
-               dia_chi_3,
-               dia_chi_4,
-               dia_chi_5,
-               city,
-               location_code,
                bank_name,
                bank_number,
                description,
                role_id
-#                    is_active,
-#                created_at,
-#                created_by,
-#                updated_at,
-#                updated_by,
-#                is_deleted
         FROM sys_user
         WHERE phone_number = #{username}
         LIMIT 1

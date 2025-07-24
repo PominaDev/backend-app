@@ -13,7 +13,7 @@ public class JwtToPrincipalConverter {
                 .map(SimpleGrantedAuthority::new)
                 .toList();
         return UserPrincipal.builder()
-                .userId(Long.valueOf(jwt.getSubject()))
+                .userId(Integer.valueOf(jwt.getSubject()))
                 .userName(jwt.getClaim("username").asString())
                 .authorities(authorityList)
                 .build();

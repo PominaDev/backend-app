@@ -11,7 +11,10 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class SysRole extends BaseEntity {
+
     private Integer id;
+
     private String roleName;
+
     private String description;
 }

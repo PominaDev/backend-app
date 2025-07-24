@@ -84,7 +84,8 @@ services:
     environment:
       SPRING_PROFILES_ACTIVE: prod
 
-#volumes:
+volumes:
+  redis_data:
 #  pomina_master_data:
 #  pomina_slave_data:
 

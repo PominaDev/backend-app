@@ -7,7 +7,6 @@ import com.pomina.erpapp.appbaohanh.product_warranty_activation.dto.request.Cust
 import com.pomina.erpapp.appbaohanh.product_warranty_activation.dto.response.CustomerResponseDto;
 import com.pomina.erpapp.appbaohanh.product_warranty_activation.entity.Customer;
 import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
 
 @Mapper(componentModel = "spring")
 public interface CustomerConverter extends BaseConverter<CustomerRequestDto, CustomerResponseDto, Customer> {

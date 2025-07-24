@@ -115,7 +115,7 @@ public class AuthService {
     }
 
     public Void attemptLogout(LogoutRequest logoutRequest, HttpServletRequest httpServletRequest) {
-        Long userId = ((UserPrincipal) SecurityContextHolder.getContext()
+        Integer userId = ((UserPrincipal) SecurityContextHolder.getContext()
                 .getAuthentication().getPrincipal()).getUserId();
 
         String deviceId = logoutRequest.getDeviceId();
@@ -235,7 +235,7 @@ public class AuthService {
 
         DecodedJWT decodedJwt = jwtIssuer.verify(refreshToken);
 
-        Long userId = Long.valueOf(decodedJwt.getSubject());
+        Integer userId = Integer.valueOf(decodedJwt.getSubject());
 
         if (!redisTokenService.isValidRefreshToken(userId, deviceId, refreshToken, userAgent)) {
             throw new AppException(ErrorCode.INVALID_REFRESH_TOKEN);
@@ -295,7 +295,7 @@ public class AuthService {
         sysUser.setHoVaTen("Người dùng mới");
         sysUser.setPassword(passwordEncoder.encode(UUID.randomUUID().toString()));
         sysUser.setRoleId(6); // default ROLE_USER
-        sysUser.setIsActive(1); // default true
+        sysUser.setIsActive(true); // default true
 
         sysUserMapper.insert(sysUser);
         return sysUser;

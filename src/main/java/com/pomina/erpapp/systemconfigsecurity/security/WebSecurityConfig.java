@@ -49,7 +49,7 @@ public class WebSecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.addFilterBefore(jwtAuthentication, UsernamePasswordAuthenticationFilter.class);
         http
-                .cors().and()
+                .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .csrf().disable()
                 .formLogin().disable()
                 .logout().disable()
