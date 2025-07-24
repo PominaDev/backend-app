@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.pomina.erpapp.appbaohanh.web.menu_permission.mapper.MasterPermissionMapper">
+
+    <resultMap id="MasterPermissionResultMap"
+               type="com.pomina.erpapp.appbaohanh.web.menu_permission.entity.MasterPermission">
+        <id column="master_permission_id" property="masterPermissionId"/>
+        <result column="master_menu_id" property="masterMenuId"/>
+        <result column="sys_user_id" property="sysUserId"/>
+        <result column="is_full" property="isFull"/>
+        <result column="is_insert" property="isInsert"/>
+        <result column="is_delete" property="isDelete"/>
+        <result column="is_update" property="isUpdate"/>
+        <result column="is_read" property="isRead"/>
+        <result column="is_print" property="isPrint"/>
+        <result column="is_export" property="isExport"/>
+        <result column="status" property="status"/>
+        <result column="noted" property="note"/>
+        <result column="created_at" property="createdAt"/>
+        <result column="created_by" property="createdBy"/>
+        <result column="updated_at" property="updatedAt"/>
+        <result column="updated_by" property="updatedBy"/>
+        <result column="is_deleted" property="isDeleted"/>
+    </resultMap>
+
+
+    <select id="findById" resultMap="MasterPermissionResultMap">
+        SELECT master_permission_id,
+               master_menu_id,
+               sys_user_id,
+               is_full,
+               is_insert,
+               is_delete,
+               is_update,
+               is_read,
+               is_print,
+               is_export,
+               status,
+               noted,
+               created_at,
+               created_by,
+               updated_at,
+               updated_by,
+               is_deleted
+        FROM master_permission
+        WHERE master_permission_id = #{id}
+          AND is_deleted = 0
+    </select>
+
+    <select id="findAll" resultMap="MasterPermissionResultMap">
+        SELECT master_permission_id,
+               master_menu_id,
+               sys_user_id,
+               is_full,
+               is_insert,
+               is_delete,
+               is_update,
+               is_read,
+               is_print,
+               is_export,
+               status,
+               noted,
+               created_at,
+               created_by,
+               updated_at,
+               updated_by,
+               is_deleted
+        FROM master_permission
+        WHERE is_deleted = 0
+    </select>
+
+    <select id="findAllPaged" resultMap="MasterPermissionResultMap">
+        SELECT master_permission_id,
+        master_menu_id,
+        sys_user_id,
+        is_full,
+        is_insert,
+        is_delete,
+        is_update,
+        is_read,
+        is_print,
+        is_export,
+        status,
+        noted,
+        created_at,
+        created_by,
+        updated_at,
+        updated_by,
+        is_deleted
+        FROM master_permission
+        WHERE is_deleted = 0
+        <if test="paging != null and paging.orderByClause != null">
+            ORDER BY ${paging.orderByClause}
+        </if>
+        LIMIT #{limit} OFFSET #{offset}
+    </select>
+
+    <insert id="insert" >
+        INSERT INTO master_permission (master_menu_id,
+                                       sys_user_id,
+                                       is_full,
+                                       is_insert,
+                                       is_delete,
+                                       is_update,
+                                       is_read,
+                                       is_print,
+                                       is_export,
+                                       status,
+                                       noted,
+                                       created_by,
+                                       updated_by)
+        VALUES (#{masterMenuId},
+                #{sysUserId},
+                #{isFull},
+                #{isInsert},
+                #{isDelete},
+                #{isUpdate},
+                #{isRead},
+                #{isPrint},
+                #{isExport},
+                #{status},
+                #{note},
+                #{createdBy},
+                #{updatedBy})
+    </insert>
+
+    <update id="update" >
+        UPDATE master_permission
+        SET
+            master_menu_id = #{masterMenuId},
+            sys_user_id    = #{sysUserId},
+            is_full        = #{isFull},
+            is_insert      = #{isInsert},
+            is_delete      = #{isDelete},
+            is_update      = #{isUpdate},
+            is_read        = #{isRead},
+            is_print       = #{isPrint},
+            is_export      = #{isExport},
+            status         = #{status},
+            noted          = #{note},
+            updated_by     = #{updatedBy},
+            updated_at     = NOW()
+        WHERE master_permission_id = #{masterPermissionId}
+          AND is_deleted = 0
+    </update>
+
+    <delete id="deleteById" >
+        DELETE
+        FROM master_permission
+        WHERE master_permission_id = #{id}
+    </delete>
+
+    <update id="softDeleteById" >
+        UPDATE master_permission
+        SET is_deleted = 1,
+            updated_at = NOW(),
+            updated_by = #{updatedBy}
+        WHERE master_permission_id = #{id}
+    </update>
+
+    <select id="existsById" >
+        SELECT EXISTS(SELECT 1
+                      FROM master_permission
+                      WHERE master_permission_id = #{id}
+                        AND is_deleted = 0)
+    </select>
+
+    <select id="countAll" >
+        SELECT COUNT(master_permission_id)
+        FROM master_permission
+        WHERE is_deleted = 0
+    </select>
+
+</mapper>
