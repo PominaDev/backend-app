@@ -2,12 +2,10 @@ package com.pomina.erpapp.appbaohanh.web.menu_permission.entity;
 
 import com.pomina.erpapp.appbaohanh.common.model.BaseEntity;
 import lombok.AllArgsConstructor;
-import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.time.LocalDateTime;
 
 @Getter
 @Setter
