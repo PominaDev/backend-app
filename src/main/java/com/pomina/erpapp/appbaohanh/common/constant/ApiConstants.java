@@ -87,4 +87,28 @@ public class ApiConstants {
 
         private ApiLocation() {}
     }
+
+    public static final class ApiMasterMenu {
+        public static final String BASE = VERSION_V1 + "/master-menus";
+        public static final String CREATE = "/create";
+        public static final String UPDATE = "/update/{id}";
+        public static final String DELETE = "/delete/{id}";
+        public static final String GET_BY_ID = "/{id}";
+        public static final String SEARCH = "/search";
+        public static final String GET_ALL = "/all";
+
+        private ApiMasterMenu() {}
+    }
+
+    public static final class ApiMasterPermission {
+        public static final String BASE = VERSION_V1 + "/master-permissions";
+        public static final String CREATE = "/create";
+        public static final String UPDATE = "/update/{id}";
+        public static final String DELETE = "/delete/{id}";
+        public static final String GET_BY_ID = "/{id}";
+        public static final String SEARCH = "/search";
+        public static final String GET_ALL = "/all";
+
+        private ApiMasterPermission() {}
+    }
 }
