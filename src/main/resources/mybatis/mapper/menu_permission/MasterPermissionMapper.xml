@@ -97,7 +97,7 @@
         LIMIT #{limit} OFFSET #{offset}
     </select>
 
-    <insert id="insert" >
+    <insert id="insert">
         INSERT INTO master_permission (master_menu_id,
                                        sys_user_id,
                                        is_full,
@@ -126,33 +126,59 @@
                 #{updatedBy})
     </insert>
 
-    <update id="update" >
+    <update id="update">
         UPDATE master_permission
         SET
-            master_menu_id = #{masterMenuId},
-            sys_user_id    = #{sysUserId},
-            is_full        = #{isFull},
-            is_insert      = #{isInsert},
-            is_delete      = #{isDelete},
-            is_update      = #{isUpdate},
-            is_read        = #{isRead},
-            is_print       = #{isPrint},
-            is_export      = #{isExport},
-            status         = #{status},
-            noted          = #{note},
-            updated_by     = #{updatedBy},
-            updated_at     = NOW()
+        <set>
+            <if test="masterMenuId != null and masterMenuId != ''">
+                , master_menu_id = #{masterMenuId}
+            </if>
+            <if test="sysUserId != null and sysUserId != ''">
+                , sys_user_id = #{sysUserId}
+            </if>
+            <if test="isFull != null and isFull != ''">
+                , is_full = #{isFull}
+            </if>
+            <if test="isInsert != null and isInsert != ''">
+                , is_insert = #{isInsert}
+            </if>
+            <if test="isDelete != null and isDelete != ''">
+                , is_delete = #{isDelete}
+            </if>
+            <if test="isUpdate != null and isUpdate != ''">
+                , is_update = #{isUpdate}
+            </if>
+            <if test="isRead != null and isRead != ''">
+                , is_read = #{isRead}
+            </if>
+            <if test="isPrint != null and isPrint != ''">
+                , is_print = #{isPrint}
+            </if>
+            <if test="isExport != null and isExport != ''">
+                , is_export = #{isExport}
+            </if>
+            <if test="status != null and status != ''">
+                , status = #{status}
+            </if>
+            <if test="note != null and note != ''">
+                , noted = #{note}
+            </if>
+            <if test="updatedBy != null and updatedBy != ''">
+                , updated_by = #{updatedBy}
+            </if>
+        </set>
+        updated_at = NOW()
         WHERE master_permission_id = #{masterPermissionId}
-          AND is_deleted = 0
+        AND is_deleted = 0
     </update>
 
-    <delete id="deleteById" >
+    <delete id="deleteById">
         DELETE
         FROM master_permission
         WHERE master_permission_id = #{id}
     </delete>
 
-    <update id="softDeleteById" >
+    <update id="softDeleteById">
         UPDATE master_permission
         SET is_deleted = 1,
             updated_at = NOW(),
@@ -160,14 +186,14 @@
         WHERE master_permission_id = #{id}
     </update>
 
-    <select id="existsById" >
+    <select id="existsById">
         SELECT EXISTS(SELECT 1
                       FROM master_permission
                       WHERE master_permission_id = #{id}
                         AND is_deleted = 0)
     </select>
 
-    <select id="countAll" >
+    <select id="countAll">
         SELECT COUNT(master_permission_id)
         FROM master_permission
         WHERE is_deleted = 0
