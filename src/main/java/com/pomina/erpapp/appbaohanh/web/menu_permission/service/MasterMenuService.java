@@ -4,6 +4,7 @@ import com.pomina.erpapp.appbaohanh.common.model.PageRequest;
 import com.pomina.erpapp.appbaohanh.common.model.PageResponse;
 import com.pomina.erpapp.appbaohanh.web.menu_permission.dto.request.MasterMenuRequestDto;
 import com.pomina.erpapp.appbaohanh.web.menu_permission.dto.response.MasterMenuResponseDto;
+import com.pomina.erpapp.appbaohanh.web.menu_permission.dto.response.MenuStructured;
 
 import java.util.List;
 
@@ -14,7 +15,6 @@ public interface MasterMenuService {
     int update(List<MasterMenuRequestDto> requestDto);
     int delete(List<Integer> id);
     PageResponse<MasterMenuResponseDto> search(PageRequest pageRequest);
-
-
+    List<MenuStructured> getMenuPermissionByUserId(Integer userId);
 
 }

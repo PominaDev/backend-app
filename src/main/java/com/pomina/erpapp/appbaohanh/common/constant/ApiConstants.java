@@ -111,4 +111,10 @@ public class ApiConstants {
 
         private ApiMasterPermission() {}
     }
+
+    public static final class ApiUserMenuPermission {
+        public static final String BASE = VERSION_V1 + "/menu-permission-by-userId";
+        public static final String GET_BY_USER_ID = "/{userId}";
+        private ApiUserMenuPermission() {}
+    }
 }

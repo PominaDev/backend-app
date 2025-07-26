@@ -1,17 +1,11 @@
-package com.pomina.erpapp.appbaohanh.web.menu_permission.entity;
+package com.pomina.erpapp.appbaohanh.web.menu_permission.dto.response;
 
-import com.pomina.erpapp.appbaohanh.common.model.BaseEntity;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
-
 
 @Getter
 @Setter
-@AllArgsConstructor
-@NoArgsConstructor
-public class MasterMenu extends BaseEntity {
+public class MenuResponseDto {
     private Integer masterMenuId;
     private String masterMenuName;
     private String path;
