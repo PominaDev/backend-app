@@ -1,0 +1,12 @@
+package com.pomina.erpapp.appbaohanh.web.user_managerment.dto.request;
+
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
+public class SysUserRoleWebRequest {
+    private Integer userId;
+    private String username;
+    private String phoneNumber;
+}

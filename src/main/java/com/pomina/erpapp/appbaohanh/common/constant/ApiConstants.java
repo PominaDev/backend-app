@@ -111,4 +111,16 @@ public class ApiConstants {
 
         private ApiMasterPermission() {}
     }
+
+    public static final class ApiUserRoleWeb {
+        public static final String BASE = VERSION_V1 + "/user-role-web";
+        public static final String CREATE = "/create";
+        public static final String UPDATE = "/update/{id}";
+        public static final String DELETE = "/delete/{id}";
+        public static final String GET_BY_ID = "/{id}";
+        public static final String SEARCH = "/search";
+        public static final String GET_ALL = "/all";
+
+        private ApiUserRoleWeb() {}
+    }
 }

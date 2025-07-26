@@ -17,13 +17,6 @@ public class MasterMenuResponseDto {
     private Boolean isParent;
     private Byte orderIndex;
     private Integer parentId;
-    private String status;
-    private String note;
-    private LocalDateTime createdAt;
-    private String createdBy;
-    private LocalDateTime updatedAt;
-    private String updatedBy;
-    private Boolean isDeleted;
     @JsonInclude(JsonInclude.Include.NON_NULL)
     private List<MasterMenuResponseDto> menuItems;
 }

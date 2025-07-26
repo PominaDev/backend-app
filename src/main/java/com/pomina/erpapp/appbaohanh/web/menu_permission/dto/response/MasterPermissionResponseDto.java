@@ -18,11 +18,4 @@ public class MasterPermissionResponseDto {
     private Boolean isRead;
     private Boolean isPrint;
     private Boolean isExport;
-    private String status;
-    private String note;
-    private LocalDateTime createdAt;
-    private String createdBy;
-    private LocalDateTime updatedAt;
-    private String updatedBy;
-    private Boolean isDeleted;
 }
