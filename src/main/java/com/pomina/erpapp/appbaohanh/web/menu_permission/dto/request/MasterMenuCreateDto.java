@@ -30,9 +30,7 @@ public class MasterMenuCreateDto {
 
     private Boolean isParent;
 
-    @PositiveOrZero(message = "orderIndex must be 0 or positive")
     private Byte orderIndex;
 
-    @Positive(message = "parentId must be a positive number")
     private Integer parentId;
 }
