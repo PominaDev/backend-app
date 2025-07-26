@@ -5,8 +5,13 @@ import com.pomina.erpapp.appbaohanh.common.model.PageResponse;
 import com.pomina.erpapp.appbaohanh.web.menu_permission.converter.MasterMenuConverter;
 import com.pomina.erpapp.appbaohanh.web.menu_permission.dto.request.MasterMenuRequestDto;
 import com.pomina.erpapp.appbaohanh.web.menu_permission.dto.response.MasterMenuResponseDto;
+import com.pomina.erpapp.appbaohanh.web.menu_permission.dto.response.MenuPermissionResponseDto;
+import com.pomina.erpapp.appbaohanh.web.menu_permission.dto.response.MenuStructured;
+import com.pomina.erpapp.appbaohanh.web.menu_permission.dto.response.PermissionResponseDto;
 import com.pomina.erpapp.appbaohanh.web.menu_permission.entity.MasterMenu;
+import com.pomina.erpapp.appbaohanh.web.menu_permission.entity.MenuPermission;
 import com.pomina.erpapp.appbaohanh.web.menu_permission.mapper.MasterMenuMapper;
+import com.pomina.erpapp.appbaohanh.web.menu_permission.mapper.MasterPermissionMapper;
 import com.pomina.erpapp.appbaohanh.web.menu_permission.service.MasterMenuService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -14,6 +19,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -24,6 +31,7 @@ public class MasterMenuServiceImpl implements MasterMenuService {
     private final MasterMenuMapper masterMenuMapper;
 
     private final MasterMenuConverter masterMenuConverter;
+    private final MasterPermissionMapper masterPermissionMapper;
 
     @Override
     public int create(MasterMenuRequestDto dto) {
@@ -77,6 +85,12 @@ public class MasterMenuServiceImpl implements MasterMenuService {
     public List<MasterMenuResponseDto> getAll() {
         List<MasterMenu> masterMenuList = masterMenuMapper.findAll();
         return loadMenuStructure(masterMenuList);
+    }
+
+    @Override
+    public List<MenuStructured> getMenuPermissionByUserId(Integer userId){
+        List<MenuPermission> listUserPermissions = masterPermissionMapper.findMenuPermissionByUserId(userId);
+        return this.convertMenuPermissionEntityToMenuStructured(listUserPermissions);
     }
 
     private List<MasterMenuResponseDto> loadMenuStructure(List<MasterMenu> menus) {
@@ -139,5 +153,61 @@ public class MasterMenuServiceImpl implements MasterMenuService {
         });
 
         return children;
+    }
+
+    private List<MenuStructured> convertMenuPermissionEntityToMenuStructured(List<MenuPermission> listMenuPermission) {
+        List<MenuStructured> finalMenu = new ArrayList<>();
+        // Convert MenuPermissionE to MenuPermissionRes
+        List<MenuPermissionResponseDto> listMenuPermissionResponseDtos = new ArrayList<>();
+        for (MenuPermission menuPermission : listMenuPermission) {
+            // Menu
+            MenuPermissionResponseDto menuPermissionResponseDto = new MenuPermissionResponseDto();
+            menuPermissionResponseDto.setMasterMenuId(menuPermission.getMasterMenu().getMasterMenuId());
+            menuPermissionResponseDto.setMasterMenuName(menuPermission.getMasterMenu().getMasterMenuName());
+            menuPermissionResponseDto.setPath(menuPermission.getMasterMenu().getPath());
+            menuPermissionResponseDto.setIcon(menuPermission.getMasterMenu().getIcon());
+            menuPermissionResponseDto.setIsParent(menuPermission.getMasterMenu().getIsParent());
+            menuPermissionResponseDto.setOrderIndex(menuPermission.getMasterMenu().getOrderIndex());
+            menuPermissionResponseDto.setParentId(menuPermission.getMasterMenu().getParentId());
+            // Permission
+            PermissionResponseDto permissionResponseDto = new PermissionResponseDto();
+            permissionResponseDto.setMasterPermissionId(menuPermission.getMasterPermissionId());
+            permissionResponseDto.setIsFull(menuPermission.getIsFull());
+            permissionResponseDto.setMasterMenuId(menuPermission.getMasterMenuId());
+            permissionResponseDto.setSysUserId(menuPermission.getSysUserId());
+            permissionResponseDto.setIsInsert(menuPermission.getIsInsert());
+            permissionResponseDto.setIsDelete(menuPermission.getIsDelete());
+            permissionResponseDto.setIsUpdate(menuPermission.getIsUpdate());
+            permissionResponseDto.setIsRead(menuPermission.getIsRead());
+            permissionResponseDto.setIsPrint(menuPermission.getIsPrint());
+            permissionResponseDto.setIsExport(menuPermission.getIsExport());
+            menuPermissionResponseDto.setPermission(permissionResponseDto);
+            listMenuPermissionResponseDtos.add(menuPermissionResponseDto);
+        };
+        // Structured Menu
+        List<MenuStructured> listMenuStructured = new ArrayList<>();
+        List<MenuPermissionResponseDto> menuPermissionResponseDtoParent = listMenuPermissionResponseDtos.stream()
+                .filter(e -> e.getIsParent() == true)
+                .collect(Collectors.toList());
+        List<MenuPermissionResponseDto> menuPermissionResponseDtoChild = listMenuPermissionResponseDtos.stream()
+                .filter(e -> e.getIsParent() == false)
+                .collect(Collectors.toList());
+        for (MenuPermissionResponseDto parent : menuPermissionResponseDtoParent) {
+            MenuStructured item = new MenuStructured();
+            item.setMasterMenuId(parent.getMasterMenuId());
+            item.setMasterMenuName(parent.getMasterMenuName());
+            item.setPath(parent.getPath());
+            item.setIcon(parent.getIcon());
+            item.setIsParent(parent.getIsParent());
+            item.setOrderIndex(parent.getOrderIndex());
+            item.setParentId(parent.getParentId());
+            item.setPermission(parent.getPermission());
+            List<MenuPermissionResponseDto> listItem = menuPermissionResponseDtoChild.stream()
+                    .filter(e -> Objects.equals(e.getParentId(), parent.getMasterMenuId()))
+                    .collect(Collectors.toList());
+            item.setItemMenu(listItem);
+            finalMenu.add(item);
+        }
+        return finalMenu;
     }
 }
