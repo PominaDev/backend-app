@@ -130,115 +130,96 @@
     </insert>
 
     <update id="update">
-        <choose>
-            <!-- Trường hợp update nhiều (list) -->
-            <when test="list != null and list.size() > 0">
-                UPDATE master_menu
-                <set>
-                    master_menu_name = CASE
-                    <foreach collection="list" item="menu">
-                        <if test="menu.masterMenuName != null and menu.masterMenuName != ''">
-                            WHEN #{menu.masterMenuId} THEN #{menu.masterMenuName}
-                        </if>
-                    </foreach>
-                    ELSE master_menu_name END,
+        UPDATE master_menu
+        <set>
+            master_menu_name = CASE
+            <foreach collection="list" item="menu">
+                <if test="menu.masterMenuName != null and menu.masterMenuName != ''">
+                    WHEN master_menu_id = #{menu.masterMenuId} THEN #{menu.masterMenuName}
+                </if>
+            </foreach>
+            WHEN 1=0 THEN NULL
+            ELSE master_menu_name END,
 
-                    path = CASE
-                    <foreach collection="list" item="menu">
-                        <if test="menu.path != null and menu.path != ''">
-                            WHEN #{menu.masterMenuId} THEN #{menu.path}
-                        </if>
-                    </foreach>
-                    ELSE path END,
+            path = CASE
+            <foreach collection="list" item="menu">
+                <if test="menu.path != null and menu.path != ''">
+                    WHEN master_menu_id = #{menu.masterMenuId} THEN #{menu.path}
+                </if>
+            </foreach>
+            WHEN 1=0 THEN NULL
+            ELSE path END,
 
-                    icon = CASE
-                    <foreach collection="list" item="menu">
-                        <if test="menu.icon != null and menu.icon != ''">
-                            WHEN #{menu.masterMenuId} THEN #{menu.icon}
-                        </if>
-                    </foreach>
-                    ELSE icon END,
+            icon = CASE
+            <foreach collection="list" item="menu">
+                <if test="menu.icon != null and menu.icon != ''">
+                    WHEN master_menu_id = #{menu.masterMenuId} THEN #{menu.icon}
+                </if>
+            </foreach>
+            WHEN 1=0 THEN NULL
+            ELSE icon END,
 
-                    is_parent = CASE
-                    <foreach collection="list" item="menu">
-                        <if test="menu.isParent != null">
-                            WHEN #{menu.masterMenuId} THEN #{menu.isParent}
-                        </if>
-                    </foreach>
-                    ELSE is_parent END,
+            is_parent = CASE
+            <foreach collection="list" item="menu">
+                <if test="menu.isParent != null">
+                    WHEN master_menu_id = #{menu.masterMenuId} THEN #{menu.isParent}
+                </if>
+            </foreach>
+            WHEN 1=0 THEN NULL
+            ELSE is_parent END,
 
-                    order_index = CASE
-                    <foreach collection="list" item="menu">
-                        <if test="menu.orderIndex != null">
-                            WHEN #{menu.masterMenuId} THEN #{menu.orderIndex}
-                        </if>
-                    </foreach>
-                    ELSE order_index END,
+            order_index = CASE
+            <foreach collection="list" item="menu">
+                <if test="menu.orderIndex != null">
+                    WHEN master_menu_id = #{menu.masterMenuId} THEN #{menu.orderIndex}
+                </if>
+            </foreach>
+            WHEN 1=0 THEN NULL
+            ELSE order_index END,
 
-                    parent_id = CASE
-                    <foreach collection="list" item="menu">
-                        <if test="menu.parentId != null">
-                            WHEN #{menu.masterMenuId} THEN #{menu.parentId}
-                        </if>
-                    </foreach>
-                    ELSE parent_id END,
+            parent_id = CASE
+            <foreach collection="list" item="menu">
+                <if test="menu.parentId != null">
+                    WHEN master_menu_id = #{menu.masterMenuId} THEN #{menu.parentId}
+                </if>
+            </foreach>
+            WHEN 1=0 THEN NULL
+            ELSE parent_id END,
 
-                    status = CASE
-                    <foreach collection="list" item="menu">
-                        <if test="menu.status != null">
-                            WHEN #{menu.masterMenuId} THEN #{menu.status}
-                        </if>
-                    </foreach>
-                    ELSE status END,
+            status = CASE
+            <foreach collection="list" item="menu">
+                <if test="menu.status != null">
+                    WHEN master_menu_id = #{menu.masterMenuId} THEN #{menu.status}
+                </if>
+            </foreach>
+            WHEN 1=0 THEN NULL
+            ELSE status END,
 
-                    noted = CASE
-                    <foreach collection="list" item="menu">
-                        <if test="menu.noted != null and menu.noted != ''">
-                            WHEN #{menu.masterMenuId} THEN #{menu.noted}
-                        </if>
-                    </foreach>
-                    ELSE noted END,
+            noted = CASE
+            <foreach collection="list" item="menu">
+                <if test="menu.noted != null and menu.noted != ''">
+                    WHEN master_menu_id = #{menu.masterMenuId} THEN #{menu.noted}
+                </if>
+            </foreach>
+            WHEN 1=0 THEN NULL
+            ELSE noted END,
 
-                    updated_by = CASE
-                    <foreach collection="list" item="menu">
-                        <if test="menu.updatedBy != null">
-                            WHEN #{menu.masterMenuId} THEN #{menu.updatedBy}
-                        </if>
-                    </foreach>
-                    ELSE updated_by END,
+            updated_by = CASE
+            <foreach collection="list" item="menu">
+                <if test="menu.updatedBy != null">
+                    WHEN master_menu_id = #{menu.masterMenuId} THEN #{menu.updatedBy}
+                </if>
+            </foreach>
+            WHEN 1=0 THEN NULL
+            ELSE updated_by END,
 
-                    updated_at = NOW()
-                </set>
-                WHERE master_menu_id IN
-                <foreach collection="list" item="menu" open="(" separator="," close=")">
-                    #{menu.masterMenuId}
-                </foreach>
-                AND is_deleted = 0
-            </when>
-
-            <!-- Trường hợp update 1 object -->
-            <otherwise>
-                UPDATE master_menu
-                <trim prefix="SET" suffixOverrides=",">
-                    <if test="masterMenuName != null and masterMenuName != ''">master_menu_name = #{masterMenuName},
-                    </if>
-                    <if test="path != null and path != ''">path = #{path},</if>
-                    <if test="icon != null and icon != ''">icon = #{icon},</if>
-                    <if test="isParent != null">is_parent = #{isParent},</if>
-                    <if test="orderIndex != null">order_index = #{orderIndex},</if>
-                    <if test="parentId != null">parent_id = #{parentId},</if>
-                    <if test="status != null">status = #{status},</if>
-                    <if test="noted != null and noted != ''">noted = #{noted},</if>
-                    updated_by = #{updatedBy},
-                    <choose>
-                        <when test="updatedAt != null">updated_at = #{updatedAt},</when>
-                        <otherwise>updated_at = NOW(),</otherwise>
-                    </choose>
-                </trim>
-                WHERE master_menu_id = #{masterMenuId}
-                AND is_deleted = 0
-            </otherwise>
-        </choose>
+            updated_at = NOW()
+        </set>
+        WHERE master_menu_id IN
+        <foreach collection="list" item="menu" open="(" separator="," close=")">
+            #{menu.masterMenuId}
+        </foreach>
+        AND is_deleted = 0
     </update>
 
     <update id="softDelete">

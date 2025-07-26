@@ -10,10 +10,10 @@ import java.util.List;
 
 public interface MasterMenuService {
     int create(List<MasterMenuRequestDto> requestDto);
-    MasterMenuResponseDto getById(Integer id);
-    List<MasterMenuResponseDto> getAll();
     int update(List<MasterMenuRequestDto> requestDto);
     int delete(List<Integer> id);
+    MasterMenuResponseDto getById(Integer id);
+    List<MasterMenuResponseDto> getAll();
     PageResponse<MasterMenuResponseDto> search(PageRequest pageRequest);
     List<MenuStructured> getMenuPermissionByUserId(Integer userId);
 

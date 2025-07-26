@@ -16,6 +16,7 @@ import com.pomina.erpapp.appbaohanh.web.menu_permission.service.MasterMenuServic
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -28,7 +29,23 @@ public class MasterMenuServiceImpl implements MasterMenuService {
     // Dependency injection
     private final MasterMenuMapper masterMenuMapper;
     private final MasterMenuConverter masterMenuConverter;
-    private final MasterPermissionMapper masterPermissionMapper;
+
+    @Override
+    public int create(List<MasterMenuRequestDto> requestDto) {
+        List<MasterMenu> masterMenuList = masterMenuConverter.toEntityList(requestDto);
+        return masterMenuMapper.insert(masterMenuList);
+    }
+
+    @Override
+    public int update(List<MasterMenuRequestDto> requestDto) {
+        List<MasterMenu> masterMenuList = masterMenuConverter.toEntityList(requestDto);
+        return masterMenuMapper.update(masterMenuList);
+    }
+
+    @Override
+    public int delete(List<Integer> id) {
+        return masterMenuMapper.softDelete(id);
+    }
 
     @Override
     public MasterMenuResponseDto getById(Integer id) {
@@ -57,6 +74,11 @@ public class MasterMenuServiceImpl implements MasterMenuService {
         return PageResponse.createPaged(masterMenuResponse, pageRequest.getPage(), pageRequest.getSize(),
                 totalElements);
 
+    }
+
+    @Override
+    public List<MenuStructured> getMenuPermissionByUserId(Integer userId) {
+        return List.of();
     }
 
     @Override
@@ -157,7 +179,8 @@ public class MasterMenuServiceImpl implements MasterMenuService {
             permissionResponseDto.setIsExport(menuPermission.getIsExport());
             menuPermissionResponseDto.setPermission(permissionResponseDto);
             listMenuPermissionResponseDtos.add(menuPermissionResponseDto);
-        };
+        }
+        ;
         // Structured Menu
         List<MenuStructured> listMenuStructured = new ArrayList<>();
         List<MenuPermissionResponseDto> menuPermissionResponseDtoParent = listMenuPermissionResponseDtos.stream()
