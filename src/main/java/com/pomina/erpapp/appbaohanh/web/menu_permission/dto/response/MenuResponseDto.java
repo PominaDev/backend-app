@@ -13,4 +13,6 @@ public class MenuResponseDto {
     private Boolean isParent;
     private Byte orderIndex;
     private Integer parentId;
+    private Boolean isDeleted;
+    private String noted;
 }

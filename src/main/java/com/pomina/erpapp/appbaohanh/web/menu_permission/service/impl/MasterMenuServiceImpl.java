@@ -169,6 +169,8 @@ public class MasterMenuServiceImpl implements MasterMenuService {
             menuPermissionResponseDto.setIsParent(menuPermission.getMasterMenu().getIsParent());
             menuPermissionResponseDto.setOrderIndex(menuPermission.getMasterMenu().getOrderIndex());
             menuPermissionResponseDto.setParentId(menuPermission.getMasterMenu().getParentId());
+            menuPermissionResponseDto.setIsDeleted(menuPermission.getMasterMenu().getIsDeleted());
+            menuPermissionResponseDto.setNoted(menuPermission.getMasterMenu().getNoted());
             // Permission
             PermissionResponseDto permissionResponseDto = new PermissionResponseDto();
             permissionResponseDto.setMasterPermissionId(menuPermission.getMasterPermissionId());
@@ -201,6 +203,8 @@ public class MasterMenuServiceImpl implements MasterMenuService {
             item.setIsParent(parent.getIsParent());
             item.setOrderIndex(parent.getOrderIndex());
             item.setParentId(parent.getParentId());
+            item.setIsDeleted(parent.getIsDeleted());
+            item.setNoted(parent.getNoted());
             item.setPermission(parent.getPermission());
             List<MenuPermissionResponseDto> listItem = menuPermissionResponseDtoChild.stream()
                     .filter(e -> Objects.equals(e.getParentId(), parent.getMasterMenuId()))
