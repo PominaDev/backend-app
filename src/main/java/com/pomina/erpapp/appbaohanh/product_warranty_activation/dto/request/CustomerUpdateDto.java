@@ -22,5 +22,5 @@ public class CustomerUpdateDto {
 
     private String status;
 
-    private String note;
+    private String noted;
 }

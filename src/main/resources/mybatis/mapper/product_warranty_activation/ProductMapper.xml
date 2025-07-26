@@ -12,7 +12,7 @@
                name,
                coil_type,
                status,
-               note,
+               noted,
                created_at,
                created_by,
                updated_at,
@@ -32,7 +32,7 @@
                name,
                coil_type,
                status,
-               note,
+               noted,
                created_at,
                created_by,
                updated_at,
@@ -52,7 +52,7 @@
                name,
                coil_type,
                status,
-               note,
+               noted,
                created_at,
                created_by,
                updated_at,
@@ -75,7 +75,7 @@
                             name,
                             coil_type,
                             status,
-                            note,
+                            noted,
                             created_by,
                             updated_by)
         VALUES (#{coilCode},
@@ -85,7 +85,7 @@
                 #{name},
                 #{coilType},
                 #{status},
-                #{note},
+                #{noted},
                 #{createdBy},
                 #{updatedBy})
     </insert>
@@ -100,7 +100,7 @@
             name        = #{name},
             coil_type   = #{coilType},
             status      = #{status},
-            note        = #{note},
+            noted        = #{noted},
             updated_by  = #{updatedBy}
         WHERE id = #{id} AND is_deleted = 0
     </update>

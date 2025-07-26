@@ -51,52 +51,52 @@ public class AuditUtil {
         entity.setIsDeleted(getDefaultIsDeleted());
     }
 
-    public static void delete(BaseEntity entity, String note) {
+    public static void delete(BaseEntity entity, String noted) {
         entity.setIsDeleted(true);
         entity.setStatus(DELETED_STATUS);
         entity.setUpdatedAt(now());
         entity.setUpdatedBy(getCurrentUser());
-        if (note != null) {
-            entity.setNote(note);
+        if (noted != null) {
+            entity.setNoted(noted);
         }
     }
 
-    public static void deactivate(BaseEntity entity, String note) {
+    public static void deactivate(BaseEntity entity, String noted) {
         entity.setStatus(INACTIVE_STATUS);
         entity.setUpdatedAt(now());
         entity.setUpdatedBy(getCurrentUser());
-        if (note != null) {
-            entity.setNote(note);
+        if (noted != null) {
+            entity.setNoted(noted);
         }
     }
 
-    public static void reactivate(BaseEntity entity, String note) {
+    public static void reactivate(BaseEntity entity, String noted) {
         entity.setStatus(DEFAULT_STATUS);
         entity.setIsDeleted(DEFAULT_IS_DELETED);
         entity.setUpdatedAt(now());
         entity.setUpdatedBy(getCurrentUser());
-        if (note != null) {
-            entity.setNote(note);
+        if (noted != null) {
+            entity.setNoted(noted);
         }
     }
 
-    public static void restrict(BaseEntity entity, String note) {
+    public static void restrict(BaseEntity entity, String noted) {
         entity.setStatus(RESTRICTED_STATUS);
         entity.setUpdatedAt(now());
         entity.setUpdatedBy(getCurrentUser());
-        if (note != null) {
-            entity.setNote(note);
+        if (noted != null) {
+            entity.setNoted(noted);
         }
     }
 
-    public static void custom(BaseEntity entity, String status, String note) {
+    public static void custom(BaseEntity entity, String status, String noted) {
         if (status != null) {
             entity.setStatus(status);
         }
         entity.setUpdatedAt(now());
         entity.setUpdatedBy(getCurrentUser());
-        if (note != null) {
-            entity.setNote(note);
+        if (noted != null) {
+            entity.setNoted(noted);
         }
     }
 }

@@ -11,7 +11,7 @@ public class DistributorResponseDto {
     private Integer id;
     private String name;
     private String status;
-    private String note;
+    private String noted;
     private LocalDateTime createdAt;
     private String createdBy;
     private LocalDateTime updatedAt;

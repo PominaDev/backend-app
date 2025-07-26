@@ -17,7 +17,7 @@
         <result column="is_print" property="isPrint"/>
         <result column="is_export" property="isExport"/>
         <result column="status" property="status"/>
-        <result column="noted" property="note"/>
+        <result column="noted" property="noted"/>
         <result column="created_at" property="createdAt"/>
         <result column="created_by" property="createdBy"/>
         <result column="updated_at" property="updatedAt"/>
@@ -121,7 +121,7 @@
                 #{isPrint},
                 #{isExport},
                 #{status},
-                #{note},
+                #{noted},
                 #{createdBy},
                 #{updatedBy})
     </insert>
@@ -160,8 +160,8 @@
             <if test="status != null and status != ''">
                 , status = #{status}
             </if>
-            <if test="note != null and note != ''">
-                , noted = #{note}
+            <if test="noted != null and noted != ''">
+                , noted = #{noted}
             </if>
             <if test="updatedBy != null and updatedBy != ''">
                 , updated_by = #{updatedBy}

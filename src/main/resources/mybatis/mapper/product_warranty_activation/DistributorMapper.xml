@@ -7,7 +7,7 @@
         <id column="id" property="id"/>
         <result column="name" property="name"/>
         <result column="status" property="status"/>
-        <result column="note" property="note"/>
+        <result column="noted" property="noted"/>
         <result column="create_at" property="createdAt"/>
         <result column="created_by" property="createdBy"/>
         <result column="update_at" property="updatedAt"/>
@@ -19,7 +19,7 @@
         SELECT id,
                name,
                status,
-               note,
+               noted,
                created_at,
                created_by,
                updated_at,
@@ -34,7 +34,7 @@
         SELECT id,
                name,
                status,
-               note,
+               noted,
                created_at,
                created_by,
                updated_at,
@@ -48,7 +48,7 @@
         SELECT id,
         name,
         status,
-        note,
+        noted,
         created_at,
         created_by,
         updated_at,
@@ -63,15 +63,15 @@
     </select>
 
     <insert id="insert">
-        INSERT INTO distributor(name, status, note, created_by, updated_by)
-        VALUES (#{name}, #{status}, #{note}, #{createdBy}, #{updatedBy})
+        INSERT INTO distributor(name, status, noted, created_by, updated_by)
+        VALUES (#{name}, #{status}, #{noted}, #{createdBy}, #{updatedBy})
     </insert>
 
     <update id="update">
         UPDATE distributor
         SET name       = #{name},
             status     = #{status},
-            note       = #{note},
+            noted       = #{noted},
             updated_by = #{updatedBy}
         WHERE id = #{id}
           AND is_deleted = 0

@@ -16,7 +16,7 @@ public class ProductResponseDto {
     private String name;
     private String coilType;
     private String status;
-    private String note;
+    private String noted;
     private LocalDateTime createdAt;
     private String createdBy;
     private LocalDateTime updatedAt;

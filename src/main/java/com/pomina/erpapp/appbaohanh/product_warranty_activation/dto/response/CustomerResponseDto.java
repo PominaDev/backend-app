@@ -14,7 +14,7 @@ public class CustomerResponseDto {
     private String phoneNumber;
     private String address;
     private String status;
-    private String note;
+    private String noted;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 }

@@ -23,5 +23,5 @@ public class CustomerCreateDto {
 
     private String status;
 
-    private String note;
+    private String noted;
 }
