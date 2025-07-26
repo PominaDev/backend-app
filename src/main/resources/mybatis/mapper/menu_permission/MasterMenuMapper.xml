@@ -1,28 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.pomina.erpapp.appbaohanh.web.menu_permission.mapper.MasterMenuMapper">
 
-    <resultMap id="masterMenuResultMap"
-               type="com.pomina.erpapp.appbaohanh.web.menu_permission.entity.MasterMenu">
+    <resultMap id="masterMenuResultMap" type="com.pomina.erpapp.appbaohanh.web.menu_permission.entity.MasterMenu">
         <id column="master_menu_id" property="masterMenuId"/>
         <result column="master_menu_name" property="masterMenuName"/>
         <result column="path" property="path"/>
-        <result column="icon" property="icon" />
-        <result column="is_parent" property="isParent" javaType="Boolean"/>
-        <result column="order_index" property="orderIndex" />
-        <result column="parent_id" property="parentId" />
-        <result column="status" property="status" />
-        <result column="noted" property="noted" />
+        <result column="icon" property="icon"/>
+        <result column="is_parent" property="isParent"/>
+        <result column="order_index" property="orderIndex"/>
+        <result column="parent_id" property="parentId"/>
+        <result column="status" property="status"/>
+        <result column="noted" property="noted"/>
         <result column="created_at" property="createdAt"/>
         <result column="created_by" property="createdBy"/>
         <result column="updated_at" property="updatedAt"/>
         <result column="updated_by" property="updatedBy"/>
-        <result column="is_deleted" property="isDeleted" javaType="Boolean"/>
+        <result column="is_deleted" property="isDeleted"/>
     </resultMap>
 
-    <select id="findById" resultMap="masterMenuResultMap" >
+    <select id="findById" resultMap="masterMenuResultMap">
         SELECT master_menu_id,
                master_menu_name,
                path,
@@ -38,13 +37,12 @@
                updated_by,
                is_deleted
         FROM master_menu
-        WHERE master_menu_id = #{id} AND is_deleted = 0
+        WHERE master_menu_id = #{id}
+          AND is_deleted = 0
     </select>
 
     <select id="findAll" resultMap="masterMenuResultMap">
-        SELECT
-               -- MasterMenuMapper_findAll
-               master_menu_id,
+        SELECT master_menu_id,
                master_menu_name,
                path,
                icon,
@@ -64,112 +62,212 @@
 
     <select id="findAllPaged" resultMap="masterMenuResultMap">
         SELECT master_menu_id,
-               master_menu_name,
-               path,
-               icon,
-               is_parent,
-               order_index,
-               parent_id,
-               status,
-               noted,
-               created_at,
-               created_by,
-               updated_at,
-               updated_by,
-               is_deleted
+        master_menu_name,
+        path,
+        icon,
+        is_parent,
+        order_index,
+        parent_id,
+        status,
+        noted,
+        created_at,
+        created_by,
+        updated_at,
+        updated_by,
+        is_deleted
         FROM master_menu
         WHERE is_deleted = 0
         <if test="paging != null and paging.orderByClause != null">
-            ORDER BY ${paging.orderByClause}
+            ORDER BY
+            <choose>
+                <when test="paging.orderByClause == 'master_menu_name'">master_menu_name</when>
+                <when test="paging.orderByClause == 'created_at'">created_at</when>
+                <otherwise>master_menu_id</otherwise>
+            </choose>
         </if>
         LIMIT #{limit} OFFSET #{offset}
     </select>
 
-    <insert id="insert" >
+    <insert id="insert">
         INSERT INTO master_menu (
-            master_menu_name,
-            path,
-            icon,
-            is_parent,
-            order_index,
-            parent_id,
-            status,
-            noted,
-            created_by,
-            updated_by
-        ) VALUES (
-            #{masterMenuName},
-            #{path},
-            #{icon},
-            #{isParent},
-            #{orderIndex},
-            #{parentId},
-            #{status},
-            #{noted},
-            #{createdBy},
-            #{updatedBy}
+        master_menu_name,
+        path,
+        icon,
+        is_parent,
+        order_index,
+        parent_id,
+        status,
+        noted,
+        created_by,
+        updated_by,
+        created_at,
+        updated_at
         )
+        VALUES
+        <foreach collection="list" item="item" separator=",">
+            (
+            #{item.masterMenuName},
+            #{item.path},
+            #{item.icon},
+            #{item.isParent},
+            #{item.orderIndex},
+            #{item.parentId},
+            #{item.status},
+            #{item.noted},
+            #{item.createdBy},
+            #{item.updatedBy},
+            <choose>
+                <when test="item.createdAt != null">#{item.createdAt}</when>
+                <otherwise>NOW()</otherwise>
+            </choose>
+            ,
+            <choose>
+                <when test="item.updatedAt != null">#{item.updatedAt}</when>
+                <otherwise>NOW()</otherwise>
+            </choose>
+            )
+        </foreach>
     </insert>
 
     <update id="update">
-        UPDATE master_menu
-        <set>
-            <if test="masterMenuName != null and masterMenuName != ''">
-                , master_menu_name = #{masterMenuName}
-            </if>
-            <if test="path != null and path != ''">
-                , path = #{path}
-            </if>
-            <if test="icon != null and icon != ''">
-                , icon = #{icon}
-            </if>
-            <if test="isParent != null and isParent != ''">
-                , is_parent = #{isParent}
-            </if>
-            <if test="orderIndex != null and orderIndex != ''">
-                , order_index = #{orderIndex}
-            </if>
-            <if test="parentId != null and parentId != ''">
-                , parent_id = #{parentId}
-            </if>
-            <if test="status != null and status != ''">
-                , status = #{status}
-            </if>
-            <if test="noted != null and noted != ''">
-                , noted = #{noted}
-            </if>
-            , updated_by = #{updatedBy}
-            <if test="updatedAt != null and updatedAt != ''">
-                , updated_at = #{updatedAt}
-            </if>
+        <choose>
+            <!-- Trường hợp update nhiều (list) -->
+            <when test="list != null and list.size() > 0">
+                UPDATE master_menu
+                <set>
+                    master_menu_name = CASE
+                    <foreach collection="list" item="menu">
+                        <if test="menu.masterMenuName != null and menu.masterMenuName != ''">
+                            WHEN #{menu.masterMenuId} THEN #{menu.masterMenuName}
+                        </if>
+                    </foreach>
+                    ELSE master_menu_name END,
 
-        </set>
-        WHERE master_menu_id = #{masterMenuId} AND is_deleted = 0
+                    path = CASE
+                    <foreach collection="list" item="menu">
+                        <if test="menu.path != null and menu.path != ''">
+                            WHEN #{menu.masterMenuId} THEN #{menu.path}
+                        </if>
+                    </foreach>
+                    ELSE path END,
+
+                    icon = CASE
+                    <foreach collection="list" item="menu">
+                        <if test="menu.icon != null and menu.icon != ''">
+                            WHEN #{menu.masterMenuId} THEN #{menu.icon}
+                        </if>
+                    </foreach>
+                    ELSE icon END,
+
+                    is_parent = CASE
+                    <foreach collection="list" item="menu">
+                        <if test="menu.isParent != null">
+                            WHEN #{menu.masterMenuId} THEN #{menu.isParent}
+                        </if>
+                    </foreach>
+                    ELSE is_parent END,
+
+                    order_index = CASE
+                    <foreach collection="list" item="menu">
+                        <if test="menu.orderIndex != null">
+                            WHEN #{menu.masterMenuId} THEN #{menu.orderIndex}
+                        </if>
+                    </foreach>
+                    ELSE order_index END,
+
+                    parent_id = CASE
+                    <foreach collection="list" item="menu">
+                        <if test="menu.parentId != null">
+                            WHEN #{menu.masterMenuId} THEN #{menu.parentId}
+                        </if>
+                    </foreach>
+                    ELSE parent_id END,
+
+                    status = CASE
+                    <foreach collection="list" item="menu">
+                        <if test="menu.status != null">
+                            WHEN #{menu.masterMenuId} THEN #{menu.status}
+                        </if>
+                    </foreach>
+                    ELSE status END,
+
+                    noted = CASE
+                    <foreach collection="list" item="menu">
+                        <if test="menu.noted != null and menu.noted != ''">
+                            WHEN #{menu.masterMenuId} THEN #{menu.noted}
+                        </if>
+                    </foreach>
+                    ELSE noted END,
+
+                    updated_by = CASE
+                    <foreach collection="list" item="menu">
+                        <if test="menu.updatedBy != null">
+                            WHEN #{menu.masterMenuId} THEN #{menu.updatedBy}
+                        </if>
+                    </foreach>
+                    ELSE updated_by END,
+
+                    updated_at = NOW()
+                </set>
+                WHERE master_menu_id IN
+                <foreach collection="list" item="menu" open="(" separator="," close=")">
+                    #{menu.masterMenuId}
+                </foreach>
+                AND is_deleted = 0
+            </when>
+
+            <!-- Trường hợp update 1 object -->
+            <otherwise>
+                UPDATE master_menu
+                <trim prefix="SET" suffixOverrides=",">
+                    <if test="masterMenuName != null and masterMenuName != ''">master_menu_name = #{masterMenuName},
+                    </if>
+                    <if test="path != null and path != ''">path = #{path},</if>
+                    <if test="icon != null and icon != ''">icon = #{icon},</if>
+                    <if test="isParent != null">is_parent = #{isParent},</if>
+                    <if test="orderIndex != null">order_index = #{orderIndex},</if>
+                    <if test="parentId != null">parent_id = #{parentId},</if>
+                    <if test="status != null">status = #{status},</if>
+                    <if test="noted != null and noted != ''">noted = #{noted},</if>
+                    updated_by = #{updatedBy},
+                    <choose>
+                        <when test="updatedAt != null">updated_at = #{updatedAt},</when>
+                        <otherwise>updated_at = NOW(),</otherwise>
+                    </choose>
+                </trim>
+                WHERE master_menu_id = #{masterMenuId}
+                AND is_deleted = 0
+            </otherwise>
+        </choose>
+    </update>
+
+    <update id="softDelete">
+        <if test="list != null and list.size() > 0">
+            UPDATE master_menu
+            SET is_deleted = 1
+            WHERE master_menu_id IN
+            <foreach collection="list" item="id" open="(" separator="," close=")">
+                #{id}
+            </foreach>
+        </if>
     </update>
 
     <delete id="deleteById">
-        DELETE FROM master_menu
+        DELETE
+        FROM master_menu
         WHERE master_menu_id = #{id}
     </delete>
 
-    <update id="softDeleteById">
-        UPDATE master_menu
-        SET is_deleted = 1
-        WHERE master_menu_id = #{id}
-    </update>
-
-    <select id="existsById">
-        SELECT EXISTS(
-            SELECT 1
-            FROM master_menu
-            WHERE master_menu_id = #{id} AND is_deleted = 0
-        )
+    <select id="existsById" resultType="boolean">
+        SELECT EXISTS(SELECT 1
+                      FROM master_menu
+                      WHERE master_menu_id = #{id}
+                        AND is_deleted = 0)
     </select>
 
-    <select id="countAll">
+    <select id="countAll" resultType="int">
         SELECT COUNT(master_menu_id)
         FROM master_menu
         WHERE is_deleted = 0
     </select>
-
 </mapper>

@@ -11,7 +11,6 @@ import com.pomina.erpapp.appbaohanh.web.menu_permission.service.MasterMenuServic
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,25 +18,9 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class MasterMenuServiceImpl implements MasterMenuService {
-
     // Dependency injection
     private final MasterMenuMapper masterMenuMapper;
-
     private final MasterMenuConverter masterMenuConverter;
-
-    @Override
-    public int create(MasterMenuRequestDto dto) {
-        MasterMenu masterMenu = masterMenuConverter.toEntity(dto);
-        return masterMenuMapper.insert(masterMenu);
-    }
-
-    @Override
-    public int update(Integer id, MasterMenuRequestDto dto) {
-        MasterMenu masterMenuInfo = masterMenuMapper.findById(id);
-        MasterMenu masterMenuUpdate = masterMenuConverter.toEntity(dto);
-        masterMenuUpdate.setMasterMenuId(masterMenuInfo.getMasterMenuId());
-        return masterMenuMapper.update(masterMenuUpdate);
-    }
 
     @Override
     public MasterMenuResponseDto getById(Integer id) {
@@ -69,14 +52,35 @@ public class MasterMenuServiceImpl implements MasterMenuService {
     }
 
     @Override
-    public int delete(Integer id) {
-        return masterMenuMapper.softDeleteById(id);
-    }
-
-    @Override
     public List<MasterMenuResponseDto> getAll() {
         List<MasterMenu> masterMenuList = masterMenuMapper.findAll();
         return loadMenuStructure(masterMenuList);
+    }
+
+    @Override
+    public int delete(List<Integer> list) {
+        if (list == null || list.isEmpty()) {
+            return 0;
+        }
+        return masterMenuMapper.softDelete(list);
+    }
+
+    @Override
+    public int create(List<MasterMenuRequestDto> requestDto) {
+        List<MasterMenu> masterMenuList = masterMenuConverter.toEntityList(requestDto);
+        if (masterMenuList == null || masterMenuList.isEmpty()) {
+            return 0;
+        }
+        return masterMenuMapper.insert(masterMenuList);
+    }
+
+    @Override
+    public int update(List<MasterMenuRequestDto> requestDto) {
+        List<MasterMenu> masterMenuList = masterMenuConverter.toEntityList(requestDto);
+        if (masterMenuList == null || masterMenuList.isEmpty()) {
+            return 0;
+        }
+        return masterMenuMapper.update(masterMenuList);
     }
 
     private List<MasterMenuResponseDto> loadMenuStructure(List<MasterMenu> menus) {

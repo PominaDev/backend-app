@@ -8,11 +8,15 @@ import com.pomina.erpapp.appbaohanh.web.menu_permission.dto.response.MasterMenuR
 import com.pomina.erpapp.appbaohanh.web.menu_permission.entity.MasterMenu;
 import org.mapstruct.Mapper;
 
+import java.util.List;
+
 @Mapper(componentModel = "spring")
 public interface MasterMenuConverter extends BaseConverter<MasterMenuRequestDto, MasterMenuResponseDto, MasterMenu> {
-    // Mapping from CreateDto to RequestDto
-    MasterMenuRequestDto toMasterMenuRequestDto(MasterMenuCreateDto createDto);
 
-    // Mapping from UpdateDto to RequestDto
-    MasterMenuRequestDto toMasterMenuRequestDto(MasterMenuUpdateDto updateDto);
+    // Mapping from ListCreateDto to ListRequestDto
+    List<MasterMenuRequestDto> toRequestDtoListFromCreate(List<MasterMenuCreateDto> createDtoList);
+
+    // Mapping from ListUpdateDto to ListRequestDto
+    List<MasterMenuRequestDto> toRequestDtoListFromUpdate(List<MasterMenuUpdateDto> updateDtoList);
+
 }

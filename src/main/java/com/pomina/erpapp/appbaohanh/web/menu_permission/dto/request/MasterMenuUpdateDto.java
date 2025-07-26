@@ -11,6 +11,7 @@ import lombok.Setter;
 @NoArgsConstructor
 public class MasterMenuUpdateDto {
 
+    private Integer masterMenuId;
     private String masterMenuName;
     private String path;
     private String icon;

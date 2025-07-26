@@ -1,7 +1,6 @@
 package com.pomina.erpapp.appbaohanh.web.menu_permission.controller;
 
 import com.pomina.erpapp.appbaohanh.common.constant.ApiConstants;
-import com.pomina.erpapp.appbaohanh.common.controller.BaseController;
 import com.pomina.erpapp.appbaohanh.common.handler.ApiResponse;
 import com.pomina.erpapp.appbaohanh.common.handler.ResponseHandler;
 import com.pomina.erpapp.appbaohanh.common.model.PageRequest;
@@ -29,47 +28,51 @@ import java.util.List;
 @RestController
 @RequestMapping(ApiConstants.ApiMasterMenu.BASE)
 @RequiredArgsConstructor
-public class MasterMenuController extends BaseController<MasterMenuCreateDto, MasterMenuUpdateDto, MasterMenuResponseDto, Integer> {
+public class MasterMenuController {
 
     // Dependency injection
     private final MasterMenuConverter masterMenuConverter;
     private final MasterMenuService masterMenuService;
 
-    @Override
     @PostMapping(ApiConstants.ApiMasterMenu.CREATE)
-    public ResponseEntity<ApiResponse<Integer>> create(@Valid @RequestBody MasterMenuCreateDto dto) {
-        MasterMenuRequestDto requestDto = masterMenuConverter.toMasterMenuRequestDto(dto);
+    public ResponseEntity<ApiResponse<Integer>> createMenuList(
+            @RequestBody List<@Valid MasterMenuCreateDto> dtoList) {
+        List<MasterMenuRequestDto> requestDto = masterMenuConverter.toRequestDtoListFromCreate(dtoList);
         return ResponseHandler.success(masterMenuService.create(requestDto));
     }
 
-    @Override
     @GetMapping(ApiConstants.ApiMasterMenu.GET_BY_ID)
     public ResponseEntity<ApiResponse<MasterMenuResponseDto>> getById(@PathVariable("id") Integer id) {
         return ResponseHandler.success(masterMenuService.getById(id));
-    }
-
-    @Override
-    @GetMapping(ApiConstants.ApiMasterMenu.SEARCH)
-    public ResponseEntity<ApiResponse<PageResponse<MasterMenuResponseDto>>> search( @Valid @ModelAttribute PageRequest pageRequest) {
-        return ResponseHandler.success(masterMenuService.search(pageRequest));
-    }
-
-    @Override
-    @PostMapping(ApiConstants.ApiMasterMenu.UPDATE)
-    public ResponseEntity<ApiResponse<Integer>> update(@PathVariable("id") Integer id, @Valid @RequestBody MasterMenuUpdateDto dto) {
-        MasterMenuRequestDto requestDto = masterMenuConverter.toMasterMenuRequestDto(dto);
-        return ResponseHandler.success(masterMenuService.update(id, requestDto));
-    }
-
-    @Override
-    @DeleteMapping(ApiConstants.ApiMasterMenu.DELETE)
-    public ResponseEntity<ApiResponse<Integer>> delete(@PathVariable("id") Integer id) {
-        return ResponseHandler.success(masterMenuService.delete(id));
     }
 
     @GetMapping(ApiConstants.ApiMasterMenu.GET_ALL)
     public ResponseEntity<ApiResponse<List<MasterMenuResponseDto>>> getAll() {
         return ResponseHandler.success(masterMenuService.getAll());
     }
+
+    @PostMapping(ApiConstants.ApiMasterMenu.UPDATE)
+    public ResponseEntity<ApiResponse<Integer>> update(
+            @RequestBody List<@Valid MasterMenuUpdateDto> dtoList) {
+        List<MasterMenuRequestDto> requestDto = masterMenuConverter.toRequestDtoListFromUpdate(dtoList);
+        return ResponseHandler.success(masterMenuService.update(requestDto));
+    }
+
+    @DeleteMapping(ApiConstants.ApiMasterMenu.DELETE)
+    public ResponseEntity<ApiResponse<Integer>> deleteByListId(@RequestBody List<Integer> list) {
+        return ResponseHandler.success(masterMenuService.delete(list));
+    }
+
+    @GetMapping(ApiConstants.ApiMasterMenu.SEARCH)
+    public ResponseEntity<ApiResponse<PageResponse<MasterMenuResponseDto>>> search(@ModelAttribute PageRequest pageRequest) {
+        return ResponseHandler.success(masterMenuService.search(pageRequest));
+    }
+
+
+
+
+
+
+
 
 }
