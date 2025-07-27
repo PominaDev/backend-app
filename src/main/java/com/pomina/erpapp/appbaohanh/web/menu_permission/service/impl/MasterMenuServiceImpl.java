@@ -29,6 +29,7 @@ public class MasterMenuServiceImpl implements MasterMenuService {
     // Dependency injection
     private final MasterMenuMapper masterMenuMapper;
     private final MasterMenuConverter masterMenuConverter;
+    private final MasterPermissionMapper masterPermissionMapper;
 
     @Override
     public int create(List<MasterMenuRequestDto> requestDto) {
@@ -78,7 +79,8 @@ public class MasterMenuServiceImpl implements MasterMenuService {
 
     @Override
     public List<MenuStructured> getMenuPermissionByUserId(Integer userId) {
-        return List.of();
+        List<MenuPermission> listUserPermissions = masterPermissionMapper.findMenuPermissionByUserId(userId);
+        return this.convertMenuPermissionEntityToMenuStructured(listUserPermissions);
     }
 
     @Override

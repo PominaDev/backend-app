@@ -48,14 +48,7 @@
                icon,
                is_parent,
                order_index,
-               parent_id,
-               status,
-               noted,
-               created_at,
-               created_by,
-               updated_at,
-               updated_by,
-               is_deleted
+               parent_id
         FROM master_menu
         WHERE is_deleted = 0
     </select>
@@ -95,13 +88,7 @@
         icon,
         is_parent,
         order_index,
-        parent_id,
-        status,
-        noted,
-        created_by,
-        updated_by,
-        created_at,
-        updated_at
+        parent_id
         )
         VALUES
         <foreach collection="list" item="item" separator=",">
@@ -111,23 +98,49 @@
             #{item.icon},
             #{item.isParent},
             #{item.orderIndex},
-            #{item.parentId},
-            #{item.status},
-            #{item.noted},
-            #{item.createdBy},
-            #{item.updatedBy},
-            <choose>
-                <when test="item.createdAt != null">#{item.createdAt}</when>
-                <otherwise>NOW()</otherwise>
-            </choose>
-            ,
-            <choose>
-                <when test="item.updatedAt != null">#{item.updatedAt}</when>
-                <otherwise>NOW()</otherwise>
-            </choose>
+            #{item.parentId}
             )
         </foreach>
     </insert>
+
+    <!--    <update id="update">-->
+    <!--        INSERT INTO master_menu (-->
+    <!--                                 master_menu_id,-->
+    <!--                                 master_menu_name,-->
+    <!--                                 path,-->
+    <!--                                 icon,-->
+    <!--                                 is_parent,-->
+    <!--                                 order_index,-->
+    <!--                                 parent_id-->
+    <!--        ) VALUES-->
+    <!--        <foreach collection="list" item="menu" separator=",">-->
+    <!--            (-->
+    <!--            #{menu.masterMenuId},-->
+    <!--            #{menu.masterMenuName},-->
+    <!--            #{menu.path},-->
+    <!--            #{menu.icon},-->
+    <!--            #{menu.isParent},-->
+    <!--            #{menu.orderIndex},-->
+    <!--            #{menu.parentId}-->
+    <!--            )-->
+    <!--        </foreach>-->
+    <!--        ON DUPLICATE KEY UPDATE-->
+    <!--        master_menu_name = CASE-->
+    <!--        WHEN VALUES(master_menu_name) IS NOT NULL AND VALUES(master_menu_name) != ''-->
+    <!--        THEN VALUES(master_menu_name)-->
+    <!--        ELSE master_menu_name END,-->
+    <!--        path = CASE-->
+    <!--        WHEN VALUES(path) IS NOT NULL AND VALUES(path) != ''-->
+    <!--        THEN VALUES(path)-->
+    <!--        ELSE path END,-->
+    <!--        icon = CASE-->
+    <!--        WHEN VALUES(icon) IS NOT NULL AND VALUES(icon) != ''-->
+    <!--        THEN VALUES(icon)-->
+    <!--        ELSE icon END,-->
+    <!--        is_parent = COALESCE(VALUES(is_parent), is_parent),-->
+    <!--        order_index = COALESCE(VALUES(order_index), order_index),-->
+    <!--        parent_id = COALESCE(VALUES(parent_id), parent_id)-->
+    <!--    </update>-->
 
     <update id="update">
         UPDATE master_menu
