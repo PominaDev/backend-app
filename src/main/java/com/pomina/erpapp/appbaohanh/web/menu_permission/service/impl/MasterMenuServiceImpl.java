@@ -48,6 +48,22 @@ public class MasterMenuServiceImpl implements MasterMenuService {
     }
 
     @Override
+//    @Transactional
+    public Integer updateListMasterMenu(List<MasterMenuRequestDto> dtoList) {
+        Integer updatedRows = 0;
+        List<MasterMenu> entityList = masterMenuConverter.toEntityList(dtoList);
+        for(MasterMenu entity : entityList) {
+            if(entity.getMasterMenuId() == 0 || entity.getMasterMenuId() == null            // set id from request
+                || Objects.isNull(masterMenuMapper.findById(entity.getMasterMenuId()))) {   // not found by id (set wrong id)
+                updatedRows+= masterMenuMapper.insert(entity);
+            }else{
+                updatedRows+= masterMenuMapper.update(entity);
+            }
+        }
+        return updatedRows;
+    }
+
+    @Override
     public MasterMenuResponseDto getById(Integer id) {
         MasterMenu masterMenu = masterMenuMapper.findById(id);
         if (masterMenu != null) {
@@ -58,27 +74,45 @@ public class MasterMenuServiceImpl implements MasterMenuService {
 
     @Override
     public PageResponse<MasterMenuResponseDto> search(PageRequest pageRequest) {
-
         List<MasterMenu> masterMenuList = masterMenuMapper.findAllPaged(pageRequest.getOffset(),
                 pageRequest.getSize(),
                 pageRequest);
-
         if (masterMenuList == null || masterMenuList.isEmpty()) {
             return PageResponse.empty(pageRequest.getPage(), pageRequest.getSize());
         }
-
         List<MasterMenuResponseDto> masterMenuResponse = masterMenuConverter.toResponseList(masterMenuList);
-
         int totalElements = masterMenuMapper.countAll();
-
         return PageResponse.createPaged(masterMenuResponse, pageRequest.getPage(), pageRequest.getSize(),
                 totalElements);
-
     }
 
     @Override
     public int delete(Integer id) {
         return masterMenuMapper.softDeleteById(id);
+    }
+
+
+    @Override
+//    @Transactional
+    public Integer createListMasterMenu(List<MasterMenuRequestDto> dtoList) {
+        Integer insertedRows = 0;
+        List<MasterMenu> entityList = masterMenuConverter.toEntityList(dtoList);
+        // find parent menu
+        MasterMenu parentDto = entityList.stream()
+                .filter(dto -> Boolean.TRUE.equals(dto.getIsParent()))
+                .findFirst()
+                .orElseThrow(() -> new RuntimeException("No parent menu found"));
+        //insert parent first
+        insertedRows = masterMenuMapper.insert(parentDto);
+        //set parent id
+        Integer parentId = masterMenuMapper.findByName(parentDto.getMasterMenuName()).getMasterMenuId();
+        for (MasterMenu menu : entityList) {
+            if(!menu.getIsParent()){
+                menu.setParentId(parentId);
+                insertedRows += masterMenuMapper.insert(menu);
+            }
+        }
+        return insertedRows;
     }
 
     @Override
@@ -92,6 +126,7 @@ public class MasterMenuServiceImpl implements MasterMenuService {
         List<MenuPermission> listUserPermissions = masterPermissionMapper.findMenuPermissionByUserId(userId);
         return this.convertMenuPermissionEntityToMenuStructured(listUserPermissions);
     }
+
 
     private List<MasterMenuResponseDto> loadMenuStructure(List<MasterMenu> menus) {
 

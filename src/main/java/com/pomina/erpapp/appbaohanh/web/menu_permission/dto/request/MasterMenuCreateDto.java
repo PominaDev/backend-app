@@ -1,12 +1,6 @@
 package com.pomina.erpapp.appbaohanh.web.menu_permission.dto.request;
 
-import jakarta.validation.constraints.Max;
-import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Positive;
-import jakarta.validation.constraints.PositiveOrZero;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -17,17 +11,23 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class MasterMenuCreateDto {
+
+//    @NotBlank(message = "Master menu id is mandatory")
+//    private Integer masterMenuId;
+
     @NotNull(message = "Master menu name is mandatory")
     @Size(max = 255, message = "Master menu name must not exceed 255 characters")
     private String masterMenuName;
 
     @NotBlank(message = "Path is mandatory")
     @Size(max = 255, message = "Path must not exceed 255 characters")
+    @Pattern(regexp = "^/.*", message = "Path must start with a '/' character")
     private String path;
 
     @Size(max = 100, message = "Icon must not exceed 100 characters")
     private String icon;
 
+    @NotNull(message = "You must specify whether this menu is a parent or not")
     private Boolean isParent;
 
     @PositiveOrZero(message = "orderIndex must be 0 or positive")
@@ -35,4 +35,12 @@ public class MasterMenuCreateDto {
 
     @Positive(message = "parentId must be a positive number")
     private Integer parentId;
+
+    @Size(max = 255, message = "Status must not exceed 255 characters")
+    private String status;
+
+    @Size(max = 255, message = "Note must not exceed 255 characters")
+    private String noted;
+
+    private String createdBy;
 }
