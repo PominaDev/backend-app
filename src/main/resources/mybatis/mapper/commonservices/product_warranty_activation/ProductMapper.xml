@@ -106,15 +106,15 @@
     <select id="existsById" resultType="boolean">
         SELECT EXISTS(
             SELECT 1
-            FROM u_product
-            WHERE id = #{id} AND is_deleted = 0
+            FROM master_product
+            WHERE master_product_id = #{id} AND is_deleted = 0
         )
     </select>
 
 
     <select id="countAll" resultType="int">
-        SELECT COUNT(id)
-        FROM u_product
+        SELECT COUNT(master_product_id)
+        FROM master_product
         WHERE is_deleted = 0
     </select>
 

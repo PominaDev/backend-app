@@ -22,9 +22,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
+@RestController
 @RequestMapping(ApiConstants.ApiMasterMenu.BASE)
 @RequiredArgsConstructor
 public class MasterMenuController extends BaseController<MasterMenuCreateDto, MasterMenuUpdateDto, MasterMenuResponseDto, Integer> {
@@ -36,20 +38,9 @@ public class MasterMenuController extends BaseController<MasterMenuCreateDto, Ma
 
     @PostMapping(ApiConstants.ApiMasterMenu.CREATE)
     @Override
-    public ResponseEntity<ApiResponse<Integer>> create(MasterMenuCreateDto dto) {
+    public ResponseEntity<ApiResponse<Integer>> create(@RequestBody MasterMenuCreateDto dto) {
         MasterMenuRequestDto requestDto = masterMenuConverter.toMasterMenuRequestDto(dto);
         return ResponseHandler.success(masterMenuService.create(requestDto));
-    }
-
-    /* API create a MasterMenu List
-     * - List MenuCreate has: 1 parent and children (at least 1 child
-     * - Response: Inserted rows
-    */
-    @PostMapping(ApiConstants.ApiMasterMenu.CREATE_LIST)
-    public ResponseEntity<ApiResponse<Integer>> createListMenu(@RequestBody List<MasterMenuCreateDto> createDtoList) {
-        //convert List<CreateDTO> to List<RequestDTO>
-        List<MasterMenuRequestDto> requestDtoList = masterMenuConverter.toMasterMenuRequestDtoList(createDtoList);
-        return ResponseHandler.success(masterMenuService.createListMasterMenu(requestDtoList));
     }
 
     @Override
@@ -86,5 +77,16 @@ public class MasterMenuController extends BaseController<MasterMenuCreateDto, Ma
     public ResponseEntity<ApiResponse<Integer>> updateListMasterMenu(@RequestBody List<MasterMenuUpdateDto> updateDtoList) {
         List<MasterMenuRequestDto> requestDtoList = masterMenuConverter.fromUpdateListToMasterRequestDtoList(updateDtoList);
         return ResponseHandler.success(masterMenuService.updateListMasterMenu(requestDtoList));
+    }
+
+    /* API create a MasterMenu List
+     * - List MenuCreate has: 1 parent and children (at least 1 child
+     * - Response: Inserted rows
+     */
+    @PostMapping(ApiConstants.ApiMasterMenu.CREATE_LIST)
+    public ResponseEntity<ApiResponse<Integer>> createListMenu(@RequestBody List<MasterMenuCreateDto> createDtoList) {
+        //convert List<CreateDTO> to List<RequestDTO>
+        List<MasterMenuRequestDto> requestDtoList = masterMenuConverter.toMasterMenuRequestDtoList(createDtoList);
+        return ResponseHandler.success(masterMenuService.createListMasterMenu(requestDtoList));
     }
 }

@@ -1,5 +1,7 @@
 package com.pomina.security.config;
 
+import com.auth0.jwt.exceptions.JWTVerificationException;
+import com.auth0.jwt.exceptions.TokenExpiredException;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.pomina.security.sysservice.TokenBlacklistService;
 import jakarta.servlet.FilterChain;
@@ -13,6 +15,7 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
+import java.time.Instant;
 import java.util.Optional;
 
 @Component
@@ -37,7 +40,20 @@ public class JwtAuthentication extends OncePerRequestFilter {
         }
 
         String token = tokenOpt.get();
-        DecodedJWT jwt = jwtDecoder.decode(token);
+
+        DecodedJWT jwt;
+
+        try {
+            jwt = jwtDecoder.decode(token);
+        } catch (TokenExpiredException ex) {
+            SecurityContextHolder.clearContext();
+            response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Token expired");
+            return;
+        } catch (JWTVerificationException ex) {
+            SecurityContextHolder.clearContext();
+            response.sendError(HttpServletResponse.SC_FORBIDDEN, "Invalid token");
+            return;
+        }
 
         if (isAccessTokenBlacklisted(token, jwt)) {
             response.sendError(HttpServletResponse.SC_UNAUTHORIZED);
@@ -64,5 +80,10 @@ public class JwtAuthentication extends OncePerRequestFilter {
         String tokenType = jwt.getClaim("tokenType").asString();
         return "REFRESH_TOKEN".equals(tokenType)
                 || tokenBlacklistService.isBlacklisted(token);
+    }
+
+    private boolean isAccessTokenExpired(DecodedJWT jwt) {
+        Instant exp = jwt.getExpiresAt().toInstant();
+        return exp.isBefore(Instant.now());
     }
 }

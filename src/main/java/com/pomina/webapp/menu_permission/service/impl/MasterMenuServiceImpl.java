@@ -15,6 +15,7 @@ import com.pomina.webapp.menu_permission.mapper.MasterPermissionMapper;
 import com.pomina.webapp.menu_permission.service.MasterMenuService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,7 +48,7 @@ public class MasterMenuServiceImpl implements MasterMenuService {
     }
 
     @Override
-//    @Transactional
+    @Transactional
     public Integer updateListMasterMenu(List<MasterMenuRequestDto> dtoList) {
         int updatedRows = 0;
         List<MasterMenu> entityList = masterMenuConverter.toEntityList(dtoList);
@@ -90,9 +91,8 @@ public class MasterMenuServiceImpl implements MasterMenuService {
         return masterMenuMapper.softDeleteById(id);
     }
 
-
     @Override
-//    @Transactional
+    //@Transactional
     public Integer createListMasterMenu(List<MasterMenuRequestDto> dtoList) {
         int insertedRows = 0;
         List<MasterMenu> entityList = masterMenuConverter.toEntityList(dtoList);
