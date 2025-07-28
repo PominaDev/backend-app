@@ -16,6 +16,8 @@ import javax.sql.DataSource;
         "com.pomina.erpapp.appbaohanh.product_warranty_activation.mapper",
         "com.pomina.erpapp.appbaohanh.client_managerment.mapper",
         "com.pomina.erpapp.appbaohanh.location_validation.mapper",
+        "com.pomina.erpapp.appbaohanh.web.menu_permission.mapper",
+
 })
 public class MybatisConfig {
 

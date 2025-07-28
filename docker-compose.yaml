@@ -11,6 +11,7 @@ services:
       MYSQL_DATABASE: pomina_master_db
       MYSQL_USER: root
       MYSQL_PASSWORD: root123
+      TZ: Asia/Ho_Chi_Minh
     ports:
       - "3306:3306"
 #    volumes:

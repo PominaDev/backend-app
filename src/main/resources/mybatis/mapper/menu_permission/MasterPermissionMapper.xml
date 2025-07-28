@@ -1,0 +1,272 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.pomina.erpapp.appbaohanh.web.menu_permission.mapper.MasterPermissionMapper">
+
+    <resultMap id="MasterPermissionResultMap"
+               type="com.pomina.erpapp.appbaohanh.web.menu_permission.entity.MasterPermission">
+        <id column="master_permission_id" property="masterPermissionId"/>
+        <result column="master_menu_id" property="masterMenuId"/>
+        <result column="sys_user_id" property="sysUserId"/>
+        <result column="is_full" property="isFull"/>
+        <result column="is_insert" property="isInsert"/>
+        <result column="is_delete" property="isDelete"/>
+        <result column="is_update" property="isUpdate"/>
+        <result column="is_read" property="isRead"/>
+        <result column="is_print" property="isPrint"/>
+        <result column="is_export" property="isExport"/>
+        <result column="status" property="status"/>
+        <result column="noted" property="note"/>
+        <result column="created_at" property="createdAt"/>
+        <result column="created_by" property="createdBy"/>
+        <result column="updated_at" property="updatedAt"/>
+        <result column="updated_by" property="updatedBy"/>
+        <result column="is_deleted" property="isDeleted"/>
+    </resultMap>
+
+    <resultMap id="MenuPermissionResultMap"
+               type="com.pomina.erpapp.appbaohanh.web.menu_permission.entity.MenuPermission">
+        <id column="master_permission_id" property="masterPermissionId"/>
+        <result column="sys_user_id" property="sysUserId"/>
+        <result column="is_full" property="isFull"/>
+        <result column="is_insert" property="isInsert"/>
+        <result column="is_delete" property="isDelete"/>
+        <result column="is_update" property="isUpdate"/>
+        <result column="is_read" property="isRead"/>
+        <result column="is_print" property="isPrint"/>
+        <result column="is_export" property="isExport"/>
+        <association property="masterMenu" javaType="com.pomina.erpapp.appbaohanh.web.menu_permission.entity.MasterMenu">
+            <id column="master_menu_id" property="masterMenuId"/>
+            <result column="master_menu_name" property="masterMenuName"/>
+            <result column="is_parent" property="isParent"/>
+            <result column="parent_id" property="parentId"/>
+            <result column="icon" property="icon"/>
+            <result column="path" property="path"/>
+            <result column="order_index" property="orderIndex"/>
+            <result column="mn.is_deleted" property="isDeleted"/>
+            <result column="mn.noted" property="noted"/>
+        </association>
+    </resultMap>
+
+
+    <select id="findById" resultMap="MasterPermissionResultMap">
+        SELECT master_permission_id,
+               master_menu_id,
+               sys_user_id,
+               is_full,
+               is_insert,
+               is_delete,
+               is_update,
+               is_read,
+               is_print,
+               is_export,
+               status,
+               noted,
+               created_at,
+               created_by,
+               updated_at,
+               updated_by,
+               is_deleted
+        FROM master_permission
+        WHERE master_permission_id = #{id}
+          AND is_deleted = 0
+    </select>
+
+    <select id="findAll" resultMap="MasterPermissionResultMap">
+        SELECT master_permission_id,
+               master_menu_id,
+               sys_user_id,
+               is_full,
+               is_insert,
+               is_delete,
+               is_update,
+               is_read,
+               is_print,
+               is_export,
+               status,
+               noted,
+               created_at,
+               created_by,
+               updated_at,
+               updated_by,
+               is_deleted
+        FROM master_permission
+        WHERE is_deleted = 0
+    </select>
+
+    <select id="findAllPaged" resultMap="MasterPermissionResultMap">
+        SELECT master_permission_id,
+        master_menu_id,
+        sys_user_id,
+        is_full,
+        is_insert,
+        is_delete,
+        is_update,
+        is_read,
+        is_print,
+        is_export,
+        status,
+        noted,
+        created_at,
+        created_by,
+        updated_at,
+        updated_by,
+        is_deleted
+        FROM master_permission
+        WHERE is_deleted = 0
+        <if test="paging != null and paging.orderByClause != null">
+            ORDER BY ${paging.orderByClause}
+        </if>
+        LIMIT #{limit} OFFSET #{offset}
+    </select>
+
+    <insert id="insert">
+        INSERT INTO master_permission (master_menu_id,
+                                       sys_user_id,
+                                       is_full,
+                                       is_insert,
+                                       is_delete,
+                                       is_update,
+                                       is_read,
+                                       is_print,
+                                       is_export,
+                                       status,
+                                       noted,
+                                       created_by,
+                                       updated_by)
+        VALUES (#{masterMenuId},
+                #{sysUserId},
+                #{isFull},
+                #{isInsert},
+                #{isDelete},
+                #{isUpdate},
+                #{isRead},
+                #{isPrint},
+                #{isExport},
+                #{status},
+                #{note},
+                #{createdBy},
+                #{updatedBy})
+    </insert>
+
+    <update id="update">
+        UPDATE master_permission
+        SET
+        <set>
+            <if test="masterMenuId != null and masterMenuId != ''">
+                , master_menu_id = #{masterMenuId}
+            </if>
+            <if test="sysUserId != null and sysUserId != ''">
+                , sys_user_id = #{sysUserId}
+            </if>
+            <if test="isFull != null and isFull != ''">
+                , is_full = #{isFull}
+            </if>
+            <if test="isInsert != null and isInsert != ''">
+                , is_insert = #{isInsert}
+            </if>
+            <if test="isDelete != null and isDelete != ''">
+                , is_delete = #{isDelete}
+            </if>
+            <if test="isUpdate != null and isUpdate != ''">
+                , is_update = #{isUpdate}
+            </if>
+            <if test="isRead != null and isRead != ''">
+                , is_read = #{isRead}
+            </if>
+            <if test="isPrint != null and isPrint != ''">
+                , is_print = #{isPrint}
+            </if>
+            <if test="isExport != null and isExport != ''">
+                , is_export = #{isExport}
+            </if>
+            <if test="status != null and status != ''">
+                , status = #{status}
+            </if>
+            <if test="note != null and note != ''">
+                , noted = #{note}
+            </if>
+            <if test="updatedBy != null and updatedBy != ''">
+                , updated_by = #{updatedBy}
+            </if>
+        </set>
+        updated_at = NOW()
+        WHERE master_permission_id = #{masterPermissionId}
+        AND is_deleted = 0
+    </update>
+
+    <delete id="deleteById">
+        DELETE
+        FROM master_permission
+        WHERE master_permission_id = #{id}
+    </delete>
+
+    <update id="softDeleteById">
+        UPDATE master_permission
+        SET is_deleted = 1,
+            updated_at = NOW(),
+            updated_by = #{updatedBy}
+        WHERE master_permission_id = #{id}
+    </update>
+
+    <select id="existsById">
+        SELECT EXISTS(SELECT 1
+                      FROM master_permission
+                      WHERE master_permission_id = #{id}
+                        AND is_deleted = 0)
+    </select>
+
+    <select id="countAll">
+        SELECT COUNT(master_permission_id)
+        FROM master_permission
+        WHERE is_deleted = 0
+    </select>
+
+    <select id="findMenuPermissionByUserId" resultMap="MenuPermissionResultMap">
+        <choose>
+            <when test="userId != 0">
+                SELECT
+                    mn.master_menu_id,
+                    mn.master_menu_name,
+                    mn.is_parent,
+                    mn.parent_id,
+                    mn.icon,
+                    mn.path,
+                    mn.order_index,
+                    mn.is_deleted "mn.is_deleted",
+                    mn.noted "mn.noted",
+                    pms.master_permission_id,
+                    pms.master_menu_id,
+                    pms.sys_user_id,
+                    pms.is_full,
+                    pms.is_insert,
+                    pms.is_delete,
+                    pms.is_update,
+                    pms.is_read,
+                    pms.is_print,
+                    pms.is_export
+                FROM master_permission pms
+                LEFT JOIN master_menu mn ON pms.master_menu_id = mn.master_menu_id
+                WHERE pms.sys_user_id = #{userId}
+                  AND pms.is_deleted = false
+                  AND mn.is_deleted = false
+            </when>
+            <otherwise>
+                SELECT
+                    mn.master_menu_id,
+                    mn.master_menu_name,
+                    mn.is_parent,
+                    mn.parent_id,
+                    mn.icon,
+                    mn.path,
+                    mn.order_index,
+                    mn.is_deleted "mn.is_deleted",
+                    mn.noted "mn.noted"
+                FROM master_menu mn
+                WHERE mn.is_deleted = false
+            </otherwise>
+        </choose>
+    </select>
+
+</mapper>
