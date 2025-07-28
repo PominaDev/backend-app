@@ -18,6 +18,8 @@ import javax.sql.DataSource;
         "com.pomina.commonservices.product_warranty_activation.mapper",
         "com.pomina.webapp.menu_permission.mapper",
         "com.pomina.webapp.notification_websocket.mapper",
+        "com.pomina.webapp.user_managerment.mapper",
+
 })
 public class MybatisConfig {
 

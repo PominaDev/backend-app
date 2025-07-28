@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pomina.webapp.user_managerment.mapper.SysUserRoleWebMapper">
+
+    <resultMap id="SysUserRoleWebResultMap" type="com.pomina.webapp.user_managerment.entity.SysUserRoleWeb">
+        <id column="user_id" property="userId"/>
+        <result column="username" property="username"/>
+        <result column="phone_number" property="phoneNumber"/>
+    </resultMap>
+
+    <select id="findAllUserActiveRoleWeb" resultMap="SysUserRoleWebResultMap">
+        SELECT user_id,
+               username,
+               phone_number
+        FROM sys_user_active_role_web_v
+    </select>
+
+</mapper>

@@ -122,4 +122,10 @@ public class ApiConstants {
 
         private ApiUserMenuPermission() {}
     }
+
+    public static final class ApiSysUserManagement {
+        public static final String BASE = VERSION_V1 + "/user-management";
+        public static final String GET_USER_ACTIVE_ROLE_WEB = "/get-user-active-role-web";
+        private ApiSysUserManagement() {}
+    }
 }
