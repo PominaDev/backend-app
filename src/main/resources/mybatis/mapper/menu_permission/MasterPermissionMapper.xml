@@ -152,8 +152,9 @@
 
     <update id="update">
         UPDATE master_permission
-        SET
+
         <set>
+            updated_at = NOW()
             <if test="masterMenuId != null and masterMenuId != ''">
                 , master_menu_id = #{masterMenuId}
             </if>
@@ -191,7 +192,6 @@
                 , updated_by = #{updatedBy}
             </if>
         </set>
-        updated_at = NOW()
         WHERE master_permission_id = #{masterPermissionId}
         AND is_deleted = 0
     </update>
