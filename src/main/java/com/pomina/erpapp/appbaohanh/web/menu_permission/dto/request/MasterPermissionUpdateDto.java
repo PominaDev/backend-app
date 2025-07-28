@@ -47,16 +47,4 @@ public class MasterPermissionUpdateDto{
 
     @NotNull(message = "isExport is required")
     private Boolean isExport;
-
-    @Size(max = 255, message = "Status menu name must not exceed 255 characters")
-    private String status;
-
-    @Size(max = 255, message = "Noted menu name must not exceed 255 characters")
-    private String noted;
-
-    @Size(max = 255, message = "createdBy menu name must not exceed 255 characters")
-    private String createdBy;
-
-    @Size(max = 255, message = "UpdatedBy menu name must not exceed 255 characters")
-    private String updatedBy;
 }

@@ -130,11 +130,7 @@
                                        is_update,
                                        is_read,
                                        is_print,
-                                       is_export,
-                                       status,
-                                       noted,
-                                       created_by,
-                                       updated_by)
+                                       is_export)
         VALUES (#{masterMenuId},
                 #{sysUserId},
                 #{isFull},
@@ -143,11 +139,7 @@
                 #{isUpdate},
                 #{isRead},
                 #{isPrint},
-                #{isExport},
-                #{status},
-                #{note},
-                #{createdBy},
-                #{updatedBy})
+                #{isExport})
     </insert>
 
     <update id="update">
@@ -180,15 +172,6 @@
             </if>
             <if test="isExport != null">
                 , is_export = #{isExport}
-            </if>
-            <if test="status != null and status != ''">
-                , status = #{status}
-            </if>
-            <if test="noted != null and noted != ''">
-                , noted = #{noted}
-            </if>
-            <if test="updatedBy != null and updatedBy != ''">
-                , updated_by = #{updatedBy}
             </if>
         </set>
         WHERE master_permission_id = #{masterPermissionId}

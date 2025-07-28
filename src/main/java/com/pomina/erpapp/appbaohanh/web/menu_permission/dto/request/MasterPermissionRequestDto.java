@@ -20,8 +20,4 @@ public class MasterPermissionRequestDto {
     private Boolean isRead;
     private Boolean isPrint;
     private Boolean isExport;
-    private String status;
-    private String noted;
-    private String createdBy;
-    private String updatedBy;
 }
