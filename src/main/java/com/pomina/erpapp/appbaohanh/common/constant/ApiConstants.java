@@ -19,7 +19,8 @@ public class ApiConstants {
         public static final String OTP_SEND = "/otp/send";
         public static final String OTP_VERIFY = "/otp/verify";
 
-        private ApiAuth() {}
+        private ApiAuth() {
+        }
     }
 
     public static final class ApiNotification {
@@ -30,7 +31,8 @@ public class ApiConstants {
         public static final String GET_BY_ID = "/{id}";
         public static final String SEARCH = "/search";
 
-        private ApiNotification() {}
+        private ApiNotification() {
+        }
     }
 
     public static final class ApiCustomer {
@@ -41,7 +43,8 @@ public class ApiConstants {
         public static final String GET_BY_ID = "/{id}";
         public static final String SEARCH = "/search";
 
-        private ApiCustomer() {}
+        private ApiCustomer() {
+        }
     }
 
     public static final class ApiProduct {
@@ -85,7 +88,8 @@ public class ApiConstants {
         public static final String REGISTER = "/register";
         public static final String VALIDATE = "/validate";
 
-        private ApiLocation() {}
+        private ApiLocation() {
+        }
     }
 
     public static final class ApiMasterMenu {
@@ -98,7 +102,9 @@ public class ApiConstants {
         public static final String GET_BY_ID = "/{id}";
         public static final String SEARCH = "/search";
         public static final String GET_ALL = "/all";
-        private ApiMasterMenu() {}
+
+        private ApiMasterMenu() {
+        }
     }
 
     public static final class ApiMasterPermission {
@@ -112,12 +118,29 @@ public class ApiConstants {
         public static final String SEARCH = "/search";
         public static final String GET_ALL = "/all";
 
-        private ApiMasterPermission() {}
+        private ApiMasterPermission() {
+        }
     }
 
     public static final class ApiUserMenuPermission {
         public static final String BASE = VERSION_V1 + "/menu-permission-by-userId";
         public static final String GET_BY_USER_ID = "/{userId}";
-        private ApiUserMenuPermission() {}
+
+        private ApiUserMenuPermission() {
+        }
     }
+
+    public static final class ApiUserRoleWeb {
+        public static final String BASE = VERSION_V1 + "/user-role-web";
+        public static final String CREATE = "/create";
+        public static final String UPDATE = "/update/{id}";
+        public static final String DELETE = "/delete/{id}";
+        public static final String GET_BY_ID = "/{id}";
+        public static final String SEARCH = "/search";
+        public static final String GET_ALL = "/all";
+
+        private ApiUserRoleWeb() {
+        }
+    }
+
 }

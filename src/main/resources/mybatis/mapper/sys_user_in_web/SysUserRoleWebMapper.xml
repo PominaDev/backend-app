@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pomina.erpapp.appbaohanh.web.user_managerment.mapper.SysUserRoleWebMapper">
+
+        <resultMap id="SysUserRoleWebResultMap" type="com.pomina.erpapp.appbaohanh.web.user_managerment.entity.SysUserRoleWeb">
+            <id column="user_id" property="userId"/>
+            <result column="username" property="username"/>
+            <result column="phone_number" property="phoneNumber"/>
+        </resultMap>
+
+    <select id="findById">
+
+    </select>
+
+    <select id="findAll" resultMap="SysUserRoleWebResultMap">
+        SELECT
+            user_id,
+            username,
+            phone_number
+        FROM sys_user_role_web_isdeleted_v
+    </select>
+
+    <select id="findAllPaged" >
+
+    </select>
+
+    <insert id="insert" >
+
+    </insert>
+
+    <update id="update">
+
+    </update>
+
+    <delete id="deleteById">
+
+    </delete>
+
+    <update id="softDeleteById">
+
+    </update>
+
+    <select id="existsById">
+
+    </select>
+
+    <select id="countAll">
+
+    </select>
+
+</mapper>
