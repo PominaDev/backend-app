@@ -3,6 +3,7 @@ package com.pomina.security.controller;
 import com.pomina.common.constant.ApiConstants;
 import com.pomina.common.handler.ApiResponse;
 import com.pomina.common.handler.ResponseHandler;
+import com.pomina.common.utils.HmacUtil;
 import com.pomina.security.service.SysUserService;
 import com.pomina.security.sysmodel.LoginRequest;
 import com.pomina.security.sysmodel.LoginResponse;
@@ -28,6 +29,8 @@ public class AuthController {
     private final AuthService authService;
 
     private final SysUserService sysUserService;
+
+    private final HmacUtil hmacUtil;
 
     @PostMapping(ApiConstants.ApiAuth.LOGIN)
     public ResponseEntity<ApiResponse<LoginResponse>> login(@RequestBody @Validated LoginRequest loginRequest,

@@ -45,7 +45,7 @@
             <result column="path" property="path"/>
             <result column="order_index" property="orderIndex"/>
             <result column="mn.is_deleted" property="isDeleted"/>
-            <result column="mn.noted" property="noted"/>
+            <result column="mn.noted" property="note"/>
         </association>
     </resultMap>
 
