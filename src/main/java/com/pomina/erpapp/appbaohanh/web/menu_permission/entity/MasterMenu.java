@@ -19,6 +19,9 @@ public class MasterMenu extends BaseEntity {
     private Boolean isParent;
     private Byte orderIndex;
     private Integer parentId;
-    private Boolean isDeleted;
+    private String status;
     private String noted;
+    private String createdBy;
+    private String updatedBy;
+    private Boolean isDeleted;
 }
