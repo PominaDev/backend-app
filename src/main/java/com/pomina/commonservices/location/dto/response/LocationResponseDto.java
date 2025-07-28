@@ -1,4 +1,4 @@
-package com.pomina.servicecommon.location.dto.response;
+package com.pomina.commonservices.location.dto.response;
 
 import lombok.Getter;
 import lombok.Setter;

@@ -1,4 +1,4 @@
-package com.pomina.servicecommon.location.external.google_geocoding.model;
+package com.pomina.commonservices.location.external.google_geocoding.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;

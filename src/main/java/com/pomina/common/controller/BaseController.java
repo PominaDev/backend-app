@@ -1,8 +1,8 @@
-package com.pomina.app.common.controller;
+package com.pomina.common.controller;
 
-import com.pomina.app.common.handler.ApiResponse;
-import com.pomina.app.common.model.PageRequest;
-import com.pomina.app.common.model.PageResponse;
+import com.pomina.common.handler.ApiResponse;
+import com.pomina.common.model.PageRequest;
+import com.pomina.common.model.PageResponse;
 import org.springframework.http.ResponseEntity;
 
 /**

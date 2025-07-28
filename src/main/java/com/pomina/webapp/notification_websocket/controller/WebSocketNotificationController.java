@@ -1,6 +1,6 @@
-package com.pomina.webapp.notification.websocket.controller;
+package com.pomina.webapp.notification_websocket.controller;
 
-import com.pomina.webapp.notification.websocket.entity.Notification;
+import com.pomina.webapp.notification_websocket.entity.Notification;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.stereotype.Controller;

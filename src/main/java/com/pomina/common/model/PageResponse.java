@@ -1,4 +1,4 @@
-package com.pomina.app.common.model;
+package com.pomina.common.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

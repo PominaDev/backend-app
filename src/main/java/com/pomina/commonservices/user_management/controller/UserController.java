@@ -1,4 +1,4 @@
-package com.pomina.commonservices.user.management.controller;
+package com.pomina.commonservices.user_management.controller;
 
 import com.pomina.common.constant.ApiConstants;
 import com.pomina.common.controller.BaseController;
@@ -6,12 +6,12 @@ import com.pomina.common.handler.ApiResponse;
 import com.pomina.common.handler.ResponseHandler;
 import com.pomina.common.model.PageRequest;
 import com.pomina.common.model.PageResponse;
-import com.pomina.commonservices.user.management.converter.UserConverter;
-import com.pomina.commonservices.user.management.dto.request.UserCreateDto;
-import com.pomina.commonservices.user.management.dto.request.UserRequestDto;
-import com.pomina.commonservices.user.management.dto.request.UserUpdateDto;
-import com.pomina.commonservices.user.management.dto.response.UserResponseDto;
-import com.pomina.commonservices.user.management.service.UserService;
+import com.pomina.commonservices.user_management.converter.UserConverter;
+import com.pomina.commonservices.user_management.dto.request.UserCreateDto;
+import com.pomina.commonservices.user_management.dto.request.UserRequestDto;
+import com.pomina.commonservices.user_management.dto.request.UserUpdateDto;
+import com.pomina.commonservices.user_management.dto.response.UserResponseDto;
+import com.pomina.commonservices.user_management.service.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

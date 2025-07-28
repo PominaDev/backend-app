@@ -1,18 +1,18 @@
-package com.pomina.app.menu_permission.service.impl;
+package com.pomina.webapp.menu_permission.service.impl;
 
-import com.pomina.common.model.PageResponse;
 import com.pomina.common.model.PageRequest;
-import com.pomina.app.menu_permission.converter.MasterMenuConverter;
-import com.pomina.app.menu_permission.dto.request.MasterMenuRequestDto;
-import com.pomina.app.menu_permission.dto.response.MasterMenuResponseDto;
-import com.pomina.app.menu_permission.dto.response.MenuPermissionResponseDto;
-import com.pomina.app.menu_permission.dto.response.MenuStructured;
-import com.pomina.app.menu_permission.dto.response.PermissionResponseDto;
-import com.pomina.app.menu_permission.entity.MasterMenu;
-import com.pomina.app.menu_permission.entity.MenuPermission;
-import com.pomina.app.menu_permission.mapper.MasterMenuMapper;
-import com.pomina.app.menu_permission.mapper.MasterPermissionMapper;
-import com.pomina.app.menu_permission.service.MasterMenuService;
+import com.pomina.common.model.PageResponse;
+import com.pomina.webapp.menu_permission.converter.MasterMenuConverter;
+import com.pomina.webapp.menu_permission.dto.request.MasterMenuRequestDto;
+import com.pomina.webapp.menu_permission.dto.response.MasterMenuResponseDto;
+import com.pomina.webapp.menu_permission.dto.response.MenuPermissionResponseDto;
+import com.pomina.webapp.menu_permission.dto.response.MenuStructured;
+import com.pomina.webapp.menu_permission.dto.response.PermissionResponseDto;
+import com.pomina.webapp.menu_permission.entity.MasterMenu;
+import com.pomina.webapp.menu_permission.entity.MenuPermission;
+import com.pomina.webapp.menu_permission.mapper.MasterMenuMapper;
+import com.pomina.webapp.menu_permission.mapper.MasterPermissionMapper;
+import com.pomina.webapp.menu_permission.service.MasterMenuService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

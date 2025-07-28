@@ -1,4 +1,4 @@
-package com.pomina.app.common.exception;
+package com.pomina.common.exception;
 
 import lombok.Getter;
 

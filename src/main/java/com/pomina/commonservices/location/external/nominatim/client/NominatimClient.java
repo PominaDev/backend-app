@@ -1,6 +1,6 @@
-package com.pomina.servicecommon.location.external.nominatim.client;
+package com.pomina.commonservices.location.external.nominatim.client;
 
-import com.pomina.servicecommon.location.external.nominatim.model.NominatimResponse;
+import com.pomina.commonservices.location.external.nominatim.model.NominatimResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;

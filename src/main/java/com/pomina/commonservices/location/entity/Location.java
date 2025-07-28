@@ -1,4 +1,4 @@
-package com.pomina.servicecommon.location.entity;
+package com.pomina.commonservices.location.entity;
 
 import com.pomina.common.model.BaseEntity;
 import lombok.AllArgsConstructor;

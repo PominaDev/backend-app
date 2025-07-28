@@ -1,11 +1,11 @@
-package com.pomina.app.menu_permission.converter;
+package com.pomina.webapp.menu_permission.converter;
 
 import com.pomina.common.converter.BaseConverter;
-import com.pomina.app.menu_permission.dto.request.MasterMenuCreateDto;
-import com.pomina.app.menu_permission.dto.request.MasterMenuRequestDto;
-import com.pomina.app.menu_permission.dto.request.MasterMenuUpdateDto;
-import com.pomina.app.menu_permission.dto.response.MasterMenuResponseDto;
-import com.pomina.app.menu_permission.entity.MasterMenu;
+import com.pomina.webapp.menu_permission.dto.request.MasterMenuCreateDto;
+import com.pomina.webapp.menu_permission.dto.request.MasterMenuRequestDto;
+import com.pomina.webapp.menu_permission.dto.request.MasterMenuUpdateDto;
+import com.pomina.webapp.menu_permission.dto.response.MasterMenuResponseDto;
+import com.pomina.webapp.menu_permission.entity.MasterMenu;
 import org.mapstruct.Mapper;
 
 import java.util.List;

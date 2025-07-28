@@ -1,9 +1,9 @@
-package com.pomina.servicecommon.location.converter;
+package com.pomina.commonservices.location.converter;
 
 import com.pomina.common.converter.BaseConverter;
-import com.pomina.servicecommon.location.dto.request.LocationRequestDto;
-import com.pomina.servicecommon.location.dto.response.LocationResponseDto;
-import com.pomina.servicecommon.location.entity.Location;
+import com.pomina.commonservices.location.dto.request.LocationRequestDto;
+import com.pomina.commonservices.location.dto.response.LocationResponseDto;
+import com.pomina.commonservices.location.entity.Location;
 import org.mapstruct.Mapper;
 
 @Mapper(componentModel = "spring")

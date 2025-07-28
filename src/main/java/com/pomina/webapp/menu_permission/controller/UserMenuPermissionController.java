@@ -1,11 +1,11 @@
-package com.pomina.app.menu_permission.controller;
+package com.pomina.webapp.menu_permission.controller;
 
 
 import com.pomina.common.constant.ApiConstants;
 import com.pomina.common.handler.ApiResponse;
 import com.pomina.common.handler.ResponseHandler;
-import com.pomina.app.menu_permission.dto.response.MenuStructured;
-import com.pomina.app.menu_permission.service.MasterMenuService;
+import com.pomina.webapp.menu_permission.dto.response.MenuStructured;
+import com.pomina.webapp.menu_permission.service.MasterMenuService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;

@@ -1,4 +1,4 @@
-package com.pomina.app.product.warranty.activation.dto.response;
+package com.pomina.commonservices.product_warranty_activation.dto.response;
 
 import lombok.Getter;
 import lombok.Setter;

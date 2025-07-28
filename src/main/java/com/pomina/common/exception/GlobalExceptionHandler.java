@@ -1,7 +1,7 @@
-package com.pomina.app.common.exception;
+package com.pomina.common.exception;
 
-import com.pomina.app.common.handler.ApiResponse;
-import com.pomina.app.common.handler.ResponseHandler;
+import com.pomina.common.handler.ApiResponse;
+import com.pomina.common.handler.ResponseHandler;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

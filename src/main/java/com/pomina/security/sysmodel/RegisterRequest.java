@@ -1,6 +1,6 @@
 package com.pomina.security.sysmodel;
 
-import com.pomina.app.location.dto.request.LocationRequestDto;
+import com.pomina.commonservices.location.dto.request.LocationRequestDto;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;

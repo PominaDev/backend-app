@@ -1,17 +1,17 @@
-package com.pomina.servicecommon.location.controller;
+package com.pomina.commonservices.location.controller;
 
-import com.pomina.servicecommon.location.dto.request.LocationCreateDto;
-import com.pomina.servicecommon.location.dto.request.LocationRequestDto;
-import com.pomina.servicecommon.location.dto.request.LocationUpdateDto;
-import com.pomina.servicecommon.location.dto.response.CheckLocationResponse;
-import com.pomina.servicecommon.location.dto.response.LocationResponseDto;
-import com.pomina.servicecommon.location.service.LocationService;
 import com.pomina.common.constant.ApiConstants;
 import com.pomina.common.controller.BaseController;
 import com.pomina.common.handler.ApiResponse;
 import com.pomina.common.handler.ResponseHandler;
 import com.pomina.common.model.PageRequest;
 import com.pomina.common.model.PageResponse;
+import com.pomina.commonservices.location.dto.request.LocationCreateDto;
+import com.pomina.commonservices.location.dto.request.LocationRequestDto;
+import com.pomina.commonservices.location.dto.request.LocationUpdateDto;
+import com.pomina.commonservices.location.dto.response.CheckLocationResponse;
+import com.pomina.commonservices.location.dto.response.LocationResponseDto;
+import com.pomina.commonservices.location.service.LocationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;

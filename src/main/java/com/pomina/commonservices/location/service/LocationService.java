@@ -1,9 +1,9 @@
-package com.pomina.servicecommon.location.service;
+package com.pomina.commonservices.location.service;
 
 import com.pomina.common.service.BaseService;
-import com.pomina.servicecommon.location.dto.request.LocationRequestDto;
-import com.pomina.servicecommon.location.dto.response.CheckLocationResponse;
-import com.pomina.servicecommon.location.dto.response.LocationResponseDto;
+import com.pomina.commonservices.location.dto.request.LocationRequestDto;
+import com.pomina.commonservices.location.dto.response.CheckLocationResponse;
+import com.pomina.commonservices.location.dto.response.LocationResponseDto;
 
 public interface LocationService extends BaseService<LocationRequestDto, LocationResponseDto, Long> {
     LocationResponseDto registerLocation(LocationRequestDto request);

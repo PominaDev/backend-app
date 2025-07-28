@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.pomina.appbaohanh.security.mapper.SysUserMapper">
+<mapper namespace="com.pomina.security.mapper.SysUserMapper">
 
-    <resultMap id="SysUserResultMap" type="com.pomina.appbaohanh.security.model.SysUser">
+    <resultMap id="SysUserResultMap" type="com.pomina.security.model.SysUser">
         <id column="user_id" property="userId"/>
         <result column="username" property="username"/>
         <result column="password" property="password"/>
@@ -18,7 +18,7 @@
         <result column="old_id" property="oldId"/>
     </resultMap>
 
-    <resultMap type="com.pomina.appbaohanh.security.model.SysUser"
+    <resultMap type="com.pomina.security.model.SysUser"
                id="userLoginResultMap">
         <id column="user_id" property="userId"/>
         <result column="username" property="username"/>

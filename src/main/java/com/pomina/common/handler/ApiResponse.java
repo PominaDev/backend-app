@@ -1,4 +1,4 @@
-package com.pomina.app.common.handler;
+package com.pomina.common.handler;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;

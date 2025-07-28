@@ -1,4 +1,4 @@
-package com.pomina.app.menu_permission.dto.request;
+package com.pomina.webapp.menu_permission.dto.request;
 
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;

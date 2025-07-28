@@ -1,6 +1,6 @@
 package com.pomina.security.sysmodel;
 
-import com.pomina.app.location.dto.response.LocationResponseDto;
+import com.pomina.commonservices.location.dto.response.LocationResponseDto;
 import lombok.Getter;
 import lombok.Setter;
 

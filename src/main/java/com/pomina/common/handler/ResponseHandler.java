@@ -1,6 +1,6 @@
-package com.pomina.app.common.handler;
+package com.pomina.common.handler;
 
-import com.pomina.app.common.exception.ErrorCode;
+import com.pomina.common.exception.ErrorCode;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 

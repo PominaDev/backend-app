@@ -1,6 +1,6 @@
-package com.pomina.app.common.utils;
+package com.pomina.common.utils;
 
-import com.pomina.app.common.model.BaseEntity;
+import com.pomina.common.model.BaseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 

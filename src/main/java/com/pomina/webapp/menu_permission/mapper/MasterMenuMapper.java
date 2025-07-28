@@ -1,7 +1,7 @@
-package com.pomina.app.menu_permission.mapper;
+package com.pomina.webapp.menu_permission.mapper;
 
 import com.pomina.common.mapper.BaseMapper;
-import com.pomina.app.menu_permission.entity.MasterMenu;
+import com.pomina.webapp.menu_permission.entity.MasterMenu;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 

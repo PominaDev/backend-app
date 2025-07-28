@@ -1,15 +1,15 @@
-package com.pomina.commonservices.user.management.service.impl;
+package com.pomina.commonservices.user_management.service.impl;
 
 import com.pomina.common.config.datasource.CustomDataSource;
 import com.pomina.common.config.datasource.DataSourceType;
 import com.pomina.common.model.PageRequest;
 import com.pomina.common.model.PageResponse;
-import com.pomina.commonservices.user.management.converter.RoleConverter;
-import com.pomina.commonservices.user.management.dto.request.RoleRequestDto;
-import com.pomina.commonservices.user.management.dto.response.RoleResponseDto;
-import com.pomina.commonservices.user.management.entity.SysRole;
-import com.pomina.commonservices.user.management.mapper.RoleMapper;
-import com.pomina.commonservices.user.management.service.RoleService;
+import com.pomina.commonservices.user_management.converter.RoleConverter;
+import com.pomina.commonservices.user_management.dto.request.RoleRequestDto;
+import com.pomina.commonservices.user_management.dto.response.RoleResponseDto;
+import com.pomina.commonservices.user_management.entity.SysRole;
+import com.pomina.commonservices.user_management.mapper.RoleMapper;
+import com.pomina.commonservices.user_management.service.RoleService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

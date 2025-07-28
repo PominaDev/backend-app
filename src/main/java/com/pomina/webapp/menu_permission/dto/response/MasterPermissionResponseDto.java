@@ -1,4 +1,4 @@
-package com.pomina.app.menu_permission.dto.response;
+package com.pomina.webapp.menu_permission.dto.response;
 
 import lombok.Getter;
 import lombok.Setter;

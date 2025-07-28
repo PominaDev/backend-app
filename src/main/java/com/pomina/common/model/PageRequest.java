@@ -1,4 +1,4 @@
-package com.pomina.app.common.model;
+package com.pomina.common.model;
 
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.Pattern;

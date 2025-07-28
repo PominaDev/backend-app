@@ -1,4 +1,4 @@
-package com.pomina.app.common.config;
+package com.pomina.common.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

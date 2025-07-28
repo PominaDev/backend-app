@@ -1,4 +1,4 @@
-package com.pomina.app.common.config.datasource;
+package com.pomina.common.config.datasource;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

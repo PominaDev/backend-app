@@ -1,4 +1,4 @@
-package com.pomina.app.common.config;
+package com.pomina.common.config;
 
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
@@ -12,12 +12,12 @@ import javax.sql.DataSource;
 
 @Configuration
 @MapperScan(basePackages = {
-        "com.pomina.app.security.mapper",
-        "com.pomina.app.product_warranty_activation.mapper",
-        "com.pomina.app.user_managerment.mapper",
-        "com.pomina.app.location.mapper",
-        "com.pomina.app.menu_permission.mapper",
-        "com.pomina.app.notification.websocket.mapper",
+        "com.pomina.security.mapper",
+        "com.pomina.commonservices.user_management.mapper",
+        "com.pomina.commonservices.location.mapper",
+        "com.pomina.commonservices.product_warranty_activation.mapper",
+        "com.pomina.webapp.menu_permission.mapper",
+        "com.pomina.webapp.notification_websocket.mapper",
 })
 public class MybatisConfig {
 
@@ -29,7 +29,7 @@ public class MybatisConfig {
         factoryBean.setDataSource(dataSource);
 
          factoryBean.setMapperLocations(new PathMatchingResourcePatternResolver()
-             .getResources("classpath:/mybatis/mapper/**/*.xml"));
+                 .getResources("classpath:/mybatis/mapper/**/**/*.xml"));
 
         return factoryBean.getObject();
     }

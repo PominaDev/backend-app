@@ -1,9 +1,8 @@
-package com.pomina.app.common.constant;
+package com.pomina.common.constant;
 
 public class ApiConstants {
 
-    private ApiConstants() {
-    }
+    private ApiConstants() {}
 
     public static final String BASE_API = "/api";
 
@@ -64,8 +63,7 @@ public class ApiConstants {
         public static final String GET_BY_ID = "/{id}";
         public static final String SEARCH = "/search";
 
-        private ApiClientManager() {
-        }
+        private ApiClientManager() {}
     }
 
     public static final class ApiRoleManager {
@@ -76,8 +74,7 @@ public class ApiConstants {
         public static final String GET_BY_ID = "/{id}";
         public static final String SEARCH = "/search";
 
-        private ApiRoleManager() {
-        }
+        private ApiRoleManager() {}
     }
 
     public static final class ApiLocation {

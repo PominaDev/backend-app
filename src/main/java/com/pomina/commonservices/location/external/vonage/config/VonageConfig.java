@@ -1,4 +1,4 @@
-package com.pomina.servicecommon.location.external.vonage.config;
+package com.pomina.commonservices.location.external.vonage.config;
 
 import com.vonage.client.VonageClient;
 import org.springframework.beans.factory.annotation.Value;

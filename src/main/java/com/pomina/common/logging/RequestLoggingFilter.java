@@ -1,4 +1,4 @@
-package com.pomina.app.common.logging;
+package com.pomina.common.logging;
 
 import jakarta.servlet.Filter;
 import jakarta.servlet.FilterChain;

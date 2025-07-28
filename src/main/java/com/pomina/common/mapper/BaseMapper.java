@@ -1,6 +1,6 @@
-package com.pomina.app.common.mapper;
+package com.pomina.common.mapper;
 
-import com.pomina.app.common.model.PageRequest;
+import com.pomina.common.model.PageRequest;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;

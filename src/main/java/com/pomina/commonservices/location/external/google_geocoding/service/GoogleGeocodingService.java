@@ -1,12 +1,12 @@
-package com.pomina.servicecommon.location.external.google_geocoding.service;
+package com.pomina.commonservices.location.external.google_geocoding.service;
 
-import com.pomina.servicecommon.location.external.google_geocoding.config.GoogleGeocodingConfig;
-import com.pomina.servicecommon.location.external.google_geocoding.dto.LocationResponse;
-import com.pomina.servicecommon.location.external.google_geocoding.model.GeocodeResponse;
-import com.pomina.servicecommon.location.external.google_geocoding.model.GeocodeResult;
 import com.pomina.common.exception.AppException;
 import com.pomina.common.exception.ErrorCode;
-import com.pomina.servicecommon.location.util.AddressParserUtil;
+import com.pomina.commonservices.location.external.google_geocoding.config.GoogleGeocodingConfig;
+import com.pomina.commonservices.location.external.google_geocoding.dto.LocationResponse;
+import com.pomina.commonservices.location.external.google_geocoding.model.GeocodeResponse;
+import com.pomina.commonservices.location.external.google_geocoding.model.GeocodeResult;
+import com.pomina.commonservices.location.util.AddressParserUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;

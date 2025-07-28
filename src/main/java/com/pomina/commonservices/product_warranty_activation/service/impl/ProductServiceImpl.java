@@ -1,11 +1,11 @@
-package com.pomina.app.product.warranty.activation.service.impl;
+package com.pomina.commonservices.product_warranty_activation.service.impl;
 
-import com.pomina.app.product.warranty.activation.converter.ProductConverter;
-import com.pomina.app.product.warranty.activation.dto.request.ProductRequestDto;
-import com.pomina.app.product.warranty.activation.dto.response.ProductResponseDto;
-import com.pomina.app.product.warranty.activation.entity.Product;
-import com.pomina.app.product.warranty.activation.mapper.ProductMapper;
-import com.pomina.app.product.warranty.activation.service.ProductService;
+import com.pomina.commonservices.product_warranty_activation.converter.ProductConverter;
+import com.pomina.commonservices.product_warranty_activation.dto.request.ProductRequestDto;
+import com.pomina.commonservices.product_warranty_activation.dto.response.ProductResponseDto;
+import com.pomina.commonservices.product_warranty_activation.entity.Product;
+import com.pomina.commonservices.product_warranty_activation.mapper.ProductMapper;
+import com.pomina.commonservices.product_warranty_activation.service.ProductService;
 import com.pomina.common.model.PageRequest;
 import com.pomina.common.model.PageResponse;
 import lombok.RequiredArgsConstructor;

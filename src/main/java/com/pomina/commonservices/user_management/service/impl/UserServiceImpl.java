@@ -1,15 +1,15 @@
-package com.pomina.commonservices.user.management.service.impl;
+package com.pomina.commonservices.user_management.service.impl;
 
 import com.pomina.common.config.datasource.CustomDataSource;
 import com.pomina.common.config.datasource.DataSourceType;
 import com.pomina.common.model.PageRequest;
 import com.pomina.common.model.PageResponse;
-import com.pomina.commonservices.user.management.converter.UserConverter;
-import com.pomina.commonservices.user.management.dto.request.UserRequestDto;
-import com.pomina.commonservices.user.management.dto.response.UserResponseDto;
-import com.pomina.commonservices.user.management.entity.SysUser;
-import com.pomina.commonservices.user.management.mapper.UserMapper;
-import com.pomina.commonservices.user.management.service.UserService;
+import com.pomina.commonservices.user_management.converter.UserConverter;
+import com.pomina.commonservices.user_management.dto.request.UserRequestDto;
+import com.pomina.commonservices.user_management.dto.response.UserResponseDto;
+import com.pomina.commonservices.user_management.entity.SysUser;
+import com.pomina.commonservices.user_management.mapper.UserMapper;
+import com.pomina.commonservices.user_management.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

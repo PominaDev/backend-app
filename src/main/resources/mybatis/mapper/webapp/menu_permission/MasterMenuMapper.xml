@@ -5,7 +5,7 @@
 <mapper namespace="com.pomina.webapp.menu_permission.mapper.MasterMenuMapper">
 
     <resultMap id="masterMenuResultMap"
-               type="com.pomina.appbaohanh.menu_permission.entity.MasterMenu">
+               type="com.pomina.webapp.menu_permission.entity.MasterMenu">
         <id column="master_menu_id" property="masterMenuId"/>
         <result column="master_menu_name" property="masterMenuName"/>
         <result column="path" property="path"/>

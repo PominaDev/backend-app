@@ -1,4 +1,4 @@
-package com.pomina.app.menu_permission.entity;
+package com.pomina.webapp.menu_permission.entity;
 
 import com.pomina.common.model.BaseEntity;
 import lombok.AllArgsConstructor;

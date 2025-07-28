@@ -1,11 +1,11 @@
-package com.pomina.commonservices.user.management.converter;
+package com.pomina.commonservices.user_management.converter;
 
 import com.pomina.common.converter.BaseConverter;
-import com.pomina.commonservices.user.management.dto.request.UserCreateDto;
-import com.pomina.commonservices.user.management.dto.request.UserRequestDto;
-import com.pomina.commonservices.user.management.dto.request.UserUpdateDto;
-import com.pomina.commonservices.user.management.dto.response.UserResponseDto;
-import com.pomina.commonservices.user.management.entity.SysUser;
+import com.pomina.commonservices.user_management.dto.request.UserCreateDto;
+import com.pomina.commonservices.user_management.dto.request.UserRequestDto;
+import com.pomina.commonservices.user_management.dto.request.UserUpdateDto;
+import com.pomina.commonservices.user_management.dto.response.UserResponseDto;
+import com.pomina.commonservices.user_management.entity.SysUser;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 

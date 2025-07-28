@@ -1,7 +1,7 @@
-package com.pomina.servicecommon.location.external.google_geocoding.controller;
+package com.pomina.commonservices.location.external.google_geocoding.controller;
 
-import com.pomina.servicecommon.location.external.google_geocoding.dto.LocationResponse;
-import com.pomina.servicecommon.location.external.google_geocoding.service.GoogleGeocodingService;
+import com.pomina.commonservices.location.external.google_geocoding.dto.LocationResponse;
+import com.pomina.commonservices.location.external.google_geocoding.service.GoogleGeocodingService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;

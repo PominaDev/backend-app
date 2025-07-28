@@ -1,7 +1,7 @@
-package com.pomina.servicecommon.location.mapper;
+package com.pomina.commonservices.location.mapper;
 
 import com.pomina.common.mapper.BaseMapper;
-import com.pomina.servicecommon.location.entity.Location;
+import com.pomina.commonservices.location.entity.Location;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 

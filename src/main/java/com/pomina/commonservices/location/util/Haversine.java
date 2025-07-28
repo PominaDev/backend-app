@@ -1,4 +1,4 @@
-package com.pomina.servicecommon.location.util;
+package com.pomina.commonservices.location.util;
 
 public class Haversine {
 

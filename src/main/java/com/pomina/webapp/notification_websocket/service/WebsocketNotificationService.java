@@ -1,8 +1,8 @@
-package com.pomina.webapp.notification.websocket.service;
+package com.pomina.webapp.notification_websocket.service;
 
-import com.pomina.webapp.notification.websocket.dto.NotificationRequestDto;
-import com.pomina.webapp.notification.websocket.entity.Notification;
-import com.pomina.webapp.notification.websocket.mapper.WebsocketNotificationMapper;
+import com.pomina.webapp.notification_websocket.dto.NotificationRequestDto;
+import com.pomina.webapp.notification_websocket.entity.Notification;
+import com.pomina.webapp.notification_websocket.mapper.WebsocketNotificationMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;

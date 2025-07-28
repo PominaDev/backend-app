@@ -1,4 +1,4 @@
-package com.pomina.commonservices.user.management.dto.response;
+package com.pomina.commonservices.user_management.dto.response;
 
 import lombok.Getter;
 import lombok.Setter;

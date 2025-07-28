@@ -1,4 +1,4 @@
-package com.pomina.commonservices.user.management.dto.request;
+package com.pomina.commonservices.user_management.dto.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

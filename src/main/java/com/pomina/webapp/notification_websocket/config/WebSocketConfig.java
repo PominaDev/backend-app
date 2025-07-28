@@ -1,4 +1,4 @@
-package com.pomina.webapp.notification.websocket.config;
+package com.pomina.webapp.notification_websocket.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

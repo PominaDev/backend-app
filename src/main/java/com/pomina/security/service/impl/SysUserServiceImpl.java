@@ -1,11 +1,11 @@
 package com.pomina.security.service.impl;
 
-import com.pomina.app.location.dto.response.LocationResponseDto;
-import com.pomina.app.location.service.LocationService;
 import com.pomina.common.config.datasource.CustomDataSource;
 import com.pomina.common.config.datasource.DataSourceType;
 import com.pomina.common.exception.AppException;
 import com.pomina.common.exception.ErrorCode;
+import com.pomina.commonservices.location.dto.response.LocationResponseDto;
+import com.pomina.commonservices.location.service.LocationService;
 import com.pomina.security.mapper.SysUserMapper;
 import com.pomina.security.model.SysUser;
 import com.pomina.security.service.SysUserService;
@@ -42,7 +42,7 @@ public class SysUserServiceImpl implements SysUserService {
     public RegisterResponse registerUser(RegisterRequest registerRequest) {
 
         // Check exist sysuser
-        SysUser sysUser = userMapper.findByUserName(registerRequest.getUsername());
+            SysUser sysUser = userMapper.findByUserName(registerRequest.getUsername());
         if (sysUser != null) {
             throw new AppException(ErrorCode.USER_EXISTED);
         }

@@ -1,4 +1,4 @@
-package com.pomina.app.menu_permission.dto.response;
+package com.pomina.webapp.menu_permission.dto.response;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Getter;

@@ -1,4 +1,4 @@
-package com.pomina.servicecommon.location.external.google_geocoding.config;
+package com.pomina.commonservices.location.external.google_geocoding.config;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

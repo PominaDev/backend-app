@@ -1,4 +1,4 @@
-package com.pomina.servicecommon.location.external.nominatim.model;
+package com.pomina.commonservices.location.external.nominatim.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;

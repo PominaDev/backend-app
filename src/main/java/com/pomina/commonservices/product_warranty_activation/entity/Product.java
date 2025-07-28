@@ -1,4 +1,4 @@
-package com.pomina.app.product.warranty.activation.entity;
+package com.pomina.commonservices.product_warranty_activation.entity;
 
 import com.pomina.common.model.BaseEntity;
 import lombok.AllArgsConstructor;

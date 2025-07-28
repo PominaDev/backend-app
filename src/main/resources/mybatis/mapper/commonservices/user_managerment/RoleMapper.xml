@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.pomina.commonservices.user.management.mapper.RoleMapper">
+<mapper namespace="com.pomina.commonservices.user_management.mapper.RoleMapper">
 
-    <resultMap id="SysRoleResultMap" type="com.pomina.appbaohanh.user_managerment.entity.SysRole">
+    <resultMap id="SysRoleResultMap" type="com.pomina.commonservices.user_management.entity.SysRole">
         <id column="id" property="id"/>
         <result column="role_name" property="roleName"/>
         <result column="description" property="description"/>

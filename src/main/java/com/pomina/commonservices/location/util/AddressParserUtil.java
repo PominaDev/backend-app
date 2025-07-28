@@ -1,8 +1,8 @@
-package com.pomina.servicecommon.location.util;
+package com.pomina.commonservices.location.util;
 
-import com.pomina.servicecommon.location.external.google_geocoding.dto.LocationResponse;
-import com.pomina.servicecommon.location.external.google_geocoding.model.AddressComponent;
-import com.pomina.servicecommon.location.external.google_geocoding.model.GeocodeResult;
+import com.pomina.commonservices.location.external.google_geocoding.dto.LocationResponse;
+import com.pomina.commonservices.location.external.google_geocoding.model.AddressComponent;
+import com.pomina.commonservices.location.external.google_geocoding.model.GeocodeResult;
 
 import java.util.Arrays;
 

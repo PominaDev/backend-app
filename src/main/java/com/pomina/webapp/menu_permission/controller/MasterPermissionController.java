@@ -1,4 +1,4 @@
-package com.pomina.app.menu_permission.controller;
+package com.pomina.webapp.menu_permission.controller;
 
 import com.pomina.common.constant.ApiConstants;
 import com.pomina.common.controller.BaseController;
@@ -6,12 +6,12 @@ import com.pomina.common.handler.ApiResponse;
 import com.pomina.common.handler.ResponseHandler;
 import com.pomina.common.model.PageRequest;
 import com.pomina.common.model.PageResponse;
-import com.pomina.app.menu_permission.converter.MasterPermissionConverter;
-import com.pomina.app.menu_permission.dto.request.MasterPermissionCreateDto;
-import com.pomina.app.menu_permission.dto.request.MasterPermissionRequestDto;
-import com.pomina.app.menu_permission.dto.request.MasterPermissionUpdateDto;
-import com.pomina.app.menu_permission.dto.response.MasterPermissionResponseDto;
-import com.pomina.app.menu_permission.service.MasterPermissionService;
+import com.pomina.webapp.menu_permission.converter.MasterPermissionConverter;
+import com.pomina.webapp.menu_permission.dto.request.MasterPermissionCreateDto;
+import com.pomina.webapp.menu_permission.dto.request.MasterPermissionRequestDto;
+import com.pomina.webapp.menu_permission.dto.request.MasterPermissionUpdateDto;
+import com.pomina.webapp.menu_permission.dto.response.MasterPermissionResponseDto;
+import com.pomina.webapp.menu_permission.service.MasterPermissionService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

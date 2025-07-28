@@ -1,11 +1,11 @@
-package com.pomina.app.product.warranty.activation.controller;
+package com.pomina.commonservices.product_warranty_activation.controller;
 
-import com.pomina.app.product.warranty.activation.converter.ProductConverter;
-import com.pomina.app.product.warranty.activation.dto.request.ProductCreateDto;
-import com.pomina.app.product.warranty.activation.dto.request.ProductRequestDto;
-import com.pomina.app.product.warranty.activation.dto.request.ProductUpdateDto;
-import com.pomina.app.product.warranty.activation.dto.response.ProductResponseDto;
-import com.pomina.app.product.warranty.activation.service.ProductService;
+import com.pomina.commonservices.product_warranty_activation.converter.ProductConverter;
+import com.pomina.commonservices.product_warranty_activation.dto.request.ProductCreateDto;
+import com.pomina.commonservices.product_warranty_activation.dto.request.ProductRequestDto;
+import com.pomina.commonservices.product_warranty_activation.dto.request.ProductUpdateDto;
+import com.pomina.commonservices.product_warranty_activation.dto.response.ProductResponseDto;
+import com.pomina.commonservices.product_warranty_activation.service.ProductService;
 import com.pomina.common.constant.ApiConstants;
 import com.pomina.common.controller.BaseController;
 import com.pomina.common.handler.ApiResponse;

@@ -1,6 +1,6 @@
-package com.pomina.app.product.warranty.activation.mapper;
+package com.pomina.commonservices.product_warranty_activation.mapper;
 
-import com.pomina.app.product.warranty.activation.entity.Product;
+import com.pomina.commonservices.product_warranty_activation.entity.Product;
 import com.pomina.common.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
 

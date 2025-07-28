@@ -1,4 +1,4 @@
-package com.pomina.app.common.utils;
+package com.pomina.common.utils;
 
 import java.util.regex.Pattern;
 

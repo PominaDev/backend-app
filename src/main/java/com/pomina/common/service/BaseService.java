@@ -1,7 +1,7 @@
-package com.pomina.app.common.service;
+package com.pomina.common.service;
 
-import com.pomina.app.common.model.PageRequest;
-import com.pomina.app.common.model.PageResponse;
+import com.pomina.common.model.PageRequest;
+import com.pomina.common.model.PageResponse;
 
 /**
  * Base Service

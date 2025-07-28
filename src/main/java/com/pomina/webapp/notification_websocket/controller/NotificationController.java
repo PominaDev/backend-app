@@ -1,4 +1,4 @@
-package com.pomina.webapp.notification.websocket.controller;
+package com.pomina.webapp.notification_websocket.controller;
 
 import com.pomina.common.constant.ApiConstants;
 import org.springframework.web.bind.annotation.RequestMapping;

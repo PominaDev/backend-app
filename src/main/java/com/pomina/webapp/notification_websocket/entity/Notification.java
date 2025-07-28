@@ -1,4 +1,4 @@
-package com.pomina.webapp.notification.websocket.entity;
+package com.pomina.webapp.notification_websocket.entity;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;

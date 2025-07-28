@@ -1,4 +1,4 @@
-package com.pomina.servicecommon.location.external.google_geocoding.model;
+package com.pomina.commonservices.location.external.google_geocoding.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -10,13 +10,13 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Geometry {
-    private Location location;
+    private LocationGoogle location;
 
     @Getter
     @Setter
     @AllArgsConstructor
     @NoArgsConstructor
-    public static class Location {
+    public static class LocationGoogle {
         private double lat;
         private double lng;
     }

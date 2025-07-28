@@ -1,4 +1,4 @@
-package com.pomina.servicecommon.location.dto.request;
+package com.pomina.commonservices.location.dto.request;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.validation.constraints.Max;

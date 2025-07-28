@@ -1,4 +1,4 @@
-package com.pomina.app.common.converter;
+package com.pomina.common.converter;
 
 import java.util.List;
 

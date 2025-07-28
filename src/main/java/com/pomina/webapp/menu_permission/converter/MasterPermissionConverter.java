@@ -1,11 +1,11 @@
-package com.pomina.app.menu_permission.converter;
+package com.pomina.webapp.menu_permission.converter;
 
 import com.pomina.common.converter.BaseConverter;
-import com.pomina.app.menu_permission.dto.request.MasterPermissionCreateDto;
-import com.pomina.app.menu_permission.dto.request.MasterPermissionRequestDto;
-import com.pomina.app.menu_permission.dto.request.MasterPermissionUpdateDto;
-import com.pomina.app.menu_permission.dto.response.MasterPermissionResponseDto;
-import com.pomina.app.menu_permission.entity.MasterPermission;
+import com.pomina.webapp.menu_permission.dto.request.MasterPermissionCreateDto;
+import com.pomina.webapp.menu_permission.dto.request.MasterPermissionRequestDto;
+import com.pomina.webapp.menu_permission.dto.request.MasterPermissionUpdateDto;
+import com.pomina.webapp.menu_permission.dto.response.MasterPermissionResponseDto;
+import com.pomina.webapp.menu_permission.entity.MasterPermission;
 import org.mapstruct.Mapper;
 
 @Mapper(componentModel = "spring")

@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.pomina.commonservices.location.mapper.LocationMapper">
 
-    <resultMap id="LocationResultMap" type="com.pomina.appbaohanh.location.entity.Location">
+    <resultMap id="LocationResultMap" type="com.pomina.commonservices.location.entity.Location">
         <id column="u_location_id" property="locationId"/>
         <result column="user_id" property="userId"/>
         <result column="latitude" property="latitude"/>
