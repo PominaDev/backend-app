@@ -152,7 +152,6 @@
 
     <update id="update">
         UPDATE master_permission
-
         <set>
             updated_at = NOW()
             <if test="masterMenuId != null and masterMenuId != ''">
@@ -161,32 +160,32 @@
             <if test="sysUserId != null and sysUserId != ''">
                 , sys_user_id = #{sysUserId}
             </if>
-            <if test="isFull != null and isFull != ''">
+            <if test="isFull != null">
                 , is_full = #{isFull}
             </if>
-            <if test="isInsert != null and isInsert != ''">
+            <if test="isInsert != null">
                 , is_insert = #{isInsert}
             </if>
-            <if test="isDelete != null and isDelete != ''">
+            <if test="isDelete != null">
                 , is_delete = #{isDelete}
             </if>
-            <if test="isUpdate != null and isUpdate != ''">
+            <if test="isUpdate != null">
                 , is_update = #{isUpdate}
             </if>
-            <if test="isRead != null and isRead != ''">
+            <if test="isRead != null">
                 , is_read = #{isRead}
             </if>
-            <if test="isPrint != null and isPrint != ''">
+            <if test="isPrint != null">
                 , is_print = #{isPrint}
             </if>
-            <if test="isExport != null and isExport != ''">
+            <if test="isExport != null">
                 , is_export = #{isExport}
             </if>
             <if test="status != null and status != ''">
                 , status = #{status}
             </if>
-            <if test="note != null and note != ''">
-                , noted = #{note}
+            <if test="noted != null and noted != ''">
+                , noted = #{noted}
             </if>
             <if test="updatedBy != null and updatedBy != ''">
                 , updated_by = #{updatedBy}
