@@ -1,6 +1,10 @@
 package com.pomina.erpapp.appbaohanh.web.menu_permission.dto.request;
 
+import com.pomina.erpapp.appbaohanh.common.model.BaseEntity;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.PositiveOrZero;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -10,10 +14,16 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class MasterPermissionUpdateDto {
+public class MasterPermissionUpdateDto{
 
+    @PositiveOrZero(message = "masterPermissionId must be a positive number or 0")
+    @NotNull(message = "masterPermissionId is required")
+    private Integer masterPermissionId;
+
+    @Positive(message = "masterMenuId must be a positive number")
     @NotNull(message = "masterMenuId is required")
     private Integer masterMenuId;
+
     @NotNull(message = "sysUserId is required")
     private Long sysUserId;
 

@@ -2,6 +2,7 @@ package com.pomina.erpapp.appbaohanh.web.menu_permission.dto.request;
 
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -12,6 +13,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class MasterPermissionCreateDto {
+
     @Positive(message = "masterMenuId must be a positive number")
     @NotNull(message = "masterMenuId is required")
     private Integer masterMenuId;

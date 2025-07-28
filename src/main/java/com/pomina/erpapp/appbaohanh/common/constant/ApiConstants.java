@@ -104,7 +104,9 @@ public class ApiConstants {
     public static final class ApiMasterPermission {
         public static final String BASE = VERSION_V1 + "/master-permissions";
         public static final String CREATE = "/create";
+        public static final String CREATE_LIST = "/create-list";
         public static final String UPDATE = "/update/{id}";
+        public static final String UPDATE_LIST = "/update-list";
         public static final String DELETE = "/delete/{id}";
         public static final String GET_BY_ID = "/{id}";
         public static final String SEARCH = "/search";

@@ -13,6 +13,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 
 @Slf4j
 @Service
@@ -30,11 +31,36 @@ public class MasterPermissionServiceImpl implements MasterPermissionService {
     }
 
     @Override
+    public Integer createListPermisstion(List<MasterPermissionRequestDto> requestDtoList) {
+        Integer createdRows = 0;
+        List<MasterPermission> masterPermissionCreate = masterPermissionConverter.toEntityList(requestDtoList);
+        for (MasterPermission entity : masterPermissionCreate) {
+          createdRows += masterPermissionMapper.insert(entity);
+        }
+        return createdRows;
+    }
+
+    @Override
     public int update(Integer id, MasterPermissionRequestDto dto) {
         MasterPermission masterPermissionInfo = masterPermissionMapper.findById(id);
         MasterPermission masterPermissionUpdate = masterPermissionConverter.toEntity(dto);
         masterPermissionUpdate.setMasterPermissionId(masterPermissionInfo.getMasterPermissionId());
         return masterPermissionMapper.update(masterPermissionUpdate);
+    }
+
+    @Override
+    public Integer updateListPermisstion(List<MasterPermissionRequestDto> requestDtoList) {
+        Integer updatedRows = 0;
+        List<MasterPermission> masterPermissionCreate = masterPermissionConverter.toEntityList(requestDtoList);
+        for (MasterPermission entity : masterPermissionCreate) {
+            MasterPermission find = masterPermissionMapper.findById(entity.getMasterPermissionId());
+            if (Objects.nonNull(find)) {
+                updatedRows += masterPermissionMapper.update(entity);
+            }else{
+                updatedRows += masterPermissionMapper.insert(entity);
+            }
+        }
+        return updatedRows;
     }
 
     @Override
@@ -66,4 +92,6 @@ public class MasterPermissionServiceImpl implements MasterPermissionService {
 
     @Override
     public int delete(Integer id) {return masterPermissionMapper.softDeleteById(id); }
+
+
 }

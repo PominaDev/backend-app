@@ -10,7 +10,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class MasterPermissionRequestDto {
-
+    private Integer masterPermissionId;
     private Integer masterMenuId;
     private Long sysUserId;
     private Boolean isFull;

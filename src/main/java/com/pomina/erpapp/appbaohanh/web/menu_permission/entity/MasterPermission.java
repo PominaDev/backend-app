@@ -23,4 +23,5 @@ public class MasterPermission extends BaseEntity {
     private Boolean isRead;
     private Boolean isPrint;
     private Boolean isExport;
+
 }

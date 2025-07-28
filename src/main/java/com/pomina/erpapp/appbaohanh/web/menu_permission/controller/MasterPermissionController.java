@@ -24,6 +24,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 
 @RestController
 @RequestMapping(ApiConstants.ApiMasterPermission.BASE)
@@ -39,6 +41,12 @@ public class MasterPermissionController extends BaseController<MasterPermissionC
   public ResponseEntity<ApiResponse<Integer>> create(@Valid @RequestBody MasterPermissionCreateDto dto) {
     MasterPermissionRequestDto requestDto = masterPermissionConverter.toMasterPermissionRequestDto(dto);
     return ResponseHandler.success(masterPermissionService.create(requestDto));
+  }
+
+  @PostMapping(ApiConstants.ApiMasterPermission.CREATE_LIST)
+  public ResponseEntity<ApiResponse<Integer>> createList(@RequestBody List<MasterPermissionCreateDto> createDtoList) {
+    List<MasterPermissionRequestDto> requestDtoList = masterPermissionConverter.fromCreateListToRequestList(createDtoList);
+    return ResponseHandler.success(masterPermissionService.createListPermisstion(requestDtoList));
   }
 
   @Override
@@ -59,6 +67,12 @@ public class MasterPermissionController extends BaseController<MasterPermissionC
     MasterPermissionRequestDto requestDto = masterPermissionConverter.toMasterPermissionRequestDto(dto);
     return ResponseHandler.success(masterPermissionService.update(id, requestDto));
   }
+  @PostMapping(ApiConstants.ApiMasterPermission.UPDATE_LIST)
+  public ResponseEntity<ApiResponse<Integer>> updateList(@RequestBody List<MasterPermissionUpdateDto> updateDtoList) {
+    List<MasterPermissionRequestDto> requestDtoList = masterPermissionConverter.fromUpdateListToRequestList(updateDtoList);
+    return ResponseHandler.success(masterPermissionService.updateListPermisstion(requestDtoList));
+  }
+
 
   @Override
   @DeleteMapping(ApiConstants.ApiMasterPermission.DELETE)

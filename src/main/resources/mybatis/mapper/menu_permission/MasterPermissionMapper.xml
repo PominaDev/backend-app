@@ -130,11 +130,7 @@
                                        is_update,
                                        is_read,
                                        is_print,
-                                       is_export,
-                                       status,
-                                       noted,
-                                       created_by,
-                                       updated_by)
+                                       is_export)
         VALUES (#{masterMenuId},
                 #{sysUserId},
                 #{isFull},
@@ -143,55 +139,41 @@
                 #{isUpdate},
                 #{isRead},
                 #{isPrint},
-                #{isExport},
-                #{status},
-                #{note},
-                #{createdBy},
-                #{updatedBy})
+                #{isExport})
     </insert>
 
     <update id="update">
         UPDATE master_permission
-        SET
         <set>
+            updated_at = NOW()
             <if test="masterMenuId != null and masterMenuId != ''">
                 , master_menu_id = #{masterMenuId}
             </if>
             <if test="sysUserId != null and sysUserId != ''">
                 , sys_user_id = #{sysUserId}
             </if>
-            <if test="isFull != null and isFull != ''">
+            <if test="isFull != null">
                 , is_full = #{isFull}
             </if>
-            <if test="isInsert != null and isInsert != ''">
+            <if test="isInsert != null">
                 , is_insert = #{isInsert}
             </if>
-            <if test="isDelete != null and isDelete != ''">
+            <if test="isDelete != null">
                 , is_delete = #{isDelete}
             </if>
-            <if test="isUpdate != null and isUpdate != ''">
+            <if test="isUpdate != null">
                 , is_update = #{isUpdate}
             </if>
-            <if test="isRead != null and isRead != ''">
+            <if test="isRead != null">
                 , is_read = #{isRead}
             </if>
-            <if test="isPrint != null and isPrint != ''">
+            <if test="isPrint != null">
                 , is_print = #{isPrint}
             </if>
-            <if test="isExport != null and isExport != ''">
+            <if test="isExport != null">
                 , is_export = #{isExport}
             </if>
-            <if test="status != null and status != ''">
-                , status = #{status}
-            </if>
-            <if test="note != null and note != ''">
-                , noted = #{note}
-            </if>
-            <if test="updatedBy != null and updatedBy != ''">
-                , updated_by = #{updatedBy}
-            </if>
         </set>
-        updated_at = NOW()
         WHERE master_permission_id = #{masterPermissionId}
         AND is_deleted = 0
     </update>
