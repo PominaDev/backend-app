@@ -8,11 +8,11 @@
         <result column="phone_number" property="phoneNumber"/>
     </resultMap>
 
-    <select id="findAll" resultMap="SysUserRoleWebResultMap">
+    <select id="findAllUserActiveRoleWeb" resultMap="SysUserRoleWebResultMap">
         SELECT user_id,
                username,
                phone_number
-        FROM sys_user_role_web_isdeleted_v
+        FROM sys_user_active_role_web_v
     </select>
 
 </mapper>

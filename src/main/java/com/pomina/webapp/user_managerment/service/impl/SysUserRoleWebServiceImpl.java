@@ -20,8 +20,8 @@ public class SysUserRoleWebServiceImpl implements SysUerRoleWebService {
     private final SysUserRoleWebMapper sysUserInWebMapper;
 
     @Override
-    public List<SysUserRoleWebResponseDto> getAll() {
-        List<SysUserRoleWeb> sysUserRoleWebList = sysUserInWebMapper.findAll();
+    public List<SysUserRoleWebResponseDto> getAllUserActiveRoleWeb() {
+        List<SysUserRoleWeb> sysUserRoleWebList = sysUserInWebMapper.findAllUserActiveRoleWeb();
         return sysUserInWebConverter.toResponseList(sysUserRoleWebList);
     }
 }

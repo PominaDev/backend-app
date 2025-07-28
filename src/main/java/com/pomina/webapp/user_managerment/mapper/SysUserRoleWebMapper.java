@@ -7,5 +7,5 @@ import java.util.List;
 
 @Mapper
 public interface SysUserRoleWebMapper {
-    List<SysUserRoleWeb> findAll();
+    List<SysUserRoleWeb> findAllUserActiveRoleWeb();
 }
