@@ -204,7 +204,7 @@ public class MasterMenuServiceImpl implements MasterMenuService {
             menuPermissionResponseDto.setOrderIndex(menuPermission.getMasterMenu().getOrderIndex());
             menuPermissionResponseDto.setParentId(menuPermission.getMasterMenu().getParentId());
             menuPermissionResponseDto.setIsDeleted(menuPermission.getMasterMenu().getIsDeleted());
-            menuPermissionResponseDto.setNoted(menuPermission.getMasterMenu().getNote());
+            menuPermissionResponseDto.setNoted(menuPermission.getMasterMenu().getNoted());
             // Permission
             PermissionResponseDto permissionResponseDto = new PermissionResponseDto();
             permissionResponseDto.setMasterPermissionId(menuPermission.getMasterPermissionId());
