@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pomina.app.product.warranty.activation.mapper.ProductMapper">
+
+    <select id="findById">
+        SELECT id,
+               coil_code,
+               length_from,
+               length_to,
+               length,
+               name,
+               coil_type,
+               status,
+               note,
+               created_at,
+               created_by,
+               updated_at,
+               updated_by,
+               is_deleted
+        FROM u_product
+        WHERE id = #{id} AND is_deleted = 0
+    </select>
+
+
+    <select id="findAll">
+        SELECT id,
+               coil_code,
+               length_from,
+               length_to,
+               length,
+               name,
+               coil_type,
+               status,
+               note,
+               created_at,
+               created_by,
+               updated_at,
+               updated_by,
+               is_deleted
+        FROM u_product
+        WHERE is_deleted = 0
+    </select>
+
+
+    <select id="findAllPaged">
+        SELECT id,
+               coil_code,
+               length_from,
+               length_to,
+               length,
+               name,
+               coil_type,
+               status,
+               note,
+               created_at,
+               created_by,
+               updated_at,
+               updated_by,
+               is_deleted
+        FROM u_product
+        WHERE is_deleted = 0
+        <if test="paging != null and paging.orderByClause != null">
+            ORDER BY ${paging.orderByClause}
+        </if>
+        LIMIT #{limit} OFFSET #{offset}
+    </select>
+
+
+    <insert id="insert">
+        INSERT INTO u_product (coil_code,
+                            length_from,
+                            length_to,
+                            length,
+                            name,
+                            coil_type,
+                            status,
+                            note,
+                            created_by,
+                            updated_by)
+        VALUES (#{coilCode},
+                #{lengthFrom},
+                #{lengthTo},
+                #{length},
+                #{name},
+                #{coilType},
+                #{status},
+                #{note},
+                #{createdBy},
+                #{updatedBy})
+    </insert>
+
+
+    <update id="update">
+        UPDATE u_product
+        SET coil_code   = #{coilCode},
+            length_from = #{lengthFrom},
+            length_to   = #{lengthTo},
+            length      = #{length},
+            name        = #{name},
+            coil_type   = #{coilType},
+            status      = #{status},
+            note        = #{note},
+            updated_by  = #{updatedBy}
+        WHERE id = #{id} AND is_deleted = 0
+    </update>
+
+
+    <delete id="deleteById">
+        DELETE FROM u_product
+        WHERE id = #{id}
+    </delete>
+
+
+    <update id="softDeleteById">
+        UPDATE u_product
+        SET is_deleted = 1
+        WHERE id = #{id}
+    </update>
+
+
+    <select id="existsById" resultType="boolean">
+        SELECT EXISTS(
+            SELECT 1
+            FROM u_product
+            WHERE id = #{id} AND is_deleted = 0
+        )
+    </select>
+
+
+    <select id="countAll" resultType="int">
+        SELECT COUNT(id)
+        FROM u_product
+        WHERE is_deleted = 0
+    </select>
+
+
+</mapper>

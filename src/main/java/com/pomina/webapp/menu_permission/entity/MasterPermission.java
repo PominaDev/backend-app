@@ -1,0 +1,24 @@
+package com.pomina.app.menu_permission.entity;
+
+import com.pomina.common.model.BaseEntity;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+public class MasterPermission extends BaseEntity {
+    private Integer masterPermissionId;
+    private Integer masterMenuId;
+    private Integer sysUserId;
+    private Boolean isFull;
+    private Boolean isInsert;
+    private Boolean isDelete;
+    private Boolean isUpdate;
+    private Boolean isRead;
+    private Boolean isPrint;
+    private Boolean isExport;
+}
