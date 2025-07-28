@@ -5,17 +5,23 @@ spring:
   profiles:
     active: dev
 
+  threads:
+    virtual:
+      enabled: true
+
   logging:
+    file:
+      path: logs
+      name: logs/app.log
     level:
       root: INFO
-      org.springframework: DEBUG
-    file:
-      name: logs/app.log
+      org.springframework.web: INFO
+      com.pomina: DEBUG
+      org.apache.ibatis: DEBUG
+      org.mybatis: DEBUG
+      org.mybatis.spring: DEBUG
+      org.springframework.jdbc.core: TRACE
 
 mybatis:
   config-location: classpath:/mybatis/configuration/mybatis-config.xml
   mapper-locations: classpath:/mybatis/mapper/**/*.xml
-  type-aliases-package:
-    com.pomina.erpapp.appbaohanh.client_managerment.entity
-    com.pomina.erpapp.appbaohanh.product_warranty_activation.entity
-    com.pomina.erpapp.appbaohanh.location_validation.entity

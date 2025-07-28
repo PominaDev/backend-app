@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.pomina.erpapp.appbaohanh.product_warranty_activation.mapper.ProductMapper">
-
+<mapper namespace="com.pomina.appbaohanh.product_warranty_activation.mapper.ProductMapper">
 
     <select id="findById">
         SELECT id,
@@ -18,7 +17,7 @@
                updated_at,
                updated_by,
                is_deleted
-        FROM product
+        FROM u_product
         WHERE id = #{id} AND is_deleted = 0
     </select>
 
@@ -38,7 +37,7 @@
                updated_at,
                updated_by,
                is_deleted
-        FROM product
+        FROM u_product
         WHERE is_deleted = 0
     </select>
 
@@ -58,7 +57,7 @@
                updated_at,
                updated_by,
                is_deleted
-        FROM product
+        FROM u_product
         WHERE is_deleted = 0
         <if test="paging != null and paging.orderByClause != null">
             ORDER BY ${paging.orderByClause}
@@ -68,7 +67,7 @@
 
 
     <insert id="insert">
-        INSERT INTO product(coil_code,
+        INSERT INTO u_product (coil_code,
                             length_from,
                             length_to,
                             length,
@@ -92,7 +91,7 @@
 
 
     <update id="update">
-        UPDATE product
+        UPDATE u_product
         SET coil_code   = #{coilCode},
             length_from = #{lengthFrom},
             length_to   = #{lengthTo},
@@ -107,13 +106,13 @@
 
 
     <delete id="deleteById">
-        DELETE FROM product
+        DELETE FROM u_product
         WHERE id = #{id}
     </delete>
 
 
     <update id="softDeleteById">
-        UPDATE product
+        UPDATE u_product
         SET is_deleted = 1
         WHERE id = #{id}
     </update>
@@ -122,7 +121,7 @@
     <select id="existsById" resultType="boolean">
         SELECT EXISTS(
             SELECT 1
-            FROM product
+            FROM u_product
             WHERE id = #{id} AND is_deleted = 0
         )
     </select>
@@ -130,7 +129,7 @@
 
     <select id="countAll" resultType="int">
         SELECT COUNT(id)
-        FROM product
+        FROM u_product
         WHERE is_deleted = 0
     </select>
 

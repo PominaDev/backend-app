@@ -31,3 +31,10 @@ build/
 
 ### VS Code ###
 .vscode/
+
+### Environment Settings ###
+/.env
+application-prod.yaml
+
+### Log ###
+logs

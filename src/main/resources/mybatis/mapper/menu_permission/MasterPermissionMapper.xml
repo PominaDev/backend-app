@@ -2,10 +2,10 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.pomina.erpapp.appbaohanh.web.menu_permission.mapper.MasterPermissionMapper">
+<mapper namespace="com.pomina.appbaohanh.menu_permission.mapper.MasterPermissionMapper">
 
     <resultMap id="MasterPermissionResultMap"
-               type="com.pomina.erpapp.appbaohanh.web.menu_permission.entity.MasterPermission">
+               type="com.pomina.appbaohanh.menu_permission.entity.MasterPermission">
         <id column="master_permission_id" property="masterPermissionId"/>
         <result column="master_menu_id" property="masterMenuId"/>
         <result column="sys_user_id" property="sysUserId"/>
@@ -26,7 +26,7 @@
     </resultMap>
 
     <resultMap id="MenuPermissionResultMap"
-               type="com.pomina.erpapp.appbaohanh.web.menu_permission.entity.MenuPermission">
+               type="com.pomina.appbaohanh.menu_permission.entity.MenuPermission">
         <id column="master_permission_id" property="masterPermissionId"/>
         <result column="sys_user_id" property="sysUserId"/>
         <result column="is_full" property="isFull"/>
@@ -36,7 +36,7 @@
         <result column="is_read" property="isRead"/>
         <result column="is_print" property="isPrint"/>
         <result column="is_export" property="isExport"/>
-        <association property="masterMenu" javaType="com.pomina.erpapp.appbaohanh.web.menu_permission.entity.MasterMenu">
+        <association property="masterMenu" javaType="com.pomina.appbaohanh.menu_permission.entity.MasterMenu">
             <id column="master_menu_id" property="masterMenuId"/>
             <result column="master_menu_name" property="masterMenuName"/>
             <result column="is_parent" property="isParent"/>
@@ -48,7 +48,6 @@
             <result column="mn.noted" property="noted"/>
         </association>
     </resultMap>
-
 
     <select id="findById" resultMap="MasterPermissionResultMap">
         SELECT master_permission_id,

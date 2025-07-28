@@ -101,11 +101,11 @@
             <artifactId>spring-boot-starter-aop</artifactId>
         </dependency>
 <!--        API Nominatim for location feature-->
-        <dependency>
-            <groupId>fr.dudie</groupId>
-            <artifactId>nominatim-api</artifactId>
-            <version>3.4</version>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>fr.dudie</groupId>-->
+<!--            <artifactId>nominatim-api</artifactId>-->
+<!--            <version>3.4</version>-->
+<!--        </dependency>-->
 <!--        API Vonage to send OTP-->
         <dependency>
             <groupId>com.vonage</groupId>
