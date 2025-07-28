@@ -14,6 +14,7 @@ import com.pomina.erpapp.appbaohanh.web.menu_permission.dto.response.MasterMenuR
 import com.pomina.erpapp.appbaohanh.web.menu_permission.service.MasterMenuService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,6 +27,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
+@Slf4j
 @RestController
 @RequestMapping(ApiConstants.ApiMasterMenu.BASE)
 @RequiredArgsConstructor
@@ -35,17 +37,33 @@ public class MasterMenuController extends BaseController<MasterMenuCreateDto, Ma
     private final MasterMenuConverter masterMenuConverter;
     private final MasterMenuService masterMenuService;
 
-    @Override
     @PostMapping(ApiConstants.ApiMasterMenu.CREATE)
-    public ResponseEntity<ApiResponse<Integer>> create(@Valid @RequestBody MasterMenuCreateDto dto) {
+    @Override
+    public ResponseEntity<ApiResponse<Integer>> create(MasterMenuCreateDto dto) {
         MasterMenuRequestDto requestDto = masterMenuConverter.toMasterMenuRequestDto(dto);
         return ResponseHandler.success(masterMenuService.create(requestDto));
+    }
+
+    /* API create a MasterMenu List
+     * - List MenuCreate has: 1 parent and children (at least 1 child
+     * - Response: Inserted rows
+    */
+    @PostMapping(ApiConstants.ApiMasterMenu.CREATE_LIST)
+    public ResponseEntity<ApiResponse<Integer>> createListMenu(@RequestBody List<MasterMenuCreateDto> createDtoList) {
+        //convert List<CreateDTO> to List<RequestDTO>
+        List<MasterMenuRequestDto> requestDtoList = masterMenuConverter.toMasterMenuRequestDtoList(createDtoList);
+        return ResponseHandler.success(masterMenuService.createListMasterMenu(requestDtoList));
     }
 
     @Override
     @GetMapping(ApiConstants.ApiMasterMenu.GET_BY_ID)
     public ResponseEntity<ApiResponse<MasterMenuResponseDto>> getById(@PathVariable("id") Integer id) {
         return ResponseHandler.success(masterMenuService.getById(id));
+    }
+
+    @GetMapping(ApiConstants.ApiMasterMenu.GET_ALL)
+    public ResponseEntity<ApiResponse<List<MasterMenuResponseDto>>> getAll() {
+        return ResponseHandler.success(masterMenuService.getAll());
     }
 
     @Override
@@ -56,9 +74,15 @@ public class MasterMenuController extends BaseController<MasterMenuCreateDto, Ma
 
     @Override
     @PostMapping(ApiConstants.ApiMasterMenu.UPDATE)
-    public ResponseEntity<ApiResponse<Integer>> update(@PathVariable("id") Integer id, @Valid @RequestBody MasterMenuUpdateDto dto) {
+    public ResponseEntity<ApiResponse<Integer>> update(@PathVariable("id") Integer id, @RequestBody MasterMenuUpdateDto dto) {
         MasterMenuRequestDto requestDto = masterMenuConverter.toMasterMenuRequestDto(dto);
         return ResponseHandler.success(masterMenuService.update(id, requestDto));
+    }
+
+    @PostMapping(ApiConstants.ApiMasterMenu.UPDATE_LIST)
+    public ResponseEntity<ApiResponse<Integer>> updateListMasterMenu(@RequestBody List<MasterMenuUpdateDto> updateDtoList) {
+        List<MasterMenuRequestDto> requestDtoList = masterMenuConverter.fromUpdateListToMasterRequestDtoList(updateDtoList);
+        return ResponseHandler.success(masterMenuService.updateListMasterMenu(requestDtoList));
     }
 
     @Override
@@ -67,9 +91,6 @@ public class MasterMenuController extends BaseController<MasterMenuCreateDto, Ma
         return ResponseHandler.success(masterMenuService.delete(id));
     }
 
-    @GetMapping(ApiConstants.ApiMasterMenu.GET_ALL)
-    public ResponseEntity<ApiResponse<List<MasterMenuResponseDto>>> getAll() {
-        return ResponseHandler.success(masterMenuService.getAll());
-    }
+
 
 }

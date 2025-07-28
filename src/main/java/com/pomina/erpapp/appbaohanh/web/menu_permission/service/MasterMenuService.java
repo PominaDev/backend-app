@@ -9,6 +9,9 @@ import com.pomina.erpapp.appbaohanh.web.menu_permission.dto.response.MenuStructu
 import java.util.List;
 
 public interface MasterMenuService extends BaseService<MasterMenuRequestDto, MasterMenuResponseDto, Integer> {
+    Integer createListMasterMenu(List<MasterMenuRequestDto> dtoList);
     List<MasterMenuResponseDto> getAll();
     List<MenuStructured> getMenuPermissionByUserId(Integer userId);
+
+    Integer updateListMasterMenu(List<MasterMenuRequestDto> dtoList);
 }

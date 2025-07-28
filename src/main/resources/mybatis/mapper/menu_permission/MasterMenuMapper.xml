@@ -41,6 +41,27 @@
         WHERE master_menu_id = #{id} AND is_deleted = 0
     </select>
 
+    <select id="findByName" resultMap="masterMenuResultMap" >
+        SELECT master_menu_id,
+               master_menu_name,
+               path,
+               icon,
+               is_parent,
+               order_index,
+               parent_id,
+               status,
+               noted,
+               created_at,
+               created_by,
+               updated_at,
+               updated_by,
+               is_deleted
+        FROM master_menu
+        WHERE master_menu_name LIKE CONCAT("%",#{masterMenuName},"%")
+        AND is_parent = 1
+        AND is_deleted = 0
+    </select>
+
     <select id="findAll" resultMap="masterMenuResultMap">
         SELECT
                -- MasterMenuMapper_findAll
@@ -85,7 +106,7 @@
         LIMIT #{limit} OFFSET #{offset}
     </select>
 
-    <insert id="insert" >
+    <insert id="insert" useGeneratedKeys="true">
         INSERT INTO master_menu (
             master_menu_name,
             path,
