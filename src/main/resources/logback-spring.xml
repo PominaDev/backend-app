@@ -1,10 +1,47 @@
 <configuration>
-    <appender name="Console" class="ch.qos.logback.core.ConsoleAppender">
+
+    <property name="LOG_PATH" value="logs"/>
+    <property name="APP_NAME" value="app"/>
+
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
-            <pattern>%d{yyyy-MM-dd HH:mm:ss} %-5level %logger{36} - %msg%n</pattern>
+            <pattern>%d{HH:mm:ss.SSS} %-5level [%X{traceId}] [%thread] %logger{36} - %msg%n</pattern>
         </encoder>
     </appender>
+
+    <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_PATH}/${APP_NAME}.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_PATH}/${APP_NAME}-%d{yyyy-MM-dd}.log</fileNamePattern>
+            <maxHistory>14</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} %-5level [%X{traceId}] [%thread] %logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="ASYNC_FILE" class="ch.qos.logback.classic.AsyncAppender">
+        <queueSize>10240</queueSize>
+        <discardingThreshold>0</discardingThreshold>
+        <appender-ref ref="FILE"/>
+    </appender>
+
+    <!-- Logger cho MyBatis và JDBC -->
+    <logger name="org.apache.ibatis" level="DEBUG"/>
+    <logger name="org.mybatis" level="DEBUG"/>
+    <logger name="org.mybatis.spring" level="DEBUG"/>
+    <logger name="org.springframework.jdbc.core" level="TRACE"/>
+
+    <!-- log4jdbc -->
+    <logger name="jdbc.sqlonly" level="DEBUG"/>
+    <logger name="jdbc.sqltiming" level="DEBUG"/>
+
+    <!-- log toàn bộ app bạn -->
+    <logger name="com.pomina" level="DEBUG"/>
+
     <root level="INFO">
-        <appender-ref ref="Console"/>
+        <appender-ref ref="CONSOLE"/>
+        <appender-ref ref="ASYNC_FILE"/>
     </root>
+
 </configuration>

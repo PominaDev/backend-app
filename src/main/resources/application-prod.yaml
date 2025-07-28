@@ -47,6 +47,11 @@ nominatim:
   email: minhnam1810@gmail.com
   url: https://nominatim.openstreetmap.org
 
+google:
+  maps:
+    api-key: AIzaSyDm-BhvvCnWOUKwQeLxRNSRcfesTssRIZI
+    geocoding-url: https://maps.googleapis.com/maps/api/geocode/json
+
 vonage:
   api:
     key: c53321d0
