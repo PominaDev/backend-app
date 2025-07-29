@@ -2,6 +2,7 @@ package com.pomina.commonservices.product_warranty_activation.service.impl;
 
 import com.pomina.common.model.PageRequest;
 import com.pomina.common.model.PageResponse;
+import com.pomina.common.utils.AuditUtil;
 import com.pomina.commonservices.product_warranty_activation.converter.ProductConverter;
 import com.pomina.commonservices.product_warranty_activation.dto.request.ProductRequestDto;
 import com.pomina.commonservices.product_warranty_activation.dto.response.ProductResponseDto;
@@ -29,6 +30,7 @@ public class ProductServiceImpl implements ProductService {
             throw new RuntimeException("Không tìm thấy product");
         }
         Product product = productConverter.toEntity(dto);
+//        AuditUtil.insert(product); chưa cập nhật AuditUtil
         return productMapper.insert(product);
     }
 
@@ -39,6 +41,7 @@ public class ProductServiceImpl implements ProductService {
             throw new RuntimeException("Không tìm thấy product với ID = " + id);
         }
         productConverter.updateEntityFromDto(dto, product);
+//        AuditUtil.update(product); Chưa cập nhật AuditUtil
         return productMapper.update(product);
     }
 
@@ -62,7 +65,12 @@ public class ProductServiceImpl implements ProductService {
             return null;
         }
 
+//        for (Product product : productInfoList) {
+//            AuditUtil.search(product); Chưa cập nhật AuditUtil
+//        }
+
         List<ProductResponseDto> productResponse = productConverter.toResponseList(productInfoList);
+
 
         int totalElements = productMapper.countAll();
 
@@ -75,6 +83,7 @@ public class ProductServiceImpl implements ProductService {
         if (product == null) {
             throw new RuntimeException("Không tìm thấy product với ID = " + productId);
         }
+//        AuditUtil.delete(product, null);
         return productMapper.softDeleteById(productId);
     }
 
