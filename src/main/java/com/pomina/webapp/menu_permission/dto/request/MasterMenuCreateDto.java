@@ -43,5 +43,4 @@ public class MasterMenuCreateDto {
     @Size(max = 255, message = "Note must not exceed 255 characters")
     private String noted;
 
-    private String createdBy;
 }
