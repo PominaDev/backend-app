@@ -15,4 +15,6 @@ public interface MasterMenuService extends BaseService<MasterMenuRequestDto, Mas
     List<MenuStructured> getMenuPermissionByUserId(Integer userId);
 
     Integer updateListMasterMenu(List<MasterMenuRequestDto> dtoList);
+
+    Integer deleteList(List<Integer> idList);
 }

@@ -47,7 +47,7 @@ public class MasterMenuServiceImpl implements MasterMenuService {
     }
 
     @Override
-    @Transactional
+//    @Transactional
     public Integer updateListMasterMenu(List<MasterMenuRequestDto> dtoList) {
         int updatedRows = 0;
         List<MasterMenu> entityList = masterMenuConverter.toEntityList(dtoList);
@@ -60,6 +60,11 @@ public class MasterMenuServiceImpl implements MasterMenuService {
             }
         }
         return updatedRows;
+    }
+
+    @Override
+    public Integer deleteList(List<Integer> idList) {
+        return masterMenuMapper.softDeleteList(idList);
     }
 
     @Override

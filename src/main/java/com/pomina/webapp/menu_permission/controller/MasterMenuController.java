@@ -68,6 +68,11 @@ public class MasterMenuController extends BaseController<MasterMenuCreateDto, Ma
         return ResponseHandler.success(masterMenuService.delete(id));
     }
 
+    @DeleteMapping(ApiConstants.ApiMasterMenu.DELETE_LIST)
+    public ResponseEntity<ApiResponse<Integer>> deleteList(@RequestBody List<Integer> idList) {
+        return ResponseHandler.success(masterMenuService.deleteList(idList));
+    }
+
     @GetMapping(ApiConstants.ApiMasterMenu.GET_ALL)
     public ResponseEntity<ApiResponse<List<MasterMenuResponseDto>>> getAll() {
         return ResponseHandler.success(masterMenuService.getAll());
