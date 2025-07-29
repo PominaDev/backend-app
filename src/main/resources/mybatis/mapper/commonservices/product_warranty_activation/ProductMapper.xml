@@ -14,9 +14,9 @@
         <result column="bh_an_mon" property="bhAnMon"/>
         <result column="total_weight" property="totalWeight"/>
         <result column="total_length" property="totalLength"/>
-        <result column="m_a_length" property="mALength"/>
-        <result column="m_b_length" property="mBLength"/>
-        <result column="m_c_length" property="mCLength"/>
+        <result column="m_a_length" property="maLength"/>
+        <result column="m_b_length" property="mbLength"/>
+        <result column="m_c_length" property="mcLength"/>
         <result column="status" property="status"/>
         <result column="noted" property="note"/>
         <result column="created_at" property="createdAt"/>
@@ -98,9 +98,9 @@
                 #{bhAnMon},
                 #{totalWeight},
                 #{totalLength},
-                #{mALength},
-                #{mBLength},
-                #{mCLength})
+                #{maLength},
+                #{mbLength},
+                #{mcLength})
     </insert>
 
     <insert id="insertBatch"
@@ -129,9 +129,9 @@
             #{item.bhAnMon},
             #{item.totalWeight},
             #{item.totalLength},
-            #{item.mALength},
-            #{item.mBLength},
-            #{item.mCLength}
+            #{item.maLength},
+            #{item.mbLength},
+            #{item.mcLength}
             )
         </foreach>
     </insert>
@@ -150,29 +150,29 @@
             <if test="loaiCuon != null and loaiCuon != ''">
                 loai_cuon = #{loaiCuon},
             </if>
-            <if test="bhPhaiMau != null and bhPhaiMau != ''">
+            <if test="bhPhaiMau != null">
                 bh_phai_mau = #{bhPhaiMau},
             </if>
-            <if test="bhAnMon != null and bhAnMon != ''">
+            <if test="bhAnMon != null">
                 bh_an_mon = #{bhAnMon},
             </if>
-            <if test="totalWeight != null and totalWeight != ''">
+            <if test="totalWeight != null">
                 total_weight = #{totalWeight},
             </if>
-            <if test="totalLength != null and totalLength != ''">
+            <if test="totalLength != null">
                 total_length = #{totalLength},
             </if>
-            <if test="mALength != null and mALength != ''">
-                m_a_length = #{mALength},
+            <if test="maLength != null">
+                m_a_length = #{maLength},
             </if>
-            <if test="mBLength != null and mBLength != ''">
-                m_b_length = #{mBLength},
+            <if test="mbLength != null">
+                m_b_length = #{mbLength},
             </if>
-            <if test="mCLength != null and mCLength != ''">
-                m_c_length = #{mCLength},
+            <if test="mcLength != null">
+                m_c_length = #{mcLength},
             </if>
         </set>
-        WHERE u_product_id = #{id}
+        WHERE u_product_id = #{productId}
     </update>
 
     <delete id="deleteById">

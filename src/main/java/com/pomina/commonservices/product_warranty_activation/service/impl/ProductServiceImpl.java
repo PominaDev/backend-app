@@ -26,6 +26,9 @@ public class ProductServiceImpl implements ProductService {
     @Override
 //    @Transactional
     public int create(ProductRequestDto dto) {
+        if (dto == null) {
+            throw new RuntimeException("Không tìm thấy product");
+        }
         Product product = productConverter.toEntity(dto);
         return productMapper.insert(product);
     }
@@ -68,8 +71,12 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public int delete(Integer id) {
-        return productMapper.softDeleteById(id);
+    public int delete(Integer productId) {
+        Product product = productMapper.findById(productId);
+        if (product == null) {
+            throw new RuntimeException("Không tìm thấy product với ID = " + productId);
+        }
+        return productMapper.softDeleteById(productId);
     }
 
     @Override

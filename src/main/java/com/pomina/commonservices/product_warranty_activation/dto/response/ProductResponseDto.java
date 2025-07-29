@@ -16,9 +16,9 @@ public class ProductResponseDto {
     private String loaiCuon;
     private Integer bhPhaiMau;
     private Integer bhAnMon;
-    private Double mALength;
-    private Double mBLength;
-    private Double mCLength;
+    private Double maLength;
+    private Double mbLength;
+    private Double mcLength;
     private String status;
     private LocalDateTime updatedAt;
 

@@ -48,7 +48,7 @@ public class ApiConstants {
         public static final String BASE = VERSION_V1 + "/products";
         public static final String CREATE = "/create";
         public static final String UPDATE = "/update/{id}";
-        public static final String DELETE = "/delete";
+        public static final String DELETE = "/delete/{id}";
         public static final String GET_BY_ID = "/{id}";
         public static final String SEARCH = "/search";
 

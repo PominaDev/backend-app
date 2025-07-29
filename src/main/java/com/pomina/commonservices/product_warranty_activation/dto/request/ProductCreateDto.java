@@ -1,10 +1,15 @@
 package com.pomina.commonservices.product_warranty_activation.dto.request;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
 @Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class ProductCreateDto {
     private String maCuonTon;
     private String tenSanPham;
@@ -13,7 +18,10 @@ public class ProductCreateDto {
     private Integer bhAnMon;
     private Double totalWeight;
     private Double totalLength;
-    private Double mALength;
-    private Double mBLength;
-    private Double mCLength;
+    @JsonProperty("mALength")
+    private Double maLength;
+    @JsonProperty("mBLength")
+    private Double mbLength;
+    @JsonProperty("mCLength")
+    private Double mcLength;
 }
