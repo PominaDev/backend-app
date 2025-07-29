@@ -15,7 +15,4 @@ public class MasterMenuUpdateDto {
     private Integer parentId;
     private String status;
     private String noted;
-    private String createdBy;
-    private String updatedBy;
-    private Boolean isDeleted;
 }
