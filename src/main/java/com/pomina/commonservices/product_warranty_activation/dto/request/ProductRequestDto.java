@@ -10,7 +10,6 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ProductRequestDto {
-
     private Integer productId;
     private String maCuonTon;
     private String tenSanPham;

@@ -1,7 +1,5 @@
 package com.pomina.commonservices.product_warranty_activation.dto.request;
 
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.PositiveOrZero;
 import lombok.Getter;
 import lombok.Setter;
 
