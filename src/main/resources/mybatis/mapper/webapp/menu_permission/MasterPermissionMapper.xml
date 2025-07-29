@@ -242,8 +242,8 @@
                     mn.icon,
                     mn.path,
                     mn.order_index,
-                    mn.is_deleted "mn.is_deleted",
-                    mn.noted "mn.noted"
+                    mn.is_deleted mn_is_deleted,
+                    mn.noted mn_noted
                 FROM master_menu mn
                 WHERE mn.is_deleted = false
             </otherwise>
