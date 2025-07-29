@@ -80,8 +80,7 @@
         LIMIT #{limit} OFFSET #{offset}
     </select>
 
-    <insert id="insert"
-            parameterType="com.pomina.commonservices.product_warranty_activation.entity.Product">
+    <insert id="insert" parameterType="com.pomina.commonservices.product_warranty_activation.entity.Product">
         INSERT INTO u_product (ma_cuon_ton,
                                ten_san_pham,
                                loai_cuon,
@@ -103,6 +102,40 @@
                 #{mBLength},
                 #{mCLength})
     </insert>
+
+    <insert id="insertBatch"
+            parameterType="java.util.List"
+            useGeneratedKeys="true"
+            keyProperty="productId">
+        INSERT INTO u_product (
+        ma_cuon_ton,
+        ten_san_pham,
+        loai_cuon,
+        bh_phai_mau,
+        bh_an_mon,
+        total_weight,
+        total_length,
+        m_a_length,
+        m_b_length,
+        m_c_length
+        )
+        VALUES
+        <foreach collection="list" item="item" separator=",">
+            (
+            #{item.maCuonTon},
+            #{item.tenSanPham},
+            #{item.loaiCuon},
+            #{item.bhPhaiMau},
+            #{item.bhAnMon},
+            #{item.totalWeight},
+            #{item.totalLength},
+            #{item.mALength},
+            #{item.mBLength},
+            #{item.mCLength}
+            )
+        </foreach>
+    </insert>
+
 
     <update id="update"
             parameterType="com.pomina.commonservices.product_warranty_activation.entity.Product">

@@ -36,24 +36,13 @@ public class ProductServiceImpl implements ProductService {
         if (product == null) {
             throw new RuntimeException("Không tìm thấy product với ID = " + id);
         }
-
-        product.setTenSanPham(dto.getTenSanPham());
-        product.setLoaiCuon(dto.getLoaiCuon());
-        product.setBhPhaiMau(dto.getBhPhaiMau());
-        product.setBhAnMon(dto.getBhAnMon());
-        product.setTotalWeight(dto.getTotalWeight());
-        product.setTotalLength(dto.getTotalLength());
-        product.setMALength(dto.getMALength());
-        product.setMBLength(dto.getMBLength());
-        product.setMCLength(dto.getMCLength());
-
+        productConverter.updateEntityFromDto(dto, product);
         return productMapper.update(product);
     }
 
     @Override
     public ProductResponseDto getById(Integer id) {
         Product productInfo = productMapper.findById(id);
-
         if (productInfo != null) {
             return productConverter.toResponse(productInfo);
         }
@@ -81,5 +70,15 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public int delete(Integer id) {
         return productMapper.softDeleteById(id);
+    }
+
+    @Override
+//    @Transactional
+    public int insertBatch(List<ProductRequestDto> list) {
+        if (list == null || list.isEmpty()) {
+            return 0;
+        }
+        List<Product> productList = productConverter.toEntityList(list);
+        return productMapper.insertBatch(productList);
     }
 }
