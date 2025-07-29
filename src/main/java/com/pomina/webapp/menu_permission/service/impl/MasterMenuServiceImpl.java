@@ -20,7 +20,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -106,7 +105,7 @@ public class MasterMenuServiceImpl implements MasterMenuService {
         //set parent id
         Integer parentId = masterMenuMapper.findByName(parentDto.getMasterMenuName()).getMasterMenuId();
         for (MasterMenu menu : entityList) {
-            if(!menu.getIsParent()){
+            if(Boolean.FALSE.equals(menu.getIsParent())){
                 menu.setParentId(parentId);
                 insertedRows += masterMenuMapper.insert(menu);
             }
@@ -132,7 +131,7 @@ public class MasterMenuServiceImpl implements MasterMenuService {
         List<MasterMenu> parentMenus = new ArrayList<>();
 
         for (MasterMenu menu : menus) {
-            if (menu.getIsParent()) {
+            if (Boolean.TRUE.equals(menu.getIsParent())) {
                 parentMenus.add(menu);
             }
         }
@@ -175,7 +174,7 @@ public class MasterMenuServiceImpl implements MasterMenuService {
         List<MasterMenu> children = new ArrayList<>();
         for (MasterMenu menu : allMenus) {
             if (parentMenu.getMasterMenuId().equals(menu.getParentId()) &&
-                    !menu.getIsParent()) {
+                    Boolean.TRUE.equals(!menu.getIsParent())) {
                 children.add(menu);
             }
         }
@@ -222,10 +221,10 @@ public class MasterMenuServiceImpl implements MasterMenuService {
         }
         // Structured Menu
         List<MenuPermissionResponseDto> menuPermissionResponseDtoParent = listMenuPermissionResponseDtos.stream()
-                .filter(e -> e.getIsParent() == true)
+                .filter(e -> e.getIsParent())
                 .toList();
         List<MenuPermissionResponseDto> menuPermissionResponseDtoChild = listMenuPermissionResponseDtos.stream()
-                .filter(e -> e.getIsParent() == false)
+                .filter(e -> !e.getIsParent())
                 .toList();
         for (MenuPermissionResponseDto parent : menuPermissionResponseDtoParent) {
             MenuStructured item = new MenuStructured();
@@ -241,7 +240,7 @@ public class MasterMenuServiceImpl implements MasterMenuService {
             item.setPermission(parent.getPermission());
             List<MenuPermissionResponseDto> listItem = menuPermissionResponseDtoChild.stream()
                     .filter(e -> Objects.equals(e.getParentId(), parent.getMasterMenuId()))
-                    .collect(Collectors.toList());
+                    .toList();
             item.setItemMenu(listItem);
             finalMenu.add(item);
         }
