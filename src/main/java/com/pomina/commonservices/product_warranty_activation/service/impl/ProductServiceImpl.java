@@ -24,7 +24,7 @@ public class ProductServiceImpl implements ProductService {
     private final ProductConverter productConverter;
 
     @Override
-    @Transactional
+//    @Transactional
     public int create(ProductRequestDto dto) {
         Product product = productConverter.toEntity(dto);
         return productMapper.insert(product);
@@ -32,7 +32,21 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public int update(Integer id, ProductRequestDto dto) {
-        Product product = productConverter.toEntity(dto);
+        Product product = productMapper.findById(id);
+        if (product == null) {
+            throw new RuntimeException("Không tìm thấy product với ID = " + id);
+        }
+
+        product.setTenSanPham(dto.getTenSanPham());
+        product.setLoaiCuon(dto.getLoaiCuon());
+        product.setBhPhaiMau(dto.getBhPhaiMau());
+        product.setBhAnMon(dto.getBhAnMon());
+        product.setTotalWeight(dto.getTotalWeight());
+        product.setTotalLength(dto.getTotalLength());
+        product.setMALength(dto.getMALength());
+        product.setMBLength(dto.getMBLength());
+        product.setMCLength(dto.getMCLength());
+
         return productMapper.update(product);
     }
 
@@ -65,5 +79,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public int delete(Integer id) {return productMapper.deleteById(id); }
+    public int delete(Integer id) {
+        return productMapper.softDeleteById(id);
+    }
 }

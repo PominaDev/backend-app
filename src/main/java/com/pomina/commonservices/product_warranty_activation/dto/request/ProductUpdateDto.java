@@ -12,7 +12,6 @@ import lombok.Setter;
 @NoArgsConstructor
 public class ProductUpdateDto {
 
-    private Integer productId;
     private String maCuonTon;
     private String tenSanPham;
     private Double totalWeight;
@@ -23,5 +22,4 @@ public class ProductUpdateDto {
     private Double mALength;
     private Double mBLength;
     private Double mCLength;
-    private String status;
 }
