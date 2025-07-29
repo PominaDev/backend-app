@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
 <mapper namespace="com.pomina.commonservices.product_warranty_activation.mapper.ProductMapper">
 
     <resultMap id="ProductResultMap" type="com.pomina.commonservices.product_warranty_activation.entity.Product">
@@ -23,7 +26,41 @@
         <result column="is_deleted" property="isDeleted"/>
     </resultMap>
 
-    <sql id="BaseColumnList">
+    <select id="findById" resultMap="ProductResultMap">
+        SELECT u_product_id,
+               ma_cuon_ton,
+               ten_san_pham,
+               loai_cuon,
+               bh_phai_mau,
+               bh_an_mon,
+               total_weight,
+               total_length,
+               m_a_length,
+               m_b_length,
+               m_c_length
+        FROM u_product
+        WHERE u_product_id = #{id}
+          AND is_deleted = 0
+    </select>
+
+    <select id="findAll" resultMap="ProductResultMap">
+        SELECT u_product_id,
+               ma_cuon_ton,
+               ten_san_pham,
+               loai_cuon,
+               bh_phai_mau,
+               bh_an_mon,
+               total_weight,
+               total_length,
+               m_a_length,
+               m_b_length,
+               m_c_length
+        FROM u_product
+        WHERE is_deleted = 0
+    </select>
+
+    <select id="findAllPaged" resultMap="ProductResultMap">
+        SELECT
         u_product_id,
         ma_cuon_ton,
         ten_san_pham,
@@ -35,23 +72,6 @@
         m_a_length,
         m_b_length,
         m_c_length
-    </sql>
-
-    <select id="findById" resultMap="ProductResultMap">
-        SELECT <include refid="BaseColumnList"/>
-        FROM u_product
-        WHERE u_product_id = #{id}
-          AND is_deleted = 0
-    </select>
-
-    <select id="findAll" resultMap="ProductResultMap">
-        SELECT <include refid="BaseColumnList"/>
-        FROM u_product
-        WHERE is_deleted = 0
-    </select>
-
-    <select id="findAllPaged" resultMap="ProductResultMap">
-        SELECT <include refid="BaseColumnList"/>
         FROM u_product
         WHERE is_deleted = 0
         <if test="paging != null and paging.orderByClause != null">
@@ -60,32 +80,66 @@
         LIMIT #{limit} OFFSET #{offset}
     </select>
 
-    <insert id="insert" parameterType="com.pomina.commonservices.product_warranty_activation.entity.Product" useGeneratedKeys="true" keyProperty="productId">
-        INSERT INTO u_product (
-            ma_cuon_ton, ten_san_pham, loai_cuon,
-            bh_phai_mau, bh_an_mon,
-            total_weight, total_length,
-            m_a_length, m_b_length, m_c_length
-        ) VALUES (
-            #{maCuonTon}, #{tenSanPham}, #{loaiCuon},
-            #{bhPhaiMau}, #{bhAnMon},
-            #{totalWeight}, #{totalLength},
-            #{mALength}, #{mBLength}, #{mCLength}
-        )
+    <insert id="insert"
+            parameterType="com.pomina.commonservices.product_warranty_activation.entity.Product">
+        INSERT INTO u_product (ma_cuon_ton,
+                               ten_san_pham,
+                               loai_cuon,
+                               bh_phai_mau,
+                               bh_an_mon,
+                               total_weight,
+                               total_length,
+                               m_a_length,
+                               m_b_length,
+                               m_c_length)
+        VALUES (#{maCuonTon},
+                #{tenSanPham},
+                #{loaiCuon},
+                #{bhPhaiMau},
+                #{bhAnMon},
+                #{totalWeight},
+                #{totalLength},
+                #{mALength},
+                #{mBLength},
+                #{mCLength})
     </insert>
 
-    <update id="update" parameterType="com.pomina.commonservices.product_warranty_activation.entity.Product">
+    <update id="update"
+            parameterType="com.pomina.commonservices.product_warranty_activation.entity.Product">
         UPDATE u_product
-        SET ma_cuon_ton = #{maCuonTon},
-            ten_san_pham = #{tenSanPham},
-            loai_cuon = #{loaiCuon},
-            bh_phai_mau = #{bhPhaiMau},
-            bh_an_mon = #{bhAnMon},
-            total_weight = #{totalWeight},
-            total_length = #{totalLength},
-            m_a_length = #{mALength},
-            m_b_length = #{mBLength},
-            m_c_length = #{mCLength}
+        <set>
+            <if test="maCuonTon != null and maCuonTon != ''">
+                ma_cuon_ton = #{maCuonTon},
+            </if>
+            <if test="tenSanPham != null and tenSanPham != ''">
+                ten_san_pham = #{tenSanPham},
+            </if>
+            <if test="loaiCuon != null and loaiCuon != ''">
+                loai_cuon = #{loaiCuon},
+            </if>
+            <if test="bhPhaiMau != null and bhPhaiMau != ''">
+                bh_phai_mau = #{bhPhaiMau},
+            </if>
+            <if test="bhAnMon != null and bhAnMon != ''">
+                bh_an_mon = #{bhAnMon},
+            </if>
+            <if test="totalWeight != null and totalWeight != ''">
+                total_weight = #{totalWeight},
+            </if>
+            <if test="totalLength != null and totalLength != ''">
+                total_length = #{totalLength},
+            </if>
+            <if test="mALength != null and mALength != ''">
+                m_a_length = #{mALength},
+            </if>
+            <if test="mBLength != null and mBLength != ''">
+                m_b_length = #{mBLength},
+            </if>
+            <if test="mCLength != null and mCLength != ''">
+                m_c_length = #{mCLength},
+            </if>
+        </set>
+        WHERE u_product_id = #{id}
     </update>
 
     <delete id="deleteById">
@@ -101,12 +155,10 @@
     </update>
 
     <select id="existsById" resultType="boolean">
-        SELECT EXISTS(
-            SELECT 1
-            FROM u_product
-            WHERE u_product_id = #{id}
-              AND is_deleted = 0
-        )
+        SELECT EXISTS (SELECT 1
+                       FROM u_product
+                       WHERE u_product_id = #{id}
+                         AND is_deleted = 0)
     </select>
 
     <select id="countAll" resultType="int">
