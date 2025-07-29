@@ -20,7 +20,6 @@ public class ProductServiceImpl implements ProductService {
 
     // Dependency injection
     private final ProductMapper productMapper;
-
     private final ProductConverter productConverter;
 
     @Override

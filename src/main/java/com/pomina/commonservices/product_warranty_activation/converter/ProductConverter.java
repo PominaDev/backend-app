@@ -21,5 +21,6 @@ public interface ProductConverter extends BaseConverter<ProductRequestDto, Produ
 
     // Mapping from RequestDto to Entity (exclude productId to avoid overwriting)
     @Mapping(target = "productId", ignore = true)
+    // ignore productId vì nếu body có trường productId người dùng update thì không công cập nhật productId người dung truyền vào mà cập nhật theo productId trong findById
     void updateEntityFromDto(ProductRequestDto dto, @MappingTarget Product entity);
 }
