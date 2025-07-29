@@ -5,6 +5,7 @@ import lombok.Getter;
 @Getter
 public enum ErrorCode {
     INTERNAL_ERROR("5000", "Lỗi hệ thống"),
+    UNAUTHORIZED("5000", "Không có quyền truy cập"),
     TOKEN_EXPIRED("5000", "Token đã hết hạn"),
     INVALID_REFRESH_TOKEN("5000", "Lỗi refresh token"),
     INVALID_TOKEN("5000", "Token không hợp lệ"),

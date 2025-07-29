@@ -9,4 +9,6 @@ public interface LocationService extends BaseService<LocationRequestDto, Locatio
     LocationResponseDto registerLocation(LocationRequestDto request);
 
     CheckLocationResponse checkLocation(LocationRequestDto request);
+
+    LocationResponseDto getLocationFromCoordinates(Double latitude, Double longitude);
 }

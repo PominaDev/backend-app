@@ -9,13 +9,13 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
-import java.time.Instant;
 import java.util.Optional;
 
 @Component
@@ -68,6 +68,17 @@ public class JwtAuthentication extends OncePerRequestFilter {
         filterChain.doFilter(request, response);
     }
 
+    public static Integer getCurrentUserId() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if (auth != null && auth.isAuthenticated()) {
+            Object principal = auth.getPrincipal();
+            if (principal instanceof UserPrincipal userPrincipal) {
+                return userPrincipal.getUserId();
+            }
+        }
+        return null;
+    }
+
     private Optional<String> extractTokenFromRequest(HttpServletRequest request) {
         String token = request.getHeader("Authorization");
         if (StringUtils.hasText(token) && token.startsWith("Bearer ")) {
@@ -80,10 +91,5 @@ public class JwtAuthentication extends OncePerRequestFilter {
         String tokenType = jwt.getClaim("tokenType").asString();
         return "REFRESH_TOKEN".equals(tokenType)
                 || tokenBlacklistService.isBlacklisted(token);
-    }
-
-    private boolean isAccessTokenExpired(DecodedJWT jwt) {
-        Instant exp = jwt.getExpiresAt().toInstant();
-        return exp.isBefore(Instant.now());
     }
 }

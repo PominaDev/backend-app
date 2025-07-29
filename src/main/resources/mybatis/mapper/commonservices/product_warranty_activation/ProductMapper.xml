@@ -2,6 +2,39 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.pomina.commonservices.product_warranty_activation.mapper.ProductMapper">
 
+    <resultMap id="ProductWithWarrantyResultMap"
+               type="com.pomina.commonservices.product_warranty_activation.entity.Product">
+        <id property="productId" column="u_product_id"/>
+        <result property="maCuonTon" column="ma_cuon_ton"/>
+        <result property="tenSanPham" column="ten_san_pham"/>
+        <result property="loaiCuon" column="loai_cuon"/>
+        <result property="bhPhaiMau" column="bh_phai_mau"/>
+        <result property="bhAnMon" column="bh_an_mon"/>
+        <result property="totalWeight" column="total_weight"/>
+        <result property="totalLength" column="total_length"/>
+        <result property="mALength" column="m_a_length"/>
+        <result property="mBLength" column="m_b_length"/>
+        <result property="mCLength" column="m_c_length"/>
+
+        <association property="warranty"
+                     javaType="com.pomina.commonservices.product_warranty_activation.entity.Warranty">
+            <id property="warrantyId" column="u_warranty_id"/>
+            <result property="userId" column="user_id"/>
+            <result property="latitude" column="latitude"/>
+            <result property="longitude" column="longitude"/>
+            <result property="address01" column="address01"/>
+            <result property="address02" column="address02"/>
+            <result property="address03" column="address03"/>
+            <result property="address04" column="address04"/>
+            <result property="address05" column="address05"/>
+            <result property="countryCode" column="country_code"/>
+            <result property="fromWarrantyPhaiMau" column="from_warranty_phai_mau"/>
+            <result property="toWarrantyPhaiMau" column="to_warranty_phai_mau"/>
+            <result property="fromWarrantyAnMon" column="from_warranty_an_mon"/>
+            <result property="toWarrantyAnMon" column="to_warranty_an_mon"/>
+        </association>
+    </resultMap>
+
     <select id="findById">
         SELECT master_product_id,
                ma_cuon_ton,
@@ -80,14 +113,11 @@
         LIMIT #{limit} OFFSET #{offset}
     </select>
 
-
     <insert id="insert">
     </insert>
 
-
     <update id="update">
     </update>
-
 
     <delete id="deleteById">
         DELETE
@@ -95,13 +125,11 @@
         WHERE master_product_id = #{id}
     </delete>
 
-
     <update id="softDeleteById">
         UPDATE master_product
         SET is_deleted = 1
         WHERE master_product_id = #{id}
     </update>
-
 
     <select id="existsById" resultType="boolean">
         SELECT EXISTS(
@@ -111,12 +139,51 @@
         )
     </select>
 
-
     <select id="countAll" resultType="int">
         SELECT COUNT(master_product_id)
         FROM master_product
         WHERE is_deleted = 0
     </select>
 
+    <select id="findProductAndWarrantyByMaCuonTon" resultMap="ProductWithWarrantyResultMap">
+        SELECT w.u_warranty_id,
+               w.user_id,
+               w.latitude,
+               w.longitude,
+               w.address01,
+               w.address02,
+               w.address03,
+               w.address04,
+               w.address05,
+               w.country_code,
+               w.ma_cuon_ton,
+               w.from_warranty_phai_mau,
+               w.to_warranty_phai_mau,
+               w.from_warranty_an_mon,
+               w.to_warranty_an_mon,
+               w.status,
+               w.noted,
+               w.created_at,
+               w.created_by,
+               w.updated_at,
+               w.updated_by,
+               w.is_deleted,
+
+               p.u_product_id,
+               p.ten_san_pham,
+               p.loai_cuon,
+               p.bh_phai_mau,
+               p.bh_an_mon,
+               p.total_weight,
+               p.total_length,
+               p.m_a_length,
+               p.m_b_length,
+               p.m_c_length
+
+        FROM u_product p
+                 LEFT JOIN u_warranty w ON w.ma_cuon_ton = p.ma_cuon_ton AND w.is_deleted = 0
+        WHERE p.ma_cuon_ton = #{maCuonTon}
+        LIMIT 1
+    </select>
 
 </mapper>

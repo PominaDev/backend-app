@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pomina.commonservices.product_warranty_activation.mapper.WarrantyMapper">
+
+    <resultMap id="WarrantyResultMap" type="com.pomina.commonservices.product_warranty_activation.entity.Warranty">
+        <id column="u_warranty_id" property="uWarrantyId"/>
+        <result column="user_id" property="userId"/>
+        <result column="latitude" property="latitude"/>
+        <result column="longitude" property="longitude"/>
+        <result column="address01" property="address01"/>
+        <result column="address02" property="address02"/>
+        <result column="address03" property="address03"/>
+        <result column="address04" property="address04"/>
+        <result column="address05" property="address05"/>
+        <result column="country_code" property="countryCode"/>
+        <result column="ma_cuon_ton" property="maCuonTon"/>
+        <result column="from_warranty_phai_mau" property="fromWarrantyPhaiMau"/>
+        <result column="to_warranty_phai_mau" property="toWarrantyPhaiMau"/>
+        <result column="from_warranty_an_mon" property="fromWarrantyAnMon"/>
+        <result column="to_warranty_an_mon" property="toWarrantyAnMon"/>
+        <result column="status" property="status"/>
+        <result column="noted" property="note"/>
+        <result column="created_at" property="createdAt"/>
+        <result column="created_by" property="createdBy"/>
+        <result column="updated_at" property="updatedAt"/>
+        <result column="updated_by" property="updatedBy"/>
+        <result column="is_deleted" property="isDeleted"/>
+    </resultMap>
+
+    <select id="findByMaCuonTon" resultType="com.pomina.commonservices.product_warranty_activation.entity.Warranty">
+        SELECT u_warranty_id,
+               user_id,
+               latitude,
+               longitude,
+               address01,
+               address02,
+               address03,
+               address04,
+               address05,
+               country_code,
+               ma_cuon_ton,
+               from_warranty_phai_mau,
+               to_warranty_phai_mau,
+               from_warranty_an_mon,
+               to_warranty_an_mon,
+               status,
+               noted,
+               created_at,
+               created_by,
+               updated_at,
+               updated_by,
+               is_deleted
+        FROM u_warranty
+        WHERE ma_cuon_ton = #{maCuonTon}
+          AND is_deleted = 0
+        LIMIT 1
+    </select>
+
+    <insert id="insert" parameterType="com.pomina.commonservices.product_warranty_activation.entity.Warranty"
+            useGeneratedKeys="true" keyProperty="warrantyId">
+        INSERT INTO u_warranty (user_id,
+                                latitude,
+                                longitude,
+                                address01,
+                                address02,
+                                address03,
+                                address04,
+                                address05,
+                                country_code,
+                                ma_cuon_ton,
+                                from_warranty_phai_mau,
+                                to_warranty_phai_mau,
+                                from_warranty_an_mon,
+                                to_warranty_an_mon,
+                                status,
+                                noted,
+                                created_at,
+                                created_by,
+                                updated_at,
+                                updated_by,
+                                is_deleted)
+        VALUES (#{userId},
+                #{latitude},
+                #{longitude},
+                #{address01},
+                #{address02},
+                #{address03},
+                #{address04},
+                #{address05},
+                #{countryCode},
+                #{maCuonTon},
+                #{fromWarrantyPhaiMau},
+                #{toWarrantyPhaiMau},
+                #{fromWarrantyAnMon},
+                #{toWarrantyAnMon},
+                #{status},
+                #{note},
+                NOW(),
+                #{createdBy},
+                NOW(),
+                #{updatedBy},
+                #{isDeleted})
+    </insert>
+
+    <update id="update" parameterType="com.pomina.commonservices.product_warranty_activation.entity.Warranty">
+        UPDATE u_warranty
+        SET user_id                = #{userId},
+            latitude               = #{latitude},
+            longitude              = #{longitude},
+            address01              = #{address01},
+            address02              = #{address02},
+            address03              = #{address03},
+            address04              = #{address04},
+            address05              = #{address05},
+            country_code           = #{countryCode},
+            ma_cuon_ton            = #{maCuonTon},
+            from_warranty_phai_mau = #{fromWarrantyPhaiMau},
+            to_warranty_phai_mau   = #{toWarrantyPhaiMau},
+            from_warranty_an_mon   = #{fromWarrantyAnMon},
+            to_warranty_an_mon     = #{toWarrantyAnMon},
+            status                 = #{status},
+            noted                  = #{noted},
+            updated_at             = NOW(),
+            updated_by             = #{updatedBy},
+            is_deleted             = #{isDeleted}
+        WHERE u_warranty_id = #{uWarrantyId}
+    </update>
+
+    <select id="findAllPaged" resultMap="WarrantyResultMap">
+        SELECT
+        u_warranty_id,
+        user_id,
+        latitude,
+        longitude,
+        address01,
+        address02,
+        address03,
+        address04,
+        address05,
+        country_code,
+        ma_cuon_ton,
+        from_warranty_phai_mau,
+        to_warranty_phai_mau,
+        from_warranty_an_mon,
+        to_warranty_an_mon,
+        status,
+        noted,
+        created_at,
+        created_by,
+        updated_at,
+        updated_by,
+        is_deleted
+        FROM u_warranty
+        WHERE is_deleted = 0
+        <if test="paging.sort != null and paging.sort != ''">
+            ORDER BY ${paging.sort} ${paging.direction}
+        </if>
+        LIMIT #{limit} OFFSET #{offset}
+    </select>
+
+</mapper>
