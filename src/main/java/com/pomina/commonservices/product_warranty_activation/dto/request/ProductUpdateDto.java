@@ -11,12 +11,17 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ProductUpdateDto {
-    @NotBlank(message = "Coil code is mandatory")
-    private String coilCode;
 
-    private Integer lengthFrom;
-    private Integer lengthTo;
-    private Integer length;
-    private String name;
-    private String coilType;
+    private Integer productId;
+    private String maCuonTon;
+    private String tenSanPham;
+    private Double totalWeight;
+    private Double totalLength;
+    private String loaiCuon;
+    private Integer bhPhaiMau;
+    private Integer bhAnMon;
+    private Double mALength;
+    private Double mBLength;
+    private Double mCLength;
+    private String status;
 }

@@ -11,18 +11,15 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Product extends BaseEntity {
-
-    private Integer id;
-
-    private String coilCode;
-
-    private Double lengthFrom;
-
-    private Double lengthTo;
-
-    private Double length;
-
-    private String name;
-
-    private String coilType;
+    private Integer productId;
+    private String maCuonTon;
+    private String tenSanPham;
+    private String loaiCuon;
+    private Integer bhPhaiMau;
+    private Integer bhAnMon;
+    private Double totalWeight;
+    private Double totalLength;
+    private Double mALength;
+    private Double mBLength;
+    private Double mCLength;
 }
