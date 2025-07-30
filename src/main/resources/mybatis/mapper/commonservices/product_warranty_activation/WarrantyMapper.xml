@@ -203,8 +203,27 @@
         LEFT JOIN sys_user us ON us.user_id = wr.user_id
         LEFT JOIN u_location lo ON lo.user_id = us.user_id
         <where>
+            wr.is_deleted = 0
             <if test="userId != null">
-                wr.user_id = #{userId}
+                AND wr.user_id = #{userId}
+            </if>
+        </where>
+        <if test="paging != null and paging.orderByClause != null">
+            ORDER BY wr.${paging.orderByClause}
+        </if>
+        LIMIT #{limit} OFFSET #{offset}
+    </select>
+
+    <select id="countWarrantyDetail" resultType="int">
+        SELECT COUNT(*)
+        FROM u_warranty wr
+        LEFT JOIN u_product pr ON wr.ma_cuon_ton = pr.ma_cuon_ton
+        LEFT JOIN sys_user us ON us.user_id = wr.user_id
+        LEFT JOIN u_location lo ON lo.user_id = us.user_id
+        <where>
+            wr.is_deleted = 0
+            <if test="userId != null">
+                AND wr.user_id = #{userId}
             </if>
         </where>
     </select>

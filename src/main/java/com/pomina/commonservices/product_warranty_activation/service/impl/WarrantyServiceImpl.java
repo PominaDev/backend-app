@@ -4,7 +4,9 @@ import com.pomina.common.model.PageRequest;
 import com.pomina.common.model.PageResponse;
 import com.pomina.commonservices.product_warranty_activation.dto.custom_mapper.WarrantyInfoHistory;
 import com.pomina.commonservices.product_warranty_activation.dto.request.WarrantyRequestDto;
+import com.pomina.commonservices.product_warranty_activation.dto.response.ProductResponseDto;
 import com.pomina.commonservices.product_warranty_activation.dto.response.WarrantyResponseDto;
+import com.pomina.commonservices.product_warranty_activation.entity.Product;
 import com.pomina.commonservices.product_warranty_activation.mapper.WarrantyMapper;
 import com.pomina.commonservices.product_warranty_activation.service.WarrantyService;
 import lombok.RequiredArgsConstructor;
@@ -50,12 +52,26 @@ public class WarrantyServiceImpl implements WarrantyService {
      * @return List<WarrantyInfoHistory>
      */
     @Override
-    public List<WarrantyInfoHistory> getWarrantyInfoHistory(boolean forAdmin) {
+    public PageResponse<WarrantyInfoHistory> getWarrantyInfoHistory(PageRequest pageRequest, boolean forAdmin) {
 
         // Tạm thời về sau sẽ nâng cấp tracking device
         // Nếu truyền cờ forAdmin (web) thì lấy tất cả lịch sử kích hoạt
         Integer userId = forAdmin ? null : getCurrentUserId();
 
-        return warrantyMapper.findWarrantyDetail(userId);
+        // Lấy danh sách lịch sử kích hoạt bảo hành
+        List<WarrantyInfoHistory> warrantyInfoHistories = warrantyMapper.findWarrantyDetail(
+                pageRequest.getOffset(),
+                pageRequest.getSize(),
+                pageRequest,
+                userId);
+
+        if (warrantyInfoHistories == null || warrantyInfoHistories.isEmpty()) {
+            return null;
+        }
+
+        // Tính tổng số lượng bản ghi
+        int totalElements = warrantyMapper.countWarrantyDetail(userId);
+
+        return PageResponse.createPaged(warrantyInfoHistories, pageRequest.getPage(), pageRequest.getSize(), totalElements);
     }
 }
