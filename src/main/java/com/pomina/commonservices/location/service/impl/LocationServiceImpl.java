@@ -1,7 +1,7 @@
 package com.pomina.commonservices.location.service.impl;
 
-import com.pomina.common.config.datasource.CustomDataSource;
-import com.pomina.common.config.datasource.DataSourceType;
+import com.pomina.common.config.datasources.CustomDataSource;
+import com.pomina.common.config.datasources.DataSourceType;
 import com.pomina.common.exception.AppException;
 import com.pomina.common.exception.ErrorCode;
 import com.pomina.common.model.PageRequest;
@@ -136,6 +136,7 @@ public class LocationServiceImpl implements LocationService {
         return buildCheckLocationResponse(registeredLocation, distance, isWithinLocation);
     }
 
+    // Test
     private Integer resolveUserId(Integer userId) {
         if (userId != null) {
             return userId;
@@ -181,4 +182,29 @@ public class LocationServiceImpl implements LocationService {
         response.setRegisteredLocation(locationDto);
         return response;
     }
+
+    @Override
+    public LocationResponseDto getLocationFromCoordinates(Double latitude, Double longitude) {
+        // 1. Gọi Google Geocoding API để lấy thông tin địa lý
+        LocationResponse locationResponse = googleGeocodingService.reverseGeocode(latitude, longitude);
+
+        // 2. Build DTO trả về cho client
+        if (locationResponse == null) {
+            return null;
+        }
+
+        LocationResponseDto dto = new LocationResponseDto();
+        dto.setLatitude(latitude);
+        dto.setLongitude(longitude);
+        dto.setRoad(joinNotNull(locationResponse.getStreetNumber(), locationResponse.getStreet()));
+        dto.setWard(locationResponse.getWard());
+        dto.setDistrict(locationResponse.getDistrict());
+        dto.setCity(locationResponse.getCity());
+        dto.setCountry(locationResponse.getCountry());
+        dto.setCountryCode(locationResponse.getPostalCode());
+        dto.setFullAddress(locationResponse.getFullAddress());
+
+        return dto;
+    }
+
 }

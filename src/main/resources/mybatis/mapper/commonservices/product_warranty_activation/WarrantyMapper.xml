@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pomina.commonservices.product_warranty_activation.mapper.WarrantyMapper">
+
+<!--    Base Result Map-->
+    <resultMap id="WarrantyResultMap" type="com.pomina.commonservices.product_warranty_activation.entity.Warranty">
+        <id column="u_warranty_id" property="warrantyId"/>
+        <result column="user_id" property="userId"/>
+        <result column="latitude" property="latitude"/>
+        <result column="longitude" property="longitude"/>
+        <result column="address01" property="address01"/>
+        <result column="address02" property="address02"/>
+        <result column="address03" property="address03"/>
+        <result column="address04" property="address04"/>
+        <result column="address05" property="address05"/>
+        <result column="country_code" property="countryCode"/>
+        <result column="ma_cuon_ton" property="maCuonTon"/>
+        <result column="from_warranty_phai_mau" property="fromWarrantyPhaiMau"/>
+        <result column="to_warranty_phai_mau" property="toWarrantyPhaiMau"/>
+        <result column="from_warranty_an_mon" property="fromWarrantyAnMon"/>
+        <result column="to_warranty_an_mon" property="toWarrantyAnMon"/>
+        <result column="status" property="status"/>
+        <result column="noted" property="note"/>
+        <result column="created_at" property="createdAt"/>
+        <result column="created_by" property="createdBy"/>
+        <result column="updated_at" property="updatedAt"/>
+        <result column="updated_by" property="updatedBy"/>
+        <result column="is_deleted" property="isDeleted"/>
+    </resultMap>
+
+    <resultMap id="WarrantyInfoResultMap"
+               type="com.pomina.commonservices.product_warranty_activation.dto.custom_mapper.WarrantyInfoHistory">
+        <result column="user_id" property="userId"/>
+        <result column="ho_va_ten" property="hoVaTen"/>
+        <result column="phone_number" property="phoneNumber"/>
+
+        <result column="ma_cuon_ton" property="maCuonTon"/>
+        <result column="ten_san_pham" property="tenSanPham"/>
+        <result column="loai_cuon" property="loaiCuon"/>
+        <result column="total_weight" property="totalWeight"/>
+        <result column="total_length" property="totalLength"/>
+        <result column="m_a_length" property="mALength"/>
+        <result column="m_b_length" property="mBLength"/>
+        <result column="m_c_length" property="mCLength"/>
+
+        <result column="location_account_01" property="locationAccount01"/>
+        <result column="location_account_02" property="locationAccount02"/>
+        <result column="location_account_03" property="locationAccount03"/>
+        <result column="location_account_04" property="locationAccount04"/>
+        <result column="location_account_lat" property="locationAccountLat"/>
+        <result column="location_account_long" property="locationAccountLong"/>
+
+        <result column="location_warranty_01" property="locationWarranty01"/>
+        <result column="location_warranty_02" property="locationWarranty02"/>
+        <result column="location_warranty_03" property="locationWarranty03"/>
+        <result column="location_warranty_04" property="locationWarranty04"/>
+        <result column="location_warranty_lat" property="locationWarrantyLat"/>
+        <result column="location_warranty_long" property="locationWarrantyLong"/>
+
+        <result column="from_warranty_an_mon" property="fromWarrantyAnMon"/>
+        <result column="to_warranty_an_mon" property="toWarrantyAnMon"/>
+        <result column="from_warranty_phai_mau" property="fromWarrantyPhaiMau"/>
+        <result column="to_warranty_phai_mau" property="toWarrantyPhaiMau"/>
+    </resultMap>
+
+    <insert id="insert" parameterType="com.pomina.commonservices.product_warranty_activation.entity.Warranty"
+            useGeneratedKeys="true" keyProperty="warrantyId">
+        INSERT INTO u_warranty (user_id,
+                                latitude,
+                                longitude,
+                                address01,
+                                address02,
+                                address03,
+                                address04,
+                                address05,
+                                country_code,
+                                ma_cuon_ton,
+                                from_warranty_phai_mau,
+                                to_warranty_phai_mau,
+                                from_warranty_an_mon,
+                                to_warranty_an_mon,
+                                status,
+                                noted,
+                                created_at,
+                                created_by,
+                                updated_at,
+                                updated_by,
+                                is_deleted)
+        VALUES (#{userId},
+                #{latitude},
+                #{longitude},
+                #{address01},
+                #{address02},
+                #{address03},
+                #{address04},
+                #{address05},
+                #{countryCode},
+                #{maCuonTon},
+                #{fromWarrantyPhaiMau},
+                #{toWarrantyPhaiMau},
+                #{fromWarrantyAnMon},
+                #{toWarrantyAnMon},
+                #{status},
+                #{note},
+                NOW(),
+                #{createdBy},
+                NOW(),
+                #{updatedBy},
+                #{isDeleted})
+    </insert>
+
+    <update id="update" parameterType="com.pomina.commonservices.product_warranty_activation.entity.Warranty">
+        UPDATE u_warranty
+        SET user_id                = #{userId},
+            latitude               = #{latitude},
+            longitude              = #{longitude},
+            address01              = #{address01},
+            address02              = #{address02},
+            address03              = #{address03},
+            address04              = #{address04},
+            address05              = #{address05},
+            country_code           = #{countryCode},
+            ma_cuon_ton            = #{maCuonTon},
+            from_warranty_phai_mau = #{fromWarrantyPhaiMau},
+            to_warranty_phai_mau   = #{toWarrantyPhaiMau},
+            from_warranty_an_mon   = #{fromWarrantyAnMon},
+            to_warranty_an_mon     = #{toWarrantyAnMon},
+            status                 = #{status},
+            noted                  = #{noted},
+            updated_at             = NOW(),
+            updated_by             = #{updatedBy},
+            is_deleted             = #{isDeleted}
+        WHERE u_warranty_id = #{uWarrantyId}
+    </update>
+
+    <select id="findAllPaged" resultMap="WarrantyResultMap">
+        SELECT
+        u_warranty_id,
+        user_id,
+        latitude,
+        longitude,
+        address01,
+        address02,
+        address03,
+        address04,
+        address05,
+        country_code,
+        ma_cuon_ton,
+        from_warranty_phai_mau,
+        to_warranty_phai_mau,
+        from_warranty_an_mon,
+        to_warranty_an_mon,
+        status,
+        noted,
+        created_at,
+        created_by,
+        updated_at,
+        updated_by,
+        is_deleted
+        FROM u_warranty
+        WHERE is_deleted = 0
+        <if test="paging.sort != null and paging.sort != ''">
+            ORDER BY ${paging.sort} ${paging.direction}
+        </if>
+        LIMIT #{limit} OFFSET #{offset}
+    </select>
+
+    <select id="findWarrantyDetail" resultMap="WarrantyInfoResultMap">
+        SELECT us.user_id,
+        us.ho_va_ten,
+        us.phone_number,
+
+        pr.ma_cuon_ton,
+        pr.ten_san_pham,
+        pr.loai_cuon,
+        pr.total_weight,
+        pr.total_length,
+        pr.m_a_length,
+        pr.m_b_length,
+        pr.m_c_length,
+
+        lo.address01 location_account_01,
+        lo.address02 location_account_02,
+        lo.address03 location_account_03,
+        lo.address04 location_account_04,
+        lo.latitude  location_account_lat,
+        lo.longitude location_account_long,
+
+        wr.address01 location_warranty_01,
+        wr.address02 location_warranty_02,
+        wr.address03 location_warranty_03,
+        wr.address04 location_warranty_04,
+        wr.latitude  location_warranty_lat,
+        wr.longitude location_warranty_long,
+
+        wr.from_warranty_an_mon,
+        wr.to_warranty_an_mon,
+        wr.from_warranty_phai_mau,
+        wr.to_warranty_phai_mau
+
+        FROM u_warranty wr
+        LEFT JOIN u_product pr ON wr.ma_cuon_ton = pr.ma_cuon_ton
+        LEFT JOIN sys_user us ON us.user_id = wr.user_id
+        LEFT JOIN u_location lo ON lo.user_id = us.user_id
+        <where>
+            <if test="userId != null">
+                wr.user_id = #{userId}
+            </if>
+        </where>
+    </select>
+
+</mapper>

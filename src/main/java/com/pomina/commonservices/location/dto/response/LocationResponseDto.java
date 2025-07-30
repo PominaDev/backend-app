@@ -23,5 +23,7 @@ public class LocationResponseDto {
 
     private String country;
 
+    private String countryCode;
+
     private String fullAddress;
 }

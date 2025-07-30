@@ -3,19 +3,21 @@ package com.pomina.security.config;
 import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.exceptions.TokenExpiredException;
 import com.auth0.jwt.interfaces.DecodedJWT;
+import com.pomina.common.exception.ErrorCode;
+import com.pomina.common.handler.ResponseWriter;
 import com.pomina.security.sysservice.TokenBlacklistService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
-import java.time.Instant;
 import java.util.Optional;
 
 @Component
@@ -47,11 +49,11 @@ public class JwtAuthentication extends OncePerRequestFilter {
             jwt = jwtDecoder.decode(token);
         } catch (TokenExpiredException ex) {
             SecurityContextHolder.clearContext();
-            response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Token expired");
+            ResponseWriter.writeJsonError(response, ErrorCode.TOKEN_EXPIRED, HttpServletResponse.SC_UNAUTHORIZED, false);
             return;
         } catch (JWTVerificationException ex) {
             SecurityContextHolder.clearContext();
-            response.sendError(HttpServletResponse.SC_FORBIDDEN, "Invalid token");
+            ResponseWriter.writeJsonError(response, ErrorCode.INVALID_TOKEN, HttpServletResponse.SC_UNAUTHORIZED, false);
             return;
         }
 
@@ -68,6 +70,17 @@ public class JwtAuthentication extends OncePerRequestFilter {
         filterChain.doFilter(request, response);
     }
 
+    public static Integer getCurrentUserId() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if (auth != null && auth.isAuthenticated()) {
+            Object principal = auth.getPrincipal();
+            if (principal instanceof UserPrincipal userPrincipal) {
+                return userPrincipal.getUserId();
+            }
+        }
+        return null;
+    }
+
     private Optional<String> extractTokenFromRequest(HttpServletRequest request) {
         String token = request.getHeader("Authorization");
         if (StringUtils.hasText(token) && token.startsWith("Bearer ")) {
@@ -80,10 +93,5 @@ public class JwtAuthentication extends OncePerRequestFilter {
         String tokenType = jwt.getClaim("tokenType").asString();
         return "REFRESH_TOKEN".equals(tokenType)
                 || tokenBlacklistService.isBlacklisted(token);
-    }
-
-    private boolean isAccessTokenExpired(DecodedJWT jwt) {
-        Instant exp = jwt.getExpiresAt().toInstant();
-        return exp.isBefore(Instant.now());
     }
 }

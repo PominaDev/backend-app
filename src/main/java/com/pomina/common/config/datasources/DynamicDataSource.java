@@ -1,4 +1,4 @@
-package com.pomina.common.config.datasource;
+package com.pomina.common.config.datasources;
 
 import org.springframework.jdbc.datasource.lookup.AbstractRoutingDataSource;
 

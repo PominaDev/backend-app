@@ -6,7 +6,6 @@ public class ApiConstants {
     }
 
     public static final String BASE_API = "/api";
-
     public static final String VERSION_V1 = BASE_API + "/v1";
 
     public static final class ApiAuth {
@@ -26,22 +25,8 @@ public class ApiConstants {
         public static final String BASE = VERSION_V1 + "/notifications";
         public static final String CREATE = "/create";
         public static final String UPDATE = "/update";
-        public static final String DELETE = "/delete";
-        public static final String GET_BY_ID = "/{id}";
-        public static final String SEARCH = "/search";
 
         private ApiNotification() {}
-    }
-
-    public static final class ApiCustomer {
-        public static final String BASE = VERSION_V1 + "/customers";
-        public static final String CREATE = "/create";
-        public static final String UPDATE = "/update";
-        public static final String DELETE = "/delete";
-        public static final String GET_BY_ID = "/{id}";
-        public static final String SEARCH = "/search";
-
-        private ApiCustomer() {}
     }
 
     public static final class ApiProduct {
@@ -56,13 +41,26 @@ public class ApiConstants {
         }
     }
 
-    public static final class ApiClientManager {
-        public static final String BASE = VERSION_V1 + "/users";
+    public static final class ApiWarranty {
+        public static final String BASE = VERSION_V1 + "/warranties";
         public static final String CREATE = "/create";
         public static final String UPDATE = "/update";
         public static final String DELETE = "/delete";
         public static final String GET_BY_ID = "/{id}";
         public static final String SEARCH = "/search";
+
+        public static final String ACTIVATE_BY_QR = "/activate-by-qr";
+        public static final String GET_WARRANTY_INFO_HISTORY = "/history";
+        public static final String GET_WARRANTY_INFO_HISTORY_ALL = "/history/all";
+
+        private ApiWarranty() {
+        }
+    }
+
+    public static final class ApiClientManager {
+        public static final String BASE = VERSION_V1 + "/users";
+        public static final String CREATE = "/create";
+        public static final String UPDATE = "/update";
 
         private ApiClientManager() {
         }
@@ -72,9 +70,6 @@ public class ApiConstants {
         public static final String BASE = VERSION_V1 + "/roles";
         public static final String CREATE = "/create";
         public static final String UPDATE = "/update";
-        public static final String DELETE = "/delete";
-        public static final String GET_BY_ID = "/{id}";
-        public static final String SEARCH = "/search";
 
         private ApiRoleManager() {
         }
@@ -112,7 +107,6 @@ public class ApiConstants {
         public static final String DELETE = "/delete/{id}";
         public static final String GET_BY_ID = "/{id}";
         public static final String SEARCH = "/search";
-        public static final String GET_ALL = "/all";
 
         private ApiMasterPermission() {}
     }
@@ -127,6 +121,7 @@ public class ApiConstants {
     public static final class ApiSysUserManagement {
         public static final String BASE = VERSION_V1 + "/user-management";
         public static final String GET_USER_ACTIVE_ROLE_WEB = "/get-user-active-role-web";
+
         private ApiSysUserManagement() {}
     }
 }
