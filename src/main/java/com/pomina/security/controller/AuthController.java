@@ -3,7 +3,7 @@ package com.pomina.security.controller;
 import com.pomina.common.constant.ApiConstants;
 import com.pomina.common.handler.ApiResponse;
 import com.pomina.common.handler.ResponseHandler;
-import com.pomina.common.utils.HmacUtil;
+import com.pomina.common.utils.EncryptionUtil;
 import com.pomina.security.service.SysUserService;
 import com.pomina.security.sysmodel.LoginRequest;
 import com.pomina.security.sysmodel.LoginResponse;
@@ -30,12 +30,13 @@ public class AuthController {
 
     private final SysUserService sysUserService;
 
-    private final HmacUtil hmacUtil;
+    private final EncryptionUtil encryptionUtil;
 
     @PostMapping(ApiConstants.ApiAuth.LOGIN)
     public ResponseEntity<ApiResponse<LoginResponse>> login(@RequestBody @Validated LoginRequest loginRequest,
                                                             HttpServletRequest httpServletRequest) {
         loginRequest.setUserAgent(httpServletRequest.getHeader("User-Agent"));
+//        loginRequest.setPassword(encryptionUtil.decrypt(loginRequest.getPassword()));
         return ResponseHandler.success(authService.attemptLogin(loginRequest));
     }
 

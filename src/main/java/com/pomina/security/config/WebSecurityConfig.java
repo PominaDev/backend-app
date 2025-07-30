@@ -25,8 +25,6 @@ public class WebSecurityConfig {
 
     private final CustomUserDetailService customUserDetailService;
 
-    private final CustomAccessDeniedHandler customAccessDeniedHandler;
-
     private final CustomPasswordEncoder passwordEncoder;
 
     private static final String[] WHITE_LIST_ENDPOINTS = {
@@ -45,16 +43,18 @@ public class WebSecurityConfig {
     );
 
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+    public SecurityFilterChain securityFilterChain(HttpSecurity http, CustomAuthenticationEntryPoint customAuthenticationEntryPoint) throws Exception {
         http.addFilterBefore(jwtAuthentication, UsernamePasswordAuthenticationFilter.class);
         http
+                .addFilterBefore(jwtAuthentication, UsernamePasswordAuthenticationFilter.class)
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .csrf().disable()
                 .formLogin().disable()
                 .logout().disable()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
-                .exceptionHandling().accessDeniedHandler(customAccessDeniedHandler)
+                .exceptionHandling()
+                .authenticationEntryPoint(customAuthenticationEntryPoint)
                 .and()
                 .authorizeHttpRequests(registry -> registry
                         .requestMatchers(WHITE_LIST_ENDPOINTS)

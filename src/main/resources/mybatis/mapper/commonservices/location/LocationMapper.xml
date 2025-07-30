@@ -16,7 +16,7 @@
         <result column="country_code" property="countryCode"/>
         <result column="radius" property="radius"/>
         <result column="status" property="status"/>
-        <result column="note" property="note"/>
+        <result column="noted" property="note"/>
         <result column="created_at" property="createdAt"/>
         <result column="created_by" property="createdBy"/>
         <result column="updated_at" property="updatedAt"/>
@@ -38,7 +38,7 @@
                country_code,
                radius,
                status,
-               note,
+               noted,
                created_at,
                created_by,
                updated_at,
@@ -61,7 +61,7 @@
                                 country_code,
                                 radius,
                                 status,
-                                note,
+                                noted,
                                 created_at,
                                 created_by,
                                 updated_at,

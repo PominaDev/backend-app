@@ -3,6 +3,8 @@ package com.pomina.security.config;
 import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.exceptions.TokenExpiredException;
 import com.auth0.jwt.interfaces.DecodedJWT;
+import com.pomina.common.exception.ErrorCode;
+import com.pomina.common.handler.ResponseWriter;
 import com.pomina.security.sysservice.TokenBlacklistService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -47,11 +49,11 @@ public class JwtAuthentication extends OncePerRequestFilter {
             jwt = jwtDecoder.decode(token);
         } catch (TokenExpiredException ex) {
             SecurityContextHolder.clearContext();
-            response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Token expired");
+            ResponseWriter.writeJsonError(response, ErrorCode.TOKEN_EXPIRED, HttpServletResponse.SC_UNAUTHORIZED, false);
             return;
         } catch (JWTVerificationException ex) {
             SecurityContextHolder.clearContext();
-            response.sendError(HttpServletResponse.SC_FORBIDDEN, "Invalid token");
+            ResponseWriter.writeJsonError(response, ErrorCode.INVALID_TOKEN, HttpServletResponse.SC_UNAUTHORIZED, false);
             return;
         }
 

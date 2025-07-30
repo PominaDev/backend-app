@@ -42,11 +42,8 @@ security:
     refresh-token-expiration: 604800000   # 7 ngày
     secret-key: oB1Zvsn1261tfh0msDaGCP63l+rYq15F/O+ksyqZWe4qWqHRwvvz5pHs3qgHBhYi
 
-# HMAC Configuration
-  hmac:
-    algorithm: HmacSHA256
-    secret: your_secure_shared_secret_here
-    max-time-diff: 30000 # 30 seconds
+  encryption:
+    secret: zQ4n7A4vFq2EKL+9cUYOLrp+U6NqFpqYcghwNXYc7dI=
 
 nominatim:
   email: minhnam1810@gmail.com

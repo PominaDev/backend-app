@@ -2,8 +2,8 @@ package com.pomina.security.sysservice;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.interfaces.DecodedJWT;
-import com.pomina.common.config.datasource.CustomDataSource;
-import com.pomina.common.config.datasource.DataSourceType;
+import com.pomina.common.config.datasources.CustomDataSource;
+import com.pomina.common.config.datasources.DataSourceType;
 import com.pomina.common.exception.AppException;
 import com.pomina.common.exception.ErrorCode;
 import com.pomina.common.utils.PhoneUtil;

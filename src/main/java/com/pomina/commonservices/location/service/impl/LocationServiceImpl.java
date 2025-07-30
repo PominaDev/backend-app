@@ -1,7 +1,7 @@
 package com.pomina.commonservices.location.service.impl;
 
-import com.pomina.common.config.datasource.CustomDataSource;
-import com.pomina.common.config.datasource.DataSourceType;
+import com.pomina.common.config.datasources.CustomDataSource;
+import com.pomina.common.config.datasources.DataSourceType;
 import com.pomina.common.exception.AppException;
 import com.pomina.common.exception.ErrorCode;
 import com.pomina.common.model.PageRequest;
@@ -136,6 +136,7 @@ public class LocationServiceImpl implements LocationService {
         return buildCheckLocationResponse(registeredLocation, distance, isWithinLocation);
     }
 
+    // Test
     private Integer resolveUserId(Integer userId) {
         if (userId != null) {
             return userId;

@@ -1,7 +1,7 @@
 package com.pomina.commonservices.user_management.service.impl;
 
-import com.pomina.common.config.datasource.CustomDataSource;
-import com.pomina.common.config.datasource.DataSourceType;
+import com.pomina.common.config.datasources.CustomDataSource;
+import com.pomina.common.config.datasources.DataSourceType;
 import com.pomina.common.model.PageRequest;
 import com.pomina.common.model.PageResponse;
 import com.pomina.commonservices.user_management.converter.RoleConverter;

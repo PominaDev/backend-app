@@ -5,5 +5,5 @@ import com.pomina.app.scan_product_warranty.dto.response.ScanProductWarrantyResp
 
 public interface ScanProductWarrantyService {
 
-    ScanProductWarrantyResponseDto scanQr(ScanProductWarrantyRequestDto scanProductWarrantyRequestDto);
+    ScanProductWarrantyResponseDto activateByQrCode(ScanProductWarrantyRequestDto scanProductWarrantyRequestDto);
 }

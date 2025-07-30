@@ -2,16 +2,17 @@ package com.pomina.common.exception;
 
 import com.pomina.common.handler.ApiResponse;
 import com.pomina.common.handler.ResponseHandler;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.jdbc.BadSqlGrammarException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
+import java.sql.SQLException;
+import java.sql.SQLSyntaxErrorException;
 import java.util.stream.Collectors;
 
-@Slf4j
 @ControllerAdvice
 public class GlobalExceptionHandler {
 
@@ -20,16 +21,21 @@ public class GlobalExceptionHandler {
         return ResponseHandler.error(e.getErrorCode());
     }
 
-//    @ExceptionHandler(Exception.class)
-//    public ResponseEntity<ApiResponse<Object>> handleOther(Exception ex) {
-//        return ResponseHandler.error(ErrorCode.INTERNAL_ERROR, HttpStatus.INTERNAL_SERVER_ERROR, ex.getMessage());
-//    }
-
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<ApiResponse<Object>> handleValidation(MethodArgumentNotValidException ex) {
         String msg = ex.getBindingResult().getFieldErrors().stream()
                 .map(f -> f.getField() + ": " + f.getDefaultMessage())
                 .collect(Collectors.joining("; "));
         return ResponseHandler.error(msg, ErrorCode.INTERNAL_ERROR, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(SQLSyntaxErrorException.class)
+    public ResponseEntity<ApiResponse<Object>> handleSQLException(SQLSyntaxErrorException ex) {
+        return ResponseHandler.error(ErrorCode.BAD_SQL, HttpStatus.BAD_REQUEST, ex.getMessage());
+    }
+
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<ApiResponse<Object>> handleOther(Exception ex) {
+        return ResponseHandler.error(ErrorCode.INTERNAL_ERROR, HttpStatus.INTERNAL_SERVER_ERROR, ex.getMessage());
     }
 }

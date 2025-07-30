@@ -49,6 +49,10 @@ public class ApiConstants {
         public static final String GET_BY_ID = "/{id}";
         public static final String SEARCH = "/search";
 
+        public static final String ACTIVATE_BY_QR = "/activate-by-qr";
+        public static final String GET_WARRANTY_INFO_HISTORY = "/history";
+        public static final String GET_WARRANTY_INFO_HISTORY_ALL = "/history/all";
+
         private ApiWarranty() {
         }
     }

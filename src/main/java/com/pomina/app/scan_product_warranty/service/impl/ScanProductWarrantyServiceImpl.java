@@ -1,11 +1,14 @@
 package com.pomina.app.scan_product_warranty.service.impl;
 
+import com.pomina.app.scan_product_warranty.converter.ScanProductWarrantyConverter;
 import com.pomina.app.scan_product_warranty.dto.request.ScanProductWarrantyRequestDto;
 import com.pomina.app.scan_product_warranty.dto.response.ProductDetailResponseDto;
 import com.pomina.app.scan_product_warranty.dto.response.ScanProductWarrantyResponseDto;
 import com.pomina.app.scan_product_warranty.service.ScanProductWarrantyService;
 import com.pomina.common.exception.AppException;
 import com.pomina.common.exception.ErrorCode;
+import com.pomina.commonservices.location.dto.request.LocationRequestDto;
+import com.pomina.commonservices.location.dto.response.CheckLocationResponse;
 import com.pomina.commonservices.location.dto.response.LocationResponseDto;
 import com.pomina.commonservices.location.service.LocationService;
 import com.pomina.commonservices.product_warranty_activation.entity.Product;
@@ -17,6 +20,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 import static com.pomina.security.config.JwtAuthentication.getCurrentUserId;
 
@@ -30,27 +34,36 @@ public class ScanProductWarrantyServiceImpl implements ScanProductWarrantyServic
 
     private final LocationService locationService;
 
+    private final ScanProductWarrantyConverter scanProductWarrantyConverter;
+
     @Override
     @Transactional
-    public ScanProductWarrantyResponseDto scanQr(ScanProductWarrantyRequestDto scanProductWarrantyRequestDto) {
+    public ScanProductWarrantyResponseDto activateByQrCode(ScanProductWarrantyRequestDto scanProductWarrantyRequestDto) {
 
         String maCuonTon = scanProductWarrantyRequestDto.getMaCuonTon();
         Double latitude = scanProductWarrantyRequestDto.getLatitude();
         Double longitude = scanProductWarrantyRequestDto.getLongitude();
 
         Integer userIdCurr = getCurrentUserId();
-        if (userIdCurr == null) throw new AppException(ErrorCode.UNAUTHORIZED);
+        if (Objects.isNull(userIdCurr)) throw new AppException(ErrorCode.UNAUTHORIZED);
 
         Product productAndWarrantyInfo = productMapper.findProductAndWarrantyByMaCuonTon(maCuonTon);
 
-        if (productAndWarrantyInfo == null) throw new AppException(ErrorCode.INTERNAL_ERROR);
+        if (Objects.isNull(productAndWarrantyInfo)) throw new AppException(ErrorCode.PRODUCT_NOT_FOUND);
 
         // quét lần đầu
-        if (productAndWarrantyInfo.getWarranty() == null) {
+        if (Objects.isNull(productAndWarrantyInfo.getWarranty())) {
+
+            // Check location có nằm trong khu vực đã đăng ký không
+            isCheckLocation(latitude, longitude);
+
             // lấy location từ người dùng
             LocationResponseDto locationResponseDto = locationService.getLocationFromCoordinates(latitude, longitude);
             Integer bhPhaiMau = productAndWarrantyInfo.getBhPhaiMau();
             Integer bhAnMon = productAndWarrantyInfo.getBhAnMon();
+
+            LocalDateTime timeNow = LocalDateTime.now();
+
             // insert warranty
             Warranty warranty = Warranty.builder()
                     .userId(userIdCurr)
@@ -63,9 +76,9 @@ public class ScanProductWarrantyServiceImpl implements ScanProductWarrantyServic
                     .address05(locationResponseDto.getCountry())
                     .countryCode(locationResponseDto.getCountryCode())
                     .maCuonTon(maCuonTon)
-                    .fromWarrantyPhaiMau(LocalDateTime.now())
+                    .fromWarrantyPhaiMau(timeNow)
                     .toWarrantyPhaiMau(LocalDateTime.now().plusYears(bhPhaiMau))
-                    .fromWarrantyAnMon(LocalDateTime.now())
+                    .fromWarrantyAnMon(timeNow)
                     .toWarrantyAnMon(LocalDateTime.now().plusYears(bhAnMon))
                     .build();
 
@@ -80,25 +93,23 @@ public class ScanProductWarrantyServiceImpl implements ScanProductWarrantyServic
             // quét lần 2
             Integer userId = productAndWarrantyInfo.getWarranty().getUserId();
             if (!userIdCurr.equals(userId)) throw new AppException(ErrorCode.UNAUTHORIZED);
-            ProductDetailResponseDto productDetailResponseDto = ProductDetailResponseDto.builder()
-                    .productId(productAndWarrantyInfo.getProductId())
-                    .maCuonTon(productAndWarrantyInfo.getMaCuonTon())
-                    .tenSanPham(productAndWarrantyInfo.getTenSanPham())
-                    .totalWeight(productAndWarrantyInfo.getTotalWeight())
-                    .totalLength(productAndWarrantyInfo.getTotalLength())
-                    .loaiCuon(productAndWarrantyInfo.getLoaiCuon())
-                    .bhPhaiMau(productAndWarrantyInfo.getBhPhaiMau())
-                    .bhAnMon(productAndWarrantyInfo.getBhAnMon())
-                    .mALength(productAndWarrantyInfo.getMALength())
-                    .mBLength(productAndWarrantyInfo.getMBLength())
-                    .mCLength(productAndWarrantyInfo.getMCLength())
-                    .status(productAndWarrantyInfo.getStatus())
-                    .updatedAt(productAndWarrantyInfo.getUpdatedAt())
-                    .build();
+            ProductDetailResponseDto productDetailResponseDto = scanProductWarrantyConverter.toProductDetailResponseDto(productAndWarrantyInfo);
 
             return ScanProductWarrantyResponseDto.builder()
                     .productDetailResponseDto(productDetailResponseDto)
                     .build();
         }
+    }
+
+    private void isCheckLocation(Double latitude, Double longitude) {
+        // Check location
+        CheckLocationResponse checkLocationResponse = locationService.checkLocation(
+                LocationRequestDto.builder()
+                        .latitude(latitude)
+                        .longitude(longitude)
+                        .build()
+        );
+
+        if (Boolean.FALSE.equals(checkLocationResponse.getIsWithinLocation())) throw new AppException(ErrorCode.OUT_OF_LOCATION);
     }
 }

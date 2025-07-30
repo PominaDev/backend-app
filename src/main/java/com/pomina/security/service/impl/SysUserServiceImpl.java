@@ -1,7 +1,7 @@
 package com.pomina.security.service.impl;
 
-import com.pomina.common.config.datasource.CustomDataSource;
-import com.pomina.common.config.datasource.DataSourceType;
+import com.pomina.common.config.datasources.CustomDataSource;
+import com.pomina.common.config.datasources.DataSourceType;
 import com.pomina.common.exception.AppException;
 import com.pomina.common.exception.ErrorCode;
 import com.pomina.commonservices.location.dto.response.LocationResponseDto;

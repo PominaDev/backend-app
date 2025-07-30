@@ -1,4 +1,4 @@
-package com.pomina.common.config.datasource;
+package com.pomina.common.config.datasources;
 
 import com.zaxxer.hikari.HikariDataSource;
 import org.springframework.beans.factory.annotation.Qualifier;
