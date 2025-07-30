@@ -62,7 +62,7 @@ public class JwtIssuer {
         try {
             return verifier.verify(token);
         } catch (JWTVerificationException e) {
-            throw new AppException(ErrorCode.INVALID_REFRESH_TOKEN);
+            throw new JWTVerificationException(null);
         }
     }
 

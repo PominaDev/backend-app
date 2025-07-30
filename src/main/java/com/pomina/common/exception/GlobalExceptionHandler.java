@@ -1,9 +1,11 @@
 package com.pomina.common.exception;
 
+import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.pomina.common.handler.ApiResponse;
 import com.pomina.common.handler.ResponseHandler;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -25,6 +27,16 @@ public class GlobalExceptionHandler {
                 .map(f -> f.getField() + ": " + f.getDefaultMessage())
                 .collect(Collectors.joining("; "));
         return ResponseHandler.error(msg, ErrorCode.INTERNAL_ERROR, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(AuthenticationException.class)
+    public ResponseEntity<ApiResponse<Object>> handleAuthenticationException(AuthenticationException ex) {
+        return ResponseHandler.error(ErrorCode.BAD_CREDENTIALS, HttpStatus.UNAUTHORIZED);
+    }
+
+    @ExceptionHandler(JWTVerificationException.class)
+    public ResponseEntity<ApiResponse<Object>> handleJWTVerificationException(JWTVerificationException ex) {
+        return ResponseHandler.error(ErrorCode.INVALID_REFRESH_TOKEN, HttpStatus.UNAUTHORIZED);
     }
 
     @ExceptionHandler(SQLSyntaxErrorException.class)

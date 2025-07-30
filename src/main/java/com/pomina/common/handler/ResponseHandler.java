@@ -27,4 +27,8 @@ public class ResponseHandler {
     public static ResponseEntity<ApiResponse<Object>> error(String customMessage, ErrorCode errorCode, HttpStatus status) {
         return ResponseEntity.status(status).body(new ApiResponse<>(false, customMessage, errorCode.getCode(), null));
     }
+
+    public static ResponseEntity<ApiResponse<Object>> error(ErrorCode errorCode, HttpStatus status) {
+        return ResponseEntity.status(status).body(new ApiResponse<>(false, errorCode.getMessage(), null, null));
+    }
 }
