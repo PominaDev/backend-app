@@ -4,12 +4,10 @@ import com.pomina.common.handler.ApiResponse;
 import com.pomina.common.handler.ResponseHandler;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.jdbc.BadSqlGrammarException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
-import java.sql.SQLException;
 import java.sql.SQLSyntaxErrorException;
 import java.util.stream.Collectors;
 
