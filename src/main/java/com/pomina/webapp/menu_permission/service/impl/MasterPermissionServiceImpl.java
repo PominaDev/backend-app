@@ -46,12 +46,15 @@ public class MasterPermissionServiceImpl implements MasterPermissionService {
         return masterPermissionMapper.update(masterPermissionUpdate);
     }
 
+
     @Override
     public Integer updateListPermisstion(List<MasterPermissionRequestDto> requestDtoList) {
         Integer updatedRows = 0;
         List<MasterPermission> masterPermissionCreate = masterPermissionConverter.toEntityList(requestDtoList);
         for (MasterPermission entity : masterPermissionCreate) {
-            MasterPermission find = masterPermissionMapper.findById(entity.getMasterPermissionId());
+
+            MasterPermission find = masterPermissionMapper.findByUserIdAndMenuId(entity);
+
             if (Objects.nonNull(find)) {
                 updatedRows += masterPermissionMapper.update(entity);
             }else{
@@ -60,6 +63,9 @@ public class MasterPermissionServiceImpl implements MasterPermissionService {
         }
         return updatedRows;
     }
+
+
+
 
     @Override
     public MasterPermissionResponseDto getById(Integer id) {
