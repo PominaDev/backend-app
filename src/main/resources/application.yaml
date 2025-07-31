@@ -21,6 +21,7 @@ spring:
       org.springframework.security: DEBUG
       org.springframework.web: DEBUG
       org.springframework.boot.autoconfigure.security: DEBUG
+      com.zaxxer.hikari: DEBUG
 
 mybatis:
   config-location: classpath:/mybatis/configuration/mybatis-config.xml
