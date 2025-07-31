@@ -23,4 +23,13 @@ public class SysUserResponeDto {
     private Integer isActive;
     private Integer oldId;
     private String isDeleted;
+
+    // JOIN u_location
+    private Integer locationId;
+    private String address01;
+    private String address02;
+    private String address03;
+    private String address04;
+    private String address05;
+    private String fullAddress;
 }
