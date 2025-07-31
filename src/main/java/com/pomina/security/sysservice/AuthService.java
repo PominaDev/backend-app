@@ -1,6 +1,7 @@
 package com.pomina.security.sysservice;
 
 import com.auth0.jwt.JWT;
+import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.pomina.common.config.datasources.CustomDataSource;
 import com.pomina.common.config.datasources.DataSourceType;
@@ -236,7 +237,7 @@ public class AuthService {
         Integer userId = Integer.valueOf(decodedJwt.getSubject());
 
         if (!redisTokenService.isValidRefreshToken(userId, deviceId, refreshToken, userAgent)) {
-            throw new AppException(ErrorCode.INVALID_REFRESH_TOKEN);
+            throw new JWTVerificationException(null);
         }
 
         SysUser sysUser = sysUserMapper.findByUserId(userId);
