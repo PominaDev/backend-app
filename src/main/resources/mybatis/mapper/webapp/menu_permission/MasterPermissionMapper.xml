@@ -250,4 +250,27 @@
         </choose>
     </select>
 
+    <select id="findByUserIdAndMenuId" resultMap="MasterPermissionResultMap">
+        SELECT master_permission_id,
+               master_menu_id,
+               sys_user_id,
+               is_full,
+               is_insert,
+               is_delete,
+               is_update,
+               is_read,
+               is_print,
+               is_export,
+               status,
+               noted,
+               created_at,
+               created_by,
+               updated_at,
+               updated_by,
+               is_deleted
+        FROM master_permission
+        WHERE sys_user_id = #{sysUserId}
+          AND master_menu_id = #{masterMenuId}
+    </select>
+
 </mapper>
