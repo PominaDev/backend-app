@@ -1,0 +1,28 @@
+package com.pomina.webapp.user_managerment.mapper;
+
+import com.pomina.webapp.user_managerment.dto.request.SysUserRequestDto;
+import com.pomina.webapp.user_managerment.dto.respone.SysUserResponeDto;
+import com.pomina.webapp.user_managerment.entity.SysUser;
+import org.apache.ibatis.annotations.Mapper;
+
+import java.util.List;
+
+@Mapper
+public interface SysUserManagermentMapper {
+    SysUser findById(Integer id);
+
+    List<SysUser> findAll();
+
+    List<SysUser> findAllPaged(Integer limit, Integer offset);
+
+    Boolean existsById(Integer id);
+
+    Integer insert(SysUser sysUser);
+
+    Integer update(SysUser sysUser);
+
+    Integer deleteById(Integer id);          // Xóa cứng
+    Integer softDeleteById(Integer id);      // Xóa mềm
+
+    Integer countAll();
+}

@@ -57,7 +57,7 @@ public class AuditUtil {
         entity.setUpdatedAt(now());
         entity.setUpdatedBy(getCurrentUser());
         if (note != null) {
-            entity.setNote(note);
+            entity.setNoted(note);
         }
     }
 
@@ -66,7 +66,7 @@ public class AuditUtil {
         entity.setUpdatedAt(now());
         entity.setUpdatedBy(getCurrentUser());
         if (note != null) {
-            entity.setNote(note);
+            entity.setNoted(note);
         }
     }
 
@@ -76,7 +76,7 @@ public class AuditUtil {
         entity.setUpdatedAt(now());
         entity.setUpdatedBy(getCurrentUser());
         if (note != null) {
-            entity.setNote(note);
+            entity.setNoted(note);
         }
     }
 
@@ -85,7 +85,7 @@ public class AuditUtil {
         entity.setUpdatedAt(now());
         entity.setUpdatedBy(getCurrentUser());
         if (note != null) {
-            entity.setNote(note);
+            entity.setNoted(note);
         }
     }
 
@@ -96,7 +96,7 @@ public class AuditUtil {
         entity.setUpdatedAt(now());
         entity.setUpdatedBy(getCurrentUser());
         if (note != null) {
-            entity.setNote(note);
+            entity.setNoted(note);
         }
     }
 }

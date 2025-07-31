@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pomina.webapp.user_managerment.mapper.SysUserManagermentMapper">
+
+    <!-- ResultMap ánh xạ toàn bộ cột -->
+    <resultMap id="SysUserResultMap" type="com.pomina.webapp.user_managerment.entity.SysUser">
+        <id column="user_id" property="userId"/>
+        <result column="username" property="username"/>
+        <result column="password" property="password"/>
+        <result column="ho_va_ten" property="hoVaTen"/>
+        <result column="phone_number" property="phoneNumber"/>
+        <result column="ma_so_thue" property="maSoThue"/>
+        <result column="master_location_code" property="masterLocationCode"/>
+        <result column="bank_name" property="bankName"/>
+        <result column="bank_number" property="bankNumber"/>
+        <result column="description" property="description"/>
+        <result column="role_id" property="roleId"/>
+        <result column="is_active" property="isActive"/>
+        <result column="old_id" property="oldId"/>
+        <result column="status" property="status"/>
+        <result column="noted" property="noted"/>
+        <result column="created_at" property="createdAt"/>
+        <result column="created_by" property="createdBy"/>
+        <result column="updated_at" property="updatedAt"/>
+        <result column="updated_by" property="updatedBy"/>
+        <result column="is_deleted" property="isDeleted"/>
+    </resultMap>
+
+    <!-- Lấy user theo ID -->
+    <select id="findById" parameterType="int" resultMap="SysUserResultMap">
+        SELECT * FROM sys_user
+        WHERE user_id = #{id} AND is_deleted = 0
+    </select>
+
+    <!-- Lấy toàn bộ user -->
+    <select id="findAll" resultMap="SysUserResultMap">
+        SELECT * FROM sys_user
+        WHERE is_deleted = 0
+    </select>
+
+    <!-- Lấy user có phân trang -->
+    <select id="findAllPaged" resultMap="SysUserResultMap">
+        SELECT * FROM sys_user
+        WHERE is_deleted = 0
+        ORDER BY created_at DESC
+            LIMIT #{limit} OFFSET #{offset}
+    </select>
+
+    <!-- Thêm user -->
+    <insert id="insert" parameterType="com.pomina.webapp.user_managerment.entity.SysUser" useGeneratedKeys="true" keyProperty="userId">
+        INSERT INTO sys_user (username, password, ho_va_ten, phone_number,
+                              ma_so_thue, master_location_code, bank_name, bank_number,
+                              description, role_id, is_active, old_id,
+                              status, noted, created_at, created_by,
+                              updated_at, updated_by, is_deleted)
+        VALUES (#{username}, #{password}, #{hoVaTen}, #{phoneNumber},
+                #{maSoThue}, #{masterLocationCode}, #{bankName}, #{bankNumber},
+                #{description}, #{roleId}, #{isActive}, #{oldId},
+                #{status}, #{noted}, NOW(), #{createdBy},
+                NOW(), #{updatedBy}, false)
+    </insert>
+
+    <!-- Cập nhật user -->
+    <update id="update" parameterType="com.pomina.webapp.user_managerment.entity.SysUser">
+        UPDATE sys_user
+        SET
+            username = #{username},
+            password = #{password},
+            ho_va_ten = #{hoVaTen},
+            phone_number = #{phoneNumber},
+            ma_so_thue = #{maSoThue},
+            master_location_code = #{masterLocationCode},
+            bank_name = #{bankName},
+            bank_number = #{bankNumber},
+            description = #{description},
+            role_id = #{roleId},
+            is_active = #{isActive},
+            old_id = #{oldId},
+            status = #{status},
+            noted = #{noted},
+            updated_at = NOW(),
+            updated_by = #{updatedBy}
+        WHERE user_id = #{userId}
+    </update>
+
+    <!-- Xóa cứng user -->
+    <delete id="deleteById" parameterType="int">
+        DELETE FROM sys_user WHERE user_id = #{id}
+    </delete>
+
+    <!-- Xóa mềm user -->
+    <update id="softDeleteById" parameterType="int">
+        UPDATE sys_user
+        SET is_deleted = 1, updated_at = NOW(), updated_by = #{updatedBy}
+        WHERE user_id = #{id}
+    </update>
+
+    <!-- Kiểm tra user có tồn tại -->
+    <select id="existsById" parameterType="int" resultType="boolean">
+        SELECT COUNT(1) > 0 FROM sys_user
+        WHERE user_id = #{id} AND is_deleted = 0
+    </select>
+
+    <!-- Đếm toàn bộ user -->
+    <select id="countAll" resultType="int">
+        SELECT COUNT(1) FROM sys_user
+        WHERE is_deleted = 0
+    </select>
+
+</mapper>
