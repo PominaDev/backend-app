@@ -1,8 +1,7 @@
 package com.pomina.webapp.master_location_managerment.service.impl;
 
 import com.pomina.webapp.master_location_managerment.converter.MasterLocationConverter;
-import com.pomina.webapp.master_location_managerment.dto.request.MasterLocationRequest;
-import com.pomina.webapp.master_location_managerment.dto.respone.MasterLocationRespone;
+import com.pomina.webapp.master_location_managerment.dto.respone.MasterLocationResponeDto;
 import com.pomina.webapp.master_location_managerment.mapper.MasterLocationMapper;
 import com.pomina.webapp.master_location_managerment.service.MasterLocationManagermentService;
 import lombok.RequiredArgsConstructor;
@@ -19,7 +18,7 @@ public class MasterLocationManagermentServiceImpl implements MasterLocationManag
     private final MasterLocationConverter masterLocationConverter;
 
     @Override
-    public List<MasterLocationRespone> findAll() {
+    public List<MasterLocationResponeDto> findAll() {
         return masterLocationConverter.toResponseList(masterLocationMapper.findAll());
     }
 }

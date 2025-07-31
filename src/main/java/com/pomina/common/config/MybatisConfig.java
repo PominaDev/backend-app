@@ -20,7 +20,8 @@ import javax.sql.DataSource;
         "com.pomina.webapp.notification_websocket.mapper",
         "com.pomina.webapp.user_managerment.mapper",
         "com.pomina.webapp.user_role_managerment.mapper",
-        "com.pomina.webapp.master_location_managerment.mapper"
+        "com.pomina.webapp.master_location_managerment.mapper",
+        "com.pomina.webapp.location.mapper"
 })
 public class MybatisConfig {
 

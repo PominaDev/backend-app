@@ -1,9 +1,9 @@
 package com.pomina.webapp.user_role_managerment.service;
 
-import com.pomina.webapp.user_role_managerment.dto.respone.SysRoleRespone;
+import com.pomina.webapp.user_role_managerment.dto.respone.SysRoleResponeDto;
 
 import java.util.List;
 
 public interface SysUserRoleManagermentService {
-    List<SysRoleRespone> findAll();
+    List<SysRoleResponeDto> findAll();
 }

@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class SysRoleRespone {
+public class SysRoleResponeDto {
     private Integer id;
     private String roleName;
     private String description;
