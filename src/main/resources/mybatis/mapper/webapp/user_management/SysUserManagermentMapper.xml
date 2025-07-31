@@ -25,6 +25,8 @@
         <result column="updated_by" property="updatedBy"/>
         <result column="is_deleted" property="isDeleted"/>
 
+        <result column="role_name" property="roleName"/>
+
         <result column="u_location_id" property="locationId"/>
         <result column="address01" property="address01"/>
         <result column="address02" property="address02"/>
@@ -80,7 +82,7 @@
             u.updated_at,
             u.updated_by,
             u.is_deleted,
-
+            r.role_name,
             l.u_location_id,
             l.address01,
             l.address02,
@@ -89,41 +91,44 @@
             l.address05,
             l.full_address
         FROM sys_user u
+                 LEFT JOIN sys_role r ON u.role_id = r.id
                  LEFT JOIN u_location l ON u.user_id = l.user_id
         WHERE user_id = #{id} AND is_deleted = 0
     </select>
 
     <!-- Lấy toàn bộ user -->
     <select id="findAll" resultMap="SysUserResultMapFullInfo">
-        SELECT u.user_id,
-               u.username,
-               u.password,
-               u.phone_number,
-               u.ho_va_ten,
-               u.ma_so_thue,
-               u.master_location_code,
-               u.bank_name,
-               u.bank_number,
-               u.description,
-               u.role_id,
-               u.is_active,
-               u.old_id,
-               u.status,
-               u.noted,
-               u.created_at,
-               u.created_by,
-               u.updated_at,
-               u.updated_by,
-               u.is_deleted,
-
-               l.u_location_id,
-               l.address01,
-               l.address02,
-               l.address03,
-               l.address04,
-               l.address05,
-               l.full_address
+        SELECT
+            u.user_id,
+            u.username,
+            u.password,
+            u.phone_number,
+            u.ho_va_ten,
+            u.ma_so_thue,
+            u.master_location_code,
+            u.bank_name,
+            u.bank_number,
+            u.description,
+            u.role_id,
+            u.is_active,
+            u.old_id,
+            u.status,
+            u.noted,
+            u.created_at,
+            u.created_by,
+            u.updated_at,
+            u.updated_by,
+            u.is_deleted,
+            r.role_name,
+            l.u_location_id,
+            l.address01,
+            l.address02,
+            l.address03,
+            l.address04,
+            l.address05,
+            l.full_address
         FROM sys_user u
+                 LEFT JOIN sys_role r ON u.role_id = r.id
                  LEFT JOIN u_location l ON u.user_id = l.user_id
         WHERE u.is_deleted = 0
     </select>
@@ -151,7 +156,7 @@
         u.updated_at,
         u.updated_by,
         u.is_deleted,
-
+        r.role_name,
         l.u_location_id,
         l.address01,
         l.address02,
@@ -160,7 +165,8 @@
         l.address05,
         l.full_address
         FROM sys_user u
-        LEFT JOIN u_location l ON u.user_id = l.user_id
+                 LEFT JOIN sys_role r ON u.role_id = r.id
+                 LEFT JOIN u_location l ON u.user_id = l.user_id
         WHERE u.is_deleted = 0
         ORDER BY created_at DESC
         LIMIT #{limit} OFFSET #{offset}

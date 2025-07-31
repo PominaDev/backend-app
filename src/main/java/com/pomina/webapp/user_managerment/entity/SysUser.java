@@ -25,6 +25,8 @@ public class SysUser extends BaseEntity {
     private Integer isActive;
     private Integer oldId;
 
+    private String roleName;
+
     private Integer locationId;
     private String address01;
     private String address02;

@@ -24,6 +24,9 @@ public class SysUserResponeDto {
     private Integer oldId;
     private String isDeleted;
 
+    // JOIN sys_role
+    private String roleName;
+
     // JOIN u_location
     private Integer locationId;
     private String address01;
