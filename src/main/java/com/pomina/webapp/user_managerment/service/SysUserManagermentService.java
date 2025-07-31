@@ -14,7 +14,7 @@ public interface SysUserManagermentService {
 
     List<SysUserResponeDto> findAll();
 
-    PageResponse<SysUserResponeDto> findAllPaged(Integer limit, Integer offset);
+    PageResponse<SysUserResponeDto> findAllPaged(Integer page, Integer size);
 
     Boolean existsById(Integer id);
 

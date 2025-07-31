@@ -1,7 +1,7 @@
 package com.pomina.webapp.user_role_managerment.service.Impl;
 
 import com.pomina.webapp.user_role_managerment.converter.SysRoleConverter;
-import com.pomina.webapp.user_role_managerment.dto.SysRoleDto;
+import com.pomina.webapp.user_role_managerment.dto.respone.SysRoleRespone;
 import com.pomina.webapp.user_role_managerment.mapper.SysRoleMapper;
 import com.pomina.webapp.user_role_managerment.service.SysUserRoleManagermentService;
 import lombok.RequiredArgsConstructor;
@@ -18,7 +18,7 @@ public class SysUserRoleManagermentServiceImpl implements SysUserRoleManagerment
     private final SysRoleConverter sysRoleConverter;
 
     @Override
-    public List<SysRoleDto> findAll() {
+    public List<SysRoleRespone> findAll() {
         return sysRoleConverter.toResponseList(sysRoleMapper.findAll());
     }
 }

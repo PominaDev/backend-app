@@ -27,9 +27,9 @@ public class SysUserManagermentController  {
 
     @GetMapping(ApiConstants.ApiSysUserManagement.GET_USERS_PAGED)
     public ResponseEntity<ApiResponse<PageResponse<SysUserResponeDto>>> getUsersPaged(
-            @RequestParam(defaultValue = "10") Integer limit,
-            @RequestParam(defaultValue = "0") Integer offset) {
-        return ResponseHandler.success(sysUserService.findAllPaged(limit, offset));
+            @RequestParam(defaultValue = "1") Integer page,  // Trang bắt đầu từ 1
+            @RequestParam(defaultValue = "10") Integer size) {
+        return ResponseHandler.success(sysUserService.findAllPaged(page, size));
     }
 
     @PostMapping(ApiConstants.ApiSysUserManagement.CREATE)
