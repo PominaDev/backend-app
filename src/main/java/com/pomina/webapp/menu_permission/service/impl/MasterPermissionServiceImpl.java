@@ -33,7 +33,10 @@ public class MasterPermissionServiceImpl implements MasterPermissionService {
         Integer createdRows = 0;
         List<MasterPermission> masterPermissionCreate = masterPermissionConverter.toEntityList(requestDtoList);
         for (MasterPermission entity : masterPermissionCreate) {
-          createdRows += masterPermissionMapper.insert(entity);
+            Byte find = masterPermissionMapper.findByUserIdAndMenuId(entity);
+            if (Objects.isNull(find)) {
+                createdRows += masterPermissionMapper.insert(entity);
+            }
         }
         return createdRows;
     }
@@ -46,13 +49,14 @@ public class MasterPermissionServiceImpl implements MasterPermissionService {
         return masterPermissionMapper.update(masterPermissionUpdate);
     }
 
+
     @Override
     public Integer updateListPermisstion(List<MasterPermissionRequestDto> requestDtoList) {
         Integer updatedRows = 0;
         List<MasterPermission> masterPermissionCreate = masterPermissionConverter.toEntityList(requestDtoList);
         for (MasterPermission entity : masterPermissionCreate) {
-            MasterPermission find = masterPermissionMapper.findById(entity.getMasterPermissionId());
-            if (Objects.nonNull(find)) {
+            Byte find = masterPermissionMapper.findByUserIdAndMenuId(entity);
+            if (!Objects.isNull(find)) {
                 updatedRows += masterPermissionMapper.update(entity);
             }else{
                 updatedRows += masterPermissionMapper.insert(entity);
@@ -60,6 +64,9 @@ public class MasterPermissionServiceImpl implements MasterPermissionService {
         }
         return updatedRows;
     }
+
+
+
 
     @Override
     public MasterPermissionResponseDto getById(Integer id) {

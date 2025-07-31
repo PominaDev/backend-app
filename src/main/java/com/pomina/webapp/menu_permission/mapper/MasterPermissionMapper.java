@@ -11,4 +11,6 @@ import java.util.List;
 @Mapper
 public interface MasterPermissionMapper extends BaseMapper<MasterPermission> {
     List<MenuPermission> findMenuPermissionByUserId(@Param("userId") Integer userId);
+    Byte findByUserIdAndMenuId(MasterPermission masterPermission);
+
 }

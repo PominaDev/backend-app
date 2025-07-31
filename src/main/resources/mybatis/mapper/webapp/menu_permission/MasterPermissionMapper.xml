@@ -250,4 +250,11 @@
         </choose>
     </select>
 
+    <select id="findByUserIdAndMenuId" resultType="byte">
+        SELECT 1
+        FROM master_permission
+        WHERE sys_user_id = #{sysUserId}
+          AND master_menu_id = #{masterMenuId}
+    </select>
+
 </mapper>
