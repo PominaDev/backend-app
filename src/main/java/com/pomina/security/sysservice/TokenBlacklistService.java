@@ -17,7 +17,7 @@ public class TokenBlacklistService {
         Duration ttl = Duration.between(Instant.now(), expirationTime);
         if (!ttl.isNegative()) {
             String key = buildKey(accessToken);
-            redisTemplate.opsForValue().set(key, "blacklisted", ttl);
+            redisTemplate.opsForValue().set(key, "blacklist", ttl);
         }
     }
 

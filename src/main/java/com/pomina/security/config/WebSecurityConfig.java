@@ -27,7 +27,7 @@ public class WebSecurityConfig {
 
     private final CustomPasswordEncoder passwordEncoder;
 
-    private static final String[] WHITE_LIST_ENDPOINTS = {
+    protected static final String[] WHITE_LIST_ENDPOINTS = {
             "/api/v1/auth/login",
             "/api/v1/auth/logout",
             "/api/v1/auth/register",

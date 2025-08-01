@@ -1,6 +1,7 @@
 package com.pomina.security.sysservice;
 
 import com.auth0.jwt.JWT;
+import com.auth0.jwt.exceptions.JWTDecodeException;
 import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.pomina.common.config.datasources.CustomDataSource;
@@ -9,6 +10,7 @@ import com.pomina.common.exception.AppException;
 import com.pomina.common.exception.ErrorCode;
 import com.pomina.common.utils.PhoneUtil;
 import com.pomina.commonservices.location.external.vonage.config.VonageConfig;
+import com.pomina.security.config.JwtAuthentication;
 import com.pomina.security.config.JwtIssuer;
 import com.pomina.security.config.UserPrincipal;
 import com.pomina.security.mapper.SysUserMapper;
@@ -40,6 +42,7 @@ import java.time.Duration;
 import java.time.Instant;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -114,28 +117,90 @@ public class AuthService {
     }
 
     public Void attemptLogout(LogoutRequest logoutRequest, HttpServletRequest httpServletRequest) {
-        Integer userId = ((UserPrincipal) SecurityContextHolder.getContext()
-                .getAuthentication().getPrincipal()).getUserId();
-
-        String deviceId = logoutRequest.getDeviceId();
-        String userAgent = logoutRequest.getUserAgent();
-
         String accessToken = extractAccessToken(httpServletRequest);
-        if (accessToken == null) {
+        if (accessToken == null) return null;
+
+        DecodedJWT jwt;
+        try {
+            jwt = JWT.decode(accessToken);
+        } catch (JWTDecodeException e) {
+            // Token invalid format
             return null;
         }
 
+        // Nếu token đã hết hạn, không cần xử lý thêm
+        if (jwt.getExpiresAt().before(new Date())) {
+            return null;
+        }
+
+        // Lấy thông tin người dùng
+        Integer userId = JwtAuthentication.getCurrentUserId(); // code bạn đã có
+        String deviceId = logoutRequest.getDeviceId();
+        String userAgent = logoutRequest.getUserAgent();
+
         if (userId != null && deviceId != null && userAgent != null) {
             var tokenInfo = redisTokenService.getKey(userId, deviceId, userAgent);
-
             if (tokenInfo != null && tokenInfo.getUserAgent().equals(userAgent)) {
-                DecodedJWT jwt = JWT.decode(accessToken);
                 Instant exp = jwt.getExpiresAt().toInstant();
                 blacklistService.blacklistToken(accessToken, exp);
             }
         }
 
         return null;
+    }
+
+    public LoginResponse refreshToken(RefreshTokenRequest request) {
+        String refreshToken = request.getRefreshToken();
+        String deviceId = request.getDeviceId();
+        String userAgent = request.getUserAgent();
+
+        DecodedJWT decodedJwt = jwtIssuer.verify(refreshToken);
+
+        Integer userId = Integer.valueOf(decodedJwt.getSubject());
+
+        if (!redisTokenService.isValidRefreshToken(userId, deviceId, refreshToken, userAgent)) {
+            throw new JWTVerificationException(null);
+        }
+
+        SysUser sysUser = sysUserMapper.findByUserId(userId);
+        if (sysUser == null) {
+            throw new AppException(ErrorCode.USER_NOT_FOUND);
+        }
+
+        var authorities = List.of(sysUser.getRoleName());
+
+        String newAccessToken = jwtIssuer.issue(JwtIssuer.Request.builder()
+                .userId(userId)
+                .userName(sysUser.getUsername())
+                .fullName(sysUser.getHoVaTen())
+                .phoneNumber(sysUser.getPhoneNumber())
+                .roles(authorities)
+                .tokenType(JwtIssuer.TokenType.ACCESS_TOKEN)
+                .build());
+
+        String newRefreshToken = jwtIssuer.issue(JwtIssuer.Request.builder()
+                .userId(userId)
+                .userName(sysUser.getUsername())
+                .fullName(sysUser.getHoVaTen())
+                .phoneNumber(sysUser.getPhoneNumber())
+                .roles(authorities)
+                .tokenType(JwtIssuer.TokenType.REFRESH_TOKEN)
+                .build());
+
+        redisTokenService.saveToken(userId,
+                deviceId,
+                newRefreshToken,
+                userAgent,
+                jwtIssuer.getRefreshTokenExpiration());
+
+        return LoginResponse.builder()
+                .accessToken(newAccessToken)
+                .refreshToken(newRefreshToken)
+                .username(sysUser.getUsername())
+                .fullName(sysUser.getHoVaTen())
+                .phoneNumber(sysUser.getPhoneNumber())
+                .roleName(authorities)
+                .build();
     }
 
     public OtpResponse sendOtp(OtpRequest otpRequest) {
@@ -227,60 +292,6 @@ public class AuthService {
         }
     }
 
-    public LoginResponse refreshToken(RefreshTokenRequest request) {
-        String refreshToken = request.getRefreshToken();
-        String deviceId = request.getDeviceId();
-        String userAgent = request.getUserAgent();
-
-        DecodedJWT decodedJwt = jwtIssuer.verify(refreshToken);
-
-        Integer userId = Integer.valueOf(decodedJwt.getSubject());
-
-        if (!redisTokenService.isValidRefreshToken(userId, deviceId, refreshToken, userAgent)) {
-            throw new JWTVerificationException(null);
-        }
-
-        SysUser sysUser = sysUserMapper.findByUserId(userId);
-        if (sysUser == null) {
-            throw new AppException(ErrorCode.USER_NOT_FOUND);
-        }
-
-        var authorities = List.of(sysUser.getRoleName());
-
-        String newAccessToken = jwtIssuer.issue(JwtIssuer.Request.builder()
-                .userId(userId)
-                .userName(sysUser.getUsername())
-                .fullName(sysUser.getHoVaTen())
-                .phoneNumber(sysUser.getPhoneNumber())
-                .roles(authorities)
-                .tokenType(JwtIssuer.TokenType.ACCESS_TOKEN)
-                .build());
-
-        String newRefreshToken = jwtIssuer.issue(JwtIssuer.Request.builder()
-                .userId(userId)
-                .userName(sysUser.getUsername())
-                .fullName(sysUser.getHoVaTen())
-                .phoneNumber(sysUser.getPhoneNumber())
-                .roles(authorities)
-                .tokenType(JwtIssuer.TokenType.REFRESH_TOKEN)
-                .build());
-
-        redisTokenService.saveToken(userId,
-                deviceId,
-                newRefreshToken,
-                userAgent,
-                jwtIssuer.getRefreshTokenExpiration());
-
-        return LoginResponse.builder()
-                .accessToken(newAccessToken)
-                .refreshToken(newRefreshToken)
-                .username(sysUser.getUsername())
-                .fullName(sysUser.getHoVaTen())
-                .phoneNumber(sysUser.getPhoneNumber())
-                .roleName(authorities)
-                .build();
-    }
-
     @CustomDataSource(DataSourceType.SLAVE)
     private Optional<SysUser> getSysUserByPhone(String phoneNumber) {
         return Optional.ofNullable(sysUserMapper.findByUserName(phoneNumber));
@@ -311,10 +322,6 @@ public class AuthService {
     // Redis flow
     private void saveRequestId(String phoneNumber, String requestId, long ttlSeconds) {
         redisTemplate.opsForValue().set(PREFIX + phoneNumber, requestId, Duration.ofSeconds(ttlSeconds));
-    }
-
-    private Optional<String> getRequestId(String phoneNumber) {
-        return Optional.ofNullable(redisTemplate.opsForValue().get(PREFIX + phoneNumber));
     }
 
     private void deleteRequestId(String phoneNumber) {

@@ -38,3 +38,10 @@ application-prod.yaml
 
 ### Log ###
 logs
+
+### Test K6 ###
+k6-test
+
+### Redis ###
+redis.conf
+
