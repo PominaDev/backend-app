@@ -250,11 +250,16 @@
     </update>
 
     <!-- Kiểm tra user có tồn tại -->
-    <select id="existsById" parameterType="int" resultType="boolean">
-        SELECT COUNT(1) > 0 FROM sys_user
+    <select id="isExistUser" parameterType="int" resultType="byte">
+        SELECT 1
+        FROM sys_user
         WHERE user_id = #{id} AND is_deleted = 0
     </select>
-
+    <select id="getListUserIdByPhoneNumber" parameterType="String" resultType="integer">
+        SELECT user_id
+        FROM sys_user
+        WHERE phone_number = #{phoneNumber}
+    </select>
     <!-- Đếm toàn bộ user -->
     <select id="countAll" resultType="int">
         SELECT COUNT(1) FROM sys_user

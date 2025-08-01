@@ -130,6 +130,7 @@ public class ApiConstants {
         public static final String CREATE = "/create";
         public static final String UPDATE = "/update/{id}";
         public static final String DELETE = "/delete/{id}";
+        public static final String UPSERT = "/upsert";
 
         private ApiSysUserManagement() {}
     }

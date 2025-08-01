@@ -29,8 +29,6 @@ public class LocationWebServiceImpl implements LocationWebService {
 
     @Override
     public int createLocation(LocationRequestCreateDto locationRequestCreateDto) {
-        locationRequestCreateDto.setCreatedAt(LocalDateTime.now());
-        locationRequestCreateDto.setUpdatedAt(LocalDateTime.now());
         Location location = locationWebConverter.toLocation(locationRequestCreateDto);
         return locationWebMapper.insert(location);
     }

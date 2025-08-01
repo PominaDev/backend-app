@@ -1,15 +1,13 @@
 package com.pomina.webapp.user_managerment.entity;
 
 import com.pomina.common.model.BaseEntity;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class SysUser extends BaseEntity {
     private Integer userId;
     private String username;

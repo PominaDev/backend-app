@@ -49,4 +49,9 @@ public class SysUserManagermentController  {
     public ResponseEntity<ApiResponse<Integer>> deleteUser(@PathVariable Integer id) {
         return ResponseHandler.success(sysUserService.softDeleteById(id));
     }
+
+    @PostMapping(ApiConstants.ApiSysUserManagement.UPSERT)
+    public ResponseEntity<ApiResponse<String>> doPostUpsert(@Valid @RequestBody SysUserRequestDto request) {
+        return ResponseHandler.success(sysUserService.upsert(request));
+    }
 }

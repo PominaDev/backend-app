@@ -5,6 +5,7 @@ import com.pomina.common.model.PageResponse;
 import com.pomina.webapp.user_managerment.dto.request.SysUserRequestDto;
 import com.pomina.webapp.user_managerment.dto.respone.SysUserResponeDto;
 import com.pomina.webapp.user_managerment.entity.SysUser;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -26,4 +27,6 @@ public interface SysUserManagermentService {
     Integer softDeleteById(Integer id);      // Xóa mềm
 
     Integer countAll();
+
+    String upsert(SysUserRequestDto sysUserRequestDto);
 }

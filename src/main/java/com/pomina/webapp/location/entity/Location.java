@@ -1,15 +1,13 @@
 package com.pomina.webapp.location.entity;
 
 import com.pomina.common.model.BaseEntity;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class Location extends BaseEntity {
 
     private Integer locationId;

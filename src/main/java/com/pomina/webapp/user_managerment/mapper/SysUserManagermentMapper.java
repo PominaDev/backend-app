@@ -4,6 +4,7 @@ import com.pomina.webapp.user_managerment.dto.request.SysUserRequestDto;
 import com.pomina.webapp.user_managerment.dto.respone.SysUserResponeDto;
 import com.pomina.webapp.user_managerment.entity.SysUser;
 import org.apache.ibatis.annotations.Mapper;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -15,7 +16,7 @@ public interface SysUserManagermentMapper {
 
     List<SysUser> findAllPaged(Integer limit, Integer offset);
 
-    Boolean existsById(Integer id);
+    Byte isExistUser(Integer id);
 
     Integer insert(SysUser sysUser);
 
@@ -25,4 +26,6 @@ public interface SysUserManagermentMapper {
     Integer softDeleteById(Integer id);      // Xóa mềm
 
     Integer countAll();
+
+    List<Integer> getListUserIdByPhoneNumber(String phoneNumber);
 }

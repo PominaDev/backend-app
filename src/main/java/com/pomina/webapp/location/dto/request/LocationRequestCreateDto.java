@@ -1,5 +1,6 @@
 package com.pomina.webapp.location.dto.request;
 
+import com.pomina.common.model.BaseEntity;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.*;
@@ -11,7 +12,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class LocationRequestCreateDto {
+public class LocationRequestCreateDto extends BaseEntity {
     @NotNull(message = "userId is required")
     private Integer userId;
     private Double latitude;
@@ -25,12 +26,4 @@ public class LocationRequestCreateDto {
     private String countryCode;
     private Double radius;
     private String road;
-
-    private String status;
-    private String noted;
-    private LocalDateTime createdAt;
-    private String createdBy;
-    private LocalDateTime updatedAt;
-    private String updatedBy;
-    private Boolean isDeleted;
 }
