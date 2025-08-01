@@ -18,14 +18,17 @@ public class SysUser extends BaseEntity {
     private String masterLocationCode;
     private String bankName;
     private String bankNumber;
-    private String description;
+    private String userDescription;
     private Integer roleId;
     private Integer isActive;
     private Integer oldId;
 
     private String roleName;
+    private String roleDescription;
 
     private Integer locationId;
+    private Double latitude;
+    private Double longitude;
     private String address01;
     private String address02;
     private String address03;

@@ -26,6 +26,7 @@ public interface SysUserManagermentMapper {
     Integer softDeleteById(Integer id);      // Xóa mềm
 
     Integer countAll();
-
     List<Integer> getListUserIdByPhoneNumber(String phoneNumber);
+
+    List<Integer> findUserIdsByPhoneNumberExcludingId(String phoneNumber, String userId);
 }

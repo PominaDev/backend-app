@@ -19,7 +19,7 @@ public class SysUserResponeDto {
     private String masterLocationCode;
     private String bankName;
     private String bankNumber;
-    private String description;
+    private String userDescription;
     private Integer roleId;
     private Integer isActive;
     private Integer oldId;
@@ -27,9 +27,12 @@ public class SysUserResponeDto {
 
     // JOIN sys_role
     private String roleName;
+    private String roleDescription;
 
     // JOIN u_location
     private Integer locationId;
+    private Double latitude;
+    private Double longitude;
     private String address01;
     private String address02;
     private String address03;

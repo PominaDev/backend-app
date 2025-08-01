@@ -130,7 +130,6 @@ public class ApiConstants {
         public static final String CREATE = "/create";
         public static final String UPDATE = "/update/{id}";
         public static final String DELETE = "/delete/{id}";
-        public static final String UPSERT = "/upsert";
 
         private ApiSysUserManagement() {}
     }
@@ -147,13 +146,5 @@ public class ApiConstants {
         public static final String GET_ALL_ROLE = "/get-all-role";
 
         private ApiSysRole() {}
-    }
-
-    public static final class ApiLocationWeb {
-        public static final String BASE = VERSION_V1 + "/locations";
-        public static final String CREATE_WEB = "/create-web";
-        public static final String UPDATE_WEB = "/update-web/{userId}";
-
-        private ApiLocationWeb() {}
     }
 }

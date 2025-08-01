@@ -16,7 +16,7 @@
         <result column="country_code" property="countryCode"/>
         <result column="radius" property="radius"/>
         <result column="status" property="status"/>
-        <result column="noted" property="note"/>
+        <result column="noted" property="noted"/>
         <result column="created_at" property="createdAt"/>
         <result column="created_by" property="createdBy"/>
         <result column="updated_at" property="updatedAt"/>
@@ -79,12 +79,33 @@
                 #{countryCode},
                 #{radius},
                 #{status},
-                #{note},
+                #{noted},
                 NOW(),
                 #{createdBy},
                 NOW(),
                 #{updatedBy},
                 #{isDeleted})
     </insert>
+
+    <update id="update">
+        UPDATE u_location
+        SET latitude = #{latitude},
+            longitude = #{longitude},
+            address01 = #{address01},
+            address02 = #{address02},
+            address03 = #{address03},
+            address04 = #{address04},
+            address05 = #{address05},
+            full_address = #{fullAddress},
+            country_code = #{countryCode},
+            radius = #{radius},
+            status = #{status},
+            noted = #{noted},
+            updated_at = NOW(),
+            updated_by = #{updatedBy},
+            is_deleted = #{isDeleted}
+        WHERE user_id = #{userId}
+    </update>
+
 
 </mapper>

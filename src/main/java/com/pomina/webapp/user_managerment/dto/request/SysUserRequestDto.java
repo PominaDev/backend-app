@@ -13,10 +13,8 @@ import lombok.Setter;
 public class SysUserRequestDto extends BaseEntity {
     private Integer userId;
 
-    @NotBlank(message = "Username must not be empty")
     @Size(max = 255, message = "Username must not exceed 255 characters")
     private String username;
-    @NotBlank(message = "Password must not be empty")
     @Size(max = 255, message = "Password must not exceed 255 characters")
     private String password;
     private String hoVaTen;

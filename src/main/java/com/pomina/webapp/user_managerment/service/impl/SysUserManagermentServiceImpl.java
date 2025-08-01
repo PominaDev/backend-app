@@ -1,14 +1,14 @@
 package com.pomina.webapp.user_managerment.service.impl;
 
 import com.pomina.common.model.PageResponse;
-import com.pomina.webapp.location.entity.Location;
-import com.pomina.webapp.location.mapper.LocationWebMapper;
+import com.pomina.commonservices.location.mapper.LocationMapper;
 import com.pomina.webapp.user_managerment.converter.SysUserManagermentConverter;
 import com.pomina.webapp.user_managerment.dto.request.SysUserRequestDto;
 import com.pomina.webapp.user_managerment.dto.respone.SysUserResponeDto;
 import com.pomina.webapp.user_managerment.entity.SysUser;
 import com.pomina.webapp.user_managerment.mapper.SysUserManagermentMapper;
 import com.pomina.webapp.user_managerment.service.SysUserManagermentService;
+import com.pomina.commonservices.location.entity.Location;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -27,7 +27,7 @@ public class SysUserManagermentServiceImpl implements SysUserManagermentService 
     private final SysUserManagermentMapper sysUserManagermentMapper;
     private final SysUserManagermentConverter sysUserManagermentConverter;
     private final PasswordEncoder passwordEncoder;
-    private final LocationWebMapper locationWebMapper;
+    private final LocationMapper locationWebMapper;
 
     @Override
     public Integer deleteById(Integer id) {
@@ -74,12 +74,25 @@ public class SysUserManagermentServiceImpl implements SysUserManagermentService 
 
     @Override
     public Integer insert(SysUserRequestDto sysUserRequestDto) {
+        if(ObjectUtils.isEmpty(sysUserRequestDto.getPassword())){
+            throw new RuntimeException("Password must not be empty");
+        }
+        try{
+            SysUser sysUser = sysUserManagermentConverter.toEntity(sysUserRequestDto);
+            sysUser.setPassword(passwordEncoder.encode(sysUser.getPassword()));
+            sysUserManagermentMapper.insert(sysUser);
 
-        SysUser sysUser = sysUserManagermentConverter.toEntity(sysUserRequestDto);
-        sysUser.setPassword(passwordEncoder.encode(sysUser.getPassword()));
-        sysUserManagermentMapper.insert(sysUser);
+            // Insert Location
+            Location ins = uLocationEntityFromSysUserDto(sysUserRequestDto);
+            ins.setUserId(sysUserManagermentMapper.getListUserIdByPhoneNumber(sysUserRequestDto.getPhoneNumber()).getFirst());
+            ins.setFullAddress(sysUserRequestDto.getAddress01()+", "+sysUserRequestDto.getAddress02()
+                    +", "+sysUserRequestDto.getAddress03()+", "+sysUserRequestDto.getAddress04()+", "+sysUserRequestDto.getAddress05());
+            locationWebMapper.insert(ins);
 
-        return sysUser.getUserId();
+            return sysUser.getUserId();
+        }catch (Exception e){
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
@@ -92,15 +105,39 @@ public class SysUserManagermentServiceImpl implements SysUserManagermentService 
 
     @Override
     public Integer update(SysUserRequestDto sysUserRequestDto) {
-        if(ObjectUtils.isEmpty(sysUserRequestDto.getUserId())) {
-            throw new IllegalArgumentException("User ID must not be null for update");
+        try{
+            if(ObjectUtils.isEmpty(sysUserRequestDto.getUserId())) {
+                throw new IllegalArgumentException("User ID must not be null for update");
+            }
+
+            // Nếu có nhập sđt mới thì check trùng
+            if (!ObjectUtils.isEmpty(sysUserRequestDto.getPhoneNumber())) {
+                List<Integer> listUserId = sysUserManagermentMapper.findUserIdsByPhoneNumberExcludingId(
+                        sysUserRequestDto.getPhoneNumber(),
+                        String.valueOf(sysUserRequestDto.getUserId())
+                );
+                if (!listUserId.isEmpty()) {
+                    throw new IllegalArgumentException("Số điện thoại đang bị trùng - Liên hệ đội IT để được hỗ trợ");
+                }
+            }
+
+            // Build entity update
+            SysUser sysUser = sysUserManagermentConverter.toEntity(sysUserRequestDto);
+            if (!ObjectUtils.isEmpty(sysUser.getPassword())) {
+                sysUser.setPassword(passwordEncoder.encode(sysUser.getPassword()));
+            }
+
+            sysUserManagermentMapper.update(sysUser);
+
+            // Update location
+            Location upd = uLocationEntityFromSysUserDto(sysUserRequestDto);
+            upd.setUserId(sysUser.getUserId());
+            locationWebMapper.update(upd);
+
+            return 1;
+        }catch (Exception e){
+            throw new RuntimeException(e);
         }
-
-        SysUser sysUser = sysUserManagermentConverter.toEntity(sysUserRequestDto);
-
-        sysUser.setPassword(passwordEncoder.encode(sysUser.getPassword()));
-
-        return sysUserManagermentMapper.update(sysUser);
     }
 
     @Override
@@ -148,6 +185,5 @@ public class SysUserManagermentServiceImpl implements SysUserManagermentService 
                 .fullAddress(sysUserRequestDto.getAddress01()+", "+sysUserRequestDto.getAddress02()
                         +", "+sysUserRequestDto.getAddress03()+", "+sysUserRequestDto.getAddress04()+", "+sysUserRequestDto.getAddress05())
                 .build();
-
     }
 }

@@ -10,16 +10,4 @@ import java.util.List;
 
 @Mapper(componentModel = "spring")
 public interface SysUserManagermentConverter extends BaseConverter<SysUserRequestDto, SysUserResponeDto, SysUser> {
-
-    @Override
-    SysUser toEntity(SysUserRequestDto requestDto);
-
-    @Override
-    List<SysUser> toEntityList(List<SysUserRequestDto> requestDtoList);
-
-    @Override
-    SysUserResponeDto toResponse(SysUser entity);
-
-    @Override
-    List<SysUserResponeDto> toResponseList(List<SysUser> entityList);
 }
