@@ -14,14 +14,7 @@ spring:
       path: logs
       name: logs/app.log
     level:
-      org.apache.ibatis: DEBUG
-      org.mybatis: DEBUG
-      org.mybatis.spring: DEBUG
-      org.springframework.jdbc.core: TRACE
-      org.springframework.security: DEBUG
-      org.springframework.web: DEBUG
-      org.springframework.boot.autoconfigure.security: DEBUG
-      com.zaxxer.hikari: DEBUG
+      root: INFO
 
 mybatis:
   config-location: classpath:/mybatis/configuration/mybatis-config.xml
