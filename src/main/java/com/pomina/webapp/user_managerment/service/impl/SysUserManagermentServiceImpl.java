@@ -77,22 +77,28 @@ public class SysUserManagermentServiceImpl implements SysUserManagermentService 
         if(ObjectUtils.isEmpty(sysUserRequestDto.getPassword())){
             throw new RuntimeException("Password must not be empty");
         }
-        try{
-            SysUser sysUser = sysUserManagermentConverter.toEntity(sysUserRequestDto);
-            sysUser.setPassword(passwordEncoder.encode(sysUser.getPassword()));
-            sysUser.setIsActive(true);
-            sysUserManagermentMapper.insert(sysUser);
+        List<Integer> listUserId = sysUserManagermentMapper.getListUserIdByPhoneNumber(sysUserRequestDto.getPhoneNumber());
 
-            // Insert Location
-            Location ins = uLocationEntityFromSysUserDto(sysUserRequestDto);
-            ins.setUserId(sysUserManagermentMapper.getListUserIdByPhoneNumber(sysUserRequestDto.getPhoneNumber()).getFirst());
-            ins.setFullAddress(sysUserRequestDto.getAddress01()+", "+sysUserRequestDto.getAddress02()
-                    +", "+sysUserRequestDto.getAddress03()+", "+sysUserRequestDto.getAddress04()+", "+sysUserRequestDto.getAddress05());
-            locationWebMapper.insert(ins);
+        if(ObjectUtils.isEmpty(listUserId)){
+            try{
+                SysUser sysUser = sysUserManagermentConverter.toEntity(sysUserRequestDto);
+                sysUser.setPassword(passwordEncoder.encode(sysUser.getPassword()));
+                sysUser.setIsActive(true);
+                sysUserManagermentMapper.insert(sysUser);
 
-            return sysUser.getUserId();
-        }catch (Exception e){
-            throw new RuntimeException(e);
+                // Insert Location
+                Location ins = uLocationEntityFromSysUserDto(sysUserRequestDto);
+                ins.setUserId(sysUserManagermentMapper.getListUserIdByPhoneNumber(sysUserRequestDto.getPhoneNumber()).getFirst());
+                ins.setFullAddress(sysUserRequestDto.getAddress01()+", "+sysUserRequestDto.getAddress02()
+                        +", "+sysUserRequestDto.getAddress03()+", "+sysUserRequestDto.getAddress04()+", "+sysUserRequestDto.getAddress05());
+                locationWebMapper.insert(ins);
+
+                return sysUser.getUserId();
+            }catch (Exception e){
+                throw new RuntimeException(e);
+            }
+        }else {
+            throw new IllegalArgumentException("Số điện thoại đang bị trùng - Liên hệ đội IT để được hỗ trợ");
         }
     }
 
