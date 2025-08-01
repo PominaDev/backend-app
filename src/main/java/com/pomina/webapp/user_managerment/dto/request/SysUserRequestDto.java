@@ -27,6 +27,8 @@ public class SysUserRequestDto extends BaseEntity {
     private String description;
     @NotNull(message = "Role ID must not be null")
     private Integer roleId;
+    private Boolean isActive;
+    private Integer oldId;
 
     // u_location
     private Double latitude;

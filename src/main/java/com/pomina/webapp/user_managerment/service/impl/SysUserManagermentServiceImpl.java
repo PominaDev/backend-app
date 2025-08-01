@@ -80,6 +80,7 @@ public class SysUserManagermentServiceImpl implements SysUserManagermentService 
         try{
             SysUser sysUser = sysUserManagermentConverter.toEntity(sysUserRequestDto);
             sysUser.setPassword(passwordEncoder.encode(sysUser.getPassword()));
+            sysUser.setIsActive(true);
             sysUserManagermentMapper.insert(sysUser);
 
             // Insert Location

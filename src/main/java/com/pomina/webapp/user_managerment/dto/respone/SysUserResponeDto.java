@@ -21,7 +21,7 @@ public class SysUserResponeDto {
     private String bankNumber;
     private String userDescription;
     private Integer roleId;
-    private Integer isActive;
+    private Boolean isActive;
     private Integer oldId;
     private String isDeleted;
 
