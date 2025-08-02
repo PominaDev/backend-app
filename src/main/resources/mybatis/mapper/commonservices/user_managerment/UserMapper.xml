@@ -28,6 +28,23 @@
         <result column="full_address" property="fullAddress"/>
     </resultMap>
 
+    <resultMap id="UserProfileResultMap" type="com.pomina.commonservices.user_management.dto.custom_mapper.UserProfile">
+        <result property="userId" column="ma_nguoi_dung"/>
+        <result property="username" column="ten_dang_nhap"/>
+        <result property="fullName" column="ho_va_ten"/>
+        <result property="phoneNumber" column="sdt"/>
+        <result property="roleName" column="role_name"/>
+        <result property="address01" column="address01"/>
+        <result property="address02" column="address02"/>
+        <result property="address03" column="address03"/>
+        <result property="address04" column="address04"/>
+        <result property="address05" column="address05"/>
+        <result property="latitude" column="latitude"/>
+        <result property="longitude" column="longitude"/>
+        <result property="masterLocationCode" column="master_location_code"/>
+        <result property="masterLocationName" column="master_location_name"/>
+    </resultMap>
+
     <select id="findById" resultMap="SysUserResultMap">
         SELECT u.user_id,
                u.username,
@@ -136,6 +153,25 @@
           AND is_deleted = 0
     </update>
 
+    <update id="updateProfile">
+        UPDATE sys_user
+        SET ho_va_ten = #{fullName},
+            phone_number = #{phoneNumber},
+            updated_at = NOW(),
+            updated_by = #{updatedBy}
+        WHERE user_id = #{userId};
+
+        UPDATE u_location
+        SET address01 = #{address01},
+            address02 = #{address02},
+            address03 = #{address03},
+            address04 = #{address04},
+            address05 = #{address05},
+            latitude = #{latitude},
+            longitude = #{longitude}
+        WHERE user_id = #{userId};
+    </update>
+
     <delete id="deleteById">
         DELETE
         FROM sys_user
@@ -159,6 +195,28 @@
         SELECT COUNT(user_id)
         FROM sys_user
         WHERE is_deleted = 0
+    </select>
+
+    <select id="getUserProfileByUserId" resultMap="UserProfileResultMap">
+        SELECT us.user_id      ma_nguoi_dung
+             , us.username     ten_dang_nhap
+             , us.ho_va_ten
+             , us.phone_number sdt
+             , ro.description  role_name
+             , u_lo.address01
+             , u_lo.address02
+             , u_lo.address03
+             , u_lo.address04
+             , u_lo.address05
+             , u_lo.latitude
+             , u_lo.longitude
+             , ms_lo.master_location_code
+             , ms_lo.master_location_name
+        FROM sys_user us
+                 LEFT JOIN sys_role ro ON us.role_id = ro.id
+                 LEFT JOIN u_location u_lo ON u_lo.user_id = us.user_id
+                 LEFT JOIN master_location ms_lo ON ms_lo.master_location_code = us.master_location_code
+        WHERE us.user_id = #{userId}
     </select>
 
 </mapper>

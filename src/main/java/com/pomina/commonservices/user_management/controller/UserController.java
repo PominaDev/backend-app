@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -54,7 +55,7 @@ public class UserController extends BaseController<UserCreateDto, UserUpdateDto,
     }
 
     @Override
-    @PostMapping("/update/{userId}")
+    @PutMapping("/{userId}")
     public ResponseEntity<ApiResponse<Integer>> update(@PathVariable("userId") Integer userId, @Valid @RequestBody UserUpdateDto dto) {
         UserRequestDto requestDto = userConverter.toUserRequestDto(dto);
         return ResponseHandler.success(userService.update(userId, requestDto));

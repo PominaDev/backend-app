@@ -59,35 +59,21 @@ public class ScanProductWarrantyServiceImpl implements ScanProductWarrantyServic
 
             // lấy location từ người dùng
             LocationResponseDto locationResponseDto = locationService.getLocationFromCoordinates(latitude, longitude);
-            Integer bhPhaiMau = productAndWarrantyInfo.getBhPhaiMau();
-            Integer bhAnMon = productAndWarrantyInfo.getBhAnMon();
-
-            LocalDateTime timeNow = LocalDateTime.now();
 
             // insert warranty
-            Warranty warranty = Warranty.builder()
-                    .userId(userIdCurr)
-                    .latitude(latitude)
-                    .longitude(longitude)
-                    .address01(locationResponseDto.getRoad())
-                    .address02(locationResponseDto.getWard())
-                    .address03(locationResponseDto.getDistrict())
-                    .address04(locationResponseDto.getCity())
-                    .address05(locationResponseDto.getCountry())
-                    .countryCode(locationResponseDto.getCountryCode())
-                    .maCuonTon(maCuonTon)
-                    .fromWarrantyPhaiMau(timeNow)
-                    .toWarrantyPhaiMau(LocalDateTime.now().plusYears(bhPhaiMau))
-                    .fromWarrantyAnMon(timeNow)
-                    .toWarrantyAnMon(LocalDateTime.now().plusYears(bhAnMon))
-                    .build();
+            int resultInserted = insertWarranty(scanProductWarrantyRequestDto, userIdCurr, productAndWarrantyInfo, locationResponseDto);
+            if (resultInserted < 1) {
+                return ScanProductWarrantyResponseDto.builder()
+                        .resultInserted(resultInserted)
+                        .productDetailResponseDto(null)
+                        .build();
+            }
 
-            // Fix tạm lỗi audit
-            warranty.setIsDeleted(false);
+            ProductDetailResponseDto productDetailResponseDto = scanProductWarrantyConverter.toProductDetailResponseDto(productAndWarrantyInfo);
 
-            int resultInserted = warrantyMapper.insert(warranty);
             return ScanProductWarrantyResponseDto.builder()
                     .resultInserted(resultInserted)
+                    .productDetailResponseDto(productDetailResponseDto)
                     .build();
         } else {
             // quét lần 2
@@ -101,6 +87,34 @@ public class ScanProductWarrantyServiceImpl implements ScanProductWarrantyServic
         }
     }
 
+    private int insertWarranty(ScanProductWarrantyRequestDto scanProductWarrantyRequestDto, Integer userIdCurr, Product productAndWarrantyInfo, LocationResponseDto locationResponseDto) {
+        LocalDateTime timeNow = LocalDateTime.now();
+
+        // insert warranty
+        Warranty warranty = Warranty.builder()
+                .userId(userIdCurr)
+                .latitude(scanProductWarrantyRequestDto.getLatitude())
+                .longitude(scanProductWarrantyRequestDto.getLongitude())
+                .address01(locationResponseDto.getRoad())
+                .address02(locationResponseDto.getWard())
+                .address03(locationResponseDto.getDistrict())
+                .address04(locationResponseDto.getCity())
+                .address05(locationResponseDto.getCountry())
+                .countryCode(locationResponseDto.getCountryCode())
+                .maCuonTon(scanProductWarrantyRequestDto.getMaCuonTon())
+                .fromWarrantyPhaiMau(timeNow)
+                .toWarrantyPhaiMau(LocalDateTime.now().plusYears(productAndWarrantyInfo.getBhPhaiMau()))
+                .fromWarrantyAnMon(timeNow)
+                .toWarrantyAnMon(LocalDateTime.now().plusYears(productAndWarrantyInfo.getBhAnMon()))
+                .isValid(true) // Default nếu đúng phạm vi truy cập
+                .build();
+
+        // Fix tạm lỗi audit
+        warranty.setIsDeleted(false);
+
+        return warrantyMapper.insert(warranty);
+    }
+
     private void isCheckLocation(Double latitude, Double longitude) {
         // Check location
         CheckLocationResponse checkLocationResponse = locationService.checkLocation(
@@ -110,6 +124,8 @@ public class ScanProductWarrantyServiceImpl implements ScanProductWarrantyServic
                         .build()
         );
 
-        if (Boolean.FALSE.equals(checkLocationResponse.getIsWithinLocation())) throw new AppException(ErrorCode.OUT_OF_LOCATION);
+        if (Boolean.FALSE.equals(checkLocationResponse.getIsWithinLocation())) {
+            throw new AppException(ErrorCode.OUT_OF_LOCATION);
+        }
     }
 }

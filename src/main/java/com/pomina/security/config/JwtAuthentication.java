@@ -18,6 +18,7 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.Optional;
 
 @Component
@@ -33,6 +34,13 @@ public class JwtAuthentication extends OncePerRequestFilter {
                                     HttpServletResponse response,
                                     FilterChain filterChain)
             throws ServletException, IOException {
+
+        // Add filter for white list -> case /logout
+        String path = request.getRequestURI();
+        if (isWhiteListPath(path)) {
+            filterChain.doFilter(request, response);
+            return;
+        }
 
         Optional<String> tokenOpt = extractTokenFromRequest(request);
 
@@ -58,6 +66,7 @@ public class JwtAuthentication extends OncePerRequestFilter {
         }
 
         if (isAccessTokenBlacklisted(token, jwt)) {
+            SecurityContextHolder.clearContext();
             response.sendError(HttpServletResponse.SC_UNAUTHORIZED);
             return;
         }
@@ -93,5 +102,9 @@ public class JwtAuthentication extends OncePerRequestFilter {
         String tokenType = jwt.getClaim("tokenType").asString();
         return "REFRESH_TOKEN".equals(tokenType)
                 || tokenBlacklistService.isBlacklisted(token);
+    }
+
+    private boolean isWhiteListPath(String path) {
+        return Arrays.stream(WebSecurityConfig.WHITE_LIST_ENDPOINTS).anyMatch(path::startsWith);
     }
 }

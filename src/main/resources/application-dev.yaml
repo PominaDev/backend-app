@@ -4,8 +4,8 @@ server:
 spring:
   datasource:
     hikari:
-      maximum-pool-size: 10
-      minimum-idle: 5
+      maximum-pool-size: 30
+      minimum-idle: 10
       idle-timeout: 30000
       max-lifetime: 1800000
       connection-timeout: 30000
@@ -32,14 +32,14 @@ spring:
       timeout: 5000
       lettuce:
         pool:
-          max-active: 50
-          max-idle: 10
-          min-idle: 2
+          max-active: 200
+          max-idle: 50
+          min-idle: 10
 
 security:
   jwt:
-#    access-token-expiration: 900000      # 15 phút
-    access-token-expiration: 30000      # 1 phút
+    access-token-expiration: 900000      # 15 phút
+#    access-token-expiration: 30000      # 1 phút
     refresh-token-expiration: 1296000000   # 15 ngày
     secret-key: oB1Zvsn1261tfh0msDaGCP63l+rYq15F/O+ksyqZWe4qWqHRwvvz5pHs3qgHBhYi
 
@@ -62,5 +62,7 @@ vonage:
 
 logging:
   level:
-    root: INFO
-    com.pomina.erpapp: DEBUG
+    root: DEBUG
+    org.springframework.web: DEBUG
+    org.mybatis: DEBUG
+    jdbc.sqlonly: DEBUG

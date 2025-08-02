@@ -1,7 +1,5 @@
 package com.pomina.common.constant;
 
-import com.vonage.client.conversations.SipRingingEvent;
-
 public class ApiConstants {
 
     private ApiConstants() {
@@ -81,8 +79,6 @@ public class ApiConstants {
         public static final String BASE = VERSION_V1 + "/locations";
         public static final String REGISTER = "/register";
         public static final String VALIDATE = "/validate";
-        public static final String CREATE_WEB = "/create-web";
-        public static final String UPDATE_WEB = "/update-web";
 
         private ApiLocation() {}
     }
@@ -146,5 +142,12 @@ public class ApiConstants {
         public static final String GET_ALL_ROLE = "/get-all-role";
 
         private ApiSysRole() {}
+    }
+
+    public static final class ApiProfile {
+        public static final String BASE = VERSION_V1 + "/profiles";
+        public static final String UPDATE = "/edit";
+
+        private ApiProfile() {}
     }
 }
