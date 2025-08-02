@@ -231,7 +231,9 @@
         UPDATE sys_user
         SET
             username = #{username},
-            password = #{password},
+            <if test="password != null and password !='' ">
+                password = #{password},
+            </if>
             ho_va_ten = #{hoVaTen},
             phone_number = #{phoneNumber},
             ma_so_thue = #{maSoThue},
