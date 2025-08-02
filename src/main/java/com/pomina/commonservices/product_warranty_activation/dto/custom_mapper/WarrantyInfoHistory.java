@@ -1,10 +1,14 @@
 package com.pomina.commonservices.product_warranty_activation.dto.custom_mapper;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
 @Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class WarrantyInfoHistory {
     // User Info
     private Integer userId;
@@ -42,4 +46,6 @@ public class WarrantyInfoHistory {
     private String toWarrantyAnMon;
     private String fromWarrantyPhaiMau;
     private String toWarrantyPhaiMau;
+
+    private Boolean isValid;
 }

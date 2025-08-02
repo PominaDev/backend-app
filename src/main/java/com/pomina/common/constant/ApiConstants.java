@@ -122,6 +122,14 @@ public class ApiConstants {
         public static final String BASE = VERSION_V1 + "/user-management";
         public static final String GET_USER_ACTIVE_ROLE_WEB = "/get-user-active-role-web";
 
+// Private constructor to prevent instantiation of the class
         private ApiSysUserManagement() {}
+    }
+
+    public static final class ApiProfile {
+        public static final String BASE = VERSION_V1 + "/profiles";
+        public static final String UPDATE = "/edit";
+
+        private ApiProfile() {}
     }
 }

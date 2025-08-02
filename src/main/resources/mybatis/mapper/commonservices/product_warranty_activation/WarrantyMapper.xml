@@ -61,6 +61,8 @@
         <result column="to_warranty_an_mon" property="toWarrantyAnMon"/>
         <result column="from_warranty_phai_mau" property="fromWarrantyPhaiMau"/>
         <result column="to_warranty_phai_mau" property="toWarrantyPhaiMau"/>
+
+        <result column="is_valid" property="isValid"/>
     </resultMap>
 
     <insert id="insert" parameterType="com.pomina.commonservices.product_warranty_activation.entity.Warranty"
@@ -79,6 +81,7 @@
                                 to_warranty_phai_mau,
                                 from_warranty_an_mon,
                                 to_warranty_an_mon,
+                                is_valid,
                                 status,
                                 noted,
                                 created_at,
@@ -100,6 +103,7 @@
                 #{toWarrantyPhaiMau},
                 #{fromWarrantyAnMon},
                 #{toWarrantyAnMon},
+                #{isValid},
                 #{status},
                 #{note},
                 NOW(),
@@ -196,7 +200,8 @@
         wr.from_warranty_an_mon,
         wr.to_warranty_an_mon,
         wr.from_warranty_phai_mau,
-        wr.to_warranty_phai_mau
+        wr.to_warranty_phai_mau,
+        wr.is_valid
 
         FROM u_warranty wr
         LEFT JOIN u_product pr ON wr.ma_cuon_ton = pr.ma_cuon_ton

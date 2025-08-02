@@ -45,4 +45,6 @@ public class Warranty extends BaseEntity {
     private LocalDateTime fromWarrantyAnMon; // Ngày kích hoạt bảo hành ăn mòn
 
     private LocalDateTime toWarrantyAnMon; // Ngày kích hoạt bảo hành ăn mòn + năm kích hoạt từ u_product.bh_an_mon
+
+    private Boolean isValid; // vtri quét k hợp lệ trong bán kính 2km
 }
