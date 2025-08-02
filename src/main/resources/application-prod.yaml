@@ -64,5 +64,4 @@ logging:
   level:
     root: INFO
     com.pomina: WARN
-    org.hibernate.SQL: OFF
     org.springframework: WARN
