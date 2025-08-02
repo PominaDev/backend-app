@@ -87,7 +87,7 @@ services:
     networks:
       - replication
     environment:
-      SPRING_PROFILES_ACTIVE: dev
+      SPRING_PROFILES_ACTIVE: prod
 
 volumes:
   redis_data:
