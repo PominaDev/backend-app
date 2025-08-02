@@ -29,20 +29,22 @@
     </resultMap>
 
     <resultMap id="UserProfileResultMap" type="com.pomina.commonservices.user_management.dto.custom_mapper.UserProfile">
-        <result property="userId" column="ma_nguoi_dung"/>
+        <id property="userId" column="ma_nguoi_dung"/>
         <result property="username" column="ten_dang_nhap"/>
         <result property="fullName" column="ho_va_ten"/>
         <result property="phoneNumber" column="sdt"/>
         <result property="roleName" column="role_name"/>
-        <result property="address01" column="address01"/>
-        <result property="address02" column="address02"/>
-        <result property="address03" column="address03"/>
-        <result property="address04" column="address04"/>
-        <result property="address05" column="address05"/>
         <result property="latitude" column="latitude"/>
         <result property="longitude" column="longitude"/>
         <result property="masterLocationCode" column="master_location_code"/>
         <result property="masterLocationName" column="master_location_name"/>
+        <association property="address" javaType="com.pomina.commonservices.user_management.dto.custom_mapper.AddressUserProfile">
+            <result property="address01" column="address01"/>
+            <result property="address02" column="address02"/>
+            <result property="address03" column="address03"/>
+            <result property="address04" column="address04"/>
+            <result property="address05" column="address05"/>
+        </association>
     </resultMap>
 
     <select id="findById" resultMap="SysUserResultMap">
