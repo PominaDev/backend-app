@@ -1,8 +1,6 @@
 package com.pomina.app.scan_product_warranty.service.impl;
 
-import com.pomina.app.scan_product_warranty.converter.ScanProductWarrantyConverter;
 import com.pomina.app.scan_product_warranty.dto.request.ScanProductWarrantyRequestDto;
-import com.pomina.app.scan_product_warranty.dto.response.ProductDetailResponseDto;
 import com.pomina.app.scan_product_warranty.dto.response.ScanProductWarrantyResponseDto;
 import com.pomina.app.scan_product_warranty.service.ScanProductWarrantyService;
 import com.pomina.common.exception.AppException;
@@ -11,9 +9,8 @@ import com.pomina.commonservices.location.dto.request.LocationRequestDto;
 import com.pomina.commonservices.location.dto.response.CheckLocationResponse;
 import com.pomina.commonservices.location.dto.response.LocationResponseDto;
 import com.pomina.commonservices.location.service.LocationService;
-import com.pomina.commonservices.product_warranty_activation.entity.Product;
+import com.pomina.commonservices.product_warranty_activation.dto.custom_mapper.WarrantyInfoHistory;
 import com.pomina.commonservices.product_warranty_activation.entity.Warranty;
-import com.pomina.commonservices.product_warranty_activation.mapper.ProductMapper;
 import com.pomina.commonservices.product_warranty_activation.mapper.WarrantyMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -28,13 +25,9 @@ import static com.pomina.security.config.JwtAuthentication.getCurrentUserId;
 @RequiredArgsConstructor
 public class ScanProductWarrantyServiceImpl implements ScanProductWarrantyService {
 
-    private final ProductMapper productMapper;
-
     private final WarrantyMapper warrantyMapper;
 
     private final LocationService locationService;
-
-    private final ScanProductWarrantyConverter scanProductWarrantyConverter;
 
     @Override
     @Transactional
@@ -47,12 +40,12 @@ public class ScanProductWarrantyServiceImpl implements ScanProductWarrantyServic
         Integer userIdCurr = getCurrentUserId();
         if (Objects.isNull(userIdCurr)) throw new AppException(ErrorCode.UNAUTHORIZED);
 
-        Product productAndWarrantyInfo = productMapper.findProductAndWarrantyByMaCuonTon(maCuonTon);
+        WarrantyInfoHistory warrantyInfoHistory = warrantyMapper.findWarrantyDetailByMaCuonTon(maCuonTon);
 
-        if (Objects.isNull(productAndWarrantyInfo)) throw new AppException(ErrorCode.PRODUCT_NOT_FOUND);
+        if (Objects.isNull(warrantyInfoHistory)) throw new AppException(ErrorCode.PRODUCT_NOT_FOUND);
 
         // quét lần đầu
-        if (Objects.isNull(productAndWarrantyInfo.getWarranty())) {
+        if (Objects.isNull(warrantyInfoHistory.getFromWarrantyAnMon())) {
 
             // Check location có nằm trong khu vực đã đăng ký không
             // isCheckLocation(latitude, longitude);
@@ -61,7 +54,7 @@ public class ScanProductWarrantyServiceImpl implements ScanProductWarrantyServic
             LocationResponseDto locationResponseDto = locationService.getLocationFromCoordinates(latitude, longitude);
 
             // insert warranty
-            int resultInserted = insertWarranty(scanProductWarrantyRequestDto, userIdCurr, productAndWarrantyInfo, locationResponseDto);
+            int resultInserted = insertWarranty(scanProductWarrantyRequestDto, userIdCurr, warrantyInfoHistory, locationResponseDto);
             if (resultInserted < 1) {
                 return ScanProductWarrantyResponseDto.builder()
                         .resultInserted(resultInserted)
@@ -69,25 +62,24 @@ public class ScanProductWarrantyServiceImpl implements ScanProductWarrantyServic
                         .build();
             }
 
-            ProductDetailResponseDto productDetailResponseDto = scanProductWarrantyConverter.toProductDetailResponseDto(productAndWarrantyInfo);
+            warrantyInfoHistory = warrantyMapper.findWarrantyDetailByMaCuonTon(maCuonTon);
 
             return ScanProductWarrantyResponseDto.builder()
                     .resultInserted(resultInserted)
-                    .productDetailResponseDto(productDetailResponseDto)
+                    .productDetailResponseDto(warrantyInfoHistory)
                     .build();
         } else {
             // quét lần 2
-            Integer userId = productAndWarrantyInfo.getWarranty().getUserId();
+            Integer userId = warrantyInfoHistory.getUserId();
             if (!userIdCurr.equals(userId)) throw new AppException(ErrorCode.UNAUTHORIZED);
-            ProductDetailResponseDto productDetailResponseDto = scanProductWarrantyConverter.toProductDetailResponseDto(productAndWarrantyInfo);
 
             return ScanProductWarrantyResponseDto.builder()
-                    .productDetailResponseDto(productDetailResponseDto)
+                    .productDetailResponseDto(warrantyInfoHistory)
                     .build();
         }
     }
 
-    private int insertWarranty(ScanProductWarrantyRequestDto scanProductWarrantyRequestDto, Integer userIdCurr, Product productAndWarrantyInfo, LocationResponseDto locationResponseDto) {
+    private int insertWarranty(ScanProductWarrantyRequestDto scanProductWarrantyRequestDto, Integer userIdCurr, WarrantyInfoHistory warrantyInfoHistory, LocationResponseDto locationResponseDto) {
         LocalDateTime timeNow = LocalDateTime.now();
 
         // insert warranty
@@ -103,9 +95,9 @@ public class ScanProductWarrantyServiceImpl implements ScanProductWarrantyServic
                 .countryCode(locationResponseDto.getCountryCode())
                 .maCuonTon(scanProductWarrantyRequestDto.getMaCuonTon())
                 .fromWarrantyPhaiMau(timeNow)
-                .toWarrantyPhaiMau(LocalDateTime.now().plusYears(productAndWarrantyInfo.getBhPhaiMau()))
+                .toWarrantyPhaiMau(LocalDateTime.now().plusYears(warrantyInfoHistory.getBhPhaiMau()))
                 .fromWarrantyAnMon(timeNow)
-                .toWarrantyAnMon(LocalDateTime.now().plusYears(productAndWarrantyInfo.getBhAnMon()))
+                .toWarrantyAnMon(LocalDateTime.now().plusYears(warrantyInfoHistory.getBhAnMon()))
                 .isValid(true) // Default nếu đúng phạm vi truy cập
                 .build();
 

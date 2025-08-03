@@ -10,4 +10,11 @@ import com.pomina.commonservices.product_warranty_activation.dto.response.Warran
 public interface WarrantyService extends BaseService<WarrantyRequestDto, WarrantyResponseDto, Integer> {
 
     PageResponse<WarrantyInfoHistory> getWarrantyInfoHistory(PageRequest pageRequest, boolean forAdmin);
+
+    /**
+     * Lấy thông tin bảo hành theo mã cuộn tồn
+     * @param maCuonTon
+     * @return WarrantyInfoHistory
+     */
+    WarrantyInfoHistory getWarrantyInfoHistoryByMaCuonTon(String maCuonTon);
 }
