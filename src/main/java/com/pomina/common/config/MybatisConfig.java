@@ -19,6 +19,7 @@ import javax.sql.DataSource;
         "com.pomina.webapp.menu_permission.mapper",
         "com.pomina.webapp.notification_websocket.mapper",
         "com.pomina.webapp.user_managerment.mapper",
+        "com.pomina.webapp.grant_approval.mapper"
 
 })
 public class MybatisConfig {
