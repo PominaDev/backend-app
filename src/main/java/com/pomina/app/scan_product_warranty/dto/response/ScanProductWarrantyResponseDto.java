@@ -1,6 +1,7 @@
 package com.pomina.app.scan_product_warranty.dto.response;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.pomina.commonservices.product_warranty_activation.dto.custom_mapper.WarrantyInfoHistory;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -17,5 +18,5 @@ public class ScanProductWarrantyResponseDto {
     @JsonIgnoreProperties(ignoreUnknown = true)
     private Integer resultInserted;
 
-    private ProductDetailResponseDto productDetailResponseDto;
+    private WarrantyInfoHistory productDetailResponseDto;
 }
