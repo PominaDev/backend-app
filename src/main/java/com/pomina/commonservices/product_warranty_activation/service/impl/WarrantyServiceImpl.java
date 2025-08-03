@@ -72,4 +72,9 @@ public class WarrantyServiceImpl implements WarrantyService {
 
         return PageResponse.createPaged(warrantyInfoHistories, pageRequest.getPage(), pageRequest.getSize(), totalElements);
     }
+
+    @Override
+    public WarrantyInfoHistory getWarrantyInfoHistoryByMaCuonTon(String maCuonTon) {
+        return null;
+    }
 }
