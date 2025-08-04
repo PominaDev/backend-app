@@ -37,6 +37,7 @@ public class ProductWarrantyActivationServiceImpl implements ProductWarrantyActi
         Warranty warrantyInfo = warrantyMapper.findById(warrantyId);
         if (Objects.isNull(warrantyInfo)) throw new AppException(ErrorCode.WARRANTY_NOT_FOUND);
 
+        warrantyInfo.setWarrantyId(warrantyId);
         warrantyInfo.setIsValid(activationWarrantyRequestDto.getIsValid());
         warrantyInfo.setNote(activationWarrantyRequestDto.getNoted());
 

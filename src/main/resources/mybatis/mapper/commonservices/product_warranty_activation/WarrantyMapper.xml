@@ -110,9 +110,9 @@
                 #{isValid},
                 #{status},
                 #{note},
-                NOW(),
+                #{createdAt},
                 #{createdBy},
-                NOW(),
+                #{updatedAt},
                 #{updatedBy},
                 #{isDeleted})
     </insert>
@@ -291,6 +291,7 @@
         lo.latitude AS location_account_lat,
         lo.longitude AS location_account_long,
 
+        wr.u_warranty_id,
         wr.address01 AS location_warranty_01,
         wr.address02 AS location_warranty_02,
         wr.address03 AS location_warranty_03,
@@ -302,7 +303,8 @@
         wr.to_warranty_an_mon,
         wr.from_warranty_phai_mau,
         wr.to_warranty_phai_mau,
-        wr.is_valid
+        wr.is_valid,
+        wr.noted
 
         FROM u_product pr
         LEFT JOIN u_warranty wr ON wr.ma_cuon_ton = pr.ma_cuon_ton

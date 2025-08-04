@@ -56,13 +56,13 @@ public class ScanProductWarrantyServiceImpl implements ScanProductWarrantyServic
         if (Objects.isNull(warrantyInfoHistory.getFromWarrantyAnMon())) {
 
             // Check location có nằm trong khu vực đã đăng ký không
-            isCheckLocation(latitude, longitude);
+            Boolean isValidLocation = isCheckLocation(latitude, longitude);
 
             // lấy location từ người dùng
             LocationResponseDto locationResponseDto = locationService.getLocationFromCoordinates(latitude, longitude);
 
             // insert warranty
-            int resultInserted = insertWarranty(scanProductWarrantyRequestDto, userIdCurr, warrantyInfoHistory, locationResponseDto);
+            int resultInserted = insertWarranty(scanProductWarrantyRequestDto, userIdCurr, warrantyInfoHistory, locationResponseDto, isValidLocation);
             if (resultInserted < 1) {
                 return ScanProductWarrantyResponseDto.builder()
                         .resultInserted(resultInserted)
@@ -87,7 +87,7 @@ public class ScanProductWarrantyServiceImpl implements ScanProductWarrantyServic
         }
     }
 
-    private int insertWarranty(ScanProductWarrantyRequestDto scanProductWarrantyRequestDto, Integer userIdCurr, WarrantyInfoHistory warrantyInfoHistory, LocationResponseDto locationResponseDto) {
+    private int insertWarranty(ScanProductWarrantyRequestDto scanProductWarrantyRequestDto, Integer userIdCurr, WarrantyInfoHistory warrantyInfoHistory, LocationResponseDto locationResponseDto, Boolean isValidLocation) {
         LocalDateTime timeNow = LocalDateTime.now();
 
         // insert warranty
@@ -106,16 +106,20 @@ public class ScanProductWarrantyServiceImpl implements ScanProductWarrantyServic
                 .toWarrantyPhaiMau(LocalDateTime.now().plusYears(warrantyInfoHistory.getBhPhaiMau()))
                 .fromWarrantyAnMon(timeNow)
                 .toWarrantyAnMon(LocalDateTime.now().plusYears(warrantyInfoHistory.getBhAnMon()))
-                .isValid(true) // Default nếu đúng phạm vi truy cập
                 .build();
 
         // Fix tạm lỗi audit
+        warranty.setCreatedAt(timeNow);
+        warranty.setUpdatedAt(timeNow);
         warranty.setIsDeleted(false);
+
+        // Default nếu đúng phạm vi truy cập
+        warranty.setIsValid(Boolean.TRUE.equals(isValidLocation));
 
         return warrantyMapper.insert(warranty);
     }
 
-    private void isCheckLocation(Double latitude, Double longitude) {
+    private Boolean isCheckLocation(Double latitude, Double longitude) {
         // Check location
         CheckLocationResponse checkLocationResponse = locationService.checkLocation(
                 LocationRequestDto.builder()
@@ -125,7 +129,9 @@ public class ScanProductWarrantyServiceImpl implements ScanProductWarrantyServic
         );
 
         if (Boolean.FALSE.equals(checkLocationResponse.getIsWithinLocation())) {
-            throw new AppException(ErrorCode.OUT_OF_LOCATION);
+            return false;
         }
+
+        return true;
     }
 }
