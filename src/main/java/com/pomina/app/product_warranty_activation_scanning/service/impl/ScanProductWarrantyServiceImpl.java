@@ -80,8 +80,9 @@ public class ScanProductWarrantyServiceImpl implements ScanProductWarrantyServic
                     .build();
         } else {
             // quét lần 2
+            // Kiểm tra chủ sỡ hữu sản phẩm
             Integer userId = warrantyInfoHistory.getUserId();
-            if (!userIdCurr.equals(userId)) throw new AppException(ErrorCode.UNAUTHORIZED);
+            if (!userIdCurr.equals(userId)) throw new AppException(ErrorCode.INVALID_OWN_PRODUCT);
 
             return ScanProductWarrantyResponseDto.builder()
                     .productDetailResponseDto(warrantyInfoHistory)

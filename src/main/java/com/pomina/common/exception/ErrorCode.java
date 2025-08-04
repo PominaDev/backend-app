@@ -31,6 +31,7 @@ public enum ErrorCode {
     INVALID_OTP("3001", "Mã OTP không hợp lệ"),
     INVALID_EMAIL_FORMAT("3002", "Định dạng email không hợp lệ"),
     INVALID_LAT_LONG("3003", "Tọa độ không hợp lệ"),
+    INVALID_OWN_PRODUCT("3004", "Sản phẩm này không thuộc quyền sở hữu của bạn!"),
 
     // ===== 2000 - Không tìm thấy / Đã tồn tại =====
     USER_NOT_FOUND("2000", "Người dùng không tồn tại"),
