@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.pomina.commonservices.product_warranty_activation.mapper.WarrantyMapper">
 
-<!--    Base Result Map-->
+    <!--    Base Result Map-->
     <resultMap id="WarrantyResultMap" type="com.pomina.commonservices.product_warranty_activation.entity.Warranty">
         <id column="u_warranty_id" property="warrantyId"/>
         <result column="user_id" property="userId"/>
@@ -42,6 +42,8 @@
         <result column="m_a_length" property="mALength"/>
         <result column="m_b_length" property="mBLength"/>
         <result column="m_c_length" property="mCLength"/>
+        <result column="bh_phai_mau" property="bhPhaiMau"/>
+        <result column="bh_an_mon" property="bhAnMon"/>
 
         <result column="location_account_01" property="locationAccount01"/>
         <result column="location_account_02" property="locationAccount02"/>
@@ -187,14 +189,14 @@
         lo.address02 location_account_02,
         lo.address03 location_account_03,
         lo.address04 location_account_04,
-        lo.latitude  location_account_lat,
+        lo.latitude location_account_lat,
         lo.longitude location_account_long,
 
         wr.address01 location_warranty_01,
         wr.address02 location_warranty_02,
         wr.address03 location_warranty_03,
         wr.address04 location_warranty_04,
-        wr.latitude  location_warranty_lat,
+        wr.latitude location_warranty_lat,
         wr.longitude location_warranty_long,
 
         wr.from_warranty_an_mon,
@@ -231,6 +233,55 @@
                 AND wr.user_id = #{userId}
             </if>
         </where>
+    </select>
+
+    <select id="findWarrantyDetailByMaCuonTon" resultMap="WarrantyInfoResultMap">
+        SELECT us.user_id,
+        us.ho_va_ten,
+        us.phone_number,
+
+        pr.ma_cuon_ton,
+        pr.ten_san_pham,
+        pr.loai_cuon,
+        pr.total_weight,
+        pr.total_length,
+        pr.m_a_length,
+        pr.m_b_length,
+        pr.m_c_length,
+        pr.bh_phai_mau,
+        pr.bh_an_mon,
+
+        lo.address01 AS location_account_01,
+        lo.address02 AS location_account_02,
+        lo.address03 AS location_account_03,
+        lo.address04 AS location_account_04,
+        lo.latitude AS location_account_lat,
+        lo.longitude AS location_account_long,
+
+        wr.address01 AS location_warranty_01,
+        wr.address02 AS location_warranty_02,
+        wr.address03 AS location_warranty_03,
+        wr.address04 AS location_warranty_04,
+        wr.latitude AS location_warranty_lat,
+        wr.longitude AS location_warranty_long,
+
+        wr.from_warranty_an_mon,
+        wr.to_warranty_an_mon,
+        wr.from_warranty_phai_mau,
+        wr.to_warranty_phai_mau,
+        wr.is_valid
+
+        FROM u_product pr
+        LEFT JOIN u_warranty wr ON wr.ma_cuon_ton = pr.ma_cuon_ton
+                                AND wr.is_deleted = 0
+        LEFT JOIN sys_user us ON us.user_id = wr.user_id
+        LEFT JOIN u_location lo ON lo.user_id = us.user_id
+        <where>
+            <if test="maCuonTon != null and maCuonTon != ''">
+                AND pr.ma_cuon_ton = #{maCuonTon}
+            </if>
+        </where>
+        LIMIT 1
     </select>
 
 </mapper>

@@ -18,11 +18,7 @@ public class UserProfile {
 
     private String roleName;
 
-    private String address01;
-    private String address02;
-    private String address03;
-    private String address04;
-    private String address05;
+    private AddressUserProfile address;
 
     private Double latitude;
     private Double longitude;

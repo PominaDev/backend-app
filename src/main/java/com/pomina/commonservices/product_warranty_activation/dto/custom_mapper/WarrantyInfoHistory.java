@@ -1,5 +1,6 @@
 package com.pomina.commonservices.product_warranty_activation.dto.custom_mapper;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -24,6 +25,10 @@ public class WarrantyInfoHistory {
     private Double mALength;
     private Double mBLength;
     private Double mCLength;
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    private Integer bhPhaiMau;
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    private Integer bhAnMon;
 
     // Location - Account (from u_location)
     private String locationAccount01;
