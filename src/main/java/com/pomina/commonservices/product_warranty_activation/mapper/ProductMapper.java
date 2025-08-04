@@ -3,6 +3,9 @@ package com.pomina.commonservices.product_warranty_activation.mapper;
 import com.pomina.common.mapper.BaseMapper;
 import com.pomina.commonservices.product_warranty_activation.entity.Product;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 @Mapper
 public interface ProductMapper extends BaseMapper<Product> {
@@ -13,5 +16,7 @@ public interface ProductMapper extends BaseMapper<Product> {
      * @param maCuonTon -> u.product.ma_cuon_ton
      * @return Product
      */
-    Product findProductAndWarrantyByMaCuonTon(String maCuonTon);
+    Product findProductAndWarrantyByMaCuonTon(@Param("maCuonTon") String maCuonTon);
+
+    int insertBatch(@Param("list") List<Product> productList);
 }

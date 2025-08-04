@@ -1,25 +1,23 @@
 package com.pomina.commonservices.product_warranty_activation.dto.request;
 
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.PositiveOrZero;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
 public class ProductCreateDto {
-    @NotBlank(message = "Coil code is mandatory")
-    private String coilCode;
-
-    @PositiveOrZero(message = "Length from must be positive or zero")
-    private Integer lengthFrom;
-
-    @PositiveOrZero(message = "Length to must be positive or zero")
-    private Integer lengthTo;
-
-    @PositiveOrZero(message = "Length must be positive or zero")
-    private Integer length;
-
-    private String name;
-    private String coilType;
+    private String maCuonTon;
+    private String tenSanPham;
+    private String loaiCuon;
+    private Integer bhPhaiMau;
+    private Integer bhAnMon;
+    private Double totalWeight;
+    private Double totalLength;
+    @JsonProperty("mALength")
+    private Double maLength;
+    @JsonProperty("mBLength")
+    private Double mbLength;
+    @JsonProperty("mCLength")
+    private Double mcLength;
 }
