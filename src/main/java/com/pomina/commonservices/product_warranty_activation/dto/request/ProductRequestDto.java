@@ -1,25 +1,20 @@
 package com.pomina.commonservices.product_warranty_activation.dto.request;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
 @Setter
-@AllArgsConstructor
-@NoArgsConstructor
 public class ProductRequestDto {
-
-    private String coilCode;
-
-    private Integer lengthFrom;
-
-    private Integer lengthTo;
-
-    private Integer length;
-
-    private String name;
-
-    private String coilType;
+    private Integer productId;
+    private String maCuonTon;
+    private String tenSanPham;
+    private String loaiCuon;
+    private Integer bhPhaiMau;
+    private Integer bhAnMon;
+    private Double totalWeight;
+    private Double totalLength;
+    private Double maLength;
+    private Double mbLength;
+    private Double mcLength;
 }
