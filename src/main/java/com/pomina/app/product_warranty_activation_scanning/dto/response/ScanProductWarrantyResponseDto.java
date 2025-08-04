@@ -1,4 +1,4 @@
-package com.pomina.app.scan_product_warranty.dto.response;
+package com.pomina.app.product_warranty_activation_scanning.dto.response;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.pomina.commonservices.product_warranty_activation.dto.custom_mapper.WarrantyInfoHistory;

@@ -1,4 +1,4 @@
-package com.pomina.app.scan_product_warranty.dto.request;
+package com.pomina.app.product_warranty_activation_scanning.dto.request;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
