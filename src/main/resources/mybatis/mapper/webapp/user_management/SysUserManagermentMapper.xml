@@ -245,7 +245,7 @@
             is_active = #{isActive},
             old_id = #{oldId},
             status = #{status},
-            noted = #{noted},
+            noted = #{note},
             updated_at = NOW(),
             updated_by = #{updatedBy}
         WHERE user_id = #{userId}

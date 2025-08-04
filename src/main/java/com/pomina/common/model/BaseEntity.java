@@ -15,7 +15,7 @@ public abstract class BaseEntity {
 
     private String status;
 
-    private String noted;
+    private String note;
 
     private LocalDateTime createdAt;
 
