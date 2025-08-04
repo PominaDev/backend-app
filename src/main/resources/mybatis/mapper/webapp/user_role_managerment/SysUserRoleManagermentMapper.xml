@@ -9,7 +9,7 @@
         <result column="role_name" property="roleName"/>
         <result column="description" property="description"/>
         <result column="status" property="status"/>
-        <result column="noted" property="noted"/>
+        <result column="noted" property="note"/>
         <result column="created_at" property="createdAt"/>
         <result column="created_by" property="createdBy"/>
         <result column="updated_at" property="updatedAt"/>

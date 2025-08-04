@@ -17,6 +17,7 @@ import java.util.List;
 @RequestMapping(ApiConstants.ApiSysRole.BASE)
 @RequiredArgsConstructor
 public class SysRoleController {
+
     private final SysUserRoleManagermentService sysUserRoleManagermentService;
 
     @GetMapping(ApiConstants.ApiSysRole.GET_ALL_ROLE)

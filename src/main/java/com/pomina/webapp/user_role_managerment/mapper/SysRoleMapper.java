@@ -1,6 +1,5 @@
 package com.pomina.webapp.user_role_managerment.mapper;
 
-
 import com.pomina.webapp.user_role_managerment.entity.SysRole;
 import org.apache.ibatis.annotations.Mapper;
 

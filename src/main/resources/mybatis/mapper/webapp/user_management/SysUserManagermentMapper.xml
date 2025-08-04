@@ -18,7 +18,7 @@
         <result column="is_active" property="isActive"/>
         <result column="old_id" property="oldId"/>
         <result column="status" property="status"/>
-        <result column="noted" property="noted"/>
+        <result column="noted" property="note"/>
         <result column="created_at" property="createdAt"/>
         <result column="created_by" property="createdBy"/>
         <result column="updated_at" property="updatedAt"/>
@@ -54,7 +54,7 @@
         <result column="is_active" property="isActive"/>
         <result column="old_id" property="oldId"/>
         <result column="status" property="status"/>
-        <result column="noted" property="noted"/>
+        <result column="noted" property="note"/>
         <result column="created_at" property="createdAt"/>
         <result column="created_by" property="createdBy"/>
         <result column="updated_at" property="updatedAt"/>
@@ -218,7 +218,7 @@
                 #{isActive},
                 #{oldId},
                 #{status},
-                #{noted},
+                #{note},
                 NOW(),
                 #{createdBy},
                 NOW(),
@@ -259,7 +259,9 @@
     <!-- Xóa mềm user -->
     <update id="softDeleteById" parameterType="int">
         UPDATE sys_user
-        SET is_deleted = 1, updated_at = NOW(), updated_by = #{updatedBy}
+        SET is_deleted = 1,
+            updated_at = NOW(),
+            updated_by = #{updatedBy}
         WHERE user_id = #{id}
     </update>
 
@@ -269,6 +271,7 @@
         FROM sys_user
         WHERE user_id = #{id} AND is_deleted = 0
     </select>
+
     <select id="getListUserIdByPhoneNumber" parameterType="String" resultType="integer">
         SELECT user_id
         FROM sys_user
@@ -281,6 +284,7 @@
         WHERE phone_number = #{phoneNumber}
         AND user_id != #{userId}
     </select>
+
     <!-- Đếm toàn bộ user -->
     <select id="countAll" resultType="int">
         SELECT COUNT(1) FROM sys_user
