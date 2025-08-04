@@ -39,7 +39,7 @@
              , updated_at
              , updated_by
              , is_deleted
-        FROM
+        FROM master_group_user
         WHERE master_group_user_id = #{id}
           AND is_deleted = 0
     </select>
@@ -62,6 +62,7 @@
              , is_deleted
         FROM master_group_user
         WHERE is_deleted = 0
+        ORDER BY master_group_user_code
     </select>
 
     <select id="findAllPaged" resultMap="masterGroupUserResultMap">
@@ -87,7 +88,7 @@
         LIMIT #{limit} OFFSET #{offset}
     </select>
 
-    <select id="getByMasterGroupUserCode" resultMap="masterGroupUserResultMap">
+    <select id="findByMasterGroupUserCode" resultMap="masterGroupUserResultMap">
         SELECT  master_group_user_id
              , master_group_user_code
              , master_group_user_name
@@ -133,7 +134,8 @@
         master_group_user_role,
         master_group_user_order,
         master_group_user_description,
-        user_id
+        user_id,
+        noted
         )
         VALUES
         <foreach collection="list" item="item" separator=",">
@@ -143,7 +145,8 @@
             #{item.masterGroupUserRole},
             #{item.masterGroupUserOrder},
             #{item.masterGroupUserDescription},
-            #{item.userId}
+            #{item.userId},
+            #{item.note}
             )
         </foreach>
     </insert>
@@ -152,51 +155,59 @@
         UPDATE master_group_user
         <set>
             <if test="masterGroupUserCode != null and masterGroupUserCode != ''">
-                master_group_user_code = #{masterGroupUserCode}
+               , master_group_user_code = #{masterGroupUserCode}
             </if>
             <if test="masterGroupUserName != null and masterGroupUserName != ''">
-                master_group_user_name = #{masterGroupUserName}
+               , master_group_user_name = #{masterGroupUserName}
             </if>
             <if test="masterGroupUserRole != null and masterGroupUserRole != ''">
-                master_group_user_role = #{masterGroupUserRole}
+              ,  master_group_user_role = #{masterGroupUserRole}
             </if>
             <if test="masterGroupUserOrder != null and masterGroupUserOrder != ''">
-                master_group_user_order = #{masterGroupUserOrder}
+               , master_group_user_order = #{masterGroupUserOrder}
             </if>
             <if test="masterGroupUserDescription != null and masterGroupUserDescription != ''">
-                master_group_user_description = #{masterGroupUserDescription}
+               , master_group_user_description = #{masterGroupUserDescription}
             </if>
             <if test="userId != null and userId != ''">
-                user_id = #{userId}
+               , user_id = #{userId}
+            </if>
+            <if test="note != null and note != ''">
+               , noted = #{note}
             </if>
         </set>
-        WHERE master_menu_id = #{masterMenuId} AND is_deleted = 0
+        WHERE master_group_user_id = #{masterGroupUserId}
+            AND is_deleted = 0
     </update>
 
     <update id="updateList" parameterType="java.util.List">
-        <foreach collection="list" item="item" separator=";">
+        <foreach collection="list" item="item">
             UPDATE master_group_user
-            <trim prefix="SET" suffixOverrides=",">
+            <set>
                 <if test="item.masterGroupUserCode != null and item.masterGroupUserCode != ''">
-                    master_group_user_code = #{item.masterGroupUserCode},
+                    master_group_user_code = #{item.masterGroupUserCode}
                 </if>
                 <if test="item.masterGroupUserName != null and item.masterGroupUserName != ''">
-                    master_group_user_name = #{item.masterGroupUserName},
+                    , master_group_user_name = #{item.masterGroupUserName}
                 </if>
                 <if test="item.masterGroupUserRole != null and item.masterGroupUserRole != ''">
-                    master_group_user_role = #{item.masterGroupUserRole},
+                    , master_group_user_role = #{item.masterGroupUserRole}
                 </if>
                 <if test="item.masterGroupUserOrder != null and item.masterGroupUserOrder != ''">
-                    master_group_user_order = #{item.masterGroupUserOrder},
+                    , master_group_user_order = #{item.masterGroupUserOrder}
                 </if>
                 <if test="item.masterGroupUserDescription != null and item.masterGroupUserDescription != ''">
-                    master_group_user_description = #{item.masterGroupUserDescription},
+                    , master_group_user_description = #{item.masterGroupUserDescription}
                 </if>
                 <if test="item.userId != null and item.userId != ''">
-                    user_id = #{item.userId},
+                    , user_id = #{item.userId}
                 </if>
-            </trim>
-            WHERE master_menu_id = #{item.masterMenuId} AND is_deleted = 0
+                <if test="item.note != null and item.note != ''">
+                    , noted = #{item.note}
+                </if>
+            </set>
+            WHERE master_group_user_id = #{item.masterGroupUserId}
+            AND is_deleted = 0
         </foreach>
     </update>
 

@@ -17,5 +17,5 @@ public class MasterGroupUser extends BaseEntity {
     private String masterGroupUserRole;
     private Byte masterGroupUserOrder;
     private String masterGroupUserDescription;
-    private String userId;
+    private Integer userId;
 }

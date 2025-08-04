@@ -12,5 +12,7 @@ public class MasterGroupUserRequestDto{
     private String masterGroupUserRole;
     private Byte masterGroupUserOrder;
     private String masterGroupUserDescription;
-    private String userId;
+    private Integer userId;
+
+    private String note;
 }

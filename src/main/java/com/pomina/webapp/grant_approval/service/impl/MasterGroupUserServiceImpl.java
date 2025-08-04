@@ -11,6 +11,7 @@ import com.pomina.webapp.grant_approval.service.MasterGroupUserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -38,9 +39,34 @@ public class MasterGroupUserServiceImpl implements MasterGroupUserService {
 
     @Override
     public Integer updateListMasterGroupUser(List<MasterGroupUserRequestDto> dtoList) {
-        int updatedRows = 0;
+        Integer updateRows = 0;
+        List<MasterGroupUser> masterGroupUserList = masterGroupUserConverter.toEntityList(dtoList);
+        List<MasterGroupUser> updateMasterGroupUserList = new ArrayList<>();
+        List<MasterGroupUser> insertMasterGroupUserList = new ArrayList<>();
 
-        return updatedRows;
+        for(MasterGroupUser groupUser : masterGroupUserList){
+            String groupCode = groupUser.getMasterGroupUserCode();
+            Integer userId = groupUser.getUserId();
+            if(masterGroupUserMapper.isExistByUserIdAndGroupCode(groupCode, userId)){
+                System.out.println("exist: " + true);
+                updateMasterGroupUserList.add(groupUser);
+            }else{
+                System.out.println("exist: " + false);
+                insertMasterGroupUserList.add(groupUser);
+            }
+        }
+        if(!insertMasterGroupUserList.isEmpty()){
+            updateRows += masterGroupUserMapper.insertList(insertMasterGroupUserList);
+        }
+
+        if(!updateMasterGroupUserList.isEmpty()){
+//            updateRows += masterGroupUserMapper.updateList(updateMasterGroupUserList);
+            for (MasterGroupUser masterGroupUser : updateMasterGroupUserList) {
+                updateRows += masterGroupUserMapper.update(masterGroupUser);
+            }
+        }
+
+        return updateRows;
     }
 
     @Override
@@ -59,16 +85,14 @@ public class MasterGroupUserServiceImpl implements MasterGroupUserService {
 
     @Override
     public PageResponse<MasterGroupUserResponseDto> search(PageRequest pageRequest) {
-        List<MasterGroupUser> masterGroupUserList = masterGroupUserMapper.findAllPaged(pageRequest.getOffset(),
-                pageRequest.getSize(),
-                pageRequest);
+        List<MasterGroupUser> masterGroupUserList = masterGroupUserMapper.findAllPaged(pageRequest.getOffset(), pageRequest.getSize(), pageRequest);
         if (masterGroupUserList == null || masterGroupUserList.isEmpty()) {
             return PageResponse.empty(pageRequest.getPage(), pageRequest.getSize());
         }
         List<MasterGroupUserResponseDto> masterGroupUserResponse = masterGroupUserConverter.toResponseList(masterGroupUserList);
         int totalElements = masterGroupUserMapper.countAll();
-        return PageResponse.createPaged(masterGroupUserResponse, pageRequest.getPage(), pageRequest.getSize(),
-                totalElements);
+
+        return PageResponse.createPaged(masterGroupUserResponse, pageRequest.getPage(), pageRequest.getSize(), totalElements);
     }
 
     @Override
@@ -78,16 +102,26 @@ public class MasterGroupUserServiceImpl implements MasterGroupUserService {
 
     @Override
     public List<MasterGroupUserResponseDto> getAllMasterGroupUser() {
-        return List.of();
+        var listEntity =  masterGroupUserMapper.findAll();
+        if (listEntity != null || !listEntity.isEmpty()) {
+            return masterGroupUserConverter.toResponseList(listEntity);
+        }
+        return null;
+
     }
 
     @Override
     public List<MasterGroupUserResponseDto> getAllMasterGroupUserByGroupCode(String groupCode) {
-        return List.of();
+        var listEntity =  masterGroupUserMapper.findByMasterGroupUserCode(groupCode);
+        if (listEntity != null || !listEntity.isEmpty()) {
+            return masterGroupUserConverter.toResponseList(listEntity);
+        }
+        return null;
     }
 
     @Override
     public Integer createListMasterGroupUser(List<MasterGroupUserRequestDto> dtoList) {
-        return null;
+        List<MasterGroupUser> masterGroupUserList = masterGroupUserConverter.toEntityList(dtoList);
+        return masterGroupUserMapper.insertList(masterGroupUserList);
     }
 }

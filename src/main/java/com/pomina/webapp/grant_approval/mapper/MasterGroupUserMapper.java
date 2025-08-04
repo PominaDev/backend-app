@@ -9,8 +9,10 @@ import java.util.List;
 
 @Mapper
 public interface MasterGroupUserMapper extends BaseMapper<MasterGroupUser> {
-    List<MasterGroupUser> getByMasterGroupUserCode(@Param("groupCode") String groupCode);
-
+    List<MasterGroupUser> findAll();
+    List<MasterGroupUser> findByMasterGroupUserCode(@Param("groupCode") String groupCode);
+    Integer insertList(List<MasterGroupUser> masterGroupUserList);
+    Integer updateList(List<MasterGroupUser> masterGroupUserList);
     boolean isExistByUserIdAndGroupCode(@Param("groupCode") String groupCode,@Param("userId")  Integer userId);
 
 }

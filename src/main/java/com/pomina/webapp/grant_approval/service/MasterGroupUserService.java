@@ -11,6 +11,7 @@ public interface MasterGroupUserService extends BaseService<MasterGroupUserReque
     List<MasterGroupUserResponseDto> getAllMasterGroupUserByGroupCode(String groupCode);
 
     Integer createListMasterGroupUser(List<MasterGroupUserRequestDto> dtoList);
+
     Integer updateListMasterGroupUser(List<MasterGroupUserRequestDto> dtoList);
 
     Boolean isExistByUserIdAndGroupCode(String groupCode, Integer userId);

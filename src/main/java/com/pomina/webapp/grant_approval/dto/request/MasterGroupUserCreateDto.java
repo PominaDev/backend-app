@@ -8,31 +8,29 @@ import lombok.Setter;
 @Setter
 public class MasterGroupUserCreateDto {
 
-    @NotNull(message = "Master menu name is mandatory")
-    @Size(max = 255, message = "Master menu name must not exceed 255 characters")
-    private String masterMenuName;
+    private Integer masterGroupUserId;
 
-    @NotBlank(message = "Path is mandatory")
-    @Size(max = 255, message = "Path must not exceed 255 characters")
-    @Pattern(regexp = "^/.*", message = "Path must start with a '/' character")
-    private String path;
+    @NotNull(message = "Master group user code is mandatory")
+    @Size(max = 255, message = "Master group user name must not exceed 255 characters")
+    private String masterGroupUserCode;
 
-    @Size(max = 100, message = "Icon must not exceed 100 characters")
-    private String icon;
+    @NotNull(message = "Master group user code is mandatory")
+    @Size(max = 255, message = "Master group user name must not exceed 255 characters")
+    private String masterGroupUserName;
+
+    @NotNull(message = "Master group user role is mandatory")
+    @Size(max = 255, message = "Master group role name must not exceed 255 characters")
+    private String masterGroupUserRole;
+
+    @NotNull(message = "Master group user order is mandatory")
+    @PositiveOrZero(message = "orderIndex must be 0 or positive")
+    private Byte masterGroupUserOrder;
+
+    @Size(max = 255, message = "Master group user description must not exceed 255 characters")
+    private String masterGroupUserDescription;
 
     @NotNull(message = "You must specify whether this menu is a parent or not")
-    private Boolean isParent;
+    private Integer userId;
 
-    @PositiveOrZero(message = "orderIndex must be 0 or positive")
-    private Byte orderIndex;
-
-    @Positive(message = "parentId must be a positive number")
-    private Integer parentId;
-
-    @Size(max = 255, message = "Status must not exceed 255 characters")
-    private String status;
-
-    @Size(max = 255, message = "Note must not exceed 255 characters")
-    private String noted;
 
 }
