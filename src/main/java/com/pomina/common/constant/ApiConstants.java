@@ -125,9 +125,27 @@ public class ApiConstants {
     public static final class ApiSysUserManagement {
         public static final String BASE = VERSION_V1 + "/user-management";
         public static final String GET_USER_ACTIVE_ROLE_WEB = "/get-user-active-role-web";
+        public static final String GET_USERS_PAGED = "/get-users-paged";
+        public static final String GET_ALL_USERS = "/get-all-users";
+        public static final String CREATE = "/create";
+        public static final String UPDATE = "/update/{id}";
+        public static final String DELETE = "/delete/{id}";
 
-// Private constructor to prevent instantiation of the class
         private ApiSysUserManagement() {}
+    }
+
+    public static final class ApiMasterLocation {
+        public static final String BASE = VERSION_V1 + "/master-location-management";
+        public static final String GET_ALL_MASTER_LOCATION = "/get-all-master-location";
+
+        private ApiMasterLocation() {}
+    }
+
+    public static final class ApiSysRole {
+        public static final String BASE = VERSION_V1 + "/master-location-management";
+        public static final String GET_ALL_ROLE = "/get-all-role";
+
+        private ApiSysRole() {}
     }
 
     public static final class ApiProfile {
