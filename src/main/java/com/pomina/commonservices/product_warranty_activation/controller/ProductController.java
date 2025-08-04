@@ -35,7 +35,7 @@ public class ProductController extends BaseController<ProductCreateDto, ProductU
 
     @Override
     @PostMapping(ApiConstants.ApiProduct.CREATE)
-    public ResponseEntity<ApiResponse<Integer>> create(@Valid @RequestBody ProductCreateDto dto) {
+    public ResponseEntity<ApiResponse<Integer>> create(@RequestBody ProductCreateDto dto) {
         ProductRequestDto requestDto = productConverter.toProductRequestDto(dto);
         return ResponseHandler.success(productService.create(requestDto));
     }

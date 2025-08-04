@@ -10,7 +10,6 @@ import com.pomina.commonservices.product_warranty_activation.mapper.ProductMappe
 import com.pomina.commonservices.product_warranty_activation.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -24,22 +23,30 @@ public class ProductServiceImpl implements ProductService {
     private final ProductConverter productConverter;
 
     @Override
-    @Transactional
+//    @Transactional
     public int create(ProductRequestDto dto) {
+        if (dto == null) {
+            throw new RuntimeException("Không tìm thấy product");
+        }
         Product product = productConverter.toEntity(dto);
+//        AuditUtil.insert(product); chưa cập nhật AuditUtil
         return productMapper.insert(product);
     }
 
     @Override
     public int update(Integer id, ProductRequestDto dto) {
-        Product product = productConverter.toEntity(dto);
+        Product product = productMapper.findById(id);
+        if (product == null) {
+            throw new RuntimeException("Không tìm thấy product với ID = " + id);
+        }
+        productConverter.updateEntityFromDto(dto, product);
+//        AuditUtil.update(product); Chưa cập nhật AuditUtil
         return productMapper.update(product);
     }
 
     @Override
     public ProductResponseDto getById(Integer id) {
         Product productInfo = productMapper.findById(id);
-
         if (productInfo != null) {
             return productConverter.toResponse(productInfo);
         }
@@ -57,7 +64,12 @@ public class ProductServiceImpl implements ProductService {
             return null;
         }
 
+//        for (Product product : productInfoList) {
+//            AuditUtil.search(product); Chưa cập nhật AuditUtil
+//        }
+
         List<ProductResponseDto> productResponse = productConverter.toResponseList(productInfoList);
+
 
         int totalElements = productMapper.countAll();
 
@@ -65,5 +77,22 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public int delete(Integer id) {return productMapper.deleteById(id); }
+    public int delete(Integer productId) {
+        Product product = productMapper.findById(productId);
+        if (product == null) {
+            throw new RuntimeException("Không tìm thấy product với ID = " + productId);
+        }
+//        AuditUtil.delete(product, null);
+        return productMapper.softDeleteById(productId);
+    }
+
+    @Override
+//    @Transactional
+    public int insertBatch(List<ProductRequestDto> list) {
+        if (list == null || list.isEmpty()) {
+            return 0;
+        }
+        List<Product> productList = productConverter.toEntityList(list);
+        return productMapper.insertBatch(productList);
+    }
 }
