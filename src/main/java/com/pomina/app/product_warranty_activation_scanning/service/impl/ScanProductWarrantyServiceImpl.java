@@ -1,8 +1,8 @@
-package com.pomina.app.scan_product_warranty.service.impl;
+package com.pomina.app.product_warranty_activation_scanning.service.impl;
 
-import com.pomina.app.scan_product_warranty.dto.request.ScanProductWarrantyRequestDto;
-import com.pomina.app.scan_product_warranty.dto.response.ScanProductWarrantyResponseDto;
-import com.pomina.app.scan_product_warranty.service.ScanProductWarrantyService;
+import com.pomina.app.product_warranty_activation_scanning.dto.request.ScanProductWarrantyRequestDto;
+import com.pomina.app.product_warranty_activation_scanning.dto.response.ScanProductWarrantyResponseDto;
+import com.pomina.app.product_warranty_activation_scanning.service.ScanProductWarrantyService;
 import com.pomina.common.exception.AppException;
 import com.pomina.common.exception.ErrorCode;
 import com.pomina.commonservices.location.dto.request.LocationRequestDto;
@@ -13,9 +13,12 @@ import com.pomina.commonservices.product_warranty_activation.dto.custom_mapper.W
 import com.pomina.commonservices.product_warranty_activation.entity.Warranty;
 import com.pomina.commonservices.product_warranty_activation.mapper.WarrantyMapper;
 import lombok.RequiredArgsConstructor;
+import org.apache.ibatis.exceptions.PersistenceException;
+import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
@@ -30,7 +33,12 @@ public class ScanProductWarrantyServiceImpl implements ScanProductWarrantyServic
     private final LocationService locationService;
 
     @Override
-    @Transactional
+    @Transactional(rollbackFor = {
+            SQLException.class,
+            PersistenceException.class,
+            DataAccessException.class,
+            AppException.class
+    })
     public ScanProductWarrantyResponseDto activateByQrCode(ScanProductWarrantyRequestDto scanProductWarrantyRequestDto) {
 
         String maCuonTon = scanProductWarrantyRequestDto.getMaCuonTon();

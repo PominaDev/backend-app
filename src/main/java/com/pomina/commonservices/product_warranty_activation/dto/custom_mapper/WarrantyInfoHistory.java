@@ -39,6 +39,7 @@ public class WarrantyInfoHistory {
     private Double locationAccountLong;
 
     // Location - Warranty (from u_warranty)
+    private Integer warrantyId;
     private String locationWarranty01;
     private String locationWarranty02;
     private String locationWarranty03;
@@ -53,4 +54,5 @@ public class WarrantyInfoHistory {
     private String toWarrantyPhaiMau;
 
     private Boolean isValid;
+    private String noted;
 }

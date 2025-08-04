@@ -52,6 +52,7 @@
         <result column="location_account_lat" property="locationAccountLat"/>
         <result column="location_account_long" property="locationAccountLong"/>
 
+        <result column="u_warranty_id" property="warrantyId"/>
         <result column="location_warranty_01" property="locationWarranty01"/>
         <result column="location_warranty_02" property="locationWarranty02"/>
         <result column="location_warranty_03" property="locationWarranty03"/>
@@ -65,6 +66,7 @@
         <result column="to_warranty_phai_mau" property="toWarrantyPhaiMau"/>
 
         <result column="is_valid" property="isValid"/>
+        <result column="noted" property="noted"/>
     </resultMap>
 
     <insert id="insert" parameterType="com.pomina.commonservices.product_warranty_activation.entity.Warranty"
@@ -131,13 +133,42 @@
             to_warranty_phai_mau   = #{toWarrantyPhaiMau},
             from_warranty_an_mon   = #{fromWarrantyAnMon},
             to_warranty_an_mon     = #{toWarrantyAnMon},
+            is_valid               = #{isValid},
             status                 = #{status},
-            noted                  = #{noted},
+            noted                  = #{note},
             updated_at             = NOW(),
             updated_by             = #{updatedBy},
             is_deleted             = #{isDeleted}
-        WHERE u_warranty_id = #{uWarrantyId}
+        WHERE u_warranty_id = #{warrantyId}
     </update>
+
+    <select id="findById" resultMap="WarrantyResultMap">
+        SELECT u_warranty_id,
+               user_id,
+               latitude,
+               longitude,
+               address01,
+               address02,
+               address03,
+               address04,
+               address05,
+               country_code,
+               ma_cuon_ton,
+               from_warranty_phai_mau,
+               to_warranty_phai_mau,
+               from_warranty_an_mon,
+               to_warranty_an_mon,
+               status,
+               noted,
+               created_at,
+               created_by,
+               updated_at,
+               updated_by,
+               is_deleted
+        FROM u_warranty
+        WHERE is_deleted = 0
+        LIMIT 1
+    </select>
 
     <select id="findAllPaged" resultMap="WarrantyResultMap">
         SELECT
@@ -192,6 +223,7 @@
         lo.latitude location_account_lat,
         lo.longitude location_account_long,
 
+        wr.u_warranty_id,
         wr.address01 location_warranty_01,
         wr.address02 location_warranty_02,
         wr.address03 location_warranty_03,
@@ -203,7 +235,8 @@
         wr.to_warranty_an_mon,
         wr.from_warranty_phai_mau,
         wr.to_warranty_phai_mau,
-        wr.is_valid
+        wr.is_valid,
+        wr.noted
 
         FROM u_warranty wr
         LEFT JOIN u_product pr ON wr.ma_cuon_ton = pr.ma_cuon_ton
@@ -273,7 +306,7 @@
 
         FROM u_product pr
         LEFT JOIN u_warranty wr ON wr.ma_cuon_ton = pr.ma_cuon_ton
-                                AND wr.is_deleted = 0
+        AND wr.is_deleted = 0
         LEFT JOIN sys_user us ON us.user_id = wr.user_id
         LEFT JOIN u_location lo ON lo.user_id = us.user_id
         <where>
