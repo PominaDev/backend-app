@@ -56,7 +56,7 @@ public class ScanProductWarrantyServiceImpl implements ScanProductWarrantyServic
         if (Objects.isNull(warrantyInfoHistory.getFromWarrantyAnMon())) {
 
             // Check location có nằm trong khu vực đã đăng ký không
-            isCheckLocation(latitude, longitude);
+            // isCheckLocation(latitude, longitude);
 
             // lấy location từ người dùng
             LocationResponseDto locationResponseDto = locationService.getLocationFromCoordinates(latitude, longitude);
