@@ -13,13 +13,10 @@ import com.pomina.commonservices.product_warranty_activation.dto.custom_mapper.W
 import com.pomina.commonservices.product_warranty_activation.entity.Warranty;
 import com.pomina.commonservices.product_warranty_activation.mapper.WarrantyMapper;
 import lombok.RequiredArgsConstructor;
-import org.apache.ibatis.exceptions.PersistenceException;
-import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
@@ -34,13 +31,8 @@ public class ScanProductWarrantyServiceImpl implements ScanProductWarrantyServic
     private final LocationService locationService;
 
     @Override
-    @Transactional(rollbackFor = {
-            SQLException.class,
-            PersistenceException.class,
-            DataAccessException.class,
-            AppException.class
-    },
-    isolation = Isolation.SERIALIZABLE)
+    // TODO: Locking by Redis
+    @Transactional(rollbackFor = Exception.class, isolation = Isolation.SERIALIZABLE)
     public ScanProductWarrantyResponseDto activateByQrCode(ScanProductWarrantyRequestDto scanProductWarrantyRequestDto) {
 
         String maCuonTon = scanProductWarrantyRequestDto.getMaCuonTon();
@@ -51,7 +43,6 @@ public class ScanProductWarrantyServiceImpl implements ScanProductWarrantyServic
         if (Objects.isNull(userIdCurr)) throw new AppException(ErrorCode.UNAUTHORIZED);
 
         WarrantyInfoHistory warrantyInfoHistory = warrantyMapper.findWarrantyDetailByMaCuonTon(maCuonTon);
-
         if (Objects.isNull(warrantyInfoHistory)) throw new AppException(ErrorCode.PRODUCT_NOT_FOUND);
 
         // quét lần đầu
@@ -62,6 +53,9 @@ public class ScanProductWarrantyServiceImpl implements ScanProductWarrantyServic
 
             // lấy location từ người dùng
             LocationResponseDto locationResponseDto = locationService.getLocationFromCoordinates(latitude, longitude);
+            if (locationResponseDto == null) {
+                throw new AppException(ErrorCode.USER_LOCATION_NOT_FOUND);
+            }
 
             // insert warranty
             int resultInserted = insertWarranty(scanProductWarrantyRequestDto, userIdCurr, warrantyInfoHistory, locationResponseDto, isValidLocation);
@@ -131,10 +125,6 @@ public class ScanProductWarrantyServiceImpl implements ScanProductWarrantyServic
                         .build()
         );
 
-        if (Boolean.FALSE.equals(checkLocationResponse.getIsWithinLocation())) {
-            return false;
-        }
-
-        return true;
+        return !Boolean.FALSE.equals(checkLocationResponse.getIsWithinLocation());
     }
 }
