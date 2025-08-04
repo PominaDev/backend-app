@@ -2,6 +2,28 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.pomina.commonservices.product_warranty_activation.mapper.ProductMapper">
 
+    <!--    Base ResultMap-->
+    <resultMap id="ProductResultMap" type="com.pomina.commonservices.product_warranty_activation.entity.Product">
+        <id column="u_product_id" property="productId"/>
+        <result column="ma_cuon_ton" property="maCuonTon"/>
+        <result column="ten_san_pham" property="tenSanPham"/>
+        <result column="loai_cuon" property="loaiCuon"/>
+        <result column="bh_phai_mau" property="bhPhaiMau"/>
+        <result column="bh_an_mon" property="bhAnMon"/>
+        <result column="total_weight" property="totalWeight"/>
+        <result column="total_length" property="totalLength"/>
+        <result column="m_a_length" property="mALength"/>
+        <result column="m_b_length" property="mBLength"/>
+        <result column="m_c_length" property="mCLength"/>
+        <result column="status" property="status"/>
+        <result column="noted" property="note"/>
+        <result column="created_at" property="createdAt"/>
+        <result column="created_by" property="createdBy"/>
+        <result column="updated_at" property="updatedAt"/>
+        <result column="updated_by" property="updatedBy"/>
+        <result column="is_deleted" property="isDeleted"/>
+    </resultMap>
+
     <resultMap id="ProductWithWarrantyResultMap"
                type="com.pomina.commonservices.product_warranty_activation.entity.Product">
         <id property="productId" column="u_product_id"/>
@@ -35,8 +57,8 @@
         </association>
     </resultMap>
 
-    <select id="findById">
-        SELECT master_product_id,
+    <select id="findById" resultMap="ProductResultMap">
+        SELECT u_product_id,
                ma_cuon_ton,
                ten_san_pham,
                loai_cuon,
@@ -46,23 +68,14 @@
                total_length,
                m_a_length,
                m_b_length,
-               m_c_length,
-               master_prod_type_id,
-               status,
-               noted,
-               created_at,
-               created_by,
-               updated_at,
-               updated_by,
-               is_deleted
-        FROM master_product
-        WHERE master_product_id = #{id}
+               m_c_length
+        FROM u_product
+        WHERE u_product_id = #{id}
           AND is_deleted = 0
     </select>
 
-
-    <select id="findAll">
-        SELECT master_product_id,
+    <select id="findAll" resultMap="ProductResultMap">
+        SELECT u_product_id,
                ma_cuon_ton,
                ten_san_pham,
                loai_cuon,
@@ -72,21 +85,14 @@
                total_length,
                m_a_length,
                m_b_length,
-               m_c_length,
-               master_prod_type_id,
-               status,
-               noted,
-               created_at,
-               created_by,
-               updated_at,
-               updated_by,
-               is_deleted
-        FROM master_product
+               m_c_length
+        FROM u_product
         WHERE is_deleted = 0
     </select>
 
-    <select id="findAllPaged">
-        SELECT master_product_id,
+    <select id="findAllPaged" resultMap="ProductResultMap">
+        SELECT
+        u_product_id,
         ma_cuon_ton,
         ten_san_pham,
         loai_cuon,
@@ -97,15 +103,9 @@
         m_a_length,
         m_b_length,
         m_c_length,
-        master_prod_type_id,
         status,
-        noted,
-        created_at,
-        created_by,
-        updated_at,
-        updated_by,
-        is_deleted
-        FROM master_product
+        updated_at
+        FROM u_product
         WHERE is_deleted = 0
         <if test="paging != null and paging.orderByClause != null">
             ORDER BY ${paging.orderByClause}
@@ -113,35 +113,123 @@
         LIMIT #{limit} OFFSET #{offset}
     </select>
 
-    <insert id="insert">
+    <insert id="insert" parameterType="com.pomina.commonservices.product_warranty_activation.entity.Product">
+        INSERT INTO u_product (ma_cuon_ton,
+                               ten_san_pham,
+                               loai_cuon,
+                               bh_phai_mau,
+                               bh_an_mon,
+                               total_weight,
+                               total_length,
+                               m_a_length,
+                               m_b_length,
+                               m_c_length)
+        VALUES (#{maCuonTon},
+                #{tenSanPham},
+                #{loaiCuon},
+                #{bhPhaiMau},
+                #{bhAnMon},
+                #{totalWeight},
+                #{totalLength},
+                #{maLength},
+                #{mbLength},
+                #{mcLength})
     </insert>
 
-    <update id="update">
+    <insert id="insertBatch"
+            parameterType="java.util.List"
+            useGeneratedKeys="true"
+            keyProperty="productId">
+        INSERT INTO u_product (
+        ma_cuon_ton,
+        ten_san_pham,
+        loai_cuon,
+        bh_phai_mau,
+        bh_an_mon,
+        total_weight,
+        total_length,
+        m_a_length,
+        m_b_length,
+        m_c_length
+        )
+        VALUES
+        <foreach collection="list" item="item" separator=",">
+            (
+            #{item.maCuonTon},
+            #{item.tenSanPham},
+            #{item.loaiCuon},
+            #{item.bhPhaiMau},
+            #{item.bhAnMon},
+            #{item.totalWeight},
+            #{item.totalLength},
+            #{item.maLength},
+            #{item.mbLength},
+            #{item.mcLength}
+            )
+        </foreach>
+    </insert>
+
+
+    <update id="update"
+            parameterType="com.pomina.commonservices.product_warranty_activation.entity.Product">
+        UPDATE u_product
+        <set>
+            <if test="maCuonTon != null and maCuonTon != ''">
+                ma_cuon_ton = #{maCuonTon},
+            </if>
+            <if test="tenSanPham != null and tenSanPham != ''">
+                ten_san_pham = #{tenSanPham},
+            </if>
+            <if test="loaiCuon != null and loaiCuon != ''">
+                loai_cuon = #{loaiCuon},
+            </if>
+            <if test="bhPhaiMau != null">
+                bh_phai_mau = #{bhPhaiMau},
+            </if>
+            <if test="bhAnMon != null">
+                bh_an_mon = #{bhAnMon},
+            </if>
+            <if test="totalWeight != null">
+                total_weight = #{totalWeight},
+            </if>
+            <if test="totalLength != null">
+                total_length = #{totalLength},
+            </if>
+            <if test="maLength != null">
+                m_a_length = #{maLength},
+            </if>
+            <if test="mbLength != null">
+                m_b_length = #{mbLength},
+            </if>
+            <if test="mcLength != null">
+                m_c_length = #{mcLength},
+            </if>
+        </set>
+        WHERE u_product_id = #{productId}
     </update>
 
     <delete id="deleteById">
         DELETE
-        FROM master_product
-        WHERE master_product_id = #{id}
+        FROM u_product
+        WHERE u_product_id = #{id}
     </delete>
 
     <update id="softDeleteById">
-        UPDATE master_product
+        UPDATE u_product
         SET is_deleted = 1
-        WHERE master_product_id = #{id}
+        WHERE u_product_id = #{id}
     </update>
 
     <select id="existsById" resultType="boolean">
-        SELECT EXISTS(
-            SELECT 1
-            FROM master_product
-            WHERE master_product_id = #{id} AND is_deleted = 0
-        )
+        SELECT EXISTS (SELECT 1
+                       FROM u_product
+                       WHERE u_product_id = #{id}
+                         AND is_deleted = 0)
     </select>
 
     <select id="countAll" resultType="int">
-        SELECT COUNT(master_product_id)
-        FROM master_product
+        SELECT COUNT(u_product_id)
+        FROM u_product
         WHERE is_deleted = 0
     </select>
 

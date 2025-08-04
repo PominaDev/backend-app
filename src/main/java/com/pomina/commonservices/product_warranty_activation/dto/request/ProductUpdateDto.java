@@ -1,22 +1,23 @@
 package com.pomina.commonservices.product_warranty_activation.dto.request;
 
-import jakarta.validation.constraints.NotBlank;
-import lombok.AllArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
 @Setter
-@AllArgsConstructor
-@NoArgsConstructor
 public class ProductUpdateDto {
-    @NotBlank(message = "Coil code is mandatory")
-    private String coilCode;
-
-    private Integer lengthFrom;
-    private Integer lengthTo;
-    private Integer length;
-    private String name;
-    private String coilType;
+    private String maCuonTon;
+    private String tenSanPham;
+    private String loaiCuon;
+    private Integer bhPhaiMau;
+    private Integer bhAnMon;
+    private Double totalWeight;
+    private Double totalLength;
+    @JsonProperty("mALength")
+    private Double maLength;
+    @JsonProperty("mBLength")
+    private Double mbLength;
+    @JsonProperty("mCLength")
+    private Double mcLength;
 }

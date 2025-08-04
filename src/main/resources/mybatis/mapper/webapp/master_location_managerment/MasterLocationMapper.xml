@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pomina.webapp.master_location_managerment.mapper.MasterLocationMapper">
+
+    <!-- ResultMap ánh xạ cột DB -> property entity -->
+    <resultMap id="MasterLocationResultMap" type="com.pomina.webapp.master_location_managerment.entity.MasterLocation">
+        <id column="master_location_code" property="masterLocationCode"/>
+        <result column="master_location_name" property="masterLocationName"/>
+        <result column="description" property="description"/>
+        <result column="status" property="status"/>
+        <result column="noted" property="noted"/>
+        <result column="created_at" property="createdAt"/>
+        <result column="created_by" property="createdBy"/>
+        <result column="updated_at" property="updatedAt"/>
+        <result column="updated_by" property="updatedBy"/>
+        <result column="is_deleted" property="isDeleted"/>
+    </resultMap>
+
+    <!-- Lấy tất cả record -->
+    <select id="findAll" resultMap="MasterLocationResultMap">
+        SELECT master_location_code,
+               master_location_name,
+               description,
+               status,
+               noted,
+               created_at,
+               created_by,
+               updated_at,
+               updated_by,
+               is_deleted
+        FROM master_location
+        WHERE is_deleted = false
+    </select>
+
+</mapper>

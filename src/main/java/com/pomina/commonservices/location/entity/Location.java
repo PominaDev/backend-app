@@ -2,6 +2,7 @@ package com.pomina.commonservices.location.entity;
 
 import com.pomina.common.model.BaseEntity;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -10,6 +11,7 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class Location extends BaseEntity {
 
     private Integer locationId;
