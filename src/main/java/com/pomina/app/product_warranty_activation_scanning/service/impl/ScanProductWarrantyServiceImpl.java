@@ -16,6 +16,7 @@ import lombok.RequiredArgsConstructor;
 import org.apache.ibatis.exceptions.PersistenceException;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.SQLException;
@@ -38,7 +39,8 @@ public class ScanProductWarrantyServiceImpl implements ScanProductWarrantyServic
             PersistenceException.class,
             DataAccessException.class,
             AppException.class
-    })
+    },
+    isolation = Isolation.SERIALIZABLE)
     public ScanProductWarrantyResponseDto activateByQrCode(ScanProductWarrantyRequestDto scanProductWarrantyRequestDto) {
 
         String maCuonTon = scanProductWarrantyRequestDto.getMaCuonTon();
