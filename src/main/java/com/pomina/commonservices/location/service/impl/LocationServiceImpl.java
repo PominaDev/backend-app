@@ -161,6 +161,11 @@ public class LocationServiceImpl implements LocationService {
         if (location == null) {
             throw new AppException(ErrorCode.USER_NOT_FOUND);
         }
+
+        if (location.getLatitude() == null || location.getLongitude() == null || location.getRadius() == null) {
+            throw new AppException(ErrorCode.USER_LOCATION_NOT_FOUND);
+        }
+
         return location;
     }
 
