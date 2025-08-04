@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pomina.webapp.user_role_managerment.mapper.SysRoleMapper">
+
+    <!-- Ánh xạ cột DB -> thuộc tính entity -->
+    <resultMap id="RoleResultMap" type="com.pomina.webapp.user_role_managerment.entity.SysRole">
+        <id column="id" property="id"/>
+        <result column="role_name" property="roleName"/>
+        <result column="description" property="description"/>
+        <result column="status" property="status"/>
+        <result column="noted" property="note"/>
+        <result column="created_at" property="createdAt"/>
+        <result column="created_by" property="createdBy"/>
+        <result column="updated_at" property="updatedAt"/>
+        <result column="updated_by" property="updatedBy"/>
+        <result column="is_deleted" property="isDeleted"/>
+    </resultMap>
+
+    <!-- Lấy tất cả bản ghi -->
+    <select id="findAll" resultMap="RoleResultMap">
+        SELECT
+            id,
+            role_name,
+            description,
+            status,
+            noted,
+            created_at,
+            created_by,
+            updated_at,
+            updated_by,
+            is_deleted
+        FROM sys_role
+        WHERE is_deleted = false
+    </select>
+
+</mapper>
