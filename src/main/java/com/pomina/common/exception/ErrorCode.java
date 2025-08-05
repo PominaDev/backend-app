@@ -31,11 +31,13 @@ public enum ErrorCode {
     INVALID_OTP("3001", "Mã OTP không hợp lệ"),
     INVALID_EMAIL_FORMAT("3002", "Định dạng email không hợp lệ"),
     INVALID_LAT_LONG("3003", "Tọa độ không hợp lệ"),
+    INVALID_OWN_PRODUCT("3004", "Sản phẩm này không thuộc quyền sở hữu của bạn!"),
 
     // ===== 2000 - Không tìm thấy / Đã tồn tại =====
     USER_NOT_FOUND("2000", "Người dùng không tồn tại"),
-    PRODUCT_NOT_FOUND("2001", "Không tìm thấy sản phẩm"),
-    WARRANTY_NOT_FOUND("2002", "Không tìm thấy thông tin bảo hành"),
+    PRODUCT_NOT_FOUND("2000", "Không tìm thấy sản phẩm"),
+    WARRANTY_NOT_FOUND("2000", "Không tìm thấy thông tin bảo hành"),
+    USER_LOCATION_NOT_FOUND("2000", "Không tìm thấy vị trí người dùng"),
 
     USER_EXISTED("2003", "Người dùng đã tồn tại"),
     PRODUCT_ALREADY_ACTIVATED("2004", "Sản phẩm đã được kích hoạt"),

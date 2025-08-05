@@ -12,21 +12,9 @@ import java.util.List;
 @Mapper
 public interface WarrantyMapper extends BaseMapper<Warranty> {
 
-    /**
-     * Truy xuất thông tin bảo hành của sản phẩm,
-     * kết hợp thông tin người dùng,
-     * địa chỉ đăng ký,
-     * và thông tin sản phẩm
-     *
-     * @param userId
-     * @return List<WarrantyInfoHistory>
-     */
-    List<WarrantyInfoHistory> findWarrantyDetail(@Param("offset") int offset,
-                                                 @Param("limit") int limit,
-                                                 @Param("paging") PageRequest pageRequest,
-                                                 @Param("userId") Integer userId);
+    List<WarrantyInfoHistory> findWarrantyDetail(@Param("offset") int offset, @Param("limit") int limit, @Param("paging") PageRequest pageRequest, @Param("userId") Integer userId);
 
     int countWarrantyDetail(@Param("userId") Integer userId);
 
-   WarrantyInfoHistory findWarrantyDetailByMaCuonTon(@Param("maCuonTon") String maCuonTon);
+    WarrantyInfoHistory findWarrantyDetailByMaCuonTon(@Param("maCuonTon") String maCuonTon);
 }

@@ -87,4 +87,25 @@
                 #{isDeleted})
     </insert>
 
+    <update id="update">
+        UPDATE u_location
+        SET latitude = #{latitude},
+            longitude = #{longitude},
+            address01 = #{address01},
+            address02 = #{address02},
+            address03 = #{address03},
+            address04 = #{address04},
+            address05 = #{address05},
+            full_address = #{fullAddress},
+            country_code = #{countryCode},
+            radius = #{radius},
+            status = #{status},
+            noted = #{note},
+            updated_at = NOW(),
+            updated_by = #{updatedBy},
+            is_deleted = #{isDeleted}
+        WHERE user_id = #{userId}
+    </update>
+
+
 </mapper>
