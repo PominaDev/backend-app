@@ -68,7 +68,14 @@
                total_length,
                m_a_length,
                m_b_length,
-               m_c_length
+               m_c_length,
+               status,
+               noted,
+               created_at,
+               created_by,
+               updated_at,
+               updated_by,
+               is_deleted
         FROM u_product
         WHERE u_product_id = #{id}
           AND is_deleted = 0
@@ -85,7 +92,14 @@
                total_length,
                m_a_length,
                m_b_length,
-               m_c_length
+               m_c_length,
+               status,
+               noted,
+               created_at,
+               created_by,
+               updated_at,
+               updated_by,
+               is_deleted
         FROM u_product
         WHERE is_deleted = 0
     </select>
@@ -104,7 +118,12 @@
         m_b_length,
         m_c_length,
         status,
-        updated_at
+        noted,
+        created_at,
+        created_by,
+        updated_at,
+        updated_by,
+        is_deleted
         FROM u_product
         WHERE is_deleted = 0
         <if test="paging != null and paging.orderByClause != null">
@@ -130,8 +149,7 @@
                                created_by,
                                updated_at,
                                updated_by,
-                               is_deleted
-                               )
+                               is_deleted)
         VALUES (#{maCuonTon},
                 #{tenSanPham},
                 #{loaiCuon},
@@ -148,8 +166,7 @@
                 #{createdBy},
                 #{updatedAt},
                 #{updatedBy},
-                #{isDeleted}
-               )
+                #{isDeleted})
     </insert>
 
     <insert id="insertBatch"
@@ -166,7 +183,14 @@
         total_length,
         m_a_length,
         m_b_length,
-        m_c_length
+        m_c_length,
+        status,
+        noted,
+        created_at,
+        created_by,
+        updated_at,
+        updated_by,
+        is_deleted
         )
         VALUES
         <foreach collection="list" item="item" separator=",">
@@ -180,46 +204,65 @@
             #{item.totalLength},
             #{item.maLength},
             #{item.mbLength},
-            #{item.mcLength}
+            #{item.mcLength},
+            #{item.status},
+            #{item.note},
+            #{item.createdAt},
+            #{item.createdBy},
+            #{item.updatedAt},
+            #{item.updatedBy},
+            #{item.isDeleted}
             )
         </foreach>
     </insert>
-
 
     <update id="update"
             parameterType="com.pomina.commonservices.product_warranty_activation.entity.Product">
         UPDATE u_product
         <set>
             <if test="maCuonTon != null and maCuonTon != ''">
-                ma_cuon_ton = #{maCuonTon},
+                ma_cuon_ton = #{maCuonTon}
             </if>
             <if test="tenSanPham != null and tenSanPham != ''">
-                ten_san_pham = #{tenSanPham},
+                ten_san_pham = #{tenSanPham}
             </if>
             <if test="loaiCuon != null and loaiCuon != ''">
-                loai_cuon = #{loaiCuon},
+                loai_cuon = #{loaiCuon}
             </if>
             <if test="bhPhaiMau != null">
-                bh_phai_mau = #{bhPhaiMau},
+                bh_phai_mau = #{bhPhaiMau}
             </if>
             <if test="bhAnMon != null">
-                bh_an_mon = #{bhAnMon},
+                bh_an_mon = #{bhAnMon}
             </if>
             <if test="totalWeight != null">
-                total_weight = #{totalWeight},
+                total_weight = #{totalWeight}
             </if>
             <if test="totalLength != null">
-                total_length = #{totalLength},
+                total_length = #{totalLength}
             </if>
             <if test="maLength != null">
-                m_a_length = #{maLength},
+                m_a_length = #{maLength}
             </if>
             <if test="mbLength != null">
-                m_b_length = #{mbLength},
+                m_b_length = #{mbLength}
             </if>
             <if test="mcLength != null">
-                m_c_length = #{mcLength},
+                m_c_length = #{mcLength}
             </if>
+            <if test="status != null and status != ''">
+                status = #{status}
+            </if>
+            <if test="note != null and note != ''">
+                noted = #{note}
+            </if>
+            <if test="updatedBy != null">
+                updated_by = #{updatedBy}
+            </if>
+            <if test="isDeleted != null">
+                is_deleted = #{isDeleted}
+            </if>
+            updated_at = NOW()
         </set>
         WHERE u_product_id = #{productId}
     </update>
@@ -240,6 +283,13 @@
         SELECT EXISTS (SELECT 1
                        FROM u_product
                        WHERE u_product_id = #{id}
+                         AND is_deleted = 0)
+    </select>
+
+    <select id="existsByMaCuonTon" resultType="boolean">
+        SELECT EXISTS (SELECT 1
+                       FROM u_product
+                       WHERE ma_cuon_ton = #{maCuonTon}
                          AND is_deleted = 0)
     </select>
 
@@ -286,8 +336,7 @@
 
         FROM u_product p
                  LEFT JOIN u_warranty w ON w.ma_cuon_ton = p.ma_cuon_ton AND w.is_deleted = 0
-        WHERE p.ma_cuon_ton = #{maCuonTon}
-        LIMIT 1
+        WHERE p.ma_cuon_ton = #{maCuonTon} LIMIT 1
     </select>
 
 </mapper>
