@@ -123,7 +123,15 @@
                                total_length,
                                m_a_length,
                                m_b_length,
-                               m_c_length)
+                               m_c_length,
+                               status,
+                               noted,
+                               created_at,
+                               created_by,
+                               updated_at,
+                               updated_by,
+                               is_deleted
+                               )
         VALUES (#{maCuonTon},
                 #{tenSanPham},
                 #{loaiCuon},
@@ -131,9 +139,17 @@
                 #{bhAnMon},
                 #{totalWeight},
                 #{totalLength},
-                #{maLength},
-                #{mbLength},
-                #{mcLength})
+                #{mALength},
+                #{mBLength},
+                #{mCLength},
+                #{status},
+                #{note},
+                #{createdAt},
+                #{createdBy},
+                #{updatedAt},
+                #{updatedBy},
+                #{isDeleted}
+               )
     </insert>
 
     <insert id="insertBatch"
