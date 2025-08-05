@@ -36,7 +36,6 @@ public class MasterGroupUserServiceImpl implements MasterGroupUserService {
         return masterGroupUserMapper.update(masterGroupUserUpdate);
     }
 
-
     @Override
     public Integer updateListMasterGroupUser(List<MasterGroupUserRequestDto> dtoList) {
         Integer updateRows = 0;
@@ -60,18 +59,12 @@ public class MasterGroupUserServiceImpl implements MasterGroupUserService {
         }
 
         if(!updateMasterGroupUserList.isEmpty()){
-//            updateRows += masterGroupUserMapper.updateList(updateMasterGroupUserList);
             for (MasterGroupUser masterGroupUser : updateMasterGroupUserList) {
                 updateRows += masterGroupUserMapper.update(masterGroupUser);
             }
         }
 
         return updateRows;
-    }
-
-    @Override
-    public Boolean isExistByUserIdAndGroupCode(String groupCode, Integer userId) {
-        return null;
     }
 
     @Override
@@ -107,7 +100,6 @@ public class MasterGroupUserServiceImpl implements MasterGroupUserService {
             return masterGroupUserConverter.toResponseList(listEntity);
         }
         return null;
-
     }
 
     @Override
@@ -123,5 +115,10 @@ public class MasterGroupUserServiceImpl implements MasterGroupUserService {
     public Integer createListMasterGroupUser(List<MasterGroupUserRequestDto> dtoList) {
         List<MasterGroupUser> masterGroupUserList = masterGroupUserConverter.toEntityList(dtoList);
         return masterGroupUserMapper.insertList(masterGroupUserList);
+    }
+
+    @Override
+    public Integer deleteList(List<Integer> idList) {
+        return masterGroupUserMapper.softDeleteList(idList);
     }
 }

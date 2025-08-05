@@ -13,6 +13,8 @@ public interface MasterGroupUserMapper extends BaseMapper<MasterGroupUser> {
     List<MasterGroupUser> findByMasterGroupUserCode(@Param("groupCode") String groupCode);
     Integer insertList(List<MasterGroupUser> masterGroupUserList);
     Integer updateList(List<MasterGroupUser> masterGroupUserList);
+    Integer softDeleteList(@Param("list")List<Integer> idList);
     boolean isExistByUserIdAndGroupCode(@Param("groupCode") String groupCode,@Param("userId")  Integer userId);
+
 
 }

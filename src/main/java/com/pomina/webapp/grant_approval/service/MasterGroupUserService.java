@@ -9,10 +9,7 @@ import java.util.List;
 public interface MasterGroupUserService extends BaseService<MasterGroupUserRequestDto, MasterGroupUserResponseDto, Integer> {
     List<MasterGroupUserResponseDto> getAllMasterGroupUser();
     List<MasterGroupUserResponseDto> getAllMasterGroupUserByGroupCode(String groupCode);
-
     Integer createListMasterGroupUser(List<MasterGroupUserRequestDto> dtoList);
-
     Integer updateListMasterGroupUser(List<MasterGroupUserRequestDto> dtoList);
-
-    Boolean isExistByUserIdAndGroupCode(String groupCode, Integer userId);
+    Integer deleteList(List<Integer> idList);
 }
