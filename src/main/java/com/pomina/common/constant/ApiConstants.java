@@ -142,7 +142,7 @@ public class ApiConstants {
     }
 
     public static final class ApiSysRole {
-        public static final String BASE = VERSION_V1 + "/master-location-management";
+        public static final String BASE = VERSION_V1 + "/user-role-management";
         public static final String GET_ALL_ROLE = "/get-all-role";
 
         private ApiSysRole() {}
