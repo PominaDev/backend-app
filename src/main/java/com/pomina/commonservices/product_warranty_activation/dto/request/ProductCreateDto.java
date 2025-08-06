@@ -6,6 +6,9 @@ import lombok.Setter;
 
 @Getter
 @Setter
+/**
+ * @JsonProperty("mALength") đổi tên field JSON khi không trùng với ten biến trong java
+ */
 public class ProductCreateDto {
     private String maCuonTon;
     private String tenSanPham;

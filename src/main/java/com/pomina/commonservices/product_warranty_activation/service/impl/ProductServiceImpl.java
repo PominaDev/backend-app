@@ -1,7 +1,11 @@
 package com.pomina.commonservices.product_warranty_activation.service.impl;
 
+import com.pomina.common.exception.AppException;
+import com.pomina.common.exception.ErrorCode;
+import com.pomina.common.logging.LogService;
 import com.pomina.common.model.PageRequest;
 import com.pomina.common.model.PageResponse;
+import com.pomina.common.utils.AuditUtil;
 import com.pomina.commonservices.product_warranty_activation.converter.ProductConverter;
 import com.pomina.commonservices.product_warranty_activation.dto.request.ProductRequestDto;
 import com.pomina.commonservices.product_warranty_activation.dto.response.ProductResponseDto;
@@ -10,6 +14,7 @@ import com.pomina.commonservices.product_warranty_activation.mapper.ProductMappe
 import com.pomina.commonservices.product_warranty_activation.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -22,14 +27,16 @@ public class ProductServiceImpl implements ProductService {
 
     private final ProductConverter productConverter;
 
+    private final LogService log;
+
     @Override
-//    @Transactional
+    @Transactional
     public int create(ProductRequestDto dto) {
-        if (dto == null) {
-            throw new RuntimeException("Không tìm thấy product");
+        if (productMapper.existsByMaCuonTon(dto.getMaCuonTon())) {
+            throw new AppException(ErrorCode.PRODUCT_EXISTED);
         }
         Product product = productConverter.toEntity(dto);
-//        AuditUtil.insert(product); chưa cập nhật AuditUtil
+        AuditUtil.insert(product);
         return productMapper.insert(product);
     }
 
@@ -37,10 +44,10 @@ public class ProductServiceImpl implements ProductService {
     public int update(Integer id, ProductRequestDto dto) {
         Product product = productMapper.findById(id);
         if (product == null) {
-            throw new RuntimeException("Không tìm thấy product với ID = " + id);
+            throw new AppException(ErrorCode.PRODUCT_NOT_FOUND);
         }
         productConverter.updateEntityFromDto(dto, product);
-//        AuditUtil.update(product); Chưa cập nhật AuditUtil
+        AuditUtil.update(product);
         return productMapper.update(product);
     }
 
@@ -64,10 +71,6 @@ public class ProductServiceImpl implements ProductService {
             return null;
         }
 
-//        for (Product product : productInfoList) {
-//            AuditUtil.search(product); Chưa cập nhật AuditUtil
-//        }
-
         List<ProductResponseDto> productResponse = productConverter.toResponseList(productInfoList);
 
 
@@ -82,7 +85,7 @@ public class ProductServiceImpl implements ProductService {
         if (product == null) {
             throw new RuntimeException("Không tìm thấy product với ID = " + productId);
         }
-//        AuditUtil.delete(product, null);
+        AuditUtil.softDelete(product, null);
         return productMapper.softDeleteById(productId);
     }
 

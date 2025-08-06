@@ -19,11 +19,11 @@ public abstract class BaseEntity {
 
     private LocalDateTime createdAt;
 
-    private String createdBy;
+    private Integer createdBy;
 
     private LocalDateTime updatedAt;
 
-    private String updatedBy;
+    private Integer updatedBy;
 
     private Boolean isDeleted;
 }
