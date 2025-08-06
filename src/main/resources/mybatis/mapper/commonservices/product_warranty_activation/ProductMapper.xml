@@ -185,7 +185,6 @@
         </foreach>
     </insert>
 
-
     <update id="update"
             parameterType="com.pomina.commonservices.product_warranty_activation.entity.Product">
         UPDATE u_product
