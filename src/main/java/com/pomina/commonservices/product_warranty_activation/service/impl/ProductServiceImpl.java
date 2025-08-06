@@ -32,7 +32,7 @@ public class ProductServiceImpl implements ProductService {
     @Override
     @Transactional
     public int create(ProductRequestDto dto) {
-        if (dto == null) {
+        if (productMapper.existsByMaCuonTon(dto.getMaCuonTon())) {
             throw new AppException(ErrorCode.PRODUCT_EXISTED);
         }
         Product product = productConverter.toEntity(dto);
