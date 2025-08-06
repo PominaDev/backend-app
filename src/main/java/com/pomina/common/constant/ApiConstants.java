@@ -154,4 +154,20 @@ public class ApiConstants {
 
         private ApiProfile() {}
     }
+
+    public static final class ApiMasterGroupUser {
+        public static final String BASE = VERSION_V1 + "/master-group-users";
+        public static final String CREATE = "/create";
+        public static final String CREATE_LIST = "/create-list";
+        public static final String UPDATE = "/update/{id}";
+        public static final String UPDATE_LIST = "/update-list";
+        public static final String DELETE = "/delete/{id}";
+        public static final String DELETE_LIST = "/delete-list";
+        public static final String GET_BY_ID = "/{id}";
+        public static final String SEARCH = "/search";
+        public static final String GET_ALL = "/all";
+        public static final String GET_BY_GROUP_USER_CODE = "/get-by-group-user-code/{groupUserCode}";
+
+        private ApiMasterGroupUser() {}
+    }
 }
