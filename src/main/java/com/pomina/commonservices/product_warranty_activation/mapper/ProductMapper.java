@@ -18,5 +18,12 @@ public interface ProductMapper extends BaseMapper<Product> {
      */
     Product findProductAndWarrantyByMaCuonTon(@Param("maCuonTon") String maCuonTon);
 
+    /**
+     * Kiểm tra xem mã cuộn tôn lúc insert đã có hay chưa
+     * @param maCuonTon -> u.product.ma_cuon_ton
+     * @return boolean
+     */
+    boolean existsByMaCuonTon(@Param("maCuonTon") String maCuonTon);
+
     int insertBatch(@Param("list") List<Product> productList);
 }

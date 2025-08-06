@@ -12,6 +12,9 @@ import com.pomina.commonservices.product_warranty_activation.dto.request.Product
 import com.pomina.commonservices.product_warranty_activation.dto.request.ProductUpdateDto;
 import com.pomina.commonservices.product_warranty_activation.dto.response.ProductResponseDto;
 import com.pomina.commonservices.product_warranty_activation.service.ProductService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -33,6 +36,36 @@ public class ProductController extends BaseController<ProductCreateDto, ProductU
 
     private final ProductConverter productConverter;
 
+    @Operation(
+            summary = "Create new product",
+            description = "Tạo mới sản phẩm với thông tin từ người dùng",
+            requestBody = @io.swagger.v3.oas.annotations.parameters.RequestBody(
+                    required = true,
+                    description = "Thông tin sản phẩm cần tạo",
+                    content = @Content(
+                            mediaType = "application/json",
+                            schema = @Schema(implementation = ProductCreateDto.class)
+                    )
+            ),
+            responses = {
+                    @io.swagger.v3.oas.annotations.responses.ApiResponse(
+                            responseCode = "200",
+                            description = "Tạo sản phẩm thành công"
+                    ),
+                    @io.swagger.v3.oas.annotations.responses.ApiResponse(
+                            responseCode = "400",
+                            description = "Request không hợp lệ"
+                    ),
+                    @io.swagger.v3.oas.annotations.responses.ApiResponse(
+                            responseCode = "2000",
+                            description = "Sản phẩm đã tồn tại"
+                    ),
+                    @io.swagger.v3.oas.annotations.responses.ApiResponse(
+                            responseCode = "5000",
+                            description = "Lỗi hệ thống"
+                    )
+            }
+    )
     @Override
     @PostMapping(ApiConstants.ApiProduct.CREATE)
     public ResponseEntity<ApiResponse<Integer>> create(@RequestBody ProductCreateDto dto) {
