@@ -2,6 +2,10 @@ spring:
   application:
     name: pomina-erp
 
+  jackson:
+    time-zone:
+      Asia/Ho_Chi_Minh
+
   profiles:
     active: dev
 
