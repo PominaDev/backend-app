@@ -12,9 +12,9 @@
         <result column="bh_an_mon" property="bhAnMon"/>
         <result column="total_weight" property="totalWeight"/>
         <result column="total_length" property="totalLength"/>
-        <result column="m_a_length" property="mALength"/>
-        <result column="m_b_length" property="mBLength"/>
-        <result column="m_c_length" property="mCLength"/>
+        <result column="m_a_length" property="maLength"/>
+        <result column="m_b_length" property="mbLength"/>
+        <result column="m_c_length" property="mcLength"/>
         <result column="status" property="status"/>
         <result column="noted" property="note"/>
         <result column="created_at" property="createdAt"/>
@@ -34,9 +34,9 @@
         <result property="bhAnMon" column="bh_an_mon"/>
         <result property="totalWeight" column="total_weight"/>
         <result property="totalLength" column="total_length"/>
-        <result property="mALength" column="m_a_length"/>
-        <result property="mBLength" column="m_b_length"/>
-        <result property="mCLength" column="m_c_length"/>
+        <result property="maLength" column="m_a_length"/>
+        <result property="mbLength" column="m_b_length"/>
+        <result property="mcLength" column="m_c_length"/>
 
         <association property="warranty"
                      javaType="com.pomina.commonservices.product_warranty_activation.entity.Warranty">
@@ -68,7 +68,14 @@
                total_length,
                m_a_length,
                m_b_length,
-               m_c_length
+               m_c_length,
+               status,
+               noted,
+               created_at,
+               created_by,
+               updated_at,
+               updated_by,
+               is_deleted
         FROM u_product
         WHERE u_product_id = #{id}
           AND is_deleted = 0
@@ -85,7 +92,14 @@
                total_length,
                m_a_length,
                m_b_length,
-               m_c_length
+               m_c_length,
+               status,
+               noted,
+               created_at,
+               created_by,
+               updated_at,
+               updated_by,
+               is_deleted
         FROM u_product
         WHERE is_deleted = 0
     </select>
@@ -104,7 +118,12 @@
         m_b_length,
         m_c_length,
         status,
-        updated_at
+        noted,
+        created_at,
+        created_by,
+        updated_at,
+        updated_by,
+        is_deleted
         FROM u_product
         WHERE is_deleted = 0
         <if test="paging != null and paging.orderByClause != null">
@@ -113,7 +132,8 @@
         LIMIT #{limit} OFFSET #{offset}
     </select>
 
-    <insert id="insert" parameterType="com.pomina.commonservices.product_warranty_activation.entity.Product">
+    <insert id="insert"
+            parameterType="com.pomina.commonservices.product_warranty_activation.entity.Product">
         INSERT INTO u_product (ma_cuon_ton,
                                ten_san_pham,
                                loai_cuon,
@@ -123,7 +143,14 @@
                                total_length,
                                m_a_length,
                                m_b_length,
-                               m_c_length)
+                               m_c_length,
+                               status,
+                               noted,
+                               created_at,
+                               created_by,
+                               updated_at,
+                               updated_by,
+                               is_deleted)
         VALUES (#{maCuonTon},
                 #{tenSanPham},
                 #{loaiCuon},
@@ -133,7 +160,14 @@
                 #{totalLength},
                 #{maLength},
                 #{mbLength},
-                #{mcLength})
+                #{mcLength},
+                #{status},
+                #{note},
+                #{createdAt},
+                #{createdBy},
+                #{updatedAt},
+                #{updatedBy},
+                #{isDeleted})
     </insert>
 
     <insert id="insertBatch"
@@ -150,7 +184,14 @@
         total_length,
         m_a_length,
         m_b_length,
-        m_c_length
+        m_c_length,
+        status,
+        noted,
+        created_at,
+        created_by,
+        updated_at,
+        updated_by,
+        is_deleted
         )
         VALUES
         <foreach collection="list" item="item" separator=",">
@@ -164,11 +205,17 @@
             #{item.totalLength},
             #{item.maLength},
             #{item.mbLength},
-            #{item.mcLength}
+            #{item.mcLength},
+            #{item.status},
+            #{item.note},
+            #{item.createdAt},
+            #{item.createdBy},
+            #{item.updatedAt},
+            #{item.updatedBy},
+            #{item.isDeleted}
             )
         </foreach>
     </insert>
-
 
     <update id="update"
             parameterType="com.pomina.commonservices.product_warranty_activation.entity.Product">
@@ -204,6 +251,19 @@
             <if test="mcLength != null">
                 m_c_length = #{mcLength},
             </if>
+            <if test="status != null and status != ''">
+                status = #{status},
+            </if>
+            <if test="note != null and note != ''">
+                noted = #{note},
+            </if>
+            <if test="updatedBy != null">
+                updated_by = #{updatedBy},
+            </if>
+            <if test="isDeleted != null">
+                is_deleted = #{isDeleted},
+            </if>
+            updated_at = NOW()
         </set>
         WHERE u_product_id = #{productId}
     </update>
@@ -224,6 +284,13 @@
         SELECT EXISTS (SELECT 1
                        FROM u_product
                        WHERE u_product_id = #{id}
+                         AND is_deleted = 0)
+    </select>
+
+    <select id="existsByMaCuonTon" resultType="boolean">
+        SELECT EXISTS (SELECT 1
+                       FROM u_product
+                       WHERE ma_cuon_ton = #{maCuonTon}
                          AND is_deleted = 0)
     </select>
 
@@ -270,8 +337,7 @@
 
         FROM u_product p
                  LEFT JOIN u_warranty w ON w.ma_cuon_ton = p.ma_cuon_ton AND w.is_deleted = 0
-        WHERE p.ma_cuon_ton = #{maCuonTon}
-        LIMIT 1
+        WHERE p.ma_cuon_ton = #{maCuonTon} LIMIT 1
     </select>
 
 </mapper>

@@ -125,6 +125,7 @@ public class ApiConstants {
     public static final class ApiSysUserManagement {
         public static final String BASE = VERSION_V1 + "/user-management";
         public static final String GET_USER_ACTIVE_ROLE_WEB = "/get-user-active-role-web";
+        public static final String GET_USER_ACTIVE_ROLE_MOBILE = "/get-user-active-role-mobile";
         public static final String GET_USERS_PAGED = "/get-users-paged";
         public static final String GET_ALL_USERS = "/get-all-users";
         public static final String CREATE = "/create";
@@ -143,7 +144,7 @@ public class ApiConstants {
     }
 
     public static final class ApiSysRole {
-        public static final String BASE = VERSION_V1 + "/master-location-management";
+        public static final String BASE = VERSION_V1 + "/user-role-management";
         public static final String GET_ALL_ROLE = "/get-all-role";
 
         private ApiSysRole() {
@@ -155,5 +156,21 @@ public class ApiConstants {
         public static final String UPDATE = "/edit";
 
         private ApiProfile() {}
+    }
+
+    public static final class ApiMasterGroupUser {
+        public static final String BASE = VERSION_V1 + "/master-group-users";
+        public static final String CREATE = "/create";
+        public static final String CREATE_LIST = "/create-list";
+        public static final String UPDATE = "/update/{id}";
+        public static final String UPDATE_LIST = "/update-list";
+        public static final String DELETE = "/delete/{id}";
+        public static final String DELETE_LIST = "/delete-list";
+        public static final String GET_BY_ID = "/{id}";
+        public static final String SEARCH = "/search";
+        public static final String GET_ALL = "/all";
+        public static final String GET_BY_GROUP_USER_CODE = "/get-by-group-user-code/{groupUserCode}";
+
+        private ApiMasterGroupUser() {}
     }
 }

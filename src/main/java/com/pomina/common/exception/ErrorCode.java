@@ -40,6 +40,7 @@ public enum ErrorCode {
     USER_LOCATION_NOT_FOUND("2000", "Không tìm thấy vị trí người dùng"),
 
     USER_EXISTED("2003", "Người dùng đã tồn tại"),
+    PRODUCT_EXISTED("2000", "Sản phẩm đã tồn tại"),
     PRODUCT_ALREADY_ACTIVATED("2004", "Sản phẩm đã được kích hoạt"),
     OUT_OF_LOCATION("2005", "Không ở trong khu vực đã đăng ký"),
 

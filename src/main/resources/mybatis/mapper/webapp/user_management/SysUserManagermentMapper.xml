@@ -56,7 +56,7 @@
         <result column="status" property="status"/>
         <result column="noted" property="note"/>
         <result column="created_at" property="createdAt"/>
-        <result column="created_by" property="createdBy"/>
+<!--        <result column="created_by" property="createdBy"/>-->
         <result column="updated_at" property="updatedAt"/>
         <result column="updated_by" property="updatedBy"/>
         <result column="is_deleted" property="isDeleted"/>

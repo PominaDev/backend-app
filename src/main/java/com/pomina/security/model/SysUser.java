@@ -1,5 +1,6 @@
 package com.pomina.security.model;
 
+import com.pomina.common.model.BaseEntity;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -9,7 +10,7 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class SysUser {
+public class SysUser extends BaseEntity {
 
     private Integer userId;
 

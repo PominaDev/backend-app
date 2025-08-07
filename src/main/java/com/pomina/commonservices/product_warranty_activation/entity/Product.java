@@ -19,9 +19,9 @@ public class Product extends BaseEntity {
     private Integer bhAnMon;
     private Double totalWeight;
     private Double totalLength;
-    private Double mALength;
-    private Double mBLength;
-    private Double mCLength;
+    private Double maLength;
+    private Double mbLength;
+    private Double mcLength;
 
     // JOIN with u_warranty table
     private Warranty warranty;

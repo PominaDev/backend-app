@@ -4,6 +4,7 @@ import com.pomina.common.config.datasources.CustomDataSource;
 import com.pomina.common.config.datasources.DataSourceType;
 import com.pomina.common.exception.AppException;
 import com.pomina.common.exception.ErrorCode;
+import com.pomina.common.utils.AuditUtil;
 import com.pomina.commonservices.location.dto.response.LocationResponseDto;
 import com.pomina.commonservices.location.service.LocationService;
 import com.pomina.security.mapper.SysUserMapper;
@@ -11,10 +12,13 @@ import com.pomina.security.model.SysUser;
 import com.pomina.security.service.SysUserService;
 import com.pomina.security.sysmodel.RegisterRequest;
 import com.pomina.security.sysmodel.RegisterResponse;
+import com.pomina.webapp.master_location_managerment.entity.MasterLocation;
+import com.pomina.webapp.master_location_managerment.mapper.MasterLocationMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Objects;
 import java.util.Optional;
@@ -29,6 +33,8 @@ public class SysUserServiceImpl implements SysUserService {
 
     private final LocationService locationService;
 
+    private final MasterLocationMapper masterLocationMapper;
+
     @CustomDataSource(DataSourceType.MASTER)
     @Override
     public Optional<SysUser> findByUserName(String userName) {
@@ -38,6 +44,7 @@ public class SysUserServiceImpl implements SysUserService {
     }
 
     @CustomDataSource(DataSourceType.MASTER)
+    @Transactional
     @Override
     public RegisterResponse registerUser(RegisterRequest registerRequest) {
 
@@ -63,17 +70,26 @@ public class SysUserServiceImpl implements SysUserService {
         user.setRoleId(registerRequest.getRoleId());
         user.setIsActive(registerRequest.getIsActive());
 
-        // Save to database
-        int resultInsert = userMapper.insert(user);
-        if (resultInsert != 1) {
-            throw new DataIntegrityViolationException("Insert user failed");
-        }
-
         // Set UserID
         registerRequest.getLocation().setUserId(user.getUserId());
         LocationResponseDto locationResponseDto = locationService.registerLocation(registerRequest.getLocation());
         if (locationResponseDto == null) {
             throw new AppException(ErrorCode.LOCATION_NOT_FOUND);
+        }
+
+        String city = locationResponseDto.getCity();
+        MasterLocation masterLocation = masterLocationMapper.findByOldName(city);
+        if (masterLocation == null || masterLocation.getMasterLocationCode() == null) {
+            throw new AppException(ErrorCode.LOCATION_NOT_FOUND);
+        }
+        user.setMasterLocationCode(masterLocation.getMasterLocationCode());
+
+        AuditUtil.insert(user);
+
+        // Save to database
+        int resultInsert = userMapper.insert(user);
+        if (resultInsert != 1) {
+            throw new DataIntegrityViolationException("Insert user failed");
         }
 
         // Map to response

@@ -1,0 +1,91 @@
+name: Pomina Application Workflow
+
+on:
+  workflow_dispatch:
+  pull_request:
+    types: [ closed ]
+    branches: [ main ]
+    paths:
+      - 'src/**'
+      - '.github/workflows/pomina-workflow.yml'
+
+env:
+  USER_PROJECT: "pomina"
+  IMAGE_NAME: "${{ secrets.DOCKERHUB_USERNAME }}/pomina-project-backend"
+
+jobs:
+  build_and_push:
+    runs-on: ubuntu-latest
+    outputs:
+      short_sha: ${{ steps.vars.outputs.short_sha }}
+    if: ${{ github.ref == 'refs/heads/main' }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Login to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_ACCESS_TOKEN }}
+
+      - name: Set short git commit SHA
+        id: vars
+        run: |
+          calculatedSha=$(git rev-parse --short ${{ github.sha }})
+          echo "::set-output name=short_sha::$calculatedSha"
+
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v6
+        with:
+          context: ./
+          file: ./Dockerfile
+          push: true
+          tags: ${{ env.IMAGE_NAME }}:sha-${{ steps.vars.outputs.short_sha }}
+          platforms: linux/amd64
+          cache-from: type=gha
+          cache-to: type=gha,mode=max`
+
+  deploy:
+    if: ${{ github.ref == 'refs/heads/main' }}
+    runs-on: ubuntu-latest
+    needs:
+      - build_and_push
+    steps:
+      - name: Execute remote SSH commands as pomina
+        uses: appleboy/ssh-action@v1.2.0
+        env:
+          IMAGE_TAG: ${{needs.build_and_push.outputs.short_sha}}
+          DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
+          DOCKERHUB_ACCESS_TOKEN: ${{ secrets.DOCKERHUB_ACCESS_TOKEN }}
+          DOCKER_IMAGE: ${{ env.IMAGE_NAME }}
+        with:
+          host: ${{ secrets.SERVER_HOST }}
+          username: ${{ secrets.SERVER_USER }}
+          key: ${{ secrets.SERVER_SSHKEY }}
+          port: ${{ secrets.SERVER_PORT }}
+          envs: DOCKER_IMAGE,IMAGE_TAG,DOCKERHUB_USERNAME,DOCKERHUB_ACCESS_TOKEN
+          script: |
+            export POMINA_APP_NAME=pomina-backend
+            
+            sudo -u ${{ env.USER_PROJECT }} bash <<EOF
+              set -e
+              echo "${DOCKERHUB_ACCESS_TOKEN}" | docker login -u "${DOCKERHUB_USERNAME}" --password-stdin
+            
+              if [ "$(docker ps -aq -f name=$POMINA_APP_NAME)" ]; then
+                docker stop $POMINA_APP_NAME
+                docker container rm $POMINA_APP_NAME
+              fi
+
+              docker run -d -p 1688:1688 \
+                --restart unless-stopped \
+                --name $POMINA_APP_NAME \
+                --cpus=1 \
+                --memory="512m" \
+                $DOCKER_IMAGE:sha-$IMAGE_TAG
+
+              docker logout
+            EOF

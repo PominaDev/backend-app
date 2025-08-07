@@ -65,3 +65,12 @@ logging:
     root: INFO
     com.pomina: WARN
     org.springframework: WARN
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,metrics,prometheus
+  endpoint:
+    health:
+      show-details: always

@@ -7,6 +7,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
@@ -28,42 +29,53 @@ public class WebSecurityConfig {
     private final CustomPasswordEncoder passwordEncoder;
 
     protected static final String[] WHITE_LIST_ENDPOINTS = {
+            // AUTH API
             "/api/v1/auth/login",
             "/api/v1/auth/logout",
             "/api/v1/auth/register",
             "/api/v1/auth/refresh-token",
             "/api/v1/auth/otp/send",
             "/api/v1/auth/otp/verify",
+
+            // OPEN API
+            "/v3/api-docs/**",
+            "/swagger-ui/**",
+            "/swagger-ui.html",
+
+            // Monitoring
+            "/actuator/**"
     };
 
     private static final List<String> WHITE_LIST_CORS = List.of(
+            // LOCAL FRONTEND
             "http://localhost:7777",
+
+            // DEPLOYED FRONTEND
             "https://pomina-flat-steel.vercel.app",
+
+            // NGROK
             "https://d8b0b708bf2f.ngrok-free.app"
     );
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http, CustomAuthenticationEntryPoint customAuthenticationEntryPoint) throws Exception {
-        http.addFilterBefore(jwtAuthentication, UsernamePasswordAuthenticationFilter.class);
-        http
+        return http
                 .addFilterBefore(jwtAuthentication, UsernamePasswordAuthenticationFilter.class)
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
-                .csrf().disable()
-                .formLogin().disable()
-                .logout().disable()
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                .and()
-                .exceptionHandling()
-                .authenticationEntryPoint(customAuthenticationEntryPoint)
-                .and()
+                .csrf(AbstractHttpConfigurer::disable)
+                .formLogin(AbstractHttpConfigurer::disable)
+                .logout(AbstractHttpConfigurer::disable)
+                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .exceptionHandling(exception -> exception
+                        .authenticationEntryPoint(customAuthenticationEntryPoint)
+                )
                 .authorizeHttpRequests(registry -> registry
                         .requestMatchers(WHITE_LIST_ENDPOINTS)
                         .permitAll()
                         .anyRequest()
                         .authenticated()
                 )
-        ;
-        return http.build();
+                .build();
     }
 
     @Bean
