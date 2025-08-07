@@ -75,7 +75,43 @@
     <insert id="insert"
             useGeneratedKeys="true"
             keyProperty="userId">
-        INSERT INTO sys_user (user_id, username, phone_number, password, ho_va_ten, ma_so_thue, role_id, is_active)
-        VALUES (#{userId}, #{username}, #{phoneNumber}, #{password}, #{hoVaTen}, #{maSoThue}, #{roleId}, #{isActive})
+        INSERT INTO sys_user (username,
+                              password,
+                              ho_va_ten,
+                              phone_number,
+                              ma_so_thue,
+                              master_location_code,
+                              bank_name,
+                              bank_number,
+                              description,
+                              role_id,
+                              is_active,
+                              old_id,
+                              status,
+                              noted,
+                              created_at,
+                              created_by,
+                              updated_at,
+                              updated_by,
+                              is_deleted)
+        VALUES (#{username},
+                #{password},
+                #{hoVaTen},
+                #{phoneNumber},
+                #{maSoThue},
+                #{masterLocationCode},
+                #{bankName},
+                #{bankNumber},
+                #{description},
+                #{roleId},
+                #{isActive},
+                #{oldId},
+                #{status},
+                #{note},
+                #{createdAt},
+                #{createdBy},
+                #{updatedAt},
+                #{updatedBy},
+                #{isDeleted})
     </insert>
 </mapper>

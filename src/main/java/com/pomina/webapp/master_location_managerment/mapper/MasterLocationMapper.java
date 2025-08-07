@@ -8,4 +8,6 @@ import java.util.List;
 @Mapper
 public interface MasterLocationMapper {
     List<MasterLocation> findAll();
+
+    MasterLocation findByOldName(String oldName);
 }
