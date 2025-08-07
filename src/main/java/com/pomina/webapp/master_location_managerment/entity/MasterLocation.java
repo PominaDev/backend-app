@@ -9,8 +9,7 @@ import java.time.LocalDateTime;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class MasterLocation extends BaseEntity {
+public class MasterLocation {
     private String masterLocationCode;
     private String masterLocationName;
-    private String description;
 }

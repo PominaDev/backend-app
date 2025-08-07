@@ -8,5 +8,4 @@ import lombok.Setter;
 public class MasterLocationRequestDto {
     private String masterLocationCode;
     private String masterLocationName;
-    private String description;
 }
