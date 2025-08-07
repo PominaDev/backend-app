@@ -28,6 +28,31 @@
         <result column="role_name" property="roleName"/>
     </resultMap>
 
+    <update id="update">
+        UPDATE sys_user
+        SET
+            username = #{username},
+            password = #{password},
+            ho_va_ten = #{hoVaTen},
+            phone_number = #{phoneNumber},
+            ma_so_thue = #{maSoThue},
+            master_location_code = #{masterLocationCode},
+            bank_name = #{bankName},
+            bank_number = #{bankNumber},
+            description = #{description},
+            role_id = #{roleId},
+            is_active = #{isActive},
+            old_id = #{oldId},
+            status = #{status},
+            noted = #{note},
+            created_at = #{createdAt},
+            created_by = #{createdBy},
+            updated_at = #{updatedAt},
+            updated_by = #{updatedBy},
+            is_deleted = #{isDeleted}
+        WHERE user_id = #{userId}
+    </update>
+
     <select id="getUserLogin" resultMap="userLoginResultMap">
         SELECT u.user_id,
                u.username,
@@ -69,6 +94,23 @@
                  LEFT JOIN sys_role r ON u.role_id = r.id
         WHERE u.user_id = #{userId}
           AND u.is_active = TRUE
+        LIMIT 1
+    </select>
+
+    <select id="findByUserNameAndPhoneNumber" resultMap="SysUserResultMap">
+        SELECT user_id,
+               username,
+               phone_number,
+               password,
+               ho_va_ten,
+               ma_so_thue,
+               bank_name,
+               bank_number,
+               description,
+               role_id
+        FROM sys_user
+        WHERE username = #{username}
+        AND phone_number = #{phoneNumber}
         LIMIT 1
     </select>
 

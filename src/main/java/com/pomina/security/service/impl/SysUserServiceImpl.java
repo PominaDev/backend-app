@@ -5,6 +5,7 @@ import com.pomina.common.config.datasources.DataSourceType;
 import com.pomina.common.exception.AppException;
 import com.pomina.common.exception.ErrorCode;
 import com.pomina.common.utils.AuditUtil;
+import com.pomina.commonservices.location.dto.request.LocationRequestDto;
 import com.pomina.commonservices.location.dto.response.LocationResponseDto;
 import com.pomina.commonservices.location.service.LocationService;
 import com.pomina.security.mapper.SysUserMapper;
@@ -47,59 +48,65 @@ public class SysUserServiceImpl implements SysUserService {
     @Transactional
     @Override
     public RegisterResponse registerUser(RegisterRequest registerRequest) {
-
-        // Check exist sysuser
-        SysUser sysUser = userMapper.findByUserName(registerRequest.getUsername());
-        if (sysUser != null) {
+        // 1. Kiểm tra user đã tồn tại chưa
+        SysUser existingUser = userMapper.findByUserNameAndPhoneNumber(
+                registerRequest.getUsername(),
+                registerRequest.getPhoneNumber()
+        );
+        if (existingUser != null) {
             throw new AppException(ErrorCode.USER_EXISTED);
         }
 
-        // Encode password
+        // 2. Mã hóa password
         String encodedPassword = passwordEncoder.encode(registerRequest.getPassword());
         if (encodedPassword == null || encodedPassword.isEmpty()) {
             return null;
         }
 
-        // Map to entity
+        // 3. Tạo mới SysUser (chưa có location)
         SysUser user = new SysUser();
         user.setUsername(registerRequest.getUsername());
         user.setPhoneNumber(registerRequest.getPhoneNumber());
         user.setPassword(encodedPassword);
         user.setHoVaTen(registerRequest.getHoVaTen());
         user.setMaSoThue(registerRequest.getMaSoThue());
-        user.setRoleId(registerRequest.getRoleId());
-        user.setIsActive(registerRequest.getIsActive());
+        user.setRoleId(registerRequest.getRoleId() != null ? registerRequest.getRoleId() : 7);
+        user.setIsActive(registerRequest.getIsActive() != null ? registerRequest.getIsActive() : true);
 
-        // Set UserID
-        registerRequest.getLocation().setUserId(user.getUserId());
-        LocationResponseDto locationResponseDto = locationService.registerLocation(registerRequest.getLocation());
+        AuditUtil.insert(user);
+        // Insert để lấy được userId
+        userMapper.insert(user); // sau insert thì user.getUserId() mới có giá trị
+
+        // 4. Gán userId cho location request
+        LocationRequestDto locationRequest = registerRequest.getLocation();
+        locationRequest.setUserId(user.getUserId());
+
+        // 5. Gọi service để tạo location
+        LocationResponseDto locationResponseDto = locationService.registerLocation(locationRequest);
         if (locationResponseDto == null) {
             throw new AppException(ErrorCode.LOCATION_NOT_FOUND);
         }
 
+        // 6. Tìm masterLocation từ city
         String city = locationResponseDto.getCity();
         MasterLocation masterLocation = masterLocationMapper.findByOldName(city);
         if (masterLocation == null || masterLocation.getMasterLocationCode() == null) {
             throw new AppException(ErrorCode.LOCATION_NOT_FOUND);
         }
+
+        // 7. Cập nhật lại masterLocationCode vào user (vì trước đó chưa có)
         user.setMasterLocationCode(masterLocation.getMasterLocationCode());
+        AuditUtil.update(user);
+        userMapper.update(user); // cập nhật lại masterLocationCode cho user
 
-        AuditUtil.insert(user);
-
-        // Save to database
-        int resultInsert = userMapper.insert(user);
-        if (resultInsert != 1) {
-            throw new DataIntegrityViolationException("Insert user failed");
-        }
-
-        // Map to response
+        // 8. Trả response
         RegisterResponse response = new RegisterResponse();
         response.setUsername(user.getUsername());
         response.setPhoneNumber(user.getPhoneNumber());
         response.setHoVaTen(user.getHoVaTen());
         response.setMaSoThue(user.getMaSoThue());
-        response.setRoleId("USER"); //Default
-        response.setIsActive(true); //Default
+        response.setRoleId(user.getRoleId().toString());
+        response.setIsActive(user.getIsActive());
         response.setLocation(locationResponseDto);
 
         return response;
