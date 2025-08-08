@@ -20,6 +20,7 @@
     <!-- Lấy tất cả bản ghi -->
     <select id="findAll" resultMap="RoleResultMap">
         SELECT
+            -- SysUserRoleManagermentMapper.findAll
             id,
             role_name,
             description,

@@ -149,6 +149,13 @@ public class ApiConstants {
         private ApiSysRole() {}
     }
 
+    public static final class ApiMobileRole {
+        public static final String BASE = VERSION_V1 + "/mobile-role";
+        public static final String GET_ALL_ROLE = "/get-all-role";
+
+        private ApiMobileRole() {}
+    }
+
     public static final class ApiProfile {
         public static final String BASE = VERSION_V1 + "/profiles";
         public static final String UPDATE = "/edit";
