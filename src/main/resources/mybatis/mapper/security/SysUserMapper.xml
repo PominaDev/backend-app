@@ -110,7 +110,7 @@
                role_id
         FROM sys_user
         WHERE username = #{username}
-        AND phone_number = #{phoneNumber}
+        OR phone_number = #{phoneNumber}
         LIMIT 1
     </select>
 

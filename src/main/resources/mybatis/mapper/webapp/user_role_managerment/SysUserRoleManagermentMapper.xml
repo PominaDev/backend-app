@@ -19,18 +19,21 @@
 
     <!-- Lấy tất cả bản ghi -->
     <select id="findAll" resultMap="RoleResultMap">
-        SELECT id,
-               role_name,
-               description,
-               status,
-               noted,
-               created_at,
-               created_by,
-               updated_at,
-               updated_by,
-               is_deleted
+        SELECT
+            -- SysUserRoleManagermentMapper.findAll
+            id,
+            role_name,
+            description,
+            status,
+            noted,
+            created_at,
+            created_by,
+            updated_at,
+            updated_by,
+            is_deleted
         FROM sys_role
         WHERE is_deleted = false
+        AND (id = 6 OR id = 7)
     </select>
 
 </mapper>
