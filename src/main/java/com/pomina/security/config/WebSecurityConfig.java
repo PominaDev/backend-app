@@ -36,6 +36,7 @@ public class WebSecurityConfig {
             "/api/v1/auth/refresh-token",
             "/api/v1/auth/otp/send",
             "/api/v1/auth/otp/verify",
+            "/api/v1/user-role-management/get-all-role",
 
             // OPEN API
             "/v3/api-docs/**",
