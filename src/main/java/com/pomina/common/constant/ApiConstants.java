@@ -180,4 +180,25 @@ public class ApiConstants {
 
         private ApiMasterGroupUser() {}
     }
+
+    public static final class ApiStatisticsSysUerActiveByRole {
+        public static final String BASE = VERSION_V1 + "/statistics-sys-uer-active-by-role";
+        public static final String GET_ALL = "/all";
+
+        private ApiStatisticsSysUerActiveByRole() {}
+    }
+
+    public static final class ApiStatisticsSysUerActiveByMLocation {
+        public static final String BASE = VERSION_V1 + "/statistics-sys-uer-active-by-m-location";
+        public static final String GET_ALL = "/all";
+
+        private ApiStatisticsSysUerActiveByMLocation() {}
+    }
+
+    public static final class ApiStatisticsSysUerActiveByULocation {
+        public static final String BASE = VERSION_V1 + "/statistics-sys-uer-active-by-u-location";
+        public static final String GET_ALL = "/all";
+
+        private ApiStatisticsSysUerActiveByULocation() {}
+    }
 }
