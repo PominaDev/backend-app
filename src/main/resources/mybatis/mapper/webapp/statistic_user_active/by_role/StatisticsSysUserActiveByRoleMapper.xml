@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pomina.webapp.statistic_user_active.by_role.mapper.StatisticsSysUserActiveByRoleMapper">
+
+    <resultMap id="StatisticsSysUserActiveByRoleResultMap"
+               type="com.pomina.webapp.statistic_user_active.by_role.entity.StatisticsSysUserActiveByRole">
+        <result column="ten_vai_tro" property="tenVaiTro"/>
+        <result column="so_luong" property="soLuong"/>
+    </resultMap>
+
+    <select id="findAllUserActiveRole" resultMap="StatisticsSysUserActiveByRoleResultMap">
+        SELECT ten_vai_tro,
+               so_luong
+        FROM v_bi_statistics_sys_user_active_by_role
+    </select>
+
+</mapper>

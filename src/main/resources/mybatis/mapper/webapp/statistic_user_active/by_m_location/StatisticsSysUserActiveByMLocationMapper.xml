@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pomina.webapp.statistic_user_active.by_m_location.mapper.StatisticsSysUserActiveByMLocationMapper">
+
+    <resultMap id="StatisticsSysUserActiveByMLocationResultMap"
+               type="com.pomina.webapp.statistic_user_active.by_m_location.entity.StatisticsSysUserActiveByMLocation">
+        <result column="ma_khu_vuc" property="maKhuVuc"/>
+        <result column="ten_khu_vuc" property="tenKhuVuc"/>
+        <result column="so_luong" property="soLuong"/>
+    </resultMap>
+
+    <select id="findAllUserActiveMLocation" resultMap="StatisticsSysUserActiveByMLocationResultMap">
+        SELECT ma_khu_vuc,
+               ten_khu_vuc,
+               so_luong
+        FROM v_bi_statistics_sys_user_active_by_m_location
+    </select>
+
+</mapper>
