@@ -125,6 +125,7 @@ public class ApiConstants {
     public static final class ApiSysUserManagement {
         public static final String BASE = VERSION_V1 + "/user-management";
         public static final String GET_USER_ACTIVE_ROLE_WEB = "/get-user-active-role-web";
+        public static final String GET_USER_ACTIVE_ROLE_MOBILE = "/get-user-active-role-mobile";
         public static final String GET_USERS_PAGED = "/get-users-paged";
         public static final String GET_ALL_USERS = "/get-all-users";
         public static final String CREATE = "/create";
@@ -146,6 +147,13 @@ public class ApiConstants {
         public static final String GET_ALL_ROLE = "/get-all-role";
 
         private ApiSysRole() {}
+    }
+
+    public static final class ApiMobileRole {
+        public static final String BASE = VERSION_V1 + "/mobile-role";
+        public static final String GET_ALL_ROLE = "/get-all-role";
+
+        private ApiMobileRole() {}
     }
 
     public static final class ApiProfile {

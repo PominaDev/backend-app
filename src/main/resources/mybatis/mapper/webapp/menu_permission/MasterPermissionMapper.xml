@@ -92,6 +92,7 @@
                is_deleted
         FROM master_permission
         WHERE is_deleted = 0
+        ORDER BY master_permission_id DESC
     </select>
 
     <select id="findAllPaged" resultMap="MasterPermissionResultMap">
@@ -232,6 +233,7 @@
                 WHERE pms.sys_user_id = #{userId}
                   AND pms.is_deleted = false
                   AND mn.is_deleted = false
+                ORDER BY pms.master_menu_id ASC
             </when>
             <otherwise>
                 SELECT
@@ -246,6 +248,7 @@
                     mn.noted mn_noted
                 FROM master_menu mn
                 WHERE mn.is_deleted = false
+                ORDER BY mn.master_menu_id ASC
             </otherwise>
         </choose>
     </select>

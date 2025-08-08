@@ -19,4 +19,14 @@
         group by master_location_code, master_location_name
     </select>
 
+    <select id="findByOldName" resultMap="MasterLocationResultMap">
+        SELECT
+            -- MasterLocationMapper.findByOldName
+            master_location_code,
+            master_location_name
+        FROM master_location
+        WHERE is_deleted = false
+        LIMIT 1
+    </select>
+
 </mapper>

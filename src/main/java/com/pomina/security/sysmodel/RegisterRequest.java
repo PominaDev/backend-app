@@ -29,9 +29,7 @@ public class RegisterRequest {
     @Size(max = 20, message = "Tax code must not exceed 20 characters")
     private String maSoThue;
 
-    private Integer roleId = 6; // ROLE_USER
-
-    private Boolean isActive = true; // TRUE
+    private Integer roleId;
 
     // Register location
     private LocationRequestDto location;

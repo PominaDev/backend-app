@@ -20,6 +20,7 @@
     <!-- Lấy tất cả bản ghi -->
     <select id="findAll" resultMap="RoleResultMap">
         SELECT
+            -- SysUserRoleManagermentMapper.findAll
             id,
             role_name,
             description,
@@ -32,6 +33,7 @@
             is_deleted
         FROM sys_role
         WHERE is_deleted = false
+        AND (id = 6 OR id = 7)
     </select>
 
 </mapper>
