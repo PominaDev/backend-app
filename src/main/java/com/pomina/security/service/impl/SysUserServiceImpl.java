@@ -70,6 +70,7 @@ public class SysUserServiceImpl implements SysUserService {
         user.setHoVaTen(registerRequest.getHoVaTen());
         user.setMaSoThue(registerRequest.getMaSoThue());
         user.setRoleId(registerRequest.getRoleId() != null ? registerRequest.getRoleId() : 7);
+        user.setIsActive(true);
 
         AuditUtil.insert(user);
 
