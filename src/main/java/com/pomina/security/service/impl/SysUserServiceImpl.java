@@ -16,7 +16,6 @@ import com.pomina.security.sysmodel.RegisterResponse;
 import com.pomina.webapp.master_location_managerment.entity.MasterLocation;
 import com.pomina.webapp.master_location_managerment.mapper.MasterLocationMapper;
 import lombok.RequiredArgsConstructor;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -45,10 +44,10 @@ public class SysUserServiceImpl implements SysUserService {
     }
 
     @CustomDataSource(DataSourceType.MASTER)
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     @Override
     public RegisterResponse registerUser(RegisterRequest registerRequest) {
-        // 1. Kiểm tra user đã tồn tại chưa
+        // Kiểm tra user đã tồn tại chưa
         SysUser existingUser = userMapper.findByUserNameAndPhoneNumber(
                 registerRequest.getUsername(),
                 registerRequest.getPhoneNumber()
@@ -57,13 +56,13 @@ public class SysUserServiceImpl implements SysUserService {
             throw new AppException(ErrorCode.USER_EXISTED);
         }
 
-        // 2. Mã hóa password
+        // Mã hóa password
         String encodedPassword = passwordEncoder.encode(registerRequest.getPassword());
         if (encodedPassword == null || encodedPassword.isEmpty()) {
-            return null;
+            throw new AppException(ErrorCode.FAILED_ENCODED_PASSWORD);
         }
 
-        // 3. Tạo mới SysUser (chưa có location)
+        // Tạo mới SysUser (chưa có location)
         SysUser user = new SysUser();
         user.setUsername(registerRequest.getUsername());
         user.setPhoneNumber(registerRequest.getPhoneNumber());
@@ -71,44 +70,43 @@ public class SysUserServiceImpl implements SysUserService {
         user.setHoVaTen(registerRequest.getHoVaTen());
         user.setMaSoThue(registerRequest.getMaSoThue());
         user.setRoleId(registerRequest.getRoleId() != null ? registerRequest.getRoleId() : 7);
-        user.setIsActive(registerRequest.getIsActive() != null ? registerRequest.getIsActive() : true);
 
         AuditUtil.insert(user);
+
         // Insert để lấy được userId
         userMapper.insert(user); // sau insert thì user.getUserId() mới có giá trị
 
-        // 4. Gán userId cho location request
+        // Gán userId cho location request
         LocationRequestDto locationRequest = registerRequest.getLocation();
         locationRequest.setUserId(user.getUserId());
 
-        // 5. Gọi service để tạo location
+        // Gọi service để tạo location
         LocationResponseDto locationResponseDto = locationService.registerLocation(locationRequest);
         if (locationResponseDto == null) {
             throw new AppException(ErrorCode.LOCATION_NOT_FOUND);
         }
 
-        // 6. Tìm masterLocation từ city
+        // Tìm masterLocation từ city
         String city = locationResponseDto.getCity();
         MasterLocation masterLocation = masterLocationMapper.findByOldName(city);
         if (masterLocation == null || masterLocation.getMasterLocationCode() == null) {
             throw new AppException(ErrorCode.LOCATION_NOT_FOUND);
         }
 
-        // 7. Cập nhật lại masterLocationCode vào user (vì trước đó chưa có)
+        // Cập nhật lại masterLocationCode vào user (vì trước đó chưa có)
         user.setMasterLocationCode(masterLocation.getMasterLocationCode());
         AuditUtil.update(user);
         userMapper.update(user); // cập nhật lại masterLocationCode cho user
 
-        // 8. Trả response
-        RegisterResponse response = new RegisterResponse();
-        response.setUsername(user.getUsername());
-        response.setPhoneNumber(user.getPhoneNumber());
-        response.setHoVaTen(user.getHoVaTen());
-        response.setMaSoThue(user.getMaSoThue());
-        response.setRoleId(user.getRoleId().toString());
-        response.setIsActive(user.getIsActive());
-        response.setLocation(locationResponseDto);
-
-        return response;
+        // Trả response
+        return RegisterResponse.builder()
+                .username(user.getUsername())
+                .phoneNumber(user.getPhoneNumber())
+                .hoVaTen(user.getHoVaTen())
+                .maSoThue(user.getMaSoThue())
+                .roleId(user.getRoleId().toString())
+                .isActive(user.getIsActive())
+                .location(locationResponseDto)
+                .build();
     }
 }

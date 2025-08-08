@@ -48,6 +48,7 @@ public enum ErrorCode {
     ACTION_NOT_ALLOWED("1000", "Hành động không được phép"),
     FEATURE_NOT_AVAILABLE("1001", "Tính năng chưa khả dụng"),
     BAD_SQL("1001", "Sai câu lệnh sql"),
+    FAILED_ENCODED_PASSWORD("1000", "Lỗi mã hóa mật khẩu")
 
     ;
 

@@ -33,6 +33,7 @@
             is_deleted
         FROM sys_role
         WHERE is_deleted = false
+        AND (id = 6 OR id = 7)
     </select>
 
 </mapper>
