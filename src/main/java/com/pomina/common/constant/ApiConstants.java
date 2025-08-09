@@ -171,4 +171,19 @@ public class ApiConstants {
 
         private ApiMasterGroupUser() {}
     }
+
+    public static final class ApiUPolicyParent {
+        public static final String BASE = VERSION_V1 + "/u-policy-parents";
+        public static final String CREATE = "/create";
+        public static final String CREATE_LIST = "/create-list";
+        public static final String UPDATE = "/update/{id}";
+        public static final String UPDATE_LIST = "/update-list";
+        public static final String DELETE = "/delete/{id}";
+        public static final String DELETE_LIST = "/delete-list";
+        public static final String GET_BY_ID = "/{id}";
+        public static final String SEARCH = "/search";
+        public static final String GET_ALL = "/all";
+        public static final String GET_BY_CODE = "/get-by-code/{code}";
+        private ApiUPolicyParent() {}
+    }
 }

@@ -38,11 +38,13 @@ public enum ErrorCode {
     PRODUCT_NOT_FOUND("2000", "Không tìm thấy sản phẩm"),
     WARRANTY_NOT_FOUND("2000", "Không tìm thấy thông tin bảo hành"),
     USER_LOCATION_NOT_FOUND("2000", "Không tìm thấy vị trí người dùng"),
+    POLICY_PARENT_NOT_FOUND("2000", "Chính sách không tồn tại"),
 
     USER_EXISTED("2003", "Người dùng đã tồn tại"),
     PRODUCT_EXISTED("2000", "Sản phẩm đã tồn tại"),
     PRODUCT_ALREADY_ACTIVATED("2004", "Sản phẩm đã được kích hoạt"),
     OUT_OF_LOCATION("2005", "Không ở trong khu vực đã đăng ký"),
+    POLICY_PARENT_EXISTED("2006", "Chính sách đã tồn tại"),
 
     // ===== 1000 - Khác (tuỳ chọn mở rộng) =====
     ACTION_NOT_ALLOWED("1000", "Hành động không được phép"),

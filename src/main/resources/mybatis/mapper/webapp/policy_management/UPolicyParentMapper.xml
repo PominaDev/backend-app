@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.pomina.webapp.policy_management.mapper.UPolicyParentMapper">
+
+    <resultMap id="uPolicyParentResultMap"
+               type="com.pomina.webapp.policy_management.entity.UPolicyParent">
+
+        <id column="u_chinh_sach_parent_id" property="policyParentId"/>
+        <result column="u_chinh_sach_parent_type" property="policyParentType"/>
+        <result column="u_chinh_sach_parent_code" property="policyParentCode"/>
+        <result column="u_chinh_sach_parent_name" property="policyParentName"/>
+        <result column="user_id" property="userId"/>
+        <result column="master_group_user_code" property="masterGroupUserCode"/>
+        <result column="u_day_begin" property="uDayBegin"/>
+        <result column="u_day_end" property="uDayEnd"/>
+        <result column="u_status" property="uStatus"/>
+        <result column="u_description" property="uDescription"/>
+
+        <result column="status" property="status"/>
+        <result column="noted" property="note"/>
+        <result column="created_at" property="createdAt"/>
+        <result column="created_by" property="createdBy"/>
+        <result column="updated_at" property="updatedAt"/>
+        <result column="updated_by" property="updatedBy"/>
+        <result column="is_deleted" property="isDeleted"/>
+    </resultMap>
+
+    <select id="findById" resultMap="uPolicyParentResultMap">
+        SELECCT u_chinh_sach_parent_id
+             , u_chinh_sach_parent_type
+             , u_chinh_sach_parent_code
+             , u_chinh_sach_parent_name
+             , user_id
+             , master_group_user_code
+             , u_day_begin
+             , u_day_end
+             , u_status
+             , u_description
+        FROM u_chinh_sach_parent
+        WHERE u_chinh_sach_parent_id = #{id}
+          AND is_deleted = 0
+    </select>
+
+    <select id="findAll" resultMap="uPolicyParentResultMap">
+        SELECT u_chinh_sach_parent_id
+             , u_chinh_sach_parent_type
+             , u_chinh_sach_parent_code
+             , u_chinh_sach_parent_name
+             , user_id
+             , master_group_user_code
+             , u_day_begin
+             , u_day_end
+             , u_status
+             , u_description
+        FROM u_chinh_sach_parent
+        WHERE is_deleted = 0
+    </select>
+
+    <select id="findAllPaged" resultMap="uPolicyParentResultMap">
+        SELECCT u_chinh_sach_parent_id
+        , u_chinh_sach_parent_type
+        , u_chinh_sach_parent_code
+        , u_chinh_sach_parent_name
+        , user_id
+        , master_group_user_code
+        , u_day_begin
+        , u_day_end
+        , u_status
+        , u_description
+        FROM u_chinh_sach_parent
+        WHERE is_deleted = 0
+        <if test="paging != null and paging.orderByClause != null">
+            ORDER BY ${paging.orderByClause}
+        </if>
+        LIMIT #{limit} OFFSET #{offset}
+    </select>
+
+
+    <select id="findByPolicyParentCode" resultMap="uPolicyParentResultMap">
+        SELECT u_chinh_sach_parent_id
+             , u_chinh_sach_parent_type
+             , u_chinh_sach_parent_code
+             , u_chinh_sach_parent_name
+             , user_id
+             , master_group_user_code
+             , u_day_begin
+             , u_day_end
+             , u_status
+             , u_description
+        FROM u_chinh_sach_parent
+        WHERE is_deleted = 0
+        AND u_chinh_sach_parent_code = #{code}
+    </select>
+
+
+    <insert id="insert" useGeneratedKeys="true">
+
+    </insert>
+
+    <insert id="insertList" parameterType="java.util.List" useGeneratedKeys="true">
+
+    </insert>
+
+    <update id="update">
+
+    </update>
+
+    <update id="updateList" parameterType="java.util.List">
+
+    </update>
+
+    <delete id="deleteById">
+        DELETE
+        FROM u_chinh_sach_parent
+        WHERE u_chinh_sach_parent_id = #{id}
+    </delete>
+
+    <update id="softDeleteList">
+        <if test="list != null and list.size() > 0">
+            UPDATE u_chinh_sach_parent
+            SET is_deleted = 1
+            WHERE u_chinh_sach_parent_id IN
+            <foreach collection="list" item="id" open="(" separator="," close=")">
+                #{id}
+            </foreach>
+        </if>
+    </update>
+
+    <update id="softDeleteById">
+        UPDATE u_chinh_sach_parent
+        SET is_deleted = 1
+        WHERE u_chinh_sach_parent_id = #{id}
+    </update>
+
+    <select id="existsById">
+        SELECT EXISTS(SELECT 1
+                      FROM u_chinh_sach_parent
+                      WHERE u_chinh_sach_parent_id = #{id}
+                        AND is_deleted = 0)
+    </select>
+
+    <select id="countAll">
+        SELECT COUNT(u_chinh_sach_parent_id)
+        FROM u_chinh_sach_parent
+        WHERE is_deleted = 0
+    </select>
+</mapper>
