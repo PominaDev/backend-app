@@ -12,12 +12,15 @@ import com.pomina.webapp.policy_management.entity.UPolicyParent;
 import com.pomina.webapp.policy_management.mapper.UPolicyParentMapper;
 import com.pomina.webapp.policy_management.service.UPolicyParentService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class UPolicyParentServiceImpl implements UPolicyParentService {
@@ -37,6 +40,7 @@ public class UPolicyParentServiceImpl implements UPolicyParentService {
         }
     }
 
+    @Transactional
     @Override
     public int update(Integer id, UPolicyParentRequestDto dto) {
         try {
@@ -44,7 +48,7 @@ public class UPolicyParentServiceImpl implements UPolicyParentService {
             if (!uPolicyParentMapper.existsById(id)){
                 AuditUtil.insert(entity);
                 return uPolicyParentMapper.insert(entity);
-            }else{
+            }else {
                 AuditUtil.update(entity);
                 return uPolicyParentMapper.update(entity);
             }
@@ -94,64 +98,17 @@ public class UPolicyParentServiceImpl implements UPolicyParentService {
     }
 
     @Override
-    public Integer createListUPolicyParent(List<UPolicyParentRequestDto> dtoList) {
-        try {
-            var listEntity = uPolicyParentConverter.toEntityList(dtoList);
-            listEntity.forEach(uPolicyParent -> {
-                AuditUtil.insert(uPolicyParent);
-            });
-            return uPolicyParentMapper.insertList(listEntity);
-        } catch (Exception e) {
-            throw new RuntimeException("Lỗi thêm chính sách", e);
-        }
-    }
-
-    @Override
-    public Integer updateListUPolicyParent(List<UPolicyParentRequestDto> dtoList) {
-        try {
-            var listEntity = uPolicyParentConverter.toEntityList(dtoList);
-            var updateList = new ArrayList<UPolicyParent>();
-            var insertList = new ArrayList<UPolicyParent>();
-
-            for (UPolicyParent entity : listEntity) {
-                if (uPolicyParentMapper.existsById(entity.getPolicyParentId())) {
-                    updateList.add(entity);
-                } else {
-                    insertList.add(entity);
-                }
-            }
-            insertList.forEach(uPolicyParent -> {
-                AuditUtil.insert(uPolicyParent);
-            });
-            updateList.forEach(uPolicyParent -> {
-                AuditUtil.update(uPolicyParent);
-            });
-
-            Integer saveRows = 0;
-            for (UPolicyParent entity : updateList) {
-                saveRows += uPolicyParentMapper.update(entity);
-            }
-
-            return saveRows + uPolicyParentMapper.insertList(insertList);
-
-        } catch (Exception e) {
-            throw new RuntimeException("Lỗi cập nhật chính sách", e);
-        }
-    }
-
-    @Override
     public Integer softDeleteList(List<Integer> idList) {
         try {
             var deleteList = new ArrayList<UPolicyParent>();
             for (Integer id : idList) {
-                deleteList.add(uPolicyParentMapper.findById(id));
+                var deleteEntity = uPolicyParentMapper.findById(id);
+                AuditUtil.softDelete(deleteEntity, "");
+                deleteList.add(deleteEntity);
             }
             if (deleteList.isEmpty()) {
                 throw new RuntimeException("Không tìm thấy các chính sách cần xóa");
             }
-            deleteList.forEach(uPolicyParent -> {
-                AuditUtil.softDelete(uPolicyParent, "");
-            });
             return uPolicyParentMapper.softDeleteList(idList);
         } catch (Exception e) {
             throw new RuntimeException("Lỗi xóa chính sách", e);

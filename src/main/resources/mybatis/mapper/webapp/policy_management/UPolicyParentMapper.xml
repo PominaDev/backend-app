@@ -28,7 +28,9 @@
     </resultMap>
 
     <select id="findById" resultMap="uPolicyParentResultMap">
-        SELECCT u_chinh_sach_parent_id
+        SELECT
+            -- UPolicyParentMapper.findById
+            u_chinh_sach_parent_id
              , u_chinh_sach_parent_type
              , u_chinh_sach_parent_code
              , u_chinh_sach_parent_name
@@ -38,13 +40,22 @@
              , u_day_end
              , u_status
              , u_description
+             , status
+             , noted
+             , created_at
+             , created_by
+             , updated_at
+             , updated_by
+             , is_deleted
         FROM u_chinh_sach_parent
         WHERE u_chinh_sach_parent_id = #{id}
           AND is_deleted = 0
     </select>
 
     <select id="findAll" resultMap="uPolicyParentResultMap">
-        SELECT u_chinh_sach_parent_id
+        SELECT
+             -- UPolicyParentMapper.findAll
+            u_chinh_sach_parent_id
              , u_chinh_sach_parent_type
              , u_chinh_sach_parent_code
              , u_chinh_sach_parent_name
@@ -54,12 +65,21 @@
              , u_day_end
              , u_status
              , u_description
+             , status
+             , noted
+             , created_at
+             , created_by
+             , updated_at
+             , updated_by
+             , is_deleted
         FROM u_chinh_sach_parent
         WHERE is_deleted = 0
     </select>
 
     <select id="findAllPaged" resultMap="uPolicyParentResultMap">
-        SELECCT u_chinh_sach_parent_id
+        SELECT
+        -- UPolicyParentMapper.findAllPaged
+        u_chinh_sach_parent_id
         , u_chinh_sach_parent_type
         , u_chinh_sach_parent_code
         , u_chinh_sach_parent_name
@@ -69,6 +89,13 @@
         , u_day_end
         , u_status
         , u_description
+        , status
+        , noted
+        , created_at
+        , created_by
+        , updated_at
+        , updated_by
+        , is_deleted
         FROM u_chinh_sach_parent
         WHERE is_deleted = 0
         <if test="paging != null and paging.orderByClause != null">
@@ -79,7 +106,9 @@
 
 
     <select id="findByPolicyParentCode" resultMap="uPolicyParentResultMap">
-        SELECT u_chinh_sach_parent_id
+        SELECT
+             -- UPolicyParentMapper.findByPolicyParentCode
+            u_chinh_sach_parent_id
              , u_chinh_sach_parent_type
              , u_chinh_sach_parent_code
              , u_chinh_sach_parent_name
@@ -89,30 +118,123 @@
              , u_day_end
              , u_status
              , u_description
+             , status
+             , noted
+             , created_at
+             , created_by
+             , updated_at
+             , updated_by
+             , is_deleted
         FROM u_chinh_sach_parent
         WHERE is_deleted = 0
         AND u_chinh_sach_parent_code = #{code}
     </select>
 
-
     <insert id="insert" useGeneratedKeys="true">
-
-    </insert>
-
-    <insert id="insertList" parameterType="java.util.List" useGeneratedKeys="true">
-
+        INSERT INTO
+        -- UPolicyParentMapper.insert
+        u_chinh_sach_parent(
+         u_chinh_sach_parent_type,
+         u_chinh_sach_parent_code,
+         u_chinh_sach_parent_name,
+         user_id,
+         master_group_user_code,
+         u_day_begin,
+         u_day_end,
+         u_status,
+         u_description,
+         status,
+         noted,
+         created_at,
+         created_by,
+         updated_at,
+         updated_by,
+         is_deleted
+        )VALUES(
+            #{policyParentType},
+            #{policyParentCode},
+            #{policyParentName},
+            #{userId},
+            #{masterGroupUserCode},
+            #{uDayBegin},
+            #{uDayEnd},
+            #{uStatus},
+            #{uDescription},
+            #{status},
+            #{note},
+            #{createdAt},
+            #{createdBy},
+            #{updatedAt},
+            #{updatedBy},
+            #{isDeleted})
     </insert>
 
     <update id="update">
+        -- UPolicyParentMapper.insert
+        UPDATE u_chinh_sach_parent
+        <set>
+            <if test="policyParentType != null and policyParentType != ''">
+                , u_chinh_sach_parent_type = #{policyParentType}
+            </if>
 
-    </update>
+            <if test="policyParentCode != null and policyParentCode != ''">
+                , u_chinh_sach_parent_code = #{policyParentCode}
+            </if>
 
-    <update id="updateList" parameterType="java.util.List">
+            <if test="policyParentName != null and policyParentName != ''">
+                , u_chinh_sach_parent_name = #{policyParentName}
+            </if>
 
+            <if test="userId != null and userId != ''">
+                , user_id = #{userId}
+            </if>
+
+            <if test="masterGroupUserCode != null and masterGroupUserCode != ''">
+                , master_group_user_code = #{masterGroupUserCode}
+            </if>
+
+            <if test="uDayBegin != null">
+                , u_day_begin = #{uDayBegin}
+            </if>
+
+            <if test="uDayEnd != null">
+                , u_day_end = #{uDayEnd}
+            </if>
+
+            <if test="uStatus != null and uStatus != ''">
+                , u_status = #{uStatus}
+            </if>
+
+            <if test="uDescription != null and uDescription != ''">
+                , u_description = #{uDescription}
+            </if>
+
+            <if test="status != null and status != ''">
+               , status = #{status}
+            </if>
+
+            <if test="note != null and note != ''">
+               , noted = #{note}
+            </if>
+
+            <if test="updatedBy != null and updatedBy != ''">
+               , updated_by = #{updatedBy}
+            </if>
+
+            <if test="isDeleted != null">
+               , is_deleted = #{isDeleted}
+            </if>
+
+            , updated_at = NOW()
+
+        </set>
+        WHERE u_chinh_sach_parent_id = #{policyParentId}
+        AND is_deleted = 0
     </update>
 
     <delete id="deleteById">
         DELETE
+        -- UPolicyParentMapper.deleteById
         FROM u_chinh_sach_parent
         WHERE u_chinh_sach_parent_id = #{id}
     </delete>
@@ -120,6 +242,7 @@
     <update id="softDeleteList">
         <if test="list != null and list.size() > 0">
             UPDATE u_chinh_sach_parent
+            -- UPolicyParentMapper.softDeleteList
             SET is_deleted = 1
             WHERE u_chinh_sach_parent_id IN
             <foreach collection="list" item="id" open="(" separator="," close=")">
@@ -130,19 +253,24 @@
 
     <update id="softDeleteById">
         UPDATE u_chinh_sach_parent
+        -- UPolicyParentMapper.softDeleteById
         SET is_deleted = 1
         WHERE u_chinh_sach_parent_id = #{id}
     </update>
 
     <select id="existsById">
-        SELECT EXISTS(SELECT 1
-                      FROM u_chinh_sach_parent
-                      WHERE u_chinh_sach_parent_id = #{id}
-                        AND is_deleted = 0)
+        SELECT
+            -- UPolicyParentMapper.existsById
+           EXISTS(SELECT 1
+                  FROM u_chinh_sach_parent
+                  WHERE u_chinh_sach_parent_id = #{id}
+                  AND is_deleted = 0)
     </select>
 
     <select id="countAll">
-        SELECT COUNT(u_chinh_sach_parent_id)
+        SELECT
+            -- UPolicyParentMapper.countAll
+            COUNT(u_chinh_sach_parent_id)
         FROM u_chinh_sach_parent
         WHERE is_deleted = 0
     </select>

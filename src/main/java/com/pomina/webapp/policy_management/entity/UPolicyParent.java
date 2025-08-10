@@ -6,7 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -19,8 +19,8 @@ public class UPolicyParent extends BaseEntity {
     private String policyParentName;
     private Integer userId;
     private String masterGroupUserCode;
-    private Date uDayBegin;
-    private Date uDayEnd;
+    private LocalDateTime uDayBegin;
+    private LocalDateTime uDayEnd;
     private String uStatus;
     private String uDescription;
 }

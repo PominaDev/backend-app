@@ -1,18 +1,18 @@
 package com.pomina.webapp.policy_management.dto.request;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.PositiveOrZero;
 import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Getter
 @Setter
 public class UPolicyParentCreateDto {
-
-    private Integer policyParentId;
 
     @NotNull(message = "Policy parent type is mandatory")
     @Size(max = 50, message = "Policy parent type must not exceed 50 characters")
@@ -33,11 +33,13 @@ public class UPolicyParentCreateDto {
     @Size(max = 255, message = "Master group user name must not exceed 255 characters")
     private String masterGroupUserCode;
 
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
     @NotNull(message = "Day begin is mandatory")
-    private Date uDayBegin;
+    private LocalDateTime uDayBegin;
 
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
     @NotNull(message = "Day end is mandatory")
-    private Date uDayEnd;
+    private LocalDateTime uDayEnd;
 
     @NotNull(message = "uStatus is mandatory")
     @Size(max = 50, message = "uStatus must not exceed 50 characters")

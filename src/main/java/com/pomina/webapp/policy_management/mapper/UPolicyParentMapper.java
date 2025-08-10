@@ -11,8 +11,5 @@ import java.util.List;
 public interface UPolicyParentMapper extends BaseMapper<UPolicyParent> {
     List<UPolicyParent> findAll();
     List<UPolicyParent> findByPolicyParentCode(@Param("code")String code);
-    Integer insertList(@Param("list") List<UPolicyParent> uPolicyParents);
-    Integer updateList(@Param("list")List<UPolicyParent> uPolicyParents);
     Integer softDeleteList(@Param("list")List<Integer> listId);
-
 }

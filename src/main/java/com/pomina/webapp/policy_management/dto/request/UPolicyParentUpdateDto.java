@@ -1,9 +1,10 @@
 package com.pomina.webapp.policy_management.dto.request;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -14,8 +15,10 @@ public class UPolicyParentUpdateDto {
     private String policyParentName;
     private Integer userId;
     private String masterGroupUserCode;
-    private Date uDayBegin;
-    private Date uDayEnd;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
+    private LocalDateTime uDayBegin;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
+    private LocalDateTime uDayEnd;
     private String uStatus;
     private String uDescription;
 }

@@ -32,13 +32,6 @@ public class UPolicyParentController extends BaseController<UPolicyParentCreateD
         return ResponseHandler.success(uPolicyParentService.create(requestDto));
     }
 
-    @PutMapping(ApiConstants.ApiUPolicyParent.CREATE_LIST)
-    public ResponseEntity<ApiResponse<Integer>> createListUPolicyParent(@RequestBody List<UPolicyParentCreateDto> createDtoList) {
-        var requestDtoList = uPolicyParentConverter.fromCreateListToUPolicyParentRequestDtoList(createDtoList);
-        return ResponseHandler.success(uPolicyParentService.createListUPolicyParent(requestDtoList));
-    }
-
-
     @GetMapping(ApiConstants.ApiUPolicyParent.GET_ALL)
     public ResponseEntity<ApiResponse<List<UPolicyParentResponseDto>>> getByAll() {
         return ResponseHandler.success(uPolicyParentService.getAllUPolicyParent());
@@ -65,12 +58,6 @@ public class UPolicyParentController extends BaseController<UPolicyParentCreateD
     public ResponseEntity<ApiResponse<Integer>> update(@PathVariable("id")Integer id, @RequestBody UPolicyParentUpdateDto updateDto) {
         var requestDto = uPolicyParentConverter.toUPolicyParentRequestDto(updateDto);
         return ResponseHandler.success(uPolicyParentService.update(id, requestDto));
-    }
-
-    @PutMapping(ApiConstants.ApiUPolicyParent.UPDATE_LIST)
-    public ResponseEntity<ApiResponse<Integer>> updateListUPolicyParent(@RequestBody List<UPolicyParentUpdateDto> updateDtoList) {
-        var requestDtoList = uPolicyParentConverter.fromUpdateListToUPolicyParentDtoList(updateDtoList);
-        return ResponseHandler.success(uPolicyParentService.updateListUPolicyParent(requestDtoList));
     }
 
     @Override
