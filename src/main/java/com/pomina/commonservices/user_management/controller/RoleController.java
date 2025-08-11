@@ -24,6 +24,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @RestController
 @RequestMapping(ApiConstants.ApiRoleManager.BASE)
 @RequiredArgsConstructor
@@ -63,5 +65,10 @@ public class RoleController extends BaseController<RoleCreateDto, RoleUpdateDto,
     @DeleteMapping("/{id}")
     public ResponseEntity<ApiResponse<Integer>> delete(@PathVariable("id") Integer id) {
         return ResponseHandler.success(roleService.delete(id));
+    }
+
+    @GetMapping
+    public ResponseEntity<ApiResponse<List<RoleResponseDto>>> getAll() {
+        return ResponseHandler.success(roleService.getAll());
     }
 }

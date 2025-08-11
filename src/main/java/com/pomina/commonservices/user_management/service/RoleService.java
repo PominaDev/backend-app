@@ -4,5 +4,8 @@ import com.pomina.common.service.BaseService;
 import com.pomina.commonservices.user_management.dto.request.RoleRequestDto;
 import com.pomina.commonservices.user_management.dto.response.RoleResponseDto;
 
+import java.util.List;
+
 public interface RoleService extends BaseService<RoleRequestDto, RoleResponseDto, Integer> {
+    List<RoleResponseDto> getAll();
 }

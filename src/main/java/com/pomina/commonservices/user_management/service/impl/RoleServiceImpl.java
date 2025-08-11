@@ -72,4 +72,13 @@ public class RoleServiceImpl implements RoleService {
     public int delete(Integer id) {
         return roleMapper.deleteById(id);
     }
+
+    @Override
+    public List<RoleResponseDto> getAll() {
+        List<SysRole> roleList = roleMapper.findAll();
+        if (roleList != null) {
+            return roleConverter.toResponseList(roleList);
+        }
+        return null;
+    }
 }
