@@ -109,8 +109,7 @@
                description,
                role_id
         FROM sys_user
-        WHERE username = #{username}
-        OR phone_number = #{phoneNumber}
+        WHERE phone_number = #{phoneNumber}
         LIMIT 1
     </select>
 

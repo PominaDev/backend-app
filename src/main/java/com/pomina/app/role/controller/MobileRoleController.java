@@ -5,7 +5,6 @@ import com.pomina.app.role.service.Impl.MobileRoleServiceImpl;
 import com.pomina.common.constant.ApiConstants;
 import com.pomina.common.handler.ApiResponse;
 import com.pomina.common.handler.ResponseHandler;
-import com.pomina.commonservices.user_management.dto.custom_mapper.UserProfile;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;

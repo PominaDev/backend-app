@@ -49,7 +49,6 @@ public class SysUserServiceImpl implements SysUserService {
     public RegisterResponse registerUser(RegisterRequest registerRequest) {
         // Kiểm tra user đã tồn tại chưa
         SysUser existingUser = userMapper.findByUserNameAndPhoneNumber(
-                registerRequest.getUsername(),
                 registerRequest.getPhoneNumber()
         );
         if (existingUser != null) {
