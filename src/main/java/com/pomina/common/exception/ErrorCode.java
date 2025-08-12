@@ -20,6 +20,7 @@ public enum ErrorCode {
     INVALID_TOKEN("5000", "Token không hợp lệ"),
     VERIFICATION_FAILED("5000", "Xác minh thất bại"),
     OTP_EXPIRED("5000", "Mã OTP đã hết hạn"),
+    OTP_FAILED("5000", "Mã OTP không đúng"),
 
     // ===== 4000 - Dịch vụ bên ngoài =====
     LOCATION_NOT_FOUND("4000", "Không tìm thấy vị trí"),

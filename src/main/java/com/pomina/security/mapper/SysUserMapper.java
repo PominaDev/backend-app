@@ -10,8 +10,7 @@ public interface SysUserMapper {
 
     SysUser findByUserName(@Param("username") String username);
 
-    SysUser findByUserNameAndPhoneNumber(@Param("username") String username,
-                                         @Param("phoneNumber") String phoneNumber);
+    SysUser findByUserNameAndPhoneNumber(@Param("phoneNumber") String phoneNumber);
 
     SysUser findByUserId(@Param("userId") Integer userId);
 

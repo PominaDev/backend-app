@@ -10,25 +10,37 @@ spring:
       max-lifetime: 1800000
       connection-timeout: 30000
       validation-timeout: 5000
+      connection-test-query: select 1 from dual
+      data-source-properties:
+        cachePrepStmts: true
+        prepStmtCacheSize: 250
+        prepStmtCacheSqlLimit: 2048
+        useServerPrepStmts: true
+        useLocalSessionState: true
+        rewriteBatchedStatements: true
+        cacheResultSetMetadata: true
+        cacheServerConfiguration: true
+        elideSetAutoCommits: true
+        maintainTimeStats: false
 
     master:
-      url: jdbc:mariadb://54.221.149.89:3333/pomina_dev_db?useUnicode=true&characterEncoding=utf8mb4&serverTimezone=Asia/Ho_Chi_Minh
-      username: root
-      password: root123
+      url: ${MASTER_DB_URL}
+      username: ${MASTER_DB_USERNAME}
+      password: ${MASTER_DB_PASSWORD}
       driver-class-name: org.mariadb.jdbc.Driver
       type: com.zaxxer.hikari.HikariDataSource
 
     slave:
-      url: jdbc:mariadb://54.221.149.89:3333/pomina_dev_db?useUnicode=true&characterEncoding=utf8mb4&serverTimezone=Asia/Ho_Chi_Minh
-      username: root
-      password: root123
+      url: ${SLAVE_DB_URL}
+      username: ${SLAVE_DB_USERNAME}
+      password: ${SLAVE_DB_PASSWORD}
       driver-class-name: org.mariadb.jdbc.Driver
       type: com.zaxxer.hikari.HikariDataSource
 
   data:
     redis:
-      host: localhost
-      port: 6379
+      host: ${REDIS_HOST}
+      port: ${REDIS_PORT}
       timeout: 5000
       lettuce:
         pool:
@@ -39,12 +51,10 @@ spring:
 security:
   jwt:
     access-token-expiration: 900000      # 15 phút
-#    access-token-expiration: 30000      # 1 phút
     refresh-token-expiration: 1296000000   # 15 ngày
-    secret-key: oB1Zvsn1261tfh0msDaGCP63l+rYq15F/O+ksyqZWe4qWqHRwvvz5pHs3qgHBhYi
-
+    secret-key: ${JWT_SECRET_KEY}
   encryption:
-    secret: zQ4n7A4vFq2EKL+9cUYOLrp+U6NqFpqYcghwNXYc7dI=
+    secret: ${ENCRYPTION_SECRET_KEY}
 
 nominatim:
   email: minhnam1810@gmail.com
@@ -52,7 +62,7 @@ nominatim:
 
 google:
   maps:
-    api-key: AIzaSyDm-BhvvCnWOUKwQeLxRNSRcfesTssRIZI
+    api-key: ${GOOGLE_MAPS_API_KEY}
     geocoding-url: https://maps.googleapis.com/maps/api/geocode/json
 
 vonage:
