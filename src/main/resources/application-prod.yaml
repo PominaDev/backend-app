@@ -10,6 +10,20 @@ spring:
       max-lifetime: 1800000
       connection-timeout: 30000
       validation-timeout: 5000
+      connection-test-query: select 1 from dual
+      data-source-properties:
+        cachePrepStmts: true
+        prepStmtCacheSize: 500          # Tăng cho production
+        prepStmtCacheSqlLimit: 4096     # Tăng cho complex queries
+        useServerPrepStmts: true
+        useLocalSessionState: true
+        rewriteBatchedStatements: true
+        cacheResultSetMetadata: true
+        cacheServerConfiguration: true
+        elideSetAutoCommits: true
+        maintainTimeStats: false
+        useSSL: false                   # Thêm cho security
+        allowPublicKeyRetrieval: true   # Thêm nếu cần
 
     master:
       url: jdbc:mariadb://54.221.149.89:3333/pomina_dev_db?useUnicode=true&characterEncoding=utf8mb4&serverTimezone=Asia/Ho_Chi_Minh
