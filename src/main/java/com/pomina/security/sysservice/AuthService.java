@@ -289,7 +289,7 @@ public class AuthService {
                     .roleName(userPrincipal.getAuthorities().stream().map(GrantedAuthority::getAuthority).toList())
                     .build();
         } else {
-            throw new AppException(ErrorCode.VERIFICATION_FAILED);
+            throw new AppException(ErrorCode.OTP_FAILED);
         }
     }
 
