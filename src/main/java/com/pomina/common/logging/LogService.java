@@ -9,12 +9,17 @@ import org.springframework.stereotype.Service;
 public class LogService {
 
     @Async
-    public void logBusiness(String message) {
+    public void logBusiness(String message, String s) {
         log.info("[BUSINESS] {}", message);
     }
 
     @Async
     public void logAudit(String user, String action) {
         log.info("[AUDIT] User {} performed {}", user, action);
+    }
+
+    @Async
+    public void logConfig(String configType, String message) {
+        log.info("[ {} ] {}", configType, message);
     }
 }
