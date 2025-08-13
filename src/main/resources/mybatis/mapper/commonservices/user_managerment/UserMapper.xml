@@ -219,6 +219,7 @@
                  LEFT JOIN u_location u_lo ON u_lo.user_id = us.user_id
                  LEFT JOIN master_location ms_lo ON ms_lo.master_location_code = us.master_location_code
         WHERE us.user_id = #{userId}
+        LIMIT 1
     </select>
 
 </mapper>

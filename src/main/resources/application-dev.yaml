@@ -70,13 +70,6 @@ vonage:
     key: c53321d0
     secret: nGXfHZxjpoj0ZNip
 
-logging:
-  level:
-#    root: DEBUG
-#    org.springframework.web: INFO
-    org.mybatis: DEBUG
-#    jdbc.sqlonly: DEBUG
-
 management:
   endpoints:
     web:

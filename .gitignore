@@ -33,7 +33,7 @@ build/
 .vscode/
 
 ### Environment Settings ###
-.env
+#.env
 application-prod.yaml
 
 ### Log ###

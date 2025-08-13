@@ -36,7 +36,7 @@
     <logger name="jdbc.sqlonly" level="DEBUG"/>
     <logger name="jdbc.sqltiming" level="DEBUG"/>
 
-    <!-- log toàn bộ app bạn -->
+    <!-- log toàn bộ app -->
     <logger name="com.pomina" level="DEBUG"/>
 
     <root level="INFO">
