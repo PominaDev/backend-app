@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pomina.webapp.pricing_policy_management.mapper.ChinhSachParentMapper">
+
+
+    <resultMap id="ChinhSachParentResultMap" type="com.pomina.webapp.pricing_policy_management.entity.ChinhSachParent">
+        <!--    Base Result Map-->
+        <id property="uChinhSachParentId" column="u_chinh_sach_parent_id"/>
+        <result property="uChinhSachParentType" column="u_chinh_sach_parent_type"/>
+        <result property="uChinhSachParentCode" column="u_chinh_sach_parent_code"/>
+        <result property="uChinhSachParentName" column="u_chinh_sach_parent_name"/>
+        <result property="userId" column="user_id"/>
+        <result property="masterGroupUserCode" column="master_group_user_code"/>
+        <result property="uDayBegin" column="u_day_begin"/>
+        <result property="uDayEnd" column="u_day_end"/>
+        <result property="uStatus" column="u_status"/>
+        <result property="uDescription" column="u_description"/>
+        <result property="dateUpload" column="date_upload"/>
+        <result property="deptUpload" column="dept_upload"/>
+        <result property="userUpload" column="user_upload"/>
+        <result property="status" column="status"/>
+        <result property="note" column="noted"/>
+        <result property="createdAt" column="created_at"/>
+        <result property="createdBy" column="created_by"/>
+        <result property="updatedAt" column="updated_at"/>
+        <result property="updatedBy" column="updated_by"/>
+        <result property="isDeleted" column="is_deleted"/>
+    </resultMap>
+
+    <select id="findById" resultMap="ChinhSachParentResultMap">
+        /* FIND BY ID - u_chinh_sach_parent */
+        SELECT u_chinh_sach_parent_id,
+               u_chinh_sach_parent_type,
+               u_chinh_sach_parent_code,
+               u_chinh_sach_parent_name,
+               user_id,
+               master_group_user_code,
+               u_day_begin,
+               u_day_end,
+               u_status,
+               u_description,
+               date_upload,
+               dept_upload,
+               user_upload,
+               status,
+               noted,
+               created_at,
+               created_by,
+               updated_at,
+               updated_by,
+               is_deleted
+        FROM u_chinh_sach_parent
+        WHERE u_chinh_sach_parent_id = #{id}
+          AND is_deleted = 0
+    </select>
+
+    <select id="findAll" resultMap="ChinhSachParentResultMap">
+        /* FIND ALL - u_chinh_sach_parent */
+        SELECT u_chinh_sach_parent_id,
+               u_chinh_sach_parent_type,
+               u_chinh_sach_parent_code,
+               u_chinh_sach_parent_name,
+               user_id,
+               master_group_user_code,
+               u_day_begin,
+               u_day_end,
+               u_status,
+               u_description,
+               date_upload,
+               dept_upload,
+               user_upload,
+               status,
+               noted,
+               created_at,
+               created_by,
+               updated_at,
+               updated_by,
+               is_deleted
+        FROM u_chinh_sach_parent
+        WHERE is_deleted = 0
+    </select>
+
+    <select id="findAllPaged" resultMap="ChinhSachParentResultMap">
+        /* FIND ALL PAGED - u_chinh_sach_parent */
+        SELECT
+        u_chinh_sach_parent_id,
+        u_chinh_sach_parent_type,
+        u_chinh_sach_parent_code,
+        u_chinh_sach_parent_name,
+        user_id,
+        master_group_user_code,
+        u_day_begin,
+        u_day_end,
+        u_status,
+        u_description,
+        date_upload,
+        dept_upload,
+        user_upload,
+        status,
+        noted,
+        created_at,
+        created_by,
+        updated_at,
+        updated_by,
+        is_deleted
+        FROM u_chinh_sach_parent
+        WHERE is_deleted = b'0'
+        <if test="paging != null">
+            ORDER BY ${paging.orderByClause}
+        </if>
+        LIMIT #{limit} OFFSET #{offset}
+    </select>
+
+    <insert id="insert">
+        /* INSERT - u_chinh_sach_parent */
+        INSERT INTO u_chinh_sach_parent (u_chinh_sach_parent_type,
+                                         u_chinh_sach_parent_code,
+                                         u_chinh_sach_parent_name,
+                                         user_id,
+                                         master_group_user_code,
+                                         u_day_begin,
+                                         u_day_end,
+                                         u_status,
+                                         u_description,
+                                         date_upload,
+                                         dept_upload,
+                                         user_upload,
+                                         status,
+                                         noted,
+                                         created_at,
+                                         created_by,
+                                         updated_at,
+                                         updated_by,
+                                         is_deleted)
+        VALUES (#{uChinhSachParentType},
+                #{uChinhSachParentCode},
+                #{uChinhSachParentName},
+                #{userId},
+                #{masterGroupUserCode},
+                #{uDayBegin},
+                #{uDayEnd},
+                #{uStatus},
+                #{uDescription},
+                #{dateUpload},
+                #{deptUpload},
+                #{userUpload},
+                #{status},
+                #{note},
+                #{createdAt},
+                #{createdBy},
+                #{updatedAt},
+                #{updatedBy},
+                #{isDeleted})
+    </insert>
+
+    <update id="update">
+        /* UPDATE - u_chinh_sach_parent */
+        UPDATE u_chinh_sach_parent
+        SET u_chinh_sach_parent_type = #{uChinhSachParentType},
+            u_chinh_sach_parent_code = #{uChinhSachParentCode},
+            u_chinh_sach_parent_name = #{uChinhSachParentName},
+            user_id                  = #{userId},
+            master_group_user_code   = #{masterGroupUserCode},
+            u_day_begin              = #{uDayBegin},
+            u_day_end                = #{uDayEnd},
+            u_status                 = #{uStatus},
+            u_description            = #{uDescription},
+            date_upload              = #{dateUpload},
+            dept_upload              = #{deptUpload},
+            user_upload              = #{userUpload},
+            status                   = #{status},
+            noted                    = #{note},
+            created_at               = #{createdAt},
+            created_by               = #{createdBy},
+            updated_at               = #{updatedAt},
+            updated_by               = #{updatedBy}
+        WHERE u_chinh_sach_parent_id = #{uChinhSachParentId}
+          AND is_deleted = 0
+    </update>
+
+    <delete id="deleteById">
+        /* HARD DELETE - u_chinh_sach_parent */
+        DELETE
+        FROM u_chinh_sach_parent
+        WHERE u_chinh_sach_parent_id = #{id}
+    </delete>
+
+    <update id="softDeleteById">
+        /* SOFT DELETE - u_chinh_sach_parent */
+        UPDATE u_chinh_sach_parent
+        SET is_deleted = 1
+        WHERE u_chinh_sach_parent_id = #{id}
+    </update>
+
+    <select id="existsById" resultType="boolean">
+        /* EXISTS BY ID - u_chinh_sach_parent */
+        SELECT EXISTS(SELECT 1
+                      FROM u_chinh_sach_parent
+                      WHERE u_chinh_sach_parent_id = #{id}
+                        AND is_deleted = 0)
+    </select>
+
+    <select id="countAll" resultType="int">
+        /* COUNT ALL - u_chinh_sach_parent */
+        SELECT COUNT(u_chinh_sach_parent_id)
+        FROM u_chinh_sach_parent
+        WHERE is_deleted = 0
+    </select>
+
+
+</mapper>

@@ -1,4 +1,18 @@
 package com.pomina.webapp.pricing_policy_management.converter;
 
-public interface ChinhSachGiaBanChildConverter {
+import com.pomina.common.converter.BaseConverter;
+import com.pomina.webapp.pricing_policy_management.dto.request.ChinhSachGiaBanChildCreateDto;
+import com.pomina.webapp.pricing_policy_management.dto.request.ChinhSachGiaBanChildRequestDto;
+import com.pomina.webapp.pricing_policy_management.dto.request.ChinhSachGiaBanChildUpdateDto;
+import com.pomina.webapp.pricing_policy_management.dto.response.ChinhSachGiaBanChildResponseDto;
+import com.pomina.webapp.pricing_policy_management.entity.ChinhSachGiaBanChild;
+import org.mapstruct.Mapper;
+
+@Mapper(componentModel = "spring")
+public interface ChinhSachGiaBanChildConverter extends BaseConverter<ChinhSachGiaBanChildRequestDto, ChinhSachGiaBanChildResponseDto, ChinhSachGiaBanChild> {
+    // Mapping from createDto to RequestDto
+    ChinhSachGiaBanChildRequestDto toChinhSachGiaBanChildRequestDto(ChinhSachGiaBanChildCreateDto createDto);
+
+    // Mapping from updateDto to RequestDto
+    ChinhSachGiaBanChildRequestDto toChinhSachGiaBanChildRequestDto(ChinhSachGiaBanChildUpdateDto updateDto);
 }

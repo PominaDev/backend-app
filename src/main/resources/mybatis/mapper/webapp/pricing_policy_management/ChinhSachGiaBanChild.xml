@@ -1,0 +1,638 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pomina.webapp.pricing_policy_management.mapper.ChinhSachGiaBanChildMapper">
+
+    <resultMap id="ChinhSachGiaBanChildResultMap"
+               type="com.pomina.webapp.pricing_policy_management.entity.ChinhSachGiaBanChild">
+        <!--    Base Result Map-->
+        <id column="u_chinh_sach_gia_ban_child_id" property="uChinhSachGiaBanChildId"/>
+        <result column="u_chinh_sach_parent_id" property="uChinhSachParentId"/>
+        <result column="ten_san_pham" property="tenSanPham"/>
+        <result column="size" property="size"/>
+        <result column="gia_bang" property="giaBang"/>
+        <result column="ck_thanh_toan" property="ckThanhToan"/>
+        <result column="cs_trong_thang" property="csTrongThang"/>
+        <result column="ck_cs_1" property="ckCs1"/>
+        <result column="ck_cs_2" property="ckCs2"/>
+        <result column="ck_cs_3" property="ckCs3"/>
+        <result column="ck_cs_4" property="ckCs4"/>
+        <result column="ck_cs_5" property="ckCs5"/>
+        <result column="ck_cs_6" property="ckCs6"/>
+        <result column="ck_cs_7" property="ckCs7"/>
+        <result column="ck_cs_8" property="ckCs8"/>
+        <result column="ck_cs_9" property="ckCs9"/>
+        <result column="ck_cs_10" property="ckCs10"/>
+        <result column="l1_ck_mb" property="l1CkMb"/>
+        <result column="l1_ck_mc" property="l1CkMc"/>
+        <result column="l1_thanh_toan_truoc" property="l1ThanhToanTruoc"/>
+        <result column="l1_ho_tro_ty_trong" property="l1HoTroTyTrong"/>
+        <result column="l1_hcm" property="l1Hcm"/>
+        <result column="l1_mba" property="l1Mba"/>
+        <result column="l1_mdo" property="l1Mdo"/>
+        <result column="l1_mta" property="l1Mta"/>
+        <result column="l1_mtr" property="l1Mtr"/>
+        <result column="l1_tng" property="l1Tng"/>
+        <result column="l1_don_gia" property="l1DonGia"/>
+        <result column="l2_ck_mb" property="l2CkMb"/>
+        <result column="l2_ck_mc" property="l2CkMc"/>
+        <result column="l2_thanh_toan_truoc" property="l2ThanhToanTruoc"/>
+        <result column="l2_ho_tro_ty_trong" property="l2HoTroTyTrong"/>
+        <result column="l2_hcm" property="l2Hcm"/>
+        <result column="l2_mba" property="l2Mba"/>
+        <result column="l2_mdo" property="l2Mdo"/>
+        <result column="l2_mta" property="l2Mta"/>
+        <result column="l2_mtr" property="l2Mtr"/>
+        <result column="l2_tng" property="l2Tng"/>
+        <result column="l2_don_gia" property="l2DonGia"/>
+        <result column="l3_ck_mb" property="l3CkMb"/>
+        <result column="l3_ck_mc" property="l3CkMc"/>
+        <result column="l3_thanh_toan_truoc" property="l3ThanhToanTruoc"/>
+        <result column="l3_ho_tro_ty_trong" property="l3HoTroTyTrong"/>
+        <result column="l3_hcm" property="l3Hcm"/>
+        <result column="l3_mba" property="l3Mba"/>
+        <result column="l3_mdo" property="l3Mdo"/>
+        <result column="l3_mta" property="l3Mta"/>
+        <result column="l3_mtr" property="l3Mtr"/>
+        <result column="l3_tng" property="l3Tng"/>
+        <result column="l3_don_gia" property="l3DonGia"/>
+        <result column="l1a_ck_mb" property="l1aCkMb"/>
+        <result column="l1a_ck_mc" property="l1aCkMc"/>
+        <result column="l1a_thanh_toan_truoc" property="l1aThanhToanTruoc"/>
+        <result column="l1a_ho_tro_ty_trong" property="l1aHoTroTyTrong"/>
+        <result column="l1a_hcm" property="l1aHcm"/>
+        <result column="l1a_mba" property="l1aMba"/>
+        <result column="l1a_mdo" property="l1aMdo"/>
+        <result column="l1a_mta" property="l1aMta"/>
+        <result column="l1a_mtr" property="l1aMtr"/>
+        <result column="l1a_tng" property="l1aTng"/>
+        <result column="l1a_don_gia" property="l1aDonGia"/>
+        <result column="l1b_ck_mb" property="l1bCkMb"/>
+        <result column="l1b_ck_mc" property="l1bCkMc"/>
+        <result column="l1b_thanh_toan_truoc" property="l1bThanhToanTruoc"/>
+        <result column="l1b_ho_tro_ty_trong" property="l1bHoTroTyTrong"/>
+        <result column="l1b_hcm" property="l1bHcm"/>
+        <result column="l1b_mba" property="l1bMba"/>
+        <result column="l1b_mdo" property="l1bMdo"/>
+        <result column="l1b_mta" property="l1bMta"/>
+        <result column="l1b_mtr" property="l1bMtr"/>
+        <result column="l1b_tng" property="l1bTng"/>
+        <result column="l1b_don_gia" property="l1bDonGia"/>
+        <result column="gia_met" property="giaMet"/>
+        <result column="u_description" property="uDescription"/>
+        <result column="status" property="status"/>
+        <result column="noted" property="note"/>
+        <result column="created_at" property="createdAt"/>
+        <result column="created_by" property="createdBy"/>
+        <result column="updated_at" property="updatedAt"/>
+        <result column="updated_by" property="updatedBy"/>
+        <result column="is_deleted" property="isDeleted"/>
+    </resultMap>
+
+    <select id="findById" resultMap="ChinhSachGiaBanChildResultMap">
+        /* FIND BY ID - u_chinh_sach_gia_ban_child */
+        SELECT u_chinh_sach_gia_ban_child_id,
+               u_chinh_sach_parent_id,
+               ten_san_pham,
+               `size`,
+               gia_bang,
+               ck_thanh_toan,
+               cs_trong_thang,
+               ck_cs_1,
+               ck_cs_2,
+               ck_cs_3,
+               ck_cs_4,
+               ck_cs_5,
+               ck_cs_6,
+               ck_cs_7,
+               ck_cs_8,
+               ck_cs_9,
+               ck_cs_10,
+               l1_ck_mb,
+               l1_ck_mc,
+               l1_thanh_toan_truoc,
+               l1_ho_tro_ty_trong,
+               l1_hcm,
+               l1_mba,
+               l1_mdo,
+               l1_mta,
+               l1_mtr,
+               l1_tng,
+               l1_don_gia,
+               l2_ck_mb,
+               l2_ck_mc,
+               l2_thanh_toan_truoc,
+               l2_ho_tro_ty_trong,
+               l2_hcm,
+               l2_mba,
+               l2_mdo,
+               l2_mta,
+               l2_mtr,
+               l2_tng,
+               l2_don_gia,
+               l3_ck_mb,
+               l3_ck_mc,
+               l3_thanh_toan_truoc,
+               l3_ho_tro_ty_trong,
+               l3_hcm,
+               l3_mba,
+               l3_mdo,
+               l3_mta,
+               l3_mtr,
+               l3_tng,
+               l3_don_gia,
+               l1a_ck_mb,
+               l1a_ck_mc,
+               l1a_thanh_toan_truoc,
+               l1a_ho_tro_ty_trong,
+               l1a_hcm,
+               l1a_mba,
+               l1a_mdo,
+               l1a_mta,
+               l1a_mtr,
+               l1a_tng,
+               l1a_don_gia,
+               l1b_ck_mb,
+               l1b_ck_mc,
+               l1b_thanh_toan_truoc,
+               l1b_ho_tro_ty_trong,
+               l1b_hcm,
+               l1b_mba,
+               l1b_mdo,
+               l1b_mta,
+               l1b_mtr,
+               l1b_tng,
+               l1b_don_gia,
+               gia_met,
+               u_description,
+               status,
+               noted,
+               created_at,
+               created_by,
+               updated_at,
+               updated_by,
+               is_deleted
+        FROM u_chinh_sach_gia_ban_child
+        WHERE u_chinh_sach_gia_ban_child_id = #{id}
+          AND is_deleted = 0
+    </select>
+
+    <select id="findAll" resultMap="ChinhSachGiaBanChildResultMap">
+        /* FIND ALL - u_chinh_sach_gia_ban_child */
+        SELECT u_chinh_sach_gia_ban_child_id,
+               u_chinh_sach_parent_id,
+               ten_san_pham,
+               `size`,
+               gia_bang,
+               ck_thanh_toan,
+               cs_trong_thang,
+               ck_cs_1,
+               ck_cs_2,
+               ck_cs_3,
+               ck_cs_4,
+               ck_cs_5,
+               ck_cs_6,
+               ck_cs_7,
+               ck_cs_8,
+               ck_cs_9,
+               ck_cs_10,
+               l1_ck_mb,
+               l1_ck_mc,
+               l1_thanh_toan_truoc,
+               l1_ho_tro_ty_trong,
+               l1_hcm,
+               l1_mba,
+               l1_mdo,
+               l1_mta,
+               l1_mtr,
+               l1_tng,
+               l1_don_gia,
+               l2_ck_mb,
+               l2_ck_mc,
+               l2_thanh_toan_truoc,
+               l2_ho_tro_ty_trong,
+               l2_hcm,
+               l2_mba,
+               l2_mdo,
+               l2_mta,
+               l2_mtr,
+               l2_tng,
+               l2_don_gia,
+               l3_ck_mb,
+               l3_ck_mc,
+               l3_thanh_toan_truoc,
+               l3_ho_tro_ty_trong,
+               l3_hcm,
+               l3_mba,
+               l3_mdo,
+               l3_mta,
+               l3_mtr,
+               l3_tng,
+               l3_don_gia,
+               l1a_ck_mb,
+               l1a_ck_mc,
+               l1a_thanh_toan_truoc,
+               l1a_ho_tro_ty_trong,
+               l1a_hcm,
+               l1a_mba,
+               l1a_mdo,
+               l1a_mta,
+               l1a_mtr,
+               l1a_tng,
+               l1a_don_gia,
+               l1b_ck_mb,
+               l1b_ck_mc,
+               l1b_thanh_toan_truoc,
+               l1b_ho_tro_ty_trong,
+               l1b_hcm,
+               l1b_mba,
+               l1b_mdo,
+               l1b_mta,
+               l1b_mtr,
+               l1b_tng,
+               l1b_don_gia,
+               gia_met,
+               u_description,
+               status,
+               noted,
+               created_at,
+               created_by,
+               updated_at,
+               updated_by,
+               is_deleted
+        FROM u_chinh_sach_gia_ban_child
+        WHERE is_deleted = 0
+    </select>
+
+    <select id="findAllPaged" resultMap="ChinhSachGiaBanChildResultMap">
+        /* FIND ALL PAGED - u_chinh_sach_gia_ban_child */
+        SELECT
+        u_chinh_sach_gia_ban_child_id,
+        u_chinh_sach_parent_id,
+        ten_san_pham,
+        `size`,
+        gia_bang,
+        ck_thanh_toan,
+        cs_trong_thang,
+        ck_cs_1,
+        ck_cs_2,
+        ck_cs_3,
+        ck_cs_4,
+        ck_cs_5,
+        ck_cs_6,
+        ck_cs_7,
+        ck_cs_8,
+        ck_cs_9,
+        ck_cs_10,
+        l1_ck_mb,
+        l1_ck_mc,
+        l1_thanh_toan_truoc,
+        l1_ho_tro_ty_trong,
+        l1_hcm,
+        l1_mba,
+        l1_mdo,
+        l1_mta,
+        l1_mtr,
+        l1_tng,
+        l1_don_gia,
+        l2_ck_mb,
+        l2_ck_mc,
+        l2_thanh_toan_truoc,
+        l2_ho_tro_ty_trong,
+        l2_hcm,
+        l2_mba,
+        l2_mdo,
+        l2_mta,
+        l2_mtr,
+        l2_tng,
+        l2_don_gia,
+        l3_ck_mb,
+        l3_ck_mc,
+        l3_thanh_toan_truoc,
+        l3_ho_tro_ty_trong,
+        l3_hcm,
+        l3_mba,
+        l3_mdo,
+        l3_mta,
+        l3_mtr,
+        l3_tng,
+        l3_don_gia,
+        l1a_ck_mb,
+        l1a_ck_mc,
+        l1a_thanh_toan_truoc,
+        l1a_ho_tro_ty_trong,
+        l1a_hcm,
+        l1a_mba,
+        l1a_mdo,
+        l1a_mta,
+        l1a_mtr,
+        l1a_tng,
+        l1a_don_gia,
+        l1b_ck_mb,
+        l1b_ck_mc,
+        l1b_thanh_toan_truoc,
+        l1b_ho_tro_ty_trong,
+        l1b_hcm,
+        l1b_mba,
+        l1b_mdo,
+        l1b_mta,
+        l1b_mtr,
+        l1b_tng,
+        l1b_don_gia,
+        gia_met,
+        u_description,
+        status,
+        noted,
+        created_at,
+        created_by,
+        updated_at,
+        updated_by,
+        is_deleted
+        FROM u_chinh_sach_gia_ban_child
+        WHERE is_deleted = 0
+        <if test="paging != null">
+            ORDER BY ${paging.orderByClause}
+        </if>
+        LIMIT #{limit} OFFSET #{offset}
+    </select>
+
+    <insert id="insert">
+        /* INSERT - u_chinh_sach_gia_ban_child */
+        INSERT INTO u_chinh_sach_gia_ban_child (u_chinh_sach_parent_id,
+                                                ten_san_pham,
+                                                size,
+                                                gia_bang,
+                                                ck_thanh_toan,
+                                                cs_trong_thang,
+                                                ck_cs_1,
+                                                ck_cs_2,
+                                                ck_cs_3,
+                                                ck_cs_4,
+                                                ck_cs_5,
+                                                ck_cs_6,
+                                                ck_cs_7,
+                                                ck_cs_8,
+                                                ck_cs_9,
+                                                ck_cs_10,
+                                                l1_ck_mb,
+                                                l1_ck_mc,
+                                                l1_thanh_toan_truoc,
+                                                l1_ho_tro_ty_trong,
+                                                l1_hcm,
+                                                l1_mba,
+                                                l1_mdo,
+                                                l1_mta,
+                                                l1_mtr,
+                                                l1_tng,
+                                                l1_don_gia,
+                                                l2_ck_mb,
+                                                l2_ck_mc,
+                                                l2_thanh_toan_truoc,
+                                                l2_ho_tro_ty_trong,
+                                                l2_hcm,
+                                                l2_mba,
+                                                l2_mdo,
+                                                l2_mta,
+                                                l2_mtr,
+                                                l2_tng,
+                                                l2_don_gia,
+                                                l3_ck_mb,
+                                                l3_ck_mc,
+                                                l3_thanh_toan_truoc,
+                                                l3_ho_tro_ty_trong,
+                                                l3_hcm,
+                                                l3_mba,
+                                                l3_mdo,
+                                                l3_mta,
+                                                l3_mtr,
+                                                l3_tng,
+                                                l3_don_gia,
+                                                l1a_ck_mb,
+                                                l1a_ck_mc,
+                                                l1a_thanh_toan_truoc,
+                                                l1a_ho_tro_ty_trong,
+                                                l1a_hcm,
+                                                l1a_mba,
+                                                l1a_mdo,
+                                                l1a_mta,
+                                                l1a_mtr,
+                                                l1a_tng,
+                                                l1a_don_gia,
+                                                l1b_ck_mb,
+                                                l1b_ck_mc,
+                                                l1b_thanh_toan_truoc,
+                                                l1b_ho_tro_ty_trong,
+                                                l1b_hcm,
+                                                l1b_mba,
+                                                l1b_mdo,
+                                                l1b_mta,
+                                                l1b_mtr,
+                                                l1b_tng,
+                                                l1b_don_gia,
+                                                gia_met,
+                                                u_description,
+                                                status,
+                                                noted,
+                                                created_at,
+                                                created_by,
+                                                updated_at,
+                                                updated_by,
+                                                is_deleted)
+        VALUES (#{uChinhSachParentId},
+                #{tenSanPham},
+                #{size},
+                #{giaBang},
+                #{ckThanhToan},
+                #{csTrongThang},
+                #{ckCs1},
+                #{ckCs2},
+                #{ckCs3},
+                #{ckCs4},
+                #{ckCs5},
+                #{ckCs6},
+                #{ckCs7},
+                #{ckCs8},
+                #{ckCs9},
+                #{ckCs10},
+                #{l1CkMb},
+                #{l1CkMc},
+                #{l1ThanhToanTruoc},
+                #{l1HoTroTyTrong},
+                #{l1Hcm},
+                #{l1Mba},
+                #{l1Mdo},
+                #{l1Mta},
+                #{l1Mtr},
+                #{l1Tng},
+                #{l1DonGia},
+                #{l2CkMb},
+                #{l2CkMc},
+                #{l2ThanhToanTruoc},
+                #{l2HoTroTyTrong},
+                #{l2Hcm},
+                #{l2Mba},
+                #{l2Mdo},
+                #{l2Mta},
+                #{l2Mtr},
+                #{l2Tng},
+                #{l2DonGia},
+                #{l3CkMb},
+                #{l3CkMc},
+                #{l3ThanhToanTruoc},
+                #{l3HoTroTyTrong},
+                #{l3Hcm},
+                #{l3Mba},
+                #{l3Mdo},
+                #{l3Mta},
+                #{l3Mtr},
+                #{l3Tng},
+                #{l3DonGia},
+                #{l1aCkMb},
+                #{l1aCkMc},
+                #{l1aThanhToanTruoc},
+                #{l1aHoTroTyTrong},
+                #{l1aHcm},
+                #{l1aMba},
+                #{l1aMdo},
+                #{l1aMta},
+                #{l1aMtr},
+                #{l1aTng},
+                #{l1aDonGia},
+                #{l1bCkMb},
+                #{l1bCkMc},
+                #{l1bThanhToanTruoc},
+                #{l1bHoTroTyTrong},
+                #{l1bHcm},
+                #{l1bMba},
+                #{l1bMdo},
+                #{l1bMta},
+                #{l1bMtr},
+                #{l1bTng},
+                #{l1bDonGia},
+                #{giaMet},
+                #{uDescription},
+                #{status},
+                #{noted},
+                #{createdAt},
+                #{createdBy},
+                #{updatedAt},
+                #{updatedBy},
+                #{isDeleted})
+    </insert>
+
+    <update id="update">
+        /* UPDATE - u_chinh_sach_gia_ban_child */
+        UPDATE u_chinh_sach_gia_ban_child
+        SET u_chinh_sach_parent_id = #{uChinhSachParentId},
+            ten_san_pham           = #{tenSanPham},
+            size                   = #{size},
+            gia_bang               = #{giaBang},
+            ck_thanh_toan          = #{ckThanhToan},
+            cs_trong_thang         = #{csTrongThang},
+            ck_cs_1                = #{ckCs1},
+            ck_cs_2                = #{ckCs2},
+            ck_cs_3                = #{ckCs3},
+            ck_cs_4                = #{ckCs4},
+            ck_cs_5                = #{ckCs5},
+            ck_cs_6                = #{ckCs6},
+            ck_cs_7                = #{ckCs7},
+            ck_cs_8                = #{ckCs8},
+            ck_cs_9                = #{ckCs9},
+            ck_cs_10               = #{ckCs10},
+            l1_ck_mb               = #{l1CkMb},
+            l1_ck_mc               = #{l1CkMc},
+            l1_thanh_toan_truoc    = #{l1ThanhToanTruoc},
+            l1_ho_tro_ty_trong     = #{l1HoTroTyTrong},
+            l1_hcm                 = #{l1Hcm},
+            l1_mba                 = #{l1Mba},
+            l1_mdo                 = #{l1Mdo},
+            l1_mta                 = #{l1Mta},
+            l1_mtr                 = #{l1Mtr},
+            l1_tng                 = #{l1Tng},
+            l1_don_gia             = #{l1DonGia},
+            l2_ck_mb               = #{l2CkMb},
+            l2_ck_mc               = #{l2CkMc},
+            l2_thanh_toan_truoc    = #{l2ThanhToanTruoc},
+            l2_ho_tro_ty_trong     = #{l2HoTroTyTrong},
+            l2_hcm                 = #{l2Hcm},
+            l2_mba                 = #{l2Mba},
+            l2_mdo                 = #{l2Mdo},
+            l2_mta                 = #{l2Mta},
+            l2_mtr                 = #{l2Mtr},
+            l2_tng                 = #{l2Tng},
+            l2_don_gia             = #{l2DonGia},
+            l3_ck_mb               = #{l3CkMb},
+            l3_ck_mc               = #{l3CkMc},
+            l3_thanh_toan_truoc    = #{l3ThanhToanTruoc},
+            l3_ho_tro_ty_trong     = #{l3HoTroTyTrong},
+            l3_hcm                 = #{l3Hcm},
+            l3_mba                 = #{l3Mba},
+            l3_mdo                 = #{l3Mdo},
+            l3_mta                 = #{l3Mta},
+            l3_mtr                 = #{l3Mtr},
+            l3_tng                 = #{l3Tng},
+            l3_don_gia             = #{l3DonGia},
+            l1a_ck_mb              = #{l1aCkMb},
+            l1a_ck_mc              = #{l1aCkMc},
+            l1a_thanh_toan_truoc   = #{l1aThanhToanTruoc},
+            l1a_ho_tro_ty_trong    = #{l1aHoTroTyTrong},
+            l1a_hcm                = #{l1aHcm},
+            l1a_mba                = #{l1aMba},
+            l1a_mdo                = #{l1aMdo},
+            l1a_mta                = #{l1aMta},
+            l1a_mtr                = #{l1aMtr},
+            l1a_tng                = #{l1aTng},
+            l1a_don_gia            = #{l1aDonGia},
+            l1b_ck_mb              = #{l1bCkMb},
+            l1b_ck_mc              = #{l1bCkMc},
+            l1b_thanh_toan_truoc   = #{l1bThanhToanTruoc},
+            l1b_ho_tro_ty_trong    = #{l1bHoTroTyTrong},
+            l1b_hcm                = #{l1bHcm},
+            l1b_mba                = #{l1bMba},
+            l1b_mdo                = #{l1bMdo},
+            l1b_mta                = #{l1bMta},
+            l1b_mtr                = #{l1bMtr},
+            l1b_tng                = #{l1bTng},
+            l1b_don_gia            = #{l1bDonGia},
+            gia_met                = #{giaMet},
+            u_description          = #{uDescription},
+            status                 = #{status},
+            noted                  = #{note},
+            created_at             = #{createdAt},
+            created_by             = #{createdBy},
+            updated_at             = #{updatedAt},
+            updated_by             = #{updatedBy}
+        WHERE u_chinh_sach_gia_ban_child_id = #{uChinhSachGiaBanChildId}
+          AND is_deleted = 0
+    </update>
+
+    <delete id="deleteById">
+        /* HARD DELETE - u_chinh_sach_gia_ban_child */
+        DELETE
+        FROM u_chinh_sach_gia_ban_child
+        WHERE u_chinh_sach_gia_ban_child_id = #{id}
+    </delete>
+
+    <update id="softDeleteById">
+        /* SOFT DELETE - u_chinh_sach_gia_ban_child */
+        UPDATE u_chinh_sach_gia_ban_child
+        SET is_deleted = 1
+        WHERE u_chinh_sach_gia_ban_child_id = #{id}
+    </update>
+
+    <select id="existsById" resultType="boolean">
+        /* EXISTS BY ID - u_chinh_sach_gia_ban_child */
+        SELECT EXISTS(SELECT 1
+                      FROM u_chinh_sach_gia_ban_child
+                      WHERE u_chinh_sach_gia_ban_child_id = #{id}
+                        AND is_deleted = 0)
+    </select>
+
+    <select id="countAll" resultType="int">
+        /* COUNT ALL - u_chinh_sach_gia_ban_child */
+        SELECT COUNT(u_chinh_sach_gia_ban_child_id)
+        FROM u_chinh_sach_gia_ban_child
+        WHERE is_deleted = 0
+    </select>
+
+
+</mapper>
