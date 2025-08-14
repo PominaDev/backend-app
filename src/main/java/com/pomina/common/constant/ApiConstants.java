@@ -201,4 +201,11 @@ public class ApiConstants {
 
         private ApiStatisticsSysUerActiveByULocation() {}
     }
+
+    public static final class ApiPricingPolicyManagement {
+        public static final String BASE = VERSION_V1 + "/pricing-policies";
+        public static final String IMPORT_LIST = "/import";
+
+        private ApiPricingPolicyManagement() {}
+    }
 }

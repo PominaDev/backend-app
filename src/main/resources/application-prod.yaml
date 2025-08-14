@@ -4,6 +4,7 @@ server:
 spring:
   datasource:
     hikari:
+      auto-commit: false
       maximum-pool-size: 30
       minimum-idle: 10
       idle-timeout: 30000

@@ -111,7 +111,7 @@
         LIMIT #{limit} OFFSET #{offset}
     </select>
 
-    <insert id="insert">
+    <insert id="insert" useGeneratedKeys="true" keyProperty="uChinhSachParentId">
         /* INSERT - u_chinh_sach_parent */
         INSERT INTO u_chinh_sach_parent (u_chinh_sach_parent_type,
                                          u_chinh_sach_parent_code,
@@ -207,5 +207,51 @@
         WHERE is_deleted = 0
     </select>
 
+    <insert id="batchInsert">
+        /* INSERT BATCH - u_chinh_sach_parent */
+        INSERT INTO u_chinh_sach_parent (
+        u_chinh_sach_parent_type,
+        u_chinh_sach_parent_code,
+        u_chinh_sach_parent_name,
+        user_id,
+        master_group_user_code,
+        u_day_begin,
+        u_day_end,
+        u_status,
+        u_description,
+        date_upload,
+        dept_upload,
+        user_upload,
+        status,
+        noted,
+        created_at,
+        created_by,
+        updated_at,
+        updated_by,
+        is_deleted
+        )
+        VALUES
+        <foreach collection="list" item="e" separator=",">
+            (#{e.uChinhSachParentType},
+            #{e.uChinhSachParentCode},
+            #{e.uChinhSachParentName},
+            #{e.userId},
+            #{e.masterGroupUserCode},
+            #{e.uDayBegin},
+            #{e.uDayEnd},
+            #{e.uStatus},
+            #{e.uDescription},
+            #{e.dateUpload},
+            #{e.deptUpload},
+            #{e.userUpload},
+            #{e.status},
+            #{e.note},
+            #{e.createdAt},
+            #{e.createdBy},
+            #{e.updatedAt},
+            #{e.updatedBy},
+            #{e.isDeleted})
+        </foreach>
+    </insert>
 
 </mapper>

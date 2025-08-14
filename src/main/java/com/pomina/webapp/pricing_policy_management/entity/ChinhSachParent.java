@@ -2,6 +2,7 @@ package com.pomina.webapp.pricing_policy_management.entity;
 
 import com.pomina.common.model.BaseEntity;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -12,6 +13,7 @@ import java.time.LocalDateTime;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class ChinhSachParent extends BaseEntity {
     private Integer uChinhSachParentId;
     private String uChinhSachParentType;
@@ -23,7 +25,6 @@ public class ChinhSachParent extends BaseEntity {
     private LocalDateTime uDayEnd;
     private String uStatus;
     private String uDescription;
-    private String status;
     private LocalDateTime dateUpload;
     private String deptUpload;
     private String userUpload;
