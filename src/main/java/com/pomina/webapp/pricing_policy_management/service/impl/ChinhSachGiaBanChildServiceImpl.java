@@ -62,4 +62,27 @@ public class ChinhSachGiaBanChildServiceImpl implements ChinhSachGiaBanChildServ
     public int delete(Integer id) {
         return chinhSachGiaBanChildMapper.softDeleteById(id);
     }
+
+    @Override
+    public PageResponse<ChinhSachGiaBanChildResponseDto> getByUChinhSachParentId(PageRequest pageRequest, int uChinhSachParentId) {
+        List<ChinhSachGiaBanChild> chinhSachGiaBanChildList = chinhSachGiaBanChildMapper.findByUChinhSachParentId(
+                pageRequest.getOffset(),
+                pageRequest.getSize(),
+                pageRequest,
+                uChinhSachParentId);
+        if (chinhSachGiaBanChildList == null || chinhSachGiaBanChildList.isEmpty()) {
+            return PageResponse.empty(
+                    pageRequest.getPage(),
+                    pageRequest.getSize());
+        }
+        List<ChinhSachGiaBanChildResponseDto> chinhSachGiaBanChildResponse = chinhSachGiaBanChildConverter.toResponseList(chinhSachGiaBanChildList);
+
+        int totalElements = chinhSachGiaBanChildMapper.countFindByUChinhSachParentId(uChinhSachParentId);
+
+        return PageResponse.createPaged(
+                chinhSachGiaBanChildResponse,
+                pageRequest.getPage(),
+                pageRequest.getSize(),
+                totalElements);
+    }
 }

@@ -805,4 +805,100 @@
         </foreach>
     </insert>
 
+    <select id="findByUChinhSachParentId" resultMap="ChinhSachGiaBanChildResultMap">
+        /* SELECT BY UChinhSachParentId - u_chinh_sach_gia_ban_child */
+        SELECT u_chinh_sach_gia_ban_child_id,
+               u_chinh_sach_parent_id,
+               ten_san_pham,
+               `size`,
+               gia_bang,
+               ck_thanh_toan,
+               cs_trong_thang,
+               ck_cs_1,
+               ck_cs_2,
+               ck_cs_3,
+               ck_cs_4,
+               ck_cs_5,
+               ck_cs_6,
+               ck_cs_7,
+               ck_cs_8,
+               ck_cs_9,
+               ck_cs_10,
+               l1_ck_mb,
+               l1_ck_mc,
+               l1_thanh_toan_truoc,
+               l1_ho_tro_ty_trong,
+               l1_hcm,
+               l1_mba,
+               l1_mdo,
+               l1_mta,
+               l1_mtr,
+               l1_tng,
+               l1_don_gia,
+               l2_ck_mb,
+               l2_ck_mc,
+               l2_thanh_toan_truoc,
+               l2_ho_tro_ty_trong,
+               l2_hcm,
+               l2_mba,
+               l2_mdo,
+               l2_mta,
+               l2_mtr,
+               l2_tng,
+               l2_don_gia,
+               l3_ck_mb,
+               l3_ck_mc,
+               l3_thanh_toan_truoc,
+               l3_ho_tro_ty_trong,
+               l3_hcm,
+               l3_mba,
+               l3_mdo,
+               l3_mta,
+               l3_mtr,
+               l3_tng,
+               l3_don_gia,
+               l1a_ck_mb,
+               l1a_ck_mc,
+               l1a_thanh_toan_truoc,
+               l1a_ho_tro_ty_trong,
+               l1a_hcm,
+               l1a_mba,
+               l1a_mdo,
+               l1a_mta,
+               l1a_mtr,
+               l1a_tng,
+               l1a_don_gia,
+               l1b_ck_mb,
+               l1b_ck_mc,
+               l1b_thanh_toan_truoc,
+               l1b_ho_tro_ty_trong,
+               l1b_hcm,
+               l1b_mba,
+               l1b_mdo,
+               l1b_mta,
+               l1b_mtr,
+               l1b_tng,
+               l1b_don_gia,
+               gia_met,
+               u_description,
+               status,
+               noted,
+               created_at,
+               created_by,
+               updated_at,
+               updated_by,
+               is_deleted
+        FROM u_chinh_sach_gia_ban_child
+        WHERE u_chinh_sach_parent_id = #{uChinhSachParentId}
+          AND is_deleted = 0
+    </select>
+
+    <select id="countFindByUChinhSachParentId">
+        /* COUNT Find BY UChinhSachParentId - u_chinh_sach_gia_ban_child */
+        SELECT COUNT(u_chinh_sach_gia_ban_child_id)
+        FROM u_chinh_sach_gia_ban_child
+        WHERE u_chinh_sach_parent_id = #{uChinhSachParentId}
+          AND is_deleted = 0
+    </select>
+
 </mapper>
