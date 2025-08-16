@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pomina.app.category.mapper.VCategoryMapper">
+
+    <resultMap id="ViewCategoriesResultMap"
+               type="com.pomina.app.category.dto.custom_mapper.CategoryItem">
+        <result property="nameGroup" column="name_group"/>
+        <result property="idOrderType" column="id_order_type"/>
+        <result property="nameType" column="name_type"/>
+    </resultMap>
+
+    <select id="findAllViewCategories" resultMap="ViewCategoriesResultMap">
+        SELECT name_group, id_order_type, name_type
+        FROM v_category_loai_ton
+        UNION ALL
+        SELECT name_group, id_order_type, name_type
+        FROM v_category_do_ma
+        UNION ALL
+        SELECT name_group, id_order_type, name_type
+        FROM v_category_mac_thep
+        UNION ALL
+        SELECT name_group, id_order_type, name_type
+        FROM v_category_mau_sac
+        UNION ALL
+        SELECT name_group, id_order_type, name_type
+        FROM v_category_loai_hang
+        LIMIT #{limit} OFFSET #{offset}
+    </select>
+
+    <select id="countFindAllViewCategories">
+        SELECT COUNT(*)
+        FROM (SELECT name_group, id_order_type, name_type
+              FROM v_category_loai_ton
+              UNION ALL
+              SELECT name_group, id_order_type, name_type
+              FROM v_category_do_ma
+              UNION ALL
+              SELECT name_group, id_order_type, name_type
+              FROM v_category_mac_thep
+              UNION ALL
+              SELECT name_group, id_order_type, name_type
+              FROM v_category_mau_sac
+              UNION ALL
+              SELECT name_group, id_order_type, name_type
+              FROM v_category_loai_hang) AS count_all_categories
+    </select>
+</mapper>
