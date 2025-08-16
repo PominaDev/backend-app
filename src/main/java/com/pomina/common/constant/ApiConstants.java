@@ -215,4 +215,11 @@ public class ApiConstants {
 
         private ApiPricingPolicyManagement() {}
     }
+
+    // APP
+    public static final class ApiCategory {
+        public static final String BASE = VERSION_V1 + "/categories";
+
+        private ApiCategory() {}
+    }
 }
