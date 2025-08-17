@@ -5,8 +5,6 @@ import com.pomina.app.category.dto.response.CategoryResponseDto;
 import com.pomina.app.category.enums.CategoryEnum;
 import com.pomina.app.category.mapper.VCategoryMapper;
 import com.pomina.app.category.service.CategoryService;
-import com.pomina.common.exception.AppException;
-import com.pomina.common.exception.ErrorCode;
 import com.pomina.common.model.PageRequest;
 import com.pomina.common.model.PageResponse;
 import lombok.RequiredArgsConstructor;
@@ -33,7 +31,7 @@ public class CategoryServiceImpl implements CategoryService {
         );
 
         if (categoriesList == null || categoriesList.isEmpty()) {
-            throw new AppException(ErrorCode.INTERNAL_ERROR);
+            return null;
         }
 
         // Group các CategoryItem theo nameGroup
