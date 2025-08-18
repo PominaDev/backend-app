@@ -26,7 +26,7 @@ import javax.sql.DataSource;
         "com.pomina.webapp.statistic_user_active.by_m_location.mapper",
         "com.pomina.webapp.statistic_user_active.by_u_location.mapper",
         "com.pomina.webapp.pricing_policy_management.mapper",
-        "com.pomina.app.category.mapper",
+        "com.pomina.commonservices.category.mapper",
 })
 public class MybatisConfig {
 

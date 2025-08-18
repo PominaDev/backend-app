@@ -1,12 +1,10 @@
-package com.pomina.app.category.service.impl;
+package com.pomina.commonservices.category.service.impl;
 
-import com.pomina.app.category.dto.custom_mapper.CategoryItem;
-import com.pomina.app.category.dto.response.CategoryResponseDto;
-import com.pomina.app.category.enums.CategoryEnum;
-import com.pomina.app.category.mapper.VCategoryMapper;
-import com.pomina.app.category.service.CategoryService;
-import com.pomina.common.model.PageRequest;
-import com.pomina.common.model.PageResponse;
+import com.pomina.commonservices.category.dto.custom_mapper.CategoryItem;
+import com.pomina.commonservices.category.dto.response.CategoryResponseDto;
+import com.pomina.commonservices.category.enums.CategoryEnum;
+import com.pomina.commonservices.category.mapper.VCategoryMapper;
+import com.pomina.commonservices.category.service.CategoryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -23,15 +21,12 @@ public class CategoryServiceImpl implements CategoryService {
     private final VCategoryMapper vCategoryMapper;
 
     @Override
-    public PageResponse<CategoryResponseDto> getCategoriesList(PageRequest pageRequest) {
+    public List<CategoryResponseDto> getCategoriesList() {
 
-        List<CategoryItem> categoriesList = vCategoryMapper.findAllViewCategories(
-                pageRequest.getOffset(),
-                pageRequest.getSize()
-        );
+        List<CategoryItem> categoriesList = vCategoryMapper.findAllViewCategories();
 
         if (categoriesList == null || categoriesList.isEmpty()) {
-            return null;
+            return Collections.emptyList();
         }
 
         // Group các CategoryItem theo nameGroup
@@ -41,7 +36,7 @@ public class CategoryServiceImpl implements CategoryService {
                         .collect(Collectors.groupingBy(CategoryItem::getNameGroup));
 
         if (grouped == null || grouped.isEmpty()) {
-            return null;
+            return Collections.emptyList();
         }
 
         // Tạo đối tượng CategoryResponseDto bằng cách duyệt qua toàn bộ CategoryEnum
@@ -63,11 +58,9 @@ public class CategoryServiceImpl implements CategoryService {
                 );
 
         if (dto == null || List.of(dto).isEmpty()) {
-            return null;
+            return Collections.emptyList();
         }
 
-        int totalElements = vCategoryMapper.countFindAllViewCategories();
-
-        return PageResponse.createPaged(List.of(dto), pageRequest.getPage(), pageRequest.getSize(), totalElements);
+        return List.of(dto);
     }
 }

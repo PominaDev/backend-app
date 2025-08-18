@@ -1,5 +1,6 @@
-package com.pomina.app.category.dto.custom_mapper;
+package com.pomina.commonservices.category.dto.custom_mapper;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -7,6 +8,7 @@ import lombok.Setter;
 @Setter
 public class CategoryItem {
 
+    @JsonIgnore
     private String nameGroup;
 
     private Integer idOrderType;
