@@ -42,12 +42,12 @@ public class ChinhSachExcelServiceImpl implements ChinhSachExcelService {
     @Transactional(rollbackFor = {Exception.class, AppException.class})
     @Override
     public int createList(ChinhSachExcelCreateDto chinhSachExcelCreateDto) {
-        ChinhSachExcelHeader chinhSachExcelHeader = chinhSachExcelCreateDto.getChinhSachExcelHeader();
+        ChinhSachExcelHeader chinhSachExcelHeader = chinhSachExcelCreateDto.getHeader();
         if (chinhSachExcelHeader == null) {
             throw new AppException(ErrorCode.INTERNAL_ERROR);
         }
 
-        List<ChinhSachExcelBody> chinhSachExcelBody = chinhSachExcelCreateDto.getChinhSachExcelBody();
+        List<ChinhSachExcelBody> chinhSachExcelBody = chinhSachExcelCreateDto.getBody();
         if (chinhSachExcelBody == null) {
             throw new AppException(ErrorCode.INTERNAL_ERROR);
         }
