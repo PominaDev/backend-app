@@ -34,6 +34,13 @@ public enum ErrorCode {
     INVALID_LAT_LONG("3003", "Tọa độ không hợp lệ"),
     INVALID_OWN_PRODUCT("3004", "Sản phẩm này không thuộc quyền sở hữu của bạn!"),
 
+    // ===== 3100 - Excel
+    IMPORT_EXCEL_FAILED("3100", "Import Excel failed"),
+    FILE_IS_EMPTY("3101", "File is empty"),
+    FILE_PROCESSING_ERROR("3102", "Failed to read file"),
+    FILE_TOO_LARGE("3103", "File too LARGE"),
+    INVALID_FILE_TYPE("3104", "INVALID_FILE_TYPE"),
+
     // ===== 2000 - Không tìm thấy / Đã tồn tại =====
     USER_NOT_FOUND("2000", "Người dùng không tồn tại"),
     PRODUCT_NOT_FOUND("2000", "Không tìm thấy sản phẩm"),

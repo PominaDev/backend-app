@@ -1,12 +1,18 @@
-package com.pomina.webapp.pricing_policy_management.dto.excel;
+package com.pomina.webapp.pricing_policy_management.dto.request.excel;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Getter
 @Setter
-public class Body {
+@Builder
+public class ChinhSachExcelBody {
     @JsonProperty("ten_san_pham")
     private String tenSanPham;
 
@@ -54,4 +60,14 @@ public class Body {
 
     @JsonProperty("gia_met")
     private Double giaMet;
+
+    @JsonIgnore
+    private List<String> warnings;
+
+    public void addWarning(String warning) {
+        if (this.warnings == null) {
+            this.warnings = new ArrayList<>();
+        }
+        this.warnings.add(warning);
+    }
 }
