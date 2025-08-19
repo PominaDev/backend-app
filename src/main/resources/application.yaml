@@ -3,7 +3,7 @@ spring:
     name: pomina-erp
 
   profiles:
-    active: dev
+    active: prod
 
   threads:
     virtual:
@@ -13,9 +13,6 @@ spring:
     file:
       path: logs
       name: logs/app.log
-    level:
-      org.springframework.transaction: DEBUG
-      org.mybatis.spring: DEBUG
 
 mybatis:
   config-location: classpath:/mybatis/configuration/mybatis-config.xml
