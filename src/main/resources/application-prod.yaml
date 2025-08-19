@@ -14,8 +14,8 @@ spring:
       connection-test-query: select 1 from dual
       data-source-properties:
         cachePrepStmts: true
-        prepStmtCacheSize: 500          # Tăng cho production
-        prepStmtCacheSqlLimit: 4096     # Tăng cho complex queries
+        prepStmtCacheSize: 500
+        prepStmtCacheSqlLimit: 4096
         useServerPrepStmts: true
         useLocalSessionState: true
         rewriteBatchedStatements: true
@@ -23,8 +23,8 @@ spring:
         cacheServerConfiguration: true
         elideSetAutoCommits: true
         maintainTimeStats: false
-        useSSL: false                   # Thêm cho security
-        allowPublicKeyRetrieval: true   # Thêm nếu cần
+        useSSL: false
+        allowPublicKeyRetrieval: true
 
     master:
       url: jdbc:mariadb://54.221.149.89:3333/pomina_dev_db?useUnicode=true&characterEncoding=utf8mb4&serverTimezone=Asia/Ho_Chi_Minh
@@ -53,8 +53,7 @@ spring:
 
 security:
   jwt:
-    #    access-token-expiration: 900000      # 15 phút
-    access-token-expiration: 30000      # 1 phút
+    access-token-expiration: 900000      # 15 phút
     refresh-token-expiration: 1296000000   # 15 ngày
     secret-key: oB1Zvsn1261tfh0msDaGCP63l+rYq15F/O+ksyqZWe4qWqHRwvvz5pHs3qgHBhYi
 
@@ -74,12 +73,6 @@ vonage:
   api:
     key: c53321d0
     secret: nGXfHZxjpoj0ZNip
-
-logging:
-  level:
-    root: INFO
-    com.pomina: WARN
-    org.springframework: WARN
 
 management:
   endpoints:
