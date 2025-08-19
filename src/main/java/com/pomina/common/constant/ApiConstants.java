@@ -212,6 +212,7 @@ public class ApiConstants {
     public static final class ApiPricingPolicyManagement {
         public static final String BASE = VERSION_V1 + "/pricing-policies";
         public static final String IMPORT_LIST = "/import";
+        public static final String PREVIEW_FILE = "/preview-file";
 
         private ApiPricingPolicyManagement() {}
     }

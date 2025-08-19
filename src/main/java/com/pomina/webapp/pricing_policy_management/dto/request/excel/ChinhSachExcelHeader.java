@@ -1,12 +1,14 @@
-package com.pomina.webapp.pricing_policy_management.dto.excel;
+package com.pomina.webapp.pricing_policy_management.dto.request.excel;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
-public class Header {
+@Builder
+public class ChinhSachExcelHeader {
     @JsonProperty("ten_chinh_sach")
     private String tenChinhSach;
 
