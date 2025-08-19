@@ -11,8 +11,8 @@ import java.util.List;
 public class ChinhSachExcelCreateDto {
 
     @NotNull
-    private ChinhSachExcelHeader chinhSachExcelHeader;
+    private ChinhSachExcelHeader header;
 
     @NotNull
-    private List<ChinhSachExcelBody> chinhSachExcelBody;
+    private List<ChinhSachExcelBody> body;
 }

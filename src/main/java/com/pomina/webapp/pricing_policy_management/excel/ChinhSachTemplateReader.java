@@ -19,6 +19,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -241,14 +242,16 @@ public class ChinhSachTemplateReader {
                 return cell.getStringCellValue().trim();
             case NUMERIC:
                 if (DateUtil.isCellDateFormatted(cell)) {
-                    return cell.getDateCellValue().toString();
+                    SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+                    return sdf.format(cell.getDateCellValue());
                 } else {
                     return String.valueOf((long) cell.getNumericCellValue());
                 }
             case BOOLEAN:
                 return String.valueOf(cell.getBooleanCellValue());
             case FORMULA:
-                return cell.getCellFormula();
+                DataFormatter formatter = new DataFormatter();
+                return formatter.formatCellValue(cell);
             default:
                 return null;
         }
