@@ -7,12 +7,15 @@ import com.pomina.common.model.PageRequest;
 import com.pomina.common.model.PageResponse;
 import com.pomina.common.utils.AuditUtil;
 import com.pomina.commonservices.product_warranty_activation.converter.ProductConverter;
+import com.pomina.commonservices.product_warranty_activation.dto.custom_mapper.ProductFilter;
 import com.pomina.commonservices.product_warranty_activation.dto.request.ProductRequestDto;
 import com.pomina.commonservices.product_warranty_activation.dto.response.ProductResponseDto;
+import com.pomina.commonservices.product_warranty_activation.dto.response.VProductResponseDto;
 import com.pomina.commonservices.product_warranty_activation.entity.Product;
 import com.pomina.commonservices.product_warranty_activation.mapper.ProductMapper;
 import com.pomina.commonservices.product_warranty_activation.service.ProductService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -97,5 +100,26 @@ public class ProductServiceImpl implements ProductService {
         }
         List<Product> productList = productConverter.toEntityList(list);
         return productMapper.insertBatch(productList);
+    }
+
+    @Override
+    public PageResponse<VProductResponseDto> getProductsByFilter(PageRequest pageRequest, ProductFilter productFilter) {
+        List<Product> productInfoList = productMapper.findByLoaiCuonAndTenSanPham(productFilter,
+                pageRequest.getOffset(),
+                pageRequest.getSize());
+
+        if (productInfoList == null || productInfoList.isEmpty()) {
+            return null;
+        }
+
+        List<VProductResponseDto> productResponse = productConverter.toVProductResponseList(productInfoList);
+
+        if (productResponse == null || productResponse.isEmpty()) {
+            return null;
+        }
+
+        int totalElements = productMapper.countFindByLoaiCuonAndTenSanPham(productFilter);
+
+        return PageResponse.createPaged(productResponse, pageRequest.getPage(), pageRequest.getSize(), totalElements);
     }
 }

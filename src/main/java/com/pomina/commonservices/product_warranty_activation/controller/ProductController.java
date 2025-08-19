@@ -7,10 +7,12 @@ import com.pomina.common.handler.ResponseHandler;
 import com.pomina.common.model.PageRequest;
 import com.pomina.common.model.PageResponse;
 import com.pomina.commonservices.product_warranty_activation.converter.ProductConverter;
+import com.pomina.commonservices.product_warranty_activation.dto.custom_mapper.ProductFilter;
 import com.pomina.commonservices.product_warranty_activation.dto.request.ProductCreateDto;
 import com.pomina.commonservices.product_warranty_activation.dto.request.ProductRequestDto;
 import com.pomina.commonservices.product_warranty_activation.dto.request.ProductUpdateDto;
 import com.pomina.commonservices.product_warranty_activation.dto.response.ProductResponseDto;
+import com.pomina.commonservices.product_warranty_activation.dto.response.VProductResponseDto;
 import com.pomina.commonservices.product_warranty_activation.service.ProductService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -96,5 +98,11 @@ public class ProductController extends BaseController<ProductCreateDto, ProductU
     @DeleteMapping(ApiConstants.ApiProduct.DELETE)
     public ResponseEntity<ApiResponse<Integer>> delete(@PathVariable("id") Integer id) {
         return ResponseHandler.success(productService.delete(id));
+    }
+
+    @PostMapping(ApiConstants.ApiProduct.SEARCH)
+    public ResponseEntity<ApiResponse<PageResponse<VProductResponseDto>>> getProductsByFilter(@Valid @ModelAttribute PageRequest pageRequest,
+                                                                                              @RequestBody ProductFilter productFilter) {
+        return ResponseHandler.success(productService.getProductsByFilter(pageRequest, productFilter));
     }
 }
