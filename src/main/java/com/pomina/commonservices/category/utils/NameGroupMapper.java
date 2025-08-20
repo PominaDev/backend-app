@@ -12,27 +12,42 @@ public class NameGroupMapper {
 
     private NameGroupMapper() {}
 
-    private static final Pattern DIACRITICS = Pattern.compile("\\p{M}");
-    private static final Pattern NON_ALNUM_SPACE = Pattern.compile("[^a-zA-Z0-9\\s]+");
-    private static final Pattern MULTI_SPACE = Pattern.compile("\\s+");
+    private static final Pattern NON_ALNUM_SPACE = Pattern.compile("[^a-zA-Z0-9\\s]");
 
     public static String mapNameGroupToKey(String nameGroup) {
         if (nameGroup == null || nameGroup.isBlank()) {
             return "";
         }
 
-        // 1. Chuẩn hóa bỏ dấu tiếng Việt
-        String normalized = Normalizer.normalize(nameGroup, Normalizer.Form.NFD);
-        normalized = DIACRITICS.matcher(normalized).replaceAll("");
+        // 1. Chuẩn hóa bỏ dấu tiếng Việt, thay các ký tự đặc biệt
+        String normalized = Normalizer.normalize(nameGroup, Normalizer.Form.NFD)
+                .replaceAll("\\p{M}", "")
+                .replace("đ", "d")
+                .replace("Đ", "d")
+                .replace("â", "a")
+                .replace("Â", "a")
+                .replace("ă", "a")
+                .replace("Ă", "a")
+                .replace("ê", "e")
+                .replace("Ê", "e")
+                .replace("ô", "o")
+                .replace("Ô", "o")
+                .replace("ơ", "o")
+                .replace("Ơ", "o")
+                .replace("ư", "u")
+                .replace("Ư", "u");
 
         // 2. Loại ký tự đặc biệt, chuyển thường, trim và gộp space
-        normalized = NON_ALNUM_SPACE.matcher(normalized).replaceAll("");
-        normalized = normalized.toLowerCase().trim();
-        normalized = MULTI_SPACE.matcher(normalized).replaceAll(" ");
+        normalized = NON_ALNUM_SPACE.matcher(normalized).replaceAll("")
+                .toLowerCase()
+                .replaceAll("\\s+", " ")
+                .trim();
 
         // 3. Tách từ và build camelCase
-        String[] words = normalized.split(" ");
-        if (words.length == 0) return "";
+        String[] words = normalized.split("\\s+");
+        if (words.length == 0 || words[0].isEmpty()) {
+            return "";
+        }
 
         StringBuilder camelCase = new StringBuilder(words[0]);
         for (int i = 1; i < words.length; i++) {
