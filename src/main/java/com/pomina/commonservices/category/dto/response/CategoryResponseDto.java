@@ -12,6 +12,8 @@ import java.util.List;
 @AllArgsConstructor
 public class CategoryResponseDto {
 
+    private String key;
+
     private String nameGroup;
 
     private List<CategoryItem> data;
