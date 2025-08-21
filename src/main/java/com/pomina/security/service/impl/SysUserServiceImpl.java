@@ -18,6 +18,7 @@ import com.pomina.webapp.master_location_managerment.mapper.MasterLocationMapper
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Objects;
@@ -44,7 +45,7 @@ public class SysUserServiceImpl implements SysUserService {
     }
 
     @CustomDataSource(DataSourceType.MASTER)
-    @Transactional(rollbackFor = Exception.class)
+    @Transactional(rollbackFor = Exception.class, isolation = Isolation.SERIALIZABLE)
     @Override
     public RegisterResponse registerUser(RegisterRequest registerRequest) {
         // Kiểm tra user đã tồn tại chưa
