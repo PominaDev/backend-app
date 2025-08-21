@@ -8,8 +8,10 @@ import com.pomina.webapp.pricing_policy_management.dto.request.excel.ChinhSachEx
 import com.pomina.webapp.pricing_policy_management.dto.response.ChinhSachGiaBanTemplateDto;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellType;
+import org.apache.poi.ss.usermodel.CellValue;
 import org.apache.poi.ss.usermodel.DataFormatter;
 import org.apache.poi.ss.usermodel.DateUtil;
+import org.apache.poi.ss.usermodel.FormulaEvaluator;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
@@ -141,67 +143,61 @@ public class ChinhSachTemplateReader {
         product.setCkCs3(getCellValueAsDouble(row, 8));
         product.setCkCs4(getCellValueAsDouble(row, 9));
         product.setCkCs5(getCellValueAsDouble(row, 10));
-        product.setCkCs6(getCellValueAsDouble(row, 11));
-        product.setCkCs7(getCellValueAsDouble(row, 12));
-        product.setCkCs8(getCellValueAsDouble(row, 13));
-        product.setCkCs9(getCellValueAsDouble(row, 14));
-        product.setCkCs10(getCellValueAsDouble(row, 15));
-        product.setL1CkMb(getCellValueAsDouble(row, 16));
-        product.setL1CkMc(getCellValueAsDouble(row, 17));
-        product.setL1ThanhToanTruoc(getCellValueAsDouble(row, 18));
-        product.setL1HoTroTyTrong(getCellValueAsDouble(row, 19));
-        product.setL1Hcm(getCellValueAsDouble(row, 20));
-        product.setL1Mba(getCellValueAsDouble(row, 21));
-        product.setL1Mdo(getCellValueAsDouble(row, 22));
-        product.setL1Mta(getCellValueAsDouble(row, 23));
-        product.setL1Mtr(getCellValueAsDouble(row, 24));
-        product.setL1Tng(getCellValueAsDouble(row, 25));
-        product.setL1DonGia(getCellValueAsDouble(row, 26));
-        product.setL2CkMb(getCellValueAsDouble(row, 27));
-        product.setL2CkMc(getCellValueAsDouble(row, 28));
-        product.setL2ThanhToanTruoc(getCellValueAsDouble(row, 29));
-        product.setL2HoTroTyTrong(getCellValueAsDouble(row, 30));
-        product.setL2Hcm(getCellValueAsDouble(row, 31));
-        product.setL2Mba(getCellValueAsDouble(row, 32));
-        product.setL2Mdo(getCellValueAsDouble(row, 33));
-        product.setL2Mta(getCellValueAsDouble(row, 34));
-        product.setL2Mtr(getCellValueAsDouble(row, 35));
-        product.setL2Tng(getCellValueAsDouble(row, 36));
-        product.setL2DonGia(getCellValueAsDouble(row, 37));
-        product.setL3CkMb(getCellValueAsDouble(row, 38));
-        product.setL3CkMc(getCellValueAsDouble(row, 39));
-        product.setL3ThanhToanTruoc(getCellValueAsDouble(row, 40));
-        product.setL3HoTroTyTrong(getCellValueAsDouble(row, 41));
-        product.setL3Hcm(getCellValueAsDouble(row, 42));
-        product.setL3Mba(getCellValueAsDouble(row, 43));
-        product.setL3Mdo(getCellValueAsDouble(row, 44));
-        product.setL3Mta(getCellValueAsDouble(row, 45));
-        product.setL3Mtr(getCellValueAsDouble(row, 46));
-        product.setL3Tng(getCellValueAsDouble(row, 47));
-        product.setL3DonGia(getCellValueAsDouble(row, 48));
-        product.setL1aCkMb(getCellValueAsDouble(row, 49));
-        product.setL1aCkMc(getCellValueAsDouble(row, 50));
-        product.setL1aThanhToanTruoc(getCellValueAsDouble(row, 51));
-        product.setL1aHoTroTyTrong(getCellValueAsDouble(row, 52));
-        product.setL1aHcm(getCellValueAsDouble(row, 53));
-        product.setL1aMba(getCellValueAsDouble(row, 54));
-        product.setL1aMdo(getCellValueAsDouble(row, 55));
-        product.setL1aMta(getCellValueAsDouble(row, 56));
-        product.setL1aMtr(getCellValueAsDouble(row, 57));
-        product.setL1aTng(getCellValueAsDouble(row, 58));
-        product.setL1aDonGia(getCellValueAsDouble(row, 59));
-        product.setL1bCkMb(getCellValueAsDouble(row, 60));
-        product.setL1bCkMc(getCellValueAsDouble(row, 61));
-        product.setL1bThanhToanTruoc(getCellValueAsDouble(row, 62));
-        product.setL1bHoTroTyTrong(getCellValueAsDouble(row, 63));
-        product.setL1bHcm(getCellValueAsDouble(row, 64));
-        product.setL1bMba(getCellValueAsDouble(row, 65));
-        product.setL1bMdo(getCellValueAsDouble(row, 66));
-        product.setL1bMta(getCellValueAsDouble(row, 67));
-        product.setL1bMtr(getCellValueAsDouble(row, 68));
-        product.setL1bTng(getCellValueAsDouble(row, 69));
-        product.setL1bDonGia(getCellValueAsDouble(row, 70));
-        product.setGiaMet(getCellValueAsDouble(row, 71));
+        product.setL1CkMb(getCellValueAsDouble(row, 11));
+        product.setL1CkMc(getCellValueAsDouble(row, 12));
+        product.setL1ThanhToanTruoc(getCellValueAsDouble(row, 13));
+        product.setL1HoTroTyTrong(getCellValueAsDouble(row, 14));
+        product.setL1Hcm(getCellValueAsDouble(row, 15));
+        product.setL1Mba(getCellValueAsDouble(row, 16));
+        product.setL1Mdo(getCellValueAsDouble(row, 17));
+        product.setL1Mta(getCellValueAsDouble(row, 18));
+        product.setL1Mtr(getCellValueAsDouble(row, 19));
+        product.setL1Tng(getCellValueAsDouble(row, 20));
+        product.setL1DonGia(getCellValueAsDouble(row, 21));
+        product.setL2CkMb(getCellValueAsDouble(row, 22));
+        product.setL2CkMc(getCellValueAsDouble(row, 23));
+        product.setL2ThanhToanTruoc(getCellValueAsDouble(row, 24));
+        product.setL2HoTroTyTrong(getCellValueAsDouble(row, 25));
+        product.setL2Hcm(getCellValueAsDouble(row, 26));
+        product.setL2Mba(getCellValueAsDouble(row, 27));
+        product.setL2Mdo(getCellValueAsDouble(row, 28));
+        product.setL2Mta(getCellValueAsDouble(row, 29));
+        product.setL2Mtr(getCellValueAsDouble(row, 30));
+        product.setL2Tng(getCellValueAsDouble(row, 31));
+        product.setL2DonGia(getCellValueAsDouble(row, 32));
+        product.setL3CkMb(getCellValueAsDouble(row, 33));
+        product.setL3CkMc(getCellValueAsDouble(row, 34));
+        product.setL3ThanhToanTruoc(getCellValueAsDouble(row, 35));
+        product.setL3HoTroTyTrong(getCellValueAsDouble(row, 36));
+        product.setL3Hcm(getCellValueAsDouble(row, 37));
+        product.setL3Mba(getCellValueAsDouble(row, 38));
+        product.setL3Mdo(getCellValueAsDouble(row, 39));
+        product.setL3Mta(getCellValueAsDouble(row, 40));
+        product.setL3Mtr(getCellValueAsDouble(row, 41));
+        product.setL3Tng(getCellValueAsDouble(row, 42));
+        product.setL3DonGia(getCellValueAsDouble(row, 43));
+        product.setL1aCkMb(getCellValueAsDouble(row, 44));
+        product.setL1aCkMc(getCellValueAsDouble(row, 45));
+        product.setL1aThanhToanTruoc(getCellValueAsDouble(row, 46));
+        product.setL1aHoTroTyTrong(getCellValueAsDouble(row, 47));
+        product.setL1aHcm(getCellValueAsDouble(row, 48));
+        product.setL1aMba(getCellValueAsDouble(row, 49));
+        product.setL1aMdo(getCellValueAsDouble(row, 50));
+        product.setL1aMta(getCellValueAsDouble(row, 51));
+        product.setL1aMtr(getCellValueAsDouble(row, 52));
+        product.setL1aTng(getCellValueAsDouble(row, 53));
+        product.setL1aDonGia(getCellValueAsDouble(row, 54));
+        product.setL1bCkMb(getCellValueAsDouble(row, 55));
+        product.setL1bCkMc(getCellValueAsDouble(row, 56));
+        product.setL1bThanhToanTruoc(getCellValueAsDouble(row, 57));
+        product.setL1bHoTroTyTrong(getCellValueAsDouble(row, 58));
+        product.setL1bHcm(getCellValueAsDouble(row, 59));
+        product.setL1bMba(getCellValueAsDouble(row, 60));
+        product.setL1bMdo(getCellValueAsDouble(row, 61));
+        product.setL1bMta(getCellValueAsDouble(row, 62));
+        product.setL1bMtr(getCellValueAsDouble(row, 63));
+        product.setL1bTng(getCellValueAsDouble(row, 64));
+        product.setL1bDonGia(getCellValueAsDouble(row, 65));
 
         // Basic validation and warnings
         addValidationWarnings(product);
@@ -313,24 +309,54 @@ public class ChinhSachTemplateReader {
     }
 
     /**
-     * Hàm chuyển đổi kiểu dữ liệu về Double
+     * Hàm chuyển đổi kiểu dữ liệu về Double (có evaluate công thức & làm tròn lên 2 chữ số thập phân)
      *
      * @param row      dòng dữ liệu
      * @param colIndex vị trí của cột
-     * @return giá trị kiểu String
+     * @return giá trị kiểu Double (làm tròn lên 2 chữ số thập phân)
      */
     private Double getCellValueAsDouble(Row row, int colIndex) {
         try {
             Cell cell = row.getCell(colIndex);
             if (cell == null) return null;
 
-            if (cell.getCellType() == CellType.NUMERIC) {
-                return cell.getNumericCellValue();
-            } else if (cell.getCellType() == CellType.STRING) {
-                String value = cell.getStringCellValue().trim();
-                return StringUtils.isEmpty(value) ? null : Double.parseDouble(value);
+            FormulaEvaluator evaluator = row.getSheet().getWorkbook()
+                    .getCreationHelper()
+                    .createFormulaEvaluator();
+
+            Double result = null;
+
+            switch (cell.getCellType()) {
+                case NUMERIC:
+                    result = cell.getNumericCellValue();
+                    break;
+
+                case STRING:
+                    String value = cell.getStringCellValue().trim();
+                    result = StringUtils.isEmpty(value) ? null : Double.parseDouble(value);
+                    break;
+
+                case FORMULA:
+                    CellValue cellValue = evaluator.evaluate(cell);
+                    if (cellValue != null) {
+                        switch (cellValue.getCellType()) {
+                            case NUMERIC:
+                                result = cellValue.getNumberValue();
+                                break;
+                            case STRING:
+                                String strVal = cellValue.getStringValue().trim();
+                                result = StringUtils.isEmpty(strVal) ? null : Double.parseDouble(strVal);
+                                break;
+                        }
+                    }
+                    break;
             }
-            return null;
+
+            if (result == null) return null;
+
+            // Làm tròn lên 2 chữ số thập phân
+            return Math.ceil(result * 100.0) / 100.0;
+
         } catch (Exception e) {
             return null;
         }
