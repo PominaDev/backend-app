@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.text.Normalizer;
 import java.util.Collections;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -31,7 +32,11 @@ public class CategoryServiceImpl implements CategoryService {
         // Group theo nameGroup
         Map<String, List<CategoryItem>> grouped =
                 categoriesList.stream()
-                        .collect(Collectors.groupingBy(CategoryItem::getNameGroup));
+                        .collect(Collectors.groupingBy(
+                                CategoryItem::getNameGroup,
+                                LinkedHashMap::new,
+                                Collectors.toList()
+                        ));
 
         // Convert sang list CategoryGroupDto
         return grouped.entrySet().stream()
