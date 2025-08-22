@@ -414,6 +414,10 @@
             </foreach>
             )
         </if>
+
+        <if test="productFilter.textSearch != null and productFilter.textSearch != ''">
+            AND LOWER(u_p.ten_san_pham) LIKE CONCAT('%', LOWER(#{productFilter.textSearch}), '%')
+        </if>
         )
         SELECT u_p_q.ma_cuon_ton,
         u_p_q.ten_san_pham,

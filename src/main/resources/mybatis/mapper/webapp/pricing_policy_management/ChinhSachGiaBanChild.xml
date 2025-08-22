@@ -808,7 +808,7 @@
     <select id="findByUChinhSachParentId" resultMap="ChinhSachGiaBanChildResultMap">
         /* SELECT BY UChinhSachParentId - u_chinh_sach_gia_ban_child */
         SELECT u_chinh_sach_gia_ban_child_id,
-               u_chinh_sach_parent_id,
+               u_chinh_sach_gia_ban_child.u_chinh_sach_parent_id,
                ten_san_pham,
                `size`,
                gia_bang,
@@ -880,17 +880,19 @@
                l1b_tng,
                l1b_don_gia,
                gia_met,
-               u_description,
-               status,
-               noted,
-               created_at,
-               created_by,
-               updated_at,
-               updated_by,
-               is_deleted
+               u_chinh_sach_parent.u_description,
+               u_chinh_sach_gia_ban_child.status,
+               u_chinh_sach_gia_ban_child.noted,
+               u_chinh_sach_gia_ban_child.created_at,
+               u_chinh_sach_gia_ban_child.created_by,
+               u_chinh_sach_gia_ban_child.updated_at,
+               u_chinh_sach_gia_ban_child.updated_by,
+               u_chinh_sach_gia_ban_child.is_deleted
         FROM u_chinh_sach_gia_ban_child
-        WHERE u_chinh_sach_parent_id = #{uChinhSachParentId}
-          AND is_deleted = 0
+                 LEFT JOIN u_chinh_sach_parent
+                           ON u_chinh_sach_gia_ban_child.u_chinh_sach_parent_id = u_chinh_sach_parent.u_chinh_sach_parent_id
+        WHERE u_chinh_sach_gia_ban_child.u_chinh_sach_parent_id = #{uChinhSachParentId}
+          AND u_chinh_sach_gia_ban_child.is_deleted = 0
     </select>
 
     <select id="countFindByUChinhSachParentId">

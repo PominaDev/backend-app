@@ -58,7 +58,7 @@ public class ChinhSachGiaBanChildCreateDto {
     private Double l1aCkMb;
     private Double l1aCkMc;
     private Double l1aThanhToanTruoc;
-    private Boolean l1aHoTroTyTrong;
+    private Double l1aHoTroTyTrong;
     private Double l1aHcm;
     private Double l1aMba;
     private Double l1aMdo;
