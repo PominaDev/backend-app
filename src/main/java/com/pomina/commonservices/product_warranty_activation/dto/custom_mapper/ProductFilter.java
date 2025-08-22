@@ -22,4 +22,6 @@ public class ProductFilter {
     private List<String> mauSacList;
 
     private List<String> macThepList;
+
+    private String textSearch;
 }
