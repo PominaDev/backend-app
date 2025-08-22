@@ -1,7 +1,6 @@
 package com.pomina.webapp.pricing_policy_management.dto.request.excel;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
@@ -42,6 +41,116 @@ public class ChinhSachExcelBody {
     private Double ckCs9;
 
     private Double ckCs10;
+
+    private Double l1CkMb;
+
+    private Double l1CkMc;
+
+    private Double l1ThanhToanTruoc;
+
+    private Double l1HoTroTyTrong;
+
+    private Double l1Hcm;
+
+    private Double l1Mba;
+
+    private Double l1Mdo;
+
+    private Double l1Mta;
+
+    private Double l1Mtr;
+
+    private Double l1Tng;
+
+    private Double l1DonGia;
+
+    private Double l2CkMb;
+
+    private Double l2CkMc;
+
+    private Double l2ThanhToanTruoc;
+
+    private Double l2HoTroTyTrong;
+
+    private Double l2Hcm;
+
+    private Double l2Mba;
+
+    private Double l2Mdo;
+
+    private Double l2Mta;
+
+    private Double l2Mtr;
+
+    private Double l2Tng;
+
+    private Double l2DonGia;
+
+    private Double l3CkMb;
+
+    private Double l3CkMc;
+
+    private Double l3ThanhToanTruoc;
+
+    private Double l3HoTroTyTrong;
+
+    private Double l3Hcm;
+
+    private Double l3Mba;
+
+    private Double l3Mdo;
+
+    private Double l3Mta;
+
+    private Double l3Mtr;
+
+    private Double l3Tng;
+
+    private Double l3DonGia;
+
+    private Double l1aCkMb;
+
+    private Double l1aCkMc;
+
+    private Double l1aThanhToanTruoc;
+
+    private Double l1aHoTroTyTrong;
+
+    private Double l1aHcm;
+
+    private Double l1aMba;
+
+    private Double l1aMdo;
+
+    private Double l1aMta;
+
+    private Double l1aMtr;
+
+    private Double l1aTng;
+
+    private Double l1aDonGia;
+
+    private Double l1bCkMb;
+
+    private Double l1bCkMc;
+
+    private Double l1bThanhToanTruoc;
+
+    private Double l1bHoTroTyTrong;
+
+    private Double l1bHcm;
+
+    private Double l1bMba;
+
+    private Double l1bMdo;
+
+    private Double l1bMta;
+
+    private Double l1bMtr;
+
+    private Double l1bTng;
+
+    private Double l1bDonGia;
 
     private Double giaMet;
 
