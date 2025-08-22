@@ -12,13 +12,9 @@ import com.pomina.webapp.product_warranty_activation_tracking.service.ProductWar
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping(ApiConstants.ApiWarranty.BASE)
@@ -37,5 +33,12 @@ public class ProductWarrantyController {
     @PutMapping(ApiConstants.ApiWarranty.ACTIVATE_WARRANTY)
     public ResponseEntity<ApiResponse<Integer>> activateWarranty(@PathVariable("id") Integer warrantyId, @Valid @RequestBody ActivationWarrantyRequestDto activationWarrantyRequestDto) {
         return ResponseHandler.success(activationService.activateWarranty(warrantyId, activationWarrantyRequestDto));
+    }
+
+    @GetMapping(ApiConstants.ApiWarranty.SEARCH)
+    public ResponseEntity<ApiResponse<PageResponse<WarrantyInfoHistory>>> filterWarrantyInfoHistory(@Valid @ModelAttribute PageRequest pageRequest,
+                                                                                                    @RequestParam(required = false) List<String> filter,
+                                                                                                    @RequestParam(required = false) String sort) {
+        return ResponseHandler.success(warrantyService.filterWarrantyInfoHistory(pageRequest, true, filter, sort));
     }
 }

@@ -17,4 +17,9 @@ public interface WarrantyMapper extends BaseMapper<Warranty> {
     int countWarrantyDetail(@Param("userId") Integer userId);
 
     WarrantyInfoHistory findWarrantyDetailByMaCuonTon(@Param("maCuonTon") String maCuonTon);
+
+    int countWarrantyInfoHistory(@Param("userId") Integer userId, @Param("filter") List<String> filter);
+
+    List<WarrantyInfoHistory> filterWarrantyDetail(@Param("filter") List<String> filter, @Param("orderByClause") String orderByClause, @Param("offset") int offset, @Param("limit") int limit, @Param("paging") PageRequest pageRequest, @Param("userId") Integer userId);
+
 }

@@ -2,6 +2,7 @@ package com.pomina.webapp.user_managerment.mapper;
 
 import com.pomina.webapp.user_managerment.entity.SysUser;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -11,7 +12,9 @@ public interface SysUserManagermentMapper {
 
     List<SysUser> findAll();
 
-    List<SysUser> findAllPaged(Integer limit, Integer offset);
+    List<SysUser> findAllPaged(@Param("filter") List<String> filter, Integer limit, Integer offset);
+
+    Integer countAllWithFilter(@Param("filter") List<String> filter);
 
     Byte isExistUser(Integer id);
 
