@@ -1,5 +1,6 @@
 package com.pomina.webapp.pricing_policy_management.entity;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.pomina.common.model.BaseEntity;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -24,6 +25,7 @@ public class ChinhSachParent extends BaseEntity {
     private LocalDateTime uDayBegin;
     private LocalDateTime uDayEnd;
     private String uStatus;
+    @JsonProperty("description")
     private String uDescription;
     private LocalDateTime dateUpload;
     private String deptUpload;
