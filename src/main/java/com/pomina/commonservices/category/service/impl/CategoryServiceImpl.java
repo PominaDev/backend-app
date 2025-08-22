@@ -2,13 +2,13 @@ package com.pomina.commonservices.category.service.impl;
 
 import com.pomina.commonservices.category.dto.custom_mapper.CategoryItem;
 import com.pomina.commonservices.category.dto.response.CategoryResponseDto;
-import com.pomina.commonservices.category.enums.CategoryEnum;
 import com.pomina.commonservices.category.mapper.VCategoryMapper;
 import com.pomina.commonservices.category.service.CategoryService;
+import com.pomina.commonservices.category.utils.NameGroupMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.Arrays;
+import java.text.Normalizer;
 import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -25,13 +25,11 @@ public class CategoryServiceImpl implements CategoryService {
     public List<CategoryResponseDto> getCategoriesList() {
 
         List<CategoryItem> categoriesList = vCategoryMapper.findAllViewCategories();
-
         if (categoriesList == null || categoriesList.isEmpty()) {
             return Collections.emptyList();
         }
 
-        // Group các CategoryItem theo nameGroup
-        // Ví dụ: "loại tôn" -> List<CategoryItem>, "độ mạ" -> List<CategoryItem>
+        // Group theo nameGroup
         Map<String, List<CategoryItem>> grouped =
                 categoriesList.stream()
                         .collect(Collectors.groupingBy(
@@ -40,32 +38,12 @@ public class CategoryServiceImpl implements CategoryService {
                                 Collectors.toList()
                         ));
 
-        if (grouped == null || grouped.isEmpty()) {
-            return Collections.emptyList();
-        }
-
-        // Tạo đối tượng CategoryResponseDto bằng cách duyệt qua toàn bộ CategoryEnum
-        // Mỗi enum sẽ biết cách map vào field tương ứng trong DTO
-        CategoryResponseDto dto = Arrays.stream(CategoryEnum.values())
-                .collect(
-                        // Supplier: khởi tạo DTO rỗng
-                        CategoryResponseDto::new,
-
-                        // Accumulator: với mỗi CategoryEnum e,
-                        // lấy list items tương ứng từ grouped map (nếu không có thì emptyList)
-                        // rồi gọi e.apply(dto, items) để set vào field trong dto
-                        (res, e) -> e.apply(
-                                res,
-                                grouped.getOrDefault(e.getNameGroup(), Collections.emptyList())
-                        ),
-                        // Combiner: không cần merge vì DTO chỉ tạo từ stream tuần tự
-                        (a, b) -> {}
-                );
-
-        if (dto == null || List.of(dto).isEmpty()) {
-            return Collections.emptyList();
-        }
-
-        return List.of(dto);
+        // Convert sang list CategoryGroupDto
+        return grouped.entrySet().stream()
+                .map(entry -> {
+                    String key = NameGroupMapper.mapNameGroupToKey(entry.getKey());
+                    return new CategoryResponseDto(key, entry.getKey(), entry.getValue());
+                })
+                .toList();
     }
 }

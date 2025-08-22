@@ -1,6 +1,7 @@
 package com.pomina.commonservices.category.dto.response;
 
 import com.pomina.commonservices.category.dto.custom_mapper.CategoryItem;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -8,19 +9,12 @@ import java.util.List;
 
 @Getter
 @Setter
+@AllArgsConstructor
 public class CategoryResponseDto {
 
-    private List<CategoryItem> loaiTon;
+    private String key;
 
-    private List<CategoryItem> loaiHang;
+    private String nameGroup;
 
-    private List<CategoryItem> beMat;
-
-    private List<CategoryItem> doMa;
-
-    private List<CategoryItem> doDay;
-
-    private List<CategoryItem> mauSac;
-
-    private List<CategoryItem> macThep;
+    private List<CategoryItem> data;
 }

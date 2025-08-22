@@ -1,6 +1,5 @@
-package com.pomina.webapp.pricing_policy_management.dto.excel;
+package com.pomina.webapp.pricing_policy_management.dto.request.excel;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
@@ -12,8 +11,8 @@ import java.util.List;
 public class ChinhSachExcelCreateDto {
 
     @NotNull
-    private Header header;
+    private ChinhSachExcelHeader header;
 
     @NotNull
-    private List<Body> body;
+    private List<ChinhSachExcelBody> body;
 }

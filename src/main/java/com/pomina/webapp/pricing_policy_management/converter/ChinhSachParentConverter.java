@@ -1,8 +1,7 @@
 package com.pomina.webapp.pricing_policy_management.converter;
 
 import com.pomina.common.converter.BaseConverter;
-import com.pomina.webapp.pricing_policy_management.dto.excel.ChinhSachExcelCreateDto;
-import com.pomina.webapp.pricing_policy_management.dto.excel.Header;
+import com.pomina.webapp.pricing_policy_management.dto.request.excel.ChinhSachExcelHeader;
 import com.pomina.webapp.pricing_policy_management.dto.request.ChinhSachParentCreateDto;
 import com.pomina.webapp.pricing_policy_management.dto.request.ChinhSachParentRequestDto;
 import com.pomina.webapp.pricing_policy_management.dto.request.ChinhSachParentUpdateDto;
@@ -31,7 +30,7 @@ public interface ChinhSachParentConverter extends BaseConverter<ChinhSachParentR
     @Mapping(target = "uDayBegin", source = "ngayBatDau", qualifiedByName = "toLocalDateTime")
     @Mapping(target = "uDayEnd", source = "ngayKetThuc", qualifiedByName = "toLocalDateTime")
     @Mapping(target = "uDescription", source = "description")
-    ChinhSachParent toChinhSachParent(Header header);
+    ChinhSachParent toChinhSachParent(ChinhSachExcelHeader chinhSachExcelHeader);
 
     @Named("toLocalDateTime")
     default LocalDateTime map(String date) {

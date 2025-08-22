@@ -2,98 +2,169 @@ package com.pomina.commonservices.excel.service;
 
 import com.alibaba.excel.EasyExcel;
 import com.alibaba.excel.context.AnalysisContext;
-import com.alibaba.excel.event.AnalysisEventListener;
 import com.pomina.common.exception.AppException;
 import com.pomina.common.exception.ErrorCode;
+import com.pomina.commonservices.excel.config.ExcelConfig;
+import com.pomina.commonservices.excel.handler.ImportApiResponse;
+import com.pomina.commonservices.excel.handler.ImportData;
+import com.pomina.commonservices.excel.handler.ImportErrorDetail;
+import com.pomina.commonservices.excel.listener.ExcelDataListener;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
-import java.io.InputStream;
 import java.net.URLEncoder;
-import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Consumer;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 @Slf4j
-public class ExcelService<T> {
-
-    private final int BATCH_SIZE = 50;
+public class ExcelService {
 
     /**
-     * Import Excel
-     * @param inputStream
-     * @param clazz
-     * @param batchHandler
-     * @throws AppException
+     * Export data to Excel
      */
-    @Async
-    public void importExcel(
-            InputStream inputStream,
-            Class<T> clazz,
-            Consumer<List<T>> batchHandler) throws AppException {
-
-        AnalysisEventListener<T> listener = new AnalysisEventListener<T>() {
-            private final List<T> cachedList = new ArrayList<>(BATCH_SIZE);
-
-            @Override
-            public void invoke(T data, AnalysisContext context) {
-                cachedList.add(data);
-                if (cachedList.size() >= BATCH_SIZE) {
-                    processBatch();
-                }
-            }
-
-            @Override
-            public void doAfterAllAnalysed(AnalysisContext context) {
-                if (!cachedList.isEmpty()) {
-                    processBatch();
-                }
-                log.info("Completed processing {} rows", context.readRowHolder().getRowIndex());
-            }
-
-            private void processBatch() {
-                try {
-                    batchHandler.accept(new ArrayList<>(cachedList));
-                } catch (Exception e) {
-                    throw new AppException(ErrorCode.INTERNAL_ERROR);
-                }
-                cachedList.clear();
-            }
-        };
-
+    public <T> void exportExcel(HttpServletResponse response,
+                                List<T> dataList,
+                                Class<T> clazz,
+                                String fileName) {
         try {
-            EasyExcel.read(inputStream, clazz, listener).sheet().doRead();
+            response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+            response.setCharacterEncoding("utf-8");
+
+            String encodedFileName = URLEncoder.encode(fileName, "UTF-8")
+                    .replaceAll("\\+", "%20");
+            response.setHeader("Content-disposition",
+                    "attachment;filename*=utf-8''" + encodedFileName + ".xlsx");
+
+            EasyExcel.write(response.getOutputStream(), clazz)
+                    .sheet("Sheet1")
+                    .doWrite(dataList);
+
         } catch (Exception e) {
-            throw new AppException(ErrorCode.INTERNAL_ERROR);
+            log.error("Export Excel error: ", e);
+            throw new AppException(ErrorCode.IMPORT_EXCEL_FAILED);
         }
     }
 
     /**
-     * Export excel
-     * @param response
-     * @param data
-     * @param clazz
-     * @param fileName
-     * @throws IOException
+     * Import Excel with validation and processing
      */
-    public void exportExcel(
-            HttpServletResponse response,
-            List<T> data,
+    public <T> ImportApiResponse<T> importExcelWithValidation(
+            MultipartFile file,
             Class<T> clazz,
-            String fileName) throws IOException {
+            ExcelConfig<T> config) {
 
-        response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
-        response.setHeader("Content-Disposition",
-                "attachment; filename=" + URLEncoder.encode(fileName, StandardCharsets.UTF_8) + ".xlsx");
+        long startTime = System.currentTimeMillis();
+        String fileName = file.getOriginalFilename();
 
-        EasyExcel.write(response.getOutputStream(), clazz)
-                .autoCloseStream(true)
-                .sheet("Data")
-                .doWrite(data);
+        ImportData<T> importData = ImportData.<T>builder()
+                .fileName(fileName)
+                .totalCount(0)
+                .successCount(0)
+                .errorCount(0)
+                .errors(new ArrayList<>())
+                .errorDetails(new ArrayList<>())
+                .build();
+
+        try {
+            List<T> allData = new ArrayList<>();
+            List<T> validData = new ArrayList<>();
+
+            // Read Excel file
+            ExcelDataListener<T> listener = new ExcelDataListener<T>() {
+                @Override
+                public void invoke(T data, AnalysisContext context) {
+                    allData.add(data);
+                    importData.setTotalCount(importData.getTotalCount() + 1);
+                }
+
+                @Override
+                public void doAfterAllAnalysed(AnalysisContext context) {
+                    log.info("Excel reading completed. Total rows: {}", allData.size());
+                }
+            };
+
+            EasyExcel.read(file.getInputStream(), clazz, listener)
+                    .sheet()
+                    .doRead();
+
+            // Validation
+            if (config.getValidator() != null && !allData.isEmpty()) {
+                List<ImportErrorDetail> errorDetails = config.getValidator().apply(allData);
+                importData.setErrorDetails(errorDetails);
+                importData.setErrorCount(errorDetails.size());
+
+                // Separate valid and invalid data
+                Set<Integer> errorRows = errorDetails.stream()
+                        .map(ImportErrorDetail::getRowNumber)
+                        .collect(Collectors.toSet());
+
+                for (int i = 0; i < allData.size(); i++) {
+                    // +2 Vì dòng excel bắt đầu bằng 1
+                    if (!errorRows.contains(i + 2)) {
+                        validData.add(allData.get(i));
+                    }
+                }
+
+                importData.setSuccessCount(validData.size());
+                importData.setSuccessData(validData);
+            } else {
+                validData = allData;
+                importData.setSuccessCount(allData.size());
+                importData.setSuccessData(validData);
+            }
+
+            // Processing valid data
+            if (config.getProcessor() != null && !validData.isEmpty()) {
+                config.getProcessor().accept(validData);
+            }
+
+            // Set processing time
+            long endTime = System.currentTimeMillis();
+            importData.setProcessingTime((endTime - startTime) + "ms");
+
+            // Determine success status and message
+            boolean isSuccess = importData.getErrorCount() == 0;
+            String message = isSuccess
+                    ? String.format("Import completed successfully. %d records processed.", importData.getSuccessCount())
+                    : String.format("Import completed with errors. %d successful, %d failed out of %d total records.",
+                    importData.getSuccessCount(), importData.getErrorCount(), importData.getTotalCount());
+
+            return ImportApiResponse.partialSuccess(message, importData);
+
+        } catch (Exception e) {
+            log.error("Import Excel error: ", e);
+            long endTime = System.currentTimeMillis();
+            importData.setProcessingTime((endTime - startTime) + "ms");
+            importData.addError("File processing failed: " + e.getMessage());
+
+            return ImportApiResponse.failure("Import failed due to system error", importData);
+        }
+    }
+
+    /**
+     * Description: Import Excel (Not validate data)
+     * @param file
+     * @param clazz
+     * @param listener
+     * @return
+     * @param <T>
+     */
+    public <T> List<T> importExcelSimple(MultipartFile file,
+                                         Class<T> clazz,
+                                         ExcelDataListener<T> listener) {
+        try {
+            EasyExcel.read(file.getInputStream(), clazz, listener)
+                    .sheet()
+                    .doRead();
+            return listener.getDataList();
+        } catch (Exception e) {
+            log.error("Simple import Excel error: ", e);
+            throw new AppException(ErrorCode.IMPORT_EXCEL_FAILED);
+        }
     }
 }
