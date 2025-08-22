@@ -17,4 +17,6 @@ public class CategoryResponseDto {
     private String nameGroup;
 
     private List<CategoryItem> data;
+
+    private Boolean isMultiple;
 }
