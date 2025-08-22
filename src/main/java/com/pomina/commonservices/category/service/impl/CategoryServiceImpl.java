@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -33,7 +34,11 @@ public class CategoryServiceImpl implements CategoryService {
         // Ví dụ: "loại tôn" -> List<CategoryItem>, "độ mạ" -> List<CategoryItem>
         Map<String, List<CategoryItem>> grouped =
                 categoriesList.stream()
-                        .collect(Collectors.groupingBy(CategoryItem::getNameGroup));
+                        .collect(Collectors.groupingBy(
+                                CategoryItem::getNameGroup,
+                                LinkedHashMap::new,
+                                Collectors.toList()
+                        ));
 
         if (grouped == null || grouped.isEmpty()) {
             return Collections.emptyList();
