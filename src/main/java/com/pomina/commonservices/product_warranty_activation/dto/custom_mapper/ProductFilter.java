@@ -9,19 +9,21 @@ import java.util.List;
 @Setter
 public class ProductFilter {
 
-    private String loaiTon;
+    private List<String> loaiTon;
 
-    private String loaiHang;
+    private List<String> loaiHang;
 
-    private String beMat;
+    private List<String> beMat;
 
-    private List<String> doMaList;
+    private List<String> doMa;
 
-    private List<String> doDayList;
+    private List<String> doDay;
 
-    private List<String> mauSacList;
+    private List<String> mauSac;
 
-    private List<String> macThepList;
+    private List<String> macThep;
+
+    private List<String> khoRong;
 
     private String textSearch;
 }

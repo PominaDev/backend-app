@@ -30,6 +30,9 @@
         UNION ALL
         SELECT name_group, id_order_type, name_type
         FROM v_category_mac_thep
+        UNION ALL
+        SELECT name_group, id_order_type, name_type
+        FROM v_category_kho_rong
     </select>
 
 </mapper>
