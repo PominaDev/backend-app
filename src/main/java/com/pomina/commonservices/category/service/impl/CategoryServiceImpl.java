@@ -5,13 +5,9 @@ import com.pomina.commonservices.category.dto.response.CategoryResponseDto;
 import com.pomina.commonservices.category.mapper.VCategoryMapper;
 import com.pomina.commonservices.category.service.CategoryService;
 import com.pomina.commonservices.category.utils.NameGroupMapper;
-import com.pomina.commonservices.product_warranty_activation.dto.custom_mapper.ProductFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.lang.reflect.Field;
-import java.text.Normalizer;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -25,10 +21,9 @@ public class CategoryServiceImpl implements CategoryService {
 
     private final VCategoryMapper vCategoryMapper;
 
-    private static final Set<String> MULTIPLE_FIELDS = Arrays.stream(ProductFilter.class.getDeclaredFields())
-            .filter(f -> List.class.isAssignableFrom(f.getType()))
-            .map(Field::getName)
-            .collect(Collectors.toSet());
+    private static final Set<String> ALLOWED_MULTIPLE_FIELDS = Set.of(
+            "mauSac", "doMa", "macThep"
+    );
 
     @Override
     public List<CategoryResponseDto> getCategoriesList() {
@@ -54,7 +49,7 @@ public class CategoryServiceImpl implements CategoryService {
                     String key = NameGroupMapper.mapNameGroupToKey(entry.getKey());
 
                     // Set isMultiple = true if multiple options to filter api POST /products/search
-                    boolean isMultiple = MULTIPLE_FIELDS.contains(key);
+                    boolean isMultiple = ALLOWED_MULTIPLE_FIELDS.contains(key);
 
                     return new CategoryResponseDto(
                             key,
