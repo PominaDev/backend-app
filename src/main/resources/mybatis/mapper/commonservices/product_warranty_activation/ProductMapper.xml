@@ -355,8 +355,10 @@
         WHERE p.ma_cuon_ton = #{maCuonTon} LIMIT 1
     </select>
 
-    <select id="findByLoaiCuonAndTenSanPham" resultMap="ProductResultMap">
-        WITH u_product_query AS (SELECT u_p.ma_cuon_ton,
+    <select id="findByLoaiCuonAndTenSanPham" resultMap="ProductResultMap" parameterType="map">
+        WITH u_product_query AS (
+        SELECT
+        u_p.ma_cuon_ton,
         u_p.ten_san_pham,
         u_p.loai_cuon,
         u_p.mac_thep,
@@ -371,83 +373,65 @@
         FROM u_product u_p
         WHERE u_p.is_visible = TRUE
 
-        <!-- loaiTon -->
-        <if test="productFilter.loaiTon != null and productFilter.loaiTon.size > 0">
-            AND (
-            <foreach item="loaiTon" collection="productFilter.loaiTon" separator=" OR ">
-                LOWER(u_p.ten_san_pham) LIKE CONCAT('%', LOWER(#{loaiTon}), '%')
-            </foreach>
-            )
+        <!-- loaiTon (String) -->
+        <if test="productFilter.loaiTon != null and productFilter.loaiTon != ''">
+            AND LOWER(u_p.ten_san_pham) LIKE CONCAT('%', LOWER(#{productFilter.loaiTon}), '%')
         </if>
 
-        <!-- loaiHang -->
-        <if test="productFilter.loaiHang != null and productFilter.loaiHang.size > 0">
-            AND u_p.loai_cuon IN
-            <foreach item="loaiHang" collection="productFilter.loaiHang" open="(" separator="," close=")">
-                #{loaiHang}
-            </foreach>
+        <!-- loaiHang (String) -->
+        <if test="productFilter.loaiHang != null and productFilter.loaiHang != ''">
+            AND u_p.loai_cuon = #{productFilter.loaiHang}
         </if>
 
-        <!-- beMat -->
-        <if test="productFilter.beMat != null and productFilter.beMat.size > 0">
-            AND (
-            <foreach item="beMat" collection="productFilter.beMat" separator=" OR ">
-                LOWER(u_p.ten_san_pham) LIKE CONCAT('%', LOWER(#{beMat}), '%')
-            </foreach>
-            )
+        <!-- beMat (String) -->
+        <if test="productFilter.beMat != null and productFilter.beMat != ''">
+            AND LOWER(u_p.ten_san_pham) LIKE CONCAT('%', LOWER(#{productFilter.beMat}), '%')
         </if>
 
-        <!-- doMa -->
+        <!-- doMa (List<String>) -->
         <if test="productFilter.doMa != null and productFilter.doMa.size > 0">
             AND (
-            <foreach item="doMa" collection="productFilter.doMa" separator=" OR ">
-                LOWER(u_p.ten_san_pham) LIKE CONCAT('%', LOWER(#{doMa}), '%')
+            <foreach item="item" collection="productFilter.doMa" separator=" OR ">
+                LOWER(u_p.ten_san_pham) LIKE CONCAT('%', LOWER(#{item}), '%')
             </foreach>
             )
         </if>
 
-        <!-- doDay -->
-        <if test="productFilter.doDay != null and productFilter.doDay.size > 0">
-            AND (
-            <foreach item="doDay" collection="productFilter.doDay" separator=" OR ">
-                LOWER(u_p.ten_san_pham) LIKE CONCAT('%', LOWER(#{doDay}), '%')
-            </foreach>
-            )
+        <!-- doDay (String) -->
+        <if test="productFilter.doDay != null and productFilter.doDay != ''">
+            AND LOWER(u_p.ten_san_pham) LIKE CONCAT('%', LOWER(#{productFilter.doDay}), '%')
         </if>
 
-        <!-- mauSac -->
+        <!-- mauSac (List<String>) -->
         <if test="productFilter.mauSac != null and productFilter.mauSac.size > 0">
             AND (
-            <foreach item="mauSac" collection="productFilter.mauSac" separator=" OR ">
-                LOWER(u_p.ten_san_pham) LIKE CONCAT('%', LOWER(#{mauSac}), '%')
+            <foreach item="item" collection="productFilter.mauSac" separator=" OR ">
+                LOWER(u_p.ten_san_pham) LIKE CONCAT('%', LOWER(#{item}), '%')
             </foreach>
             )
         </if>
 
-        <!-- macThep -->
+        <!-- macThep (List<String>) -->
         <if test="productFilter.macThep != null and productFilter.macThep.size > 0">
             AND (
-            <foreach item="macThep" collection="productFilter.macThep" separator=" OR ">
-                LOWER(u_p.ten_san_pham) LIKE CONCAT('%', LOWER(#{macThep}), '%')
+            <foreach item="item" collection="productFilter.macThep" separator=" OR ">
+                LOWER(u_p.ten_san_pham) LIKE CONCAT('%', LOWER(#{item}), '%')
             </foreach>
             )
         </if>
 
-        <!-- khoRong -->
-        <if test="productFilter.khoRong != null and productFilter.khoRong.size > 0">
-            AND (
-            <foreach item="khoRong" collection="productFilter.khoRong" separator=" OR ">
-                LOWER(u_p.ten_san_pham) LIKE CONCAT('%', LOWER(#{khoRong}), '%')
-            </foreach>
-            )
+        <!-- khoRong (String) -->
+        <if test="productFilter.khoRong != null and productFilter.khoRong != ''">
+            AND LOWER(u_p.ten_san_pham) LIKE CONCAT('%', LOWER(#{productFilter.khoRong}), '%')
         </if>
 
-        <!-- textSearch -->
+        <!-- textSearch (String) -->
         <if test="productFilter.textSearch != null and productFilter.textSearch != ''">
             AND LOWER(u_p.ten_san_pham) LIKE CONCAT('%', LOWER(#{productFilter.textSearch}), '%')
         </if>
         )
-        SELECT u_p_q.ma_cuon_ton,
+        SELECT
+        u_p_q.ma_cuon_ton,
         u_p_q.ten_san_pham,
         u_p_q.loai_cuon,
         u_p_q.do_ma,
@@ -464,7 +448,9 @@
     </select>
 
     <select id="countFindByLoaiCuonAndTenSanPham">
-        WITH u_product_query AS (SELECT u_p.ma_cuon_ton,
+        WITH u_product_query AS (
+        SELECT
+        u_p.ma_cuon_ton,
         u_p.ten_san_pham,
         u_p.loai_cuon,
         u_p.mac_thep,
@@ -479,78 +465,59 @@
         FROM u_product u_p
         WHERE u_p.is_visible = TRUE
 
-        <!-- loaiTon -->
-        <if test="productFilter.loaiTon != null and productFilter.loaiTon.size > 0">
-            AND (
-            <foreach item="loaiTon" collection="productFilter.loaiTon" separator=" OR ">
-                LOWER(u_p.ten_san_pham) LIKE CONCAT('%', LOWER(#{loaiTon}), '%')
-            </foreach>
-            )
+        <!-- loaiTon (String) -->
+        <if test="productFilter.loaiTon != null and productFilter.loaiTon != ''">
+            AND LOWER(u_p.ten_san_pham) LIKE CONCAT('%', LOWER(#{productFilter.loaiTon}), '%')
         </if>
 
-        <!-- loaiHang -->
-        <if test="productFilter.loaiHang != null and productFilter.loaiHang.size > 0">
-            AND u_p.loai_cuon IN
-            <foreach item="loaiHang" collection="productFilter.loaiHang" open="(" separator="," close=")">
-                #{loaiHang}
-            </foreach>
+        <!-- loaiHang (String) -->
+        <if test="productFilter.loaiHang != null and productFilter.loaiHang != ''">
+            AND u_p.loai_cuon = #{productFilter.loaiHang}
         </if>
 
-        <!-- beMat -->
-        <if test="productFilter.beMat != null and productFilter.beMat.size > 0">
-            AND (
-            <foreach item="beMat" collection="productFilter.beMat" separator=" OR ">
-                LOWER(u_p.ten_san_pham) LIKE CONCAT('%', LOWER(#{beMat}), '%')
-            </foreach>
-            )
+        <!-- beMat (String) -->
+        <if test="productFilter.beMat != null and productFilter.beMat != ''">
+            AND LOWER(u_p.ten_san_pham) LIKE CONCAT('%', LOWER(#{productFilter.beMat}), '%')
         </if>
 
-        <!-- doMa -->
+        <!-- doMa (List<String>) -->
         <if test="productFilter.doMa != null and productFilter.doMa.size > 0">
             AND (
-            <foreach item="doMa" collection="productFilter.doMa" separator=" OR ">
-                LOWER(u_p.ten_san_pham) LIKE CONCAT('%', LOWER(#{doMa}), '%')
+            <foreach item="item" collection="productFilter.doMa" separator=" OR ">
+                LOWER(u_p.ten_san_pham) LIKE CONCAT('%', LOWER(#{item}), '%')
             </foreach>
             )
         </if>
 
-        <!-- doDay -->
-        <if test="productFilter.doDay != null and productFilter.doDay.size > 0">
-            AND (
-            <foreach item="doDay" collection="productFilter.doDay" separator=" OR ">
-                LOWER(u_p.ten_san_pham) LIKE CONCAT('%', LOWER(#{doDay}), '%')
-            </foreach>
-            )
+        <!-- doDay (String) -->
+        <if test="productFilter.doDay != null and productFilter.doDay != ''">
+            AND LOWER(u_p.ten_san_pham) LIKE CONCAT('%', LOWER(#{productFilter.doDay}), '%')
         </if>
 
-        <!-- mauSac -->
+        <!-- mauSac (List<String>) -->
         <if test="productFilter.mauSac != null and productFilter.mauSac.size > 0">
             AND (
-            <foreach item="mauSac" collection="productFilter.mauSac" separator=" OR ">
-                LOWER(u_p.ten_san_pham) LIKE CONCAT('%', LOWER(#{mauSac}), '%')
+            <foreach item="item" collection="productFilter.mauSac" separator=" OR ">
+                LOWER(u_p.ten_san_pham) LIKE CONCAT('%', LOWER(#{item}), '%')
             </foreach>
             )
         </if>
 
-        <!-- macThep -->
+        <!-- macThep (List<String>) -->
         <if test="productFilter.macThep != null and productFilter.macThep.size > 0">
             AND (
-            <foreach item="macThep" collection="productFilter.macThep" separator=" OR ">
-                LOWER(u_p.ten_san_pham) LIKE CONCAT('%', LOWER(#{macThep}), '%')
+            <foreach item="item" collection="productFilter.macThep" separator=" OR ">
+                LOWER(u_p.ten_san_pham) LIKE CONCAT('%', LOWER(#{item}), '%')
             </foreach>
             )
         </if>
 
-        <!-- khoRong -->
-        <if test="productFilter.khoRong != null and productFilter.khoRong.size > 0">
-            AND (
-            <foreach item="khoRong" collection="productFilter.khoRong" separator=" OR ">
-                LOWER(u_p.ten_san_pham) LIKE CONCAT('%', LOWER(#{khoRong}), '%')
-            </foreach>
-            )
+        <!-- khoRong (String) -->
+        <if test="productFilter.khoRong != null and productFilter.khoRong != ''">
+            AND LOWER(u_p.ten_san_pham) LIKE CONCAT('%', LOWER(#{productFilter.khoRong}), '%')
         </if>
 
-        <!-- textSearch -->
+        <!-- textSearch (String) -->
         <if test="productFilter.textSearch != null and productFilter.textSearch != ''">
             AND LOWER(u_p.ten_san_pham) LIKE CONCAT('%', LOWER(#{productFilter.textSearch}), '%')
         </if>
