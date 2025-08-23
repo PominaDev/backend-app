@@ -9,21 +9,21 @@ import java.util.List;
 @Setter
 public class ProductFilter {
 
-    private String loaiTon;
+    private List<String> loaiTon;
 
-    private String loaiHang;
+    private List<String> loaiHang;
 
-    private String beMat;
+    private List<String> beMat;
 
     private List<String> doMa;
 
-    private String doDay;
+    private List<String> doDay;
 
     private List<String> mauSac;
 
     private List<String> macThep;
 
-    private String khoRong;
+    private List<String> khoRong;
 
     private String textSearch;
 }

@@ -14,6 +14,7 @@ import com.pomina.commonservices.product_warranty_activation.dto.response.VProdu
 import com.pomina.commonservices.product_warranty_activation.entity.Product;
 import com.pomina.commonservices.product_warranty_activation.mapper.ProductMapper;
 import com.pomina.commonservices.product_warranty_activation.service.ProductService;
+import com.pomina.commonservices.product_warranty_activation.utils.ProductFilterValidator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
@@ -104,6 +105,10 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public PageResponse<VProductResponseDto> getProductsByFilter(PageRequest pageRequest, ProductFilter productFilter) {
+
+        // Validate productFilter
+        ProductFilterValidator.validate(productFilter);
+
         List<Product> productInfoList = productMapper.findByLoaiCuonAndTenSanPham(productFilter,
                 pageRequest.getOffset(),
                 pageRequest.getSize());
