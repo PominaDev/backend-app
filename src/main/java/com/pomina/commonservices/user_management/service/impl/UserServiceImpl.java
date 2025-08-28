@@ -67,6 +67,6 @@ public class UserServiceImpl implements UserService {
     @CustomDataSource(DataSourceType.MASTER)
     @Override
     public int delete(Integer userId) {
-        return userMapper.deleteById(userId);
+        return userMapper.softDeleteById(userId);
     }
 }

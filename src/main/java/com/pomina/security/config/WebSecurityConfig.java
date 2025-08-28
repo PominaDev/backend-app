@@ -53,6 +53,7 @@ public class WebSecurityConfig {
 
             // SERVER FRONTEND
             "http://172.16.30.49:7777",
+            "http://113.161.131.140:7777",
 
             // DEPLOYED FRONTEND
             "https://pomina-flat-steel.vercel.app",
