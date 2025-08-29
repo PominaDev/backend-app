@@ -5,4 +5,6 @@ import com.pomina.webapp.product_warranty_activation_tracking.dto.request.Activa
 public interface ProductWarrantyActivationService {
 
     Integer activateWarranty(Integer warrantyId, ActivationWarrantyRequestDto activationWarrantyRequestDto);
+
+
 }

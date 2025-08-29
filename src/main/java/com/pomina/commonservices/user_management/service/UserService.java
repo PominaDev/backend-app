@@ -5,4 +5,6 @@ import com.pomina.commonservices.user_management.dto.request.UserRequestDto;
 import com.pomina.commonservices.user_management.dto.response.UserResponseDto;
 
 public interface UserService extends BaseService<UserRequestDto, UserResponseDto, Integer> {
+
+    int active(Integer userId);
 }

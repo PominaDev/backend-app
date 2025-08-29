@@ -52,11 +52,11 @@ public class SysUserManagermentServiceImpl implements SysUserManagermentService 
     }
 
     @Override
-    public PageResponse<SysUserResponeDto> findAllPaged(Integer page, Integer size) {
+    public PageResponse<SysUserResponeDto> findAllPaged(List<String> filter, Integer page, Integer size) {
         int offset = (page - 1) * size;
 
-        List<SysUser> users = sysUserManagermentMapper.findAllPaged(size, offset);
-        int totalElements = this.countAll();
+        List<SysUser> users = sysUserManagermentMapper.findAllPaged(filter, size, offset);
+        int totalElements = sysUserManagermentMapper.countAllWithFilter(filter);
 
         if (users.isEmpty()) {
             return PageResponse.empty(page, size);
