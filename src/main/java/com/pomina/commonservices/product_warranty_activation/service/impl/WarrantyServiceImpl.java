@@ -11,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 import static com.pomina.security.config.JwtAuthentication.getCurrentUserId;
 
@@ -76,5 +77,54 @@ public class WarrantyServiceImpl implements WarrantyService {
     @Override
     public WarrantyInfoHistory getWarrantyInfoHistoryByMaCuonTon(String maCuonTon) {
         return null;
+    }
+
+
+    @Override
+    public PageResponse<WarrantyInfoHistory> filterWarrantyInfoHistory(PageRequest pageRequest, boolean forAdmin, List<String> filter, String sort) {
+        Integer userId = forAdmin ? null : getCurrentUserId();
+        String orderByClause = buildSortClause(sort);
+        // Lấy danh sách lịch sử kích hoạt bảo hành với filter
+        List<WarrantyInfoHistory> warrantyInfoHistories = warrantyMapper.filterWarrantyDetail(
+                filter,
+                orderByClause,
+                pageRequest.getOffset(),
+                pageRequest.getSize(),
+                pageRequest,
+                userId);
+
+        if (warrantyInfoHistories == null || warrantyInfoHistories.isEmpty()) {
+            return null;
+        }
+
+        // Tính tổng số lượng bản ghi
+        int totalElements = warrantyMapper.countWarrantyInfoHistory(userId, filter);
+
+        return PageResponse.createPaged(warrantyInfoHistories, pageRequest.getPage(), pageRequest.getSize(), totalElements);
+    }
+
+    private static final Map<String, String> FIELD_COLUMN_MAP = Map.of(
+            "hoVaTen", "ho_va_ten",
+            "phoneNumber", "phone_number",
+            "tenSanPham", "ten_san_pham",
+            "maCuonTon", "ma_cuon_ton",
+            "createdAt", "created_at"
+    );
+
+    private String buildSortClause(String sort) {
+        if (sort == null || sort.isBlank()) {
+            return "created_at DESC";
+        }
+        String[] parts = sort.split(":");
+        String field = parts[0];
+        String direction = parts.length > 1 ? parts[1].toUpperCase() : "ASC";
+        String column = FIELD_COLUMN_MAP.get(field);
+        if (column == null) {
+            throw new IllegalArgumentException("Invalid sort field: " + field);
+        }
+        if (!direction.equals("ASC") && !direction.equals("DESC")) {
+            direction = "ASC";
+        }
+        return column + " " + direction;
     }
 }
