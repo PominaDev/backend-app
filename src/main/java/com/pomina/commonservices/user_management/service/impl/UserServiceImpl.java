@@ -69,4 +69,10 @@ public class UserServiceImpl implements UserService {
     public int delete(Integer userId) {
         return userMapper.softDeleteById(userId);
     }
+
+    @CustomDataSource(DataSourceType.MASTER)
+    @Override
+    public int active(Integer userId) {
+        return userMapper.softDeleteById(userId);
+    }
 }

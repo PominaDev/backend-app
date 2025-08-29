@@ -61,9 +61,20 @@ public class UserController extends BaseController<UserCreateDto, UserUpdateDto,
         return ResponseHandler.success(userService.update(userId, requestDto));
     }
 
+    /**
+     * Xóa/ vô hiệu hóa tài khoản
+     */
     @Override
     @DeleteMapping("/{userId}")
     public ResponseEntity<ApiResponse<Integer>> delete(@PathVariable("userId") Integer userId) {
+        return ResponseHandler.success(userService.delete(userId));
+    }
+
+    /**
+     * Kích hoạt tài khoản đã bị xóa/ vô hiệu hóa.
+     */
+    @PutMapping("/{userId}/activation")
+    public ResponseEntity<ApiResponse<Integer>> active(@PathVariable("userId") Integer userId) {
         return ResponseHandler.success(userService.delete(userId));
     }
 }

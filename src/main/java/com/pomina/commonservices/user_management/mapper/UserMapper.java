@@ -13,4 +13,9 @@ public interface UserMapper extends BaseMapper<SysUser> {
     UserProfile getUserProfileByUserId(@Param("userId") Integer userId);
 
     int updateProfile(@Param("userId") Integer userId, @Param("userProfile") UserProfileRequestDto userProfile);
+
+    /*
+        Active (Restore) tài khoản user đã bị xóa/ vô hiệu hóa.
+     */
+    int updateIsActiveAndIsDelete(@Param("id") Integer id);
 }
