@@ -77,6 +77,11 @@ vonage:
     key: c53321d0
     secret: nGXfHZxjpoj0ZNip
 
+cloudinary:
+  cloud-name: "dqqqjxnfh"
+  api-key: "255558816145194"
+  api_secret: "gfcwesLzyJVykvcuJIHctzOOuoU"
+
 management:
   endpoints:
     web:
