@@ -3,7 +3,7 @@ spring:
     name: pomina-erp
 
   profiles:
-    active: prod
+    active: dev
 
   threads:
     virtual:
