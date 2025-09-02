@@ -83,7 +83,7 @@ services:
       - mariadb-slave
       - redis
     ports:
-      - "8080:8080"
+      - "7777:8080"
     networks:
       - replication
     environment:
