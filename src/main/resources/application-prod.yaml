@@ -1,5 +1,11 @@
 server:
-  port: 8080
+  port: 8083
+  tomcat:
+    connection-timeout: 2s
+    keep-alive-timeout: 15s
+    threads:
+      max: 50
+      min-spare: 5
 
 spring:
   datasource:
@@ -87,3 +93,23 @@ management:
   endpoint:
     health:
       show-details: always
+
+rate-limit:
+  enabled: true
+  default-limit: 100
+  default-interval: 1m  # 1 minute
+
+  # Phân cấp người dùng
+  tiers:
+    free: 100
+    pro: 500
+    enterprise: 1000
+
+  # Endpoint-specific limits
+  endpoints:
+    /api/auth/login: 10   # Chống brute force
+    /api/public: 200
+    /api/admin: 50
+
+  # Whitelist
+  whitelist-enabled: true

@@ -1,3 +1,113 @@
 server:
-  port: 8081
+  port: 8082
+  tomcat:
+    connection-timeout: 2s
+    keep-alive-timeout: 15s
 
+
+spring:
+  datasource:
+    hikari:
+      auto-commit: false
+      maximum-pool-size: 30
+      minimum-idle: 10
+      idle-timeout: 30000
+      max-lifetime: 1800000
+      connection-timeout: 30000
+      validation-timeout: 5000
+      connection-test-query: select 1 from dual
+      data-source-properties:
+        cachePrepStmts: true
+        prepStmtCacheSize: 500
+        prepStmtCacheSqlLimit: 4096
+        useServerPrepStmts: true
+        useLocalSessionState: true
+        rewriteBatchedStatements: true
+        cacheResultSetMetadata: true
+        cacheServerConfiguration: true
+        elideSetAutoCommits: true
+        maintainTimeStats: false
+        useSSL: false
+        allowPublicKeyRetrieval: true
+
+    master:
+      url: jdbc:mariadb://54.221.149.89:3333/pomina_dev_db?useUnicode=true&characterEncoding=utf8mb4&serverTimezone=Asia/Ho_Chi_Minh
+      username: root
+      password: root123
+      driver-class-name: org.mariadb.jdbc.Driver
+      type: com.zaxxer.hikari.HikariDataSource
+
+    slave:
+      url: jdbc:mariadb://54.221.149.89:3333/pomina_dev_db?useUnicode=true&characterEncoding=utf8mb4&serverTimezone=Asia/Ho_Chi_Minh
+      username: root
+      password: root123
+      driver-class-name: org.mariadb.jdbc.Driver
+      type: com.zaxxer.hikari.HikariDataSource
+
+  data:
+    redis:
+      host: redis
+      port: 6379
+      timeout: 5000
+      lettuce:
+        pool:
+          max-active: 200
+          max-idle: 50
+          min-idle: 10
+
+security:
+  jwt:
+    access-token-expiration: 900000      # 15 phút
+    refresh-token-expiration: 1296000000   # 15 ngày
+    secret-key: oB1Zvsn1261tfh0msDaGCP63l+rYq15F/O+ksyqZWe4qWqHRwvvz5pHs3qgHBhYi
+
+  encryption:
+    secret: zQ4n7A4vFq2EKL+9cUYOLrp+U6NqFpqYcghwNXYc7dI=
+
+nominatim:
+  email: minhnam1810@gmail.com
+  url: https://nominatim.openstreetmap.org
+
+google:
+  maps:
+    api-key: AIzaSyDm-BhvvCnWOUKwQeLxRNSRcfesTssRIZI
+    geocoding-url: https://maps.googleapis.com/maps/api/geocode/json
+
+vonage:
+  api:
+    key: c53321d0
+    secret: nGXfHZxjpoj0ZNip
+
+cloudinary:
+  cloud-name: "dqqqjxnfh"
+  api-key: "255558816145194"
+  api_secret: "gfcwesLzyJVykvcuJIHctzOOuoU"
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,metrics,prometheus
+  endpoint:
+    health:
+      show-details: always
+
+rate-limit:
+  enabled: true
+  default-limit: 100
+  default-interval: 1m  # 1 minute
+
+  # Phân cấp người dùng
+  tiers:
+    free: 100
+    pro: 500
+    enterprise: 1000
+
+  # Endpoint-specific limits
+  endpoints:
+    /api/auth/login: 10   # Chống brute force
+    /api/public: 200
+    /api/admin: 50
+
+  # Whitelist
+  whitelist-enabled: true
