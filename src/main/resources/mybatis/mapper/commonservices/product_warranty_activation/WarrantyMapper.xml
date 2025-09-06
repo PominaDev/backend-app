@@ -166,7 +166,9 @@
                updated_by,
                is_deleted
         FROM u_warranty
-        WHERE is_deleted = 0
+        WHERE
+            id = #{id}
+            is_deleted = 0
         LIMIT 1
     </select>
 

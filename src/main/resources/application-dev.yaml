@@ -88,6 +88,14 @@ cloudinary:
   api-key: "255558816145194"
   api_secret: "gfcwesLzyJVykvcuJIHctzOOuoU"
 
+zalo:
+  zns:
+    url:
+      send: "null"
+      refresh-token: "null"
+    app-id: "null"
+    secret-key: "null"
+
 management:
   endpoints:
     web:
