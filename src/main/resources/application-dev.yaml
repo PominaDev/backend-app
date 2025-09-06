@@ -1,5 +1,5 @@
 server:
-  port: 8081
+  port: 8080
   tomcat:
     connection-timeout: 2s
     keep-alive-timeout: 15s

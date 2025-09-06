@@ -167,8 +167,8 @@
                is_deleted
         FROM u_warranty
         WHERE
-            id = #{id}
-            is_deleted = 0
+            u_warranty_id = #{id}
+            AND is_deleted = 0
         LIMIT 1
     </select>
 
