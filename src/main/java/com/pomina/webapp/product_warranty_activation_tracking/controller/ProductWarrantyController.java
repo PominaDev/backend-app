@@ -38,7 +38,9 @@ public class ProductWarrantyController {
     @GetMapping(ApiConstants.ApiWarranty.SEARCH)
     public ResponseEntity<ApiResponse<PageResponse<WarrantyInfoHistory>>> filterWarrantyInfoHistory(@Valid @ModelAttribute PageRequest pageRequest,
                                                                                                     @RequestParam(required = false) List<String> filter,
+                                                                                                    @RequestParam(required = false) String isValid,
                                                                                                     @RequestParam(required = false) String sort) {
-        return ResponseHandler.success(warrantyService.filterWarrantyInfoHistory(pageRequest, true, filter, sort));
+        Boolean isValidBool = (isValid == null || isValid.isBlank()) ? null : Boolean.parseBoolean(isValid);
+        return ResponseHandler.success(warrantyService.filterWarrantyInfoHistory(pageRequest, true, filter, isValidBool, sort));
     }
 }

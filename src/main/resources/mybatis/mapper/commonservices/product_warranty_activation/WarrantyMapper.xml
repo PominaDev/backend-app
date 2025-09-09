@@ -382,6 +382,9 @@
                 </foreach>
                 )
             </if>
+            <if test="isValid != null">
+                AND is_valid = #{isValid}
+            </if>
         </where>
         <if test="orderByClause != null and orderByClause != ''">
             ORDER BY ${orderByClause}
@@ -396,7 +399,8 @@
         us.ho_va_ten,
         us.phone_number,
         pr.ten_san_pham,
-        pr.ma_cuon_ton
+        pr.ma_cuon_ton,
+        wr.is_valid
         FROM u_warranty wr
         LEFT JOIN u_product pr ON wr.ma_cuon_ton = pr.ma_cuon_ton
         LEFT JOIN sys_user us ON us.user_id = wr.user_id
@@ -419,8 +423,98 @@
                 </foreach>
                 )
             </if>
+            <if test="isValid != null">
+                AND is_valid = #{isValid}
+            </if>
         </where>
     </select>
+
+<!--    <select id="filterByStatus" resultMap="WarrantyInfoResultMap">-->
+<!--        WITH warranty_data AS (-->
+<!--        SELECT-->
+<!--        us.user_id,-->
+<!--        us.ho_va_ten,-->
+<!--        us.phone_number,-->
+
+<!--        pr.ma_cuon_ton,-->
+<!--        pr.ten_san_pham,-->
+<!--        pr.loai_cuon,-->
+<!--        pr.total_weight,-->
+<!--        pr.total_length,-->
+<!--        pr.m_a_length,-->
+<!--        pr.m_b_length,-->
+<!--        pr.m_c_length,-->
+
+<!--        lo.address01 AS location_account_01,-->
+<!--        lo.address02 AS location_account_02,-->
+<!--        lo.address03 AS location_account_03,-->
+<!--        lo.address04 AS location_account_04,-->
+<!--        lo.latitude  AS location_account_lat,-->
+<!--        lo.longitude AS location_account_long,-->
+
+<!--        wr.u_warranty_id,-->
+<!--        wr.address01 AS location_warranty_01,-->
+<!--        wr.address02 AS location_warranty_02,-->
+<!--        wr.address03 AS location_warranty_03,-->
+<!--        wr.address04 AS location_warranty_04,-->
+<!--        wr.latitude  AS location_warranty_lat,-->
+<!--        wr.longitude AS location_warranty_long,-->
+
+<!--        fn_convert_utc_to_tz(from_warranty_phai_mau,'+07:00') AS from_warranty_phai_mau,-->
+<!--        fn_convert_utc_to_tz(to_warranty_phai_mau,'+07:00')   AS to_warranty_phai_mau,-->
+<!--        fn_convert_utc_to_tz(from_warranty_an_mon,'+07:00')   AS from_warranty_an_mon,-->
+<!--        fn_convert_utc_to_tz(to_warranty_an_mon,'+07:00')     AS to_warranty_an_mon,-->
+
+<!--        wr.is_valid,-->
+<!--        wr.noted,-->
+<!--        wr.created_at-->
+<!--        FROM u_warranty wr-->
+<!--        LEFT JOIN u_product pr ON wr.ma_cuon_ton = pr.ma_cuon_ton-->
+<!--        LEFT JOIN sys_user us ON us.user_id = wr.user_id-->
+<!--        LEFT JOIN u_location lo ON lo.user_id = us.user_id-->
+<!--        WHERE wr.is_deleted = 0-->
+<!--        <if test="userId != null">-->
+<!--            AND wr.user_id = #{userId}-->
+<!--        </if>-->
+<!--        )-->
+<!--        SELECT *-->
+<!--        FROM warranty_data-->
+<!--        <where>-->
+<!--            <if test="isValid != null">-->
+<!--                AND is_valid = #{isValid}-->
+<!--            </if>-->
+<!--        </where>-->
+<!--        <if test="orderByClause != null and orderByClause != ''">-->
+<!--            ORDER BY ${orderByClause}-->
+<!--        </if>-->
+<!--        LIMIT #{limit} OFFSET #{offset}-->
+<!--    </select>-->
+
+<!--    <select id="countByStatus" resultType="int">-->
+<!--        WITH warranty_data AS (-->
+<!--        SELECT-->
+<!--        wr.u_warranty_id,-->
+<!--        us.ho_va_ten,-->
+<!--        us.phone_number,-->
+<!--        pr.ten_san_pham,-->
+<!--        pr.ma_cuon_ton-->
+<!--        FROM u_warranty wr-->
+<!--        LEFT JOIN u_product pr ON wr.ma_cuon_ton = pr.ma_cuon_ton-->
+<!--        LEFT JOIN sys_user us ON us.user_id = wr.user_id-->
+<!--        LEFT JOIN u_location lo ON lo.user_id = us.user_id-->
+<!--        WHERE wr.is_deleted = 0-->
+<!--        <if test="userId != null">-->
+<!--            AND wr.user_id = #{userId}-->
+<!--        </if>-->
+<!--        )-->
+<!--        SELECT COUNT(*)-->
+<!--        FROM warranty_data-->
+<!--        <where>-->
+<!--            <if test="isValid != null">-->
+<!--                AND is_valid = #{isValid}-->
+<!--            </if>-->
+<!--        </where>-->
+<!--    </select>-->
 
 
 </mapper>
