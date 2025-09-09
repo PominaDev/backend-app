@@ -81,12 +81,13 @@ public class WarrantyServiceImpl implements WarrantyService {
 
 
     @Override
-    public PageResponse<WarrantyInfoHistory> filterWarrantyInfoHistory(PageRequest pageRequest, boolean forAdmin, List<String> filter, String sort) {
+    public PageResponse<WarrantyInfoHistory> filterWarrantyInfoHistory(PageRequest pageRequest, boolean forAdmin, List<String> filter, Boolean isValid , String sort) {
         Integer userId = forAdmin ? null : getCurrentUserId();
         String orderByClause = buildSortClause(sort);
         // Lấy danh sách lịch sử kích hoạt bảo hành với filter
         List<WarrantyInfoHistory> warrantyInfoHistories = warrantyMapper.filterWarrantyDetail(
                 filter,
+                isValid,
                 orderByClause,
                 pageRequest.getOffset(),
                 pageRequest.getSize(),
@@ -98,7 +99,7 @@ public class WarrantyServiceImpl implements WarrantyService {
         }
 
         // Tính tổng số lượng bản ghi
-        int totalElements = warrantyMapper.countWarrantyInfoHistory(userId, filter);
+        int totalElements = warrantyMapper.countWarrantyInfoHistory(userId, filter, isValid);
 
         return PageResponse.createPaged(warrantyInfoHistories, pageRequest.getPage(), pageRequest.getSize(), totalElements);
     }
@@ -108,7 +109,8 @@ public class WarrantyServiceImpl implements WarrantyService {
             "phoneNumber", "phone_number",
             "tenSanPham", "ten_san_pham",
             "maCuonTon", "ma_cuon_ton",
-            "createdAt", "created_at"
+            "createdAt", "created_at",
+            "isValid", "is_valid"
     );
 
     private String buildSortClause(String sort) {

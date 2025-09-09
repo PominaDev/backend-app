@@ -382,6 +382,9 @@
                 </foreach>
                 )
             </if>
+            <if test="isValid != null">
+                AND is_valid = #{isValid}
+            </if>
         </where>
         <if test="orderByClause != null and orderByClause != ''">
             ORDER BY ${orderByClause}
@@ -396,7 +399,8 @@
         us.ho_va_ten,
         us.phone_number,
         pr.ten_san_pham,
-        pr.ma_cuon_ton
+        pr.ma_cuon_ton,
+        wr.is_valid
         FROM u_warranty wr
         LEFT JOIN u_product pr ON wr.ma_cuon_ton = pr.ma_cuon_ton
         LEFT JOIN sys_user us ON us.user_id = wr.user_id
@@ -419,8 +423,10 @@
                 </foreach>
                 )
             </if>
+            <if test="isValid != null">
+                AND is_valid = #{isValid}
+            </if>
         </where>
     </select>
-
 
 </mapper>
