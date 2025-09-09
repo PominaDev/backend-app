@@ -45,7 +45,7 @@ public class SysUserServiceImpl implements SysUserService {
     }
 
     @CustomDataSource(DataSourceType.MASTER)
-    @Transactional(rollbackFor = Exception.class, isolation = Isolation.SERIALIZABLE)
+    @Transactional(rollbackFor = Exception.class)
     @Override
     public RegisterResponse registerUser(RegisterRequest registerRequest) {
         // Kiểm tra user đã tồn tại chưa
