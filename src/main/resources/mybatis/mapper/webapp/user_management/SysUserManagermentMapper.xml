@@ -99,8 +99,8 @@
         FROM sys_user u
                  LEFT JOIN sys_role r ON u.role_id = r.id
                  LEFT JOIN u_location l ON u.user_id = l.user_id
-        WHERE user_id = #{id}
-          AND is_deleted = 0
+        WHERE u.user_id = #{id}
+          AND u.is_deleted = 0
     </select>
 
     <!-- Lấy toàn bộ user -->

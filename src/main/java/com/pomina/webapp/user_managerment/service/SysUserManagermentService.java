@@ -29,4 +29,6 @@ public interface SysUserManagermentService {
     Integer countAll();
 
     String upsert(SysUserRequestDto sysUserRequestDto);
+
+    List<SysUser> findByIds(List<Integer> ids);
 }

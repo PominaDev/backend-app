@@ -1,8 +1,12 @@
 package com.pomina.webapp.user_managerment.service.impl;
 
+import com.pomina.common.config.datasources.CustomDataSource;
+import com.pomina.common.config.datasources.DataSourceType;
 import com.pomina.common.model.PageResponse;
 import com.pomina.commonservices.location.entity.Location;
 import com.pomina.commonservices.location.mapper.LocationMapper;
+import com.pomina.commonservices.user_management.service.UserService;
+import com.pomina.commonservices.user_management.service.impl.UserServiceImpl;
 import com.pomina.webapp.user_managerment.converter.SysUserManagermentConverter;
 import com.pomina.webapp.user_managerment.dto.request.SysUserRequestDto;
 import com.pomina.webapp.user_managerment.dto.respone.SysUserResponeDto;
@@ -69,6 +73,9 @@ public class SysUserManagermentServiceImpl implements SysUserManagermentService 
 
     @Override
     public SysUser findById(Integer id) {
+        if(!ObjectUtils.isEmpty(id)){
+            return sysUserManagermentMapper.findById(id);
+        }
         return null;
     }
 
@@ -192,5 +199,22 @@ public class SysUserManagermentServiceImpl implements SysUserManagermentService 
                 .fullAddress(sysUserRequestDto.getAddress01() + ", " + sysUserRequestDto.getAddress02()
                         + ", " + sysUserRequestDto.getAddress03() + ", " + sysUserRequestDto.getAddress04() + ", " + sysUserRequestDto.getAddress05())
                 .build();
+    }
+
+    @CustomDataSource(DataSourceType.SLAVE)
+    @Override
+    public List<SysUser> findByIds(List<Integer> ids) {
+        if(!ObjectUtils.isEmpty(ids)){
+            List<SysUser> sysUserList = new ArrayList<>();
+            for(Integer idUser : ids){
+                SysUser user = this.findById(idUser);
+                if(!ObjectUtils.isEmpty(user)){
+                    sysUserList.add(user);
+                }
+            }
+
+            return sysUserList;
+        }
+        return List.of();
     }
 }
