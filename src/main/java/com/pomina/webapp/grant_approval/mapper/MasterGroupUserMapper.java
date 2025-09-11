@@ -16,5 +16,7 @@ public interface MasterGroupUserMapper extends BaseMapper<MasterGroupUser> {
     Integer softDeleteList(@Param("list")List<Integer> idList);
     boolean isExistByUserIdAndGroupCode(@Param("groupCode") String groupCode,@Param("userId")  Integer userId);
 
+    List<MasterGroupUser> findOrderOneUsersByGroupCode(@Param("groupCode") String groupCode);
+
 
 }

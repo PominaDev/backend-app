@@ -255,6 +255,19 @@
         WHERE is_deleted = 0
     </select>
 
+    <select id="findOrderOneUsersByGroupCode" resultMap="masterGroupUserResultMap">
+        SELECT
+            user_id,
+            master_group_user_code,
+            master_group_user_order,
+            master_group_user_name
+        FROM master_group_user
+        WHERE master_group_user_code = #{groupCode}
+          AND master_group_user_order = 1
+    </select>
+
+
+
 
 
 </mapper>

@@ -53,6 +53,7 @@ public class WarrantyInfoHistory {
     private String fromWarrantyPhaiMau;
     private String toWarrantyPhaiMau;
 
+    private String status;
     private Boolean isValid;
     private String noted;
 }
