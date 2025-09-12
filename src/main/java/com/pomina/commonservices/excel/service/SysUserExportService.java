@@ -2,6 +2,7 @@ package com.pomina.commonservices.excel.service;
 
 import com.pomina.common.utils.AuditUtil;
 import com.pomina.commonservices.entity.SysUserExport;
+import com.pomina.commonservices.user_management.service.impl.RoleServiceImpl;
 import com.pomina.security.service.SysUserService;
 import com.pomina.webapp.user_managerment.entity.SysUser;
 import com.pomina.webapp.user_managerment.service.impl.SysUserManagermentServiceImpl;
@@ -26,8 +27,11 @@ public class SysUserExportService {
     private final ExcelService excelService;
     private final SysUserManagermentServiceImpl sysUserService;
     private final SysUserManagermentServiceImpl sysUserManagermentService;
+    private final RoleServiceImpl roleService;
 
-    public void exportUsers(HttpServletResponse response, List<Integer> roleIds, List<String> filter) {
+    public void exportUsers(HttpServletResponse response, List<String> roleNames, List<String> filter) {
+        List<Integer> roleIds = roleService.findByRoleNames(roleNames).stream().map(v -> v.getId()).toList();
+
         List<SysUser> sysUserList = sysUserManagermentService.findAllFilter(filter, roleIds);
         
         // Gán STT

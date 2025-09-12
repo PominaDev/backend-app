@@ -213,6 +213,7 @@
     <!-- Lấy user có phân trang and filter -->
     <select id="findAllPaged" resultMap="SysUserResultMapFullInfo">
         WITH user_data AS (
+        -- SysUserManagermentMapper.findAllFilter
         SELECT
         u.user_id,
         u.username,
@@ -248,19 +249,29 @@
         FROM sys_user u
         LEFT JOIN sys_role r ON u.role_id = r.id
         LEFT JOIN u_location l ON u.user_id = l.user_id
-        WHERE u.is_deleted = 0
+        <where>
+            u.is_deleted = 0
+            <!-- Nếu có roleId -->
+            <if test="roleIds != null and roleIds.size > 0">
+                AND u.role_id IN
+                <foreach collection="roleIds" item="rid" open="(" separator="," close=")">
+                    #{rid}
+                </foreach>
+            </if>
 
-        <if test="filter != null and filter.size > 0">
-            AND (
-            <foreach collection="filter" item="f" separator=" OR ">
-                u.ho_va_ten LIKE CONCAT('%', #{f}, '%')
-                OR u.username LIKE CONCAT('%', #{f}, '%')
-                OR u.phone_number LIKE CONCAT('%', #{f}, '%')
-                OR r.role_name LIKE CONCAT('%', #{f}, '%')
-                OR l.full_address LIKE CONCAT('%', #{f}, '%')
-            </foreach>
-            )
-        </if>
+            <!-- Nếu có filter -->
+            <if test="filter != null and filter.size > 0">
+                AND (
+                <foreach collection="filter" item="f" separator=" OR ">
+                    u.ho_va_ten LIKE CONCAT('%', #{f}, '%')
+                    OR u.username LIKE CONCAT('%', #{f}, '%')
+                    OR u.phone_number LIKE CONCAT('%', #{f}, '%')
+                    OR r.role_name LIKE CONCAT('%', #{f}, '%')
+                    OR l.full_address LIKE CONCAT('%', #{f}, '%')
+                </foreach>
+                )
+            </if>
+        </where>
         )
         SELECT *
         FROM user_data

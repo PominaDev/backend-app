@@ -38,8 +38,8 @@ public class ExcelController {
     @GetMapping(ApiConstants.ApiExcel.EXPORT_INFORMATION_USER)
     public void exportInformationUsers(
             HttpServletResponse response,
-            @RequestParam(required = false) List<Integer> roleIds,
+            @RequestParam(required = false) List<String> roleNames,
             @RequestParam(required = false) List<String> filter) {
-        sysUserExportService.exportUsers(response, roleIds, filter);
+        sysUserExportService.exportUsers(response, roleNames, filter);
     }
 }

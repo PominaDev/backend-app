@@ -5,8 +5,7 @@ import com.pomina.common.config.datasources.DataSourceType;
 import com.pomina.common.model.PageResponse;
 import com.pomina.commonservices.location.entity.Location;
 import com.pomina.commonservices.location.mapper.LocationMapper;
-import com.pomina.commonservices.user_management.service.UserService;
-import com.pomina.commonservices.user_management.service.impl.UserServiceImpl;
+import com.pomina.commonservices.user_management.service.impl.RoleServiceImpl;
 import com.pomina.webapp.user_managerment.converter.SysUserManagermentConverter;
 import com.pomina.webapp.user_managerment.dto.request.SysUserRequestDto;
 import com.pomina.webapp.user_managerment.dto.respone.SysUserResponeDto;
@@ -32,6 +31,7 @@ public class SysUserManagermentServiceImpl implements SysUserManagermentService 
     private final SysUserManagermentConverter sysUserManagermentConverter;
     private final PasswordEncoder passwordEncoder;
     private final LocationMapper locationWebMapper;
+    private final RoleServiceImpl roleService;
 
     @Override
     public Integer deleteById(Integer id) {
@@ -56,11 +56,13 @@ public class SysUserManagermentServiceImpl implements SysUserManagermentService 
     }
 
     @Override
-    public PageResponse<SysUserResponeDto> findAllPaged(List<String> filter, Integer page, Integer size) {
+    public PageResponse<SysUserResponeDto> findAllPaged(List<String> filter, List<String> roleNames, Integer page, Integer size) {
         int offset = (page - 1) * size;
 
-        List<SysUser> users = sysUserManagermentMapper.findAllPaged(filter, size, offset);
-        int totalElements = sysUserManagermentMapper.countAllWithFilter(filter);
+        List<Integer> roleIds = roleService.findByRoleNames(roleNames).stream().map(v -> v.getId()).toList();
+
+        List<SysUser> users = sysUserManagermentMapper.findAllPaged(filter, roleIds, size, offset);
+        int totalElements = sysUserManagermentMapper.findAllFilter(filter, roleIds).size();
 
         if (users.isEmpty()) {
             return PageResponse.empty(page, size);
