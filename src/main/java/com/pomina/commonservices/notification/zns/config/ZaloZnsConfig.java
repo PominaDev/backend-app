@@ -14,7 +14,7 @@ import org.springframework.context.annotation.Configuration;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class ZaloZNSConfig {
+public class ZaloZnsConfig {
 
     @Value("${zalo.zns.url.send}")
     private String urlZaloZNS;

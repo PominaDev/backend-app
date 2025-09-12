@@ -26,6 +26,7 @@ public enum ErrorCode {
     LOCATION_NOT_FOUND("4000", "Không tìm thấy vị trí"),
     GOOGLE_API_ERROR("4001", "Lỗi từ Google Geocode API"),
     VONAGE_ERROR("4002", "Lỗi từ Vonage SMS API"),
+    ZALO_ZNS_ERROR("4003", "Lỗi từ Zalo ZNS"),
 
     // ===== 3000 - Dữ liệu không hợp lệ =====
     INVALID_PHONE_NUMBER("3000", "Sai định dạng số điện thoại"),
