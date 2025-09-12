@@ -5,6 +5,7 @@ import com.pomina.common.model.PageResponse;
 import com.pomina.webapp.user_managerment.dto.request.SysUserRequestDto;
 import com.pomina.webapp.user_managerment.dto.respone.SysUserResponeDto;
 import com.pomina.webapp.user_managerment.entity.SysUser;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -14,7 +15,7 @@ public interface SysUserManagermentService {
 
     List<SysUserResponeDto> findAll();
 
-    PageResponse<SysUserResponeDto> findAllPaged(List<String>filter, Integer page, Integer size);
+    PageResponse<SysUserResponeDto> findAllPaged(List<String> filter, List<String> roleNames, Integer page, Integer size);
 
     Boolean existsById(Integer id);
 
@@ -29,4 +30,6 @@ public interface SysUserManagermentService {
     Integer countAll();
 
     String upsert(SysUserRequestDto sysUserRequestDto);
+
+    List<SysUser> findAllFilter(List<String> filter, List<Integer> roleIds);
 }
