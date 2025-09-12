@@ -19,7 +19,10 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.InputStream;
 import java.net.URLEncoder;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -170,6 +173,15 @@ public class ExcelService {
         }
     }
 
+    /**
+     * Xuất file excel với template
+     *
+     * @param response     {@link HttpServletResponse}
+     * @param dataList     Dữ liệu cần ghi vào file excel
+     * @param templatePath Đường dẫn file template excel
+     * @param fileName     Tên file excel khi xuất
+     * @param variables    Metadata khác như: Nguời yêu cầu, thời gian xuất file
+     */
     public <T> void exportExcelWithTemplate(HttpServletResponse response,
                                             List<T> dataList,
                                             String templatePath,
@@ -210,7 +222,4 @@ public class ExcelService {
             throw new AppException(ErrorCode.EXPORT_EXCEL_FAILED);
         }
     }
-
-
-
 }

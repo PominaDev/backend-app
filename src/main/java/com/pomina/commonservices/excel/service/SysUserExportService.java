@@ -1,17 +1,15 @@
 package com.pomina.commonservices.excel.service;
 
 import com.pomina.common.utils.AuditUtil;
-import com.pomina.commonservices.entity.SysUserExport;
+import com.pomina.commonservices.excel.entity.SysUserExport;
+import com.pomina.commonservices.user_management.entity.SysRole;
 import com.pomina.commonservices.user_management.service.impl.RoleServiceImpl;
-import com.pomina.security.service.SysUserService;
 import com.pomina.webapp.user_managerment.entity.SysUser;
 import com.pomina.webapp.user_managerment.service.impl.SysUserManagermentServiceImpl;
-import com.pomina.webapp.user_managerment.service.impl.SysUserRoleWebServiceImpl;
-import com.pomina.webapp.user_role_managerment.service.impl.SysUserRoleManagermentServiceImpl;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
-import jakarta.servlet.http.HttpServletResponse;
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;
@@ -24,13 +22,21 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 public class SysUserExportService {
+
     private final ExcelService excelService;
+
     private final SysUserManagermentServiceImpl sysUserService;
+
     private final SysUserManagermentServiceImpl sysUserManagermentService;
+
     private final RoleServiceImpl roleService;
 
     public void exportUsers(HttpServletResponse response, List<String> roleNames, List<String> filter) {
-        List<Integer> roleIds = roleService.findByRoleNames(roleNames).stream().map(v -> v.getId()).toList();
+
+        List<Integer> roleIds = roleService.findByRoleNames(roleNames)
+                .stream()
+                .map(SysRole::getId)
+                .toList();
 
         List<SysUser> sysUserList = sysUserManagermentService.findAllFilter(filter, roleIds);
         
