@@ -21,7 +21,6 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
@@ -56,12 +55,17 @@ public class ZNSServiceImpl implements ZNSService {
      */
     @Override
     public ZaloZNSResponse sendZaloZNS(ZaloZNSRequest request) {
-        return sendZaloZNS(request, false);
+
+        ZaloOaToken zaloOaToken = zaloOaTokenMapper.findLatestToken();
+
+        String accessToken = zaloOaToken.getAccessToken();
+
+        return sendZaloZNS(request, accessToken, false);
     }
 
-    private ZaloZNSResponse sendZaloZNS(ZaloZNSRequest request, boolean retry) {
+    private ZaloZNSResponse sendZaloZNS(ZaloZNSRequest request, String accessToken, boolean retry) {
 
-        HttpHeaders header = buildHeaderZaloZNS();
+        HttpHeaders header = buildHeaderZaloZNS(accessToken);
 
         Map<String, Object> body = buildRequestBodyZaloZNS(request);
 
@@ -76,15 +80,18 @@ public class ZNSServiceImpl implements ZNSService {
                 || "access_token is expired or removed".equalsIgnoreCase(zaloZNSResponse.getMessage()))
                 && !retry) {
             // renew access token
-            renewAccessToken();
+            OaAccessTokenResponse oaAccessTokenResponse = renewAccessToken();
+            if (oaAccessTokenResponse != null && oaAccessTokenResponse.getAccessToken() != null) {
 
-            // Retry lại với access token mới
-            return sendZaloZNS(request, true);
-        } else if (zaloZNSResponse.getData() != null) {
-
-            // Ghi log Zalo ZNS
-            insertZaloZnsLog(request, zaloZNSResponse);
+                // Retry lại với access token mới
+                return sendZaloZNS(request, oaAccessTokenResponse.getAccessToken(), true);
+            }
+        } else if (zaloZNSResponse.getData() == null) {
+            throw new AppException(ErrorCode.ZALO_ZNS_ERROR);
         }
+
+        // Ghi log Zalo ZNS
+        insertZaloZnsLog(request, accessToken, zaloZNSResponse);
 
         return zaloZNSResponse;
     }
@@ -94,13 +101,11 @@ public class ZNSServiceImpl implements ZNSService {
      * </br>
      * Access Token có hiệu lực 25 giờ.
      * </br>
-     * Cron Job: Chạy mỗi 22 giờ một lần.
      * <a href="https://developers.zalo.me/docs/official-account/bat-dau/xac-thuc-va-uy-quyen-cho-ung-dung-new">...</a>
      *
      * @return {@link OaAccessTokenResponse}
      */
     @Override
-    @Scheduled(fixedDelay = 23 * 60 * 60 * 1000)
     public OaAccessTokenResponse renewAccessToken() {
 
         HttpHeaders header = buildHeaderOaAccessToken();
@@ -122,12 +127,12 @@ public class ZNSServiceImpl implements ZNSService {
         return oaAccessTokenResponse;
     }
 
-    private HttpHeaders buildHeaderZaloZNS() {
+    private HttpHeaders buildHeaderZaloZNS(String accessToken) {
 
         HttpHeaders header = new HttpHeaders();
 
         header.setContentType(MediaType.APPLICATION_JSON);
-        header.set("access_token", zaloOaTokenMapper.findLatestToken().getAccessToken());
+        header.set("access_token", accessToken);
 
         return header;
     }
@@ -160,6 +165,8 @@ public class ZNSServiceImpl implements ZNSService {
                 ZaloZNSResponse.class
         );
 
+        logService.logBusiness(String.valueOf(response.getBody()));
+
         if (!response.getStatusCode().is2xxSuccessful()) {
             logService.logBusiness(
                     String.format("Failed to send ZNS request. Status: %s, Body: %s",
@@ -173,10 +180,9 @@ public class ZNSServiceImpl implements ZNSService {
         return response.getBody();
     }
 
-    private void insertZaloZnsLog(ZaloZNSRequest request, ZaloZNSResponse response) {
+    private void insertZaloZnsLog(ZaloZNSRequest request, String accessToken, ZaloZNSResponse response) {
 
-        ZaloZnsLog zaloZnsLog = ZaloZnsLog.builder()
-                .accessToken(zaloOaTokenMapper.findLatestToken().getAccessToken())
+        ZaloZnsLog zaloZnsLog = ZaloZnsLog.builder().accessToken(accessToken)
                 .phone(request.getPhone())
                 .templateId(request.getTemplateId())
                 .templateData(request.getTemplateData().toString())
@@ -188,6 +194,7 @@ public class ZNSServiceImpl implements ZNSService {
                 .dailyQuota(response.getData().getQuota().getDailyQuota())
                 .remainingQuota(response.getData().getQuota().getRemainingQuota())
                 .build();
+
         zaloZnsLogMapper.insert(zaloZnsLog);
     }
 

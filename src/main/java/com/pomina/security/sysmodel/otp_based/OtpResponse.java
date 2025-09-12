@@ -10,4 +10,6 @@ import lombok.Setter;
 public class OtpResponse {
 
     private Boolean status;
+
+    private String otpToken;
 }

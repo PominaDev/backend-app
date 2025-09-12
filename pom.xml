@@ -107,12 +107,6 @@
         <!--            <artifactId>nominatim-api</artifactId>-->
         <!--            <version>3.4</version>-->
         <!--        </dependency>-->
-<!--        API Vonage to send OTP-->
-        <dependency>
-            <groupId>com.vonage</groupId>
-            <artifactId>server-sdk</artifactId>
-            <version>9.3.1</version>
-        </dependency>
         <dependency>
             <groupId>io.jsonwebtoken</groupId>
             <artifactId>jjwt</artifactId>

@@ -17,7 +17,6 @@ import javax.sql.DataSource;
         "com.pomina.commonservices.location.mapper",
         "com.pomina.commonservices.product_warranty_activation.mapper",
         "com.pomina.webapp.menu_permission.mapper",
-        "com.pomina.webapp.notification_websocket.mapper",
         "com.pomina.webapp.user_managerment.mapper",
         "com.pomina.webapp.grant_approval.mapper",
         "com.pomina.webapp.user_role_managerment.mapper",
@@ -27,6 +26,8 @@ import javax.sql.DataSource;
         "com.pomina.webapp.statistic_user_active.by_u_location.mapper",
         "com.pomina.webapp.pricing_policy_management.mapper",
         "com.pomina.commonservices.category.mapper",
+        "com.pomina.commonservices.notification.websocket.mapper",
+        "com.pomina.commonservices.notification.zns.mapper",
 })
 public class MybatisConfig {
 

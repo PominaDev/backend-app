@@ -9,7 +9,7 @@ import java.util.Map;
 @Getter
 @AllArgsConstructor
 public enum ZaloZnsTemplate {
-    ZALO_OTP("482688", Map.of("otp", "{otp}")),
+    ZALO_OTP("484909", Map.of("otp", "{otp}")),
     ;
 
     private final String templateId;
