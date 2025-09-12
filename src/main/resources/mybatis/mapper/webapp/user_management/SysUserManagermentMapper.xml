@@ -143,6 +143,73 @@
         WHERE u.is_deleted = 0
     </select>
 
+    <select id="findAllFilter" resultMap="SysUserResultMapFullInfo">
+        WITH user_data AS (
+        -- SysUserManagermentMapper.findAllFilter
+        SELECT
+        u.user_id,
+        u.username,
+        u.password,
+        u.phone_number,
+        u.ho_va_ten,
+        u.ma_so_thue,
+        u.master_location_code,
+        u.bank_name,
+        u.bank_number,
+        u.description   AS user_description,
+        u.role_id,
+        u.is_active,
+        u.old_id,
+        u.status,
+        u.noted,
+        u.created_at,
+        u.created_by,
+        u.updated_at,
+        u.updated_by,
+        u.is_deleted,
+        r.role_name,
+        r.description   AS role_description,
+        l.u_location_id AS locationId,
+        l.latitude,
+        l.longitude,
+        l.address01,
+        l.address02,
+        l.address03,
+        l.address04,
+        l.address05,
+        l.full_address  AS fullAddress
+        FROM sys_user u
+        LEFT JOIN sys_role r ON u.role_id = r.id
+        LEFT JOIN u_location l ON u.user_id = l.user_id
+        <where>
+            u.is_deleted = 0
+            <!-- Nếu có roleId -->
+            <if test="roleIds != null and roleIds.size > 0">
+                AND u.role_id IN
+                <foreach collection="roleIds" item="rid" open="(" separator="," close=")">
+                    #{rid}
+                </foreach>
+            </if>
+
+            <!-- Nếu có filter -->
+            <if test="filter != null and filter.size > 0">
+                AND (
+                <foreach collection="filter" item="f" separator=" OR ">
+                    u.ho_va_ten LIKE CONCAT('%', #{f}, '%')
+                    OR u.username LIKE CONCAT('%', #{f}, '%')
+                    OR u.phone_number LIKE CONCAT('%', #{f}, '%')
+                    OR r.role_name LIKE CONCAT('%', #{f}, '%')
+                    OR l.full_address LIKE CONCAT('%', #{f}, '%')
+                </foreach>
+                )
+            </if>
+        </where>
+        )
+        SELECT *
+        FROM user_data
+        ORDER BY created_at DESC
+    </select>
+
     <!-- Lấy user có phân trang and filter -->
     <select id="findAllPaged" resultMap="SysUserResultMapFullInfo">
         WITH user_data AS (

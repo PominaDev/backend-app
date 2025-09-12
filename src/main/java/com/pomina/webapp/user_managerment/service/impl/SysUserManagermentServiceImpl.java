@@ -203,18 +203,7 @@ public class SysUserManagermentServiceImpl implements SysUserManagermentService 
 
     @CustomDataSource(DataSourceType.SLAVE)
     @Override
-    public List<SysUser> findByIds(List<Integer> ids) {
-        if(!ObjectUtils.isEmpty(ids)){
-            List<SysUser> sysUserList = new ArrayList<>();
-            for(Integer idUser : ids){
-                SysUser user = this.findById(idUser);
-                if(!ObjectUtils.isEmpty(user)){
-                    sysUserList.add(user);
-                }
-            }
-
-            return sysUserList;
-        }
-        return List.of();
+    public List<SysUser> findAllFilter(List<String> filter, List<Integer> roleIds) {
+        return sysUserManagermentMapper.findAllFilter(filter, roleIds);
     }
 }

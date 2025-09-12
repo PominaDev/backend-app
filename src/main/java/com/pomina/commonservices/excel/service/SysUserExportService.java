@@ -25,11 +25,11 @@ import java.util.stream.Collectors;
 public class SysUserExportService {
     private final ExcelService excelService;
     private final SysUserManagermentServiceImpl sysUserService;
-    private final SysUserRoleManagermentServiceImpl sysUserRoleManagermentService;
+    private final SysUserManagermentServiceImpl sysUserManagermentService;
 
-    public void exportUsers(HttpServletResponse response, List<Integer> ids) {
-        List<SysUser> sysUserList = sysUserService.findByIds(ids);
-
+    public void exportUsers(HttpServletResponse response, List<Integer> roleIds, List<String> filter) {
+        List<SysUser> sysUserList = sysUserManagermentService.findAllFilter(filter, roleIds);
+        
         // Gán STT
         AtomicInteger counter = new AtomicInteger(1);
         List<SysUserExport> sysUserExports = sysUserList.stream()

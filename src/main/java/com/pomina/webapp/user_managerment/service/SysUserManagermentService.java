@@ -5,6 +5,7 @@ import com.pomina.common.model.PageResponse;
 import com.pomina.webapp.user_managerment.dto.request.SysUserRequestDto;
 import com.pomina.webapp.user_managerment.dto.respone.SysUserResponeDto;
 import com.pomina.webapp.user_managerment.entity.SysUser;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -30,5 +31,5 @@ public interface SysUserManagermentService {
 
     String upsert(SysUserRequestDto sysUserRequestDto);
 
-    List<SysUser> findByIds(List<Integer> ids);
+    List<SysUser> findAllFilter(List<String> filter, List<Integer> roleIds);
 }
