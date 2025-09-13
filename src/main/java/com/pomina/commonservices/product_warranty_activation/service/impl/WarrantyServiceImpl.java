@@ -1,5 +1,7 @@
 package com.pomina.commonservices.product_warranty_activation.service.impl;
 
+import com.pomina.common.config.datasources.CustomDataSource;
+import com.pomina.common.config.datasources.DataSourceType;
 import com.pomina.common.model.PageRequest;
 import com.pomina.common.model.PageResponse;
 import com.pomina.commonservices.product_warranty_activation.dto.custom_mapper.WarrantyInfoHistory;
@@ -81,13 +83,14 @@ public class WarrantyServiceImpl implements WarrantyService {
 
 
     @Override
-    public PageResponse<WarrantyInfoHistory> filterWarrantyInfoHistory(PageRequest pageRequest, boolean forAdmin, List<String> filter, Boolean isValid , String sort) {
+    public PageResponse<WarrantyInfoHistory> filterWarrantyInfoHistory(PageRequest pageRequest, boolean forAdmin, List<String> filter, Boolean isValid, String status, String sort) {
         Integer userId = forAdmin ? null : getCurrentUserId();
         String orderByClause = buildSortClause(sort);
         // Lấy danh sách lịch sử kích hoạt bảo hành với filter
         List<WarrantyInfoHistory> warrantyInfoHistories = warrantyMapper.filterWarrantyDetail(
                 filter,
                 isValid,
+                status,
                 orderByClause,
                 pageRequest.getOffset(),
                 pageRequest.getSize(),
@@ -99,7 +102,7 @@ public class WarrantyServiceImpl implements WarrantyService {
         }
 
         // Tính tổng số lượng bản ghi
-        int totalElements = warrantyMapper.countWarrantyInfoHistory(userId, filter, isValid);
+        int totalElements = warrantyMapper.countWarrantyInfoHistory(userId, filter, isValid, status);
 
         return PageResponse.createPaged(warrantyInfoHistories, pageRequest.getPage(), pageRequest.getSize(), totalElements);
     }
@@ -110,7 +113,8 @@ public class WarrantyServiceImpl implements WarrantyService {
             "tenSanPham", "ten_san_pham",
             "maCuonTon", "ma_cuon_ton",
             "createdAt", "created_at",
-            "isValid", "is_valid"
+            "isValid", "is_valid",
+            "status", "status"
     );
 
     private String buildSortClause(String sort) {
@@ -128,5 +132,12 @@ public class WarrantyServiceImpl implements WarrantyService {
             direction = "ASC";
         }
         return column + " " + direction;
+    }
+
+    @CustomDataSource(DataSourceType.SLAVE)
+    @Override
+    public List<WarrantyInfoHistory> findAllWarrantyDetailWithFilter(List<String> filter, Boolean isValid, String status, boolean forAdmin) {
+        Integer userId = forAdmin ? null : getCurrentUserId();
+        return warrantyMapper.findAllWarrantyDetailWithFilter(filter, isValid,status, userId);
     }
 }

@@ -177,6 +177,7 @@ public class ApiConstants {
         public static final String SEARCH = "/search";
         public static final String GET_ALL = "/all";
         public static final String GET_BY_GROUP_USER_CODE = "/get-by-group-user-code/{groupUserCode}";
+        public static final String GET_ORDER_ONE_USERS_BY_GROUP = "/get-order-one-users-by-group/{groupUserCode}";
 
         private ApiMasterGroupUser() {}
     }
@@ -232,6 +233,7 @@ public class ApiConstants {
     public static final class ApiExcel {
         public static final String BASE = VERSION_V1 + "/excel";
         public static final String EXPORT_INFORMATION_USER = "/export/information-users";
+        public static final String EXPORT_INFORMATION_WARRANTY = "/export/information-warranty";
 
         private ApiExcel() {}
     }

@@ -10,6 +10,7 @@ import com.pomina.webapp.grant_approval.converter.MasterGroupUserConverter;
 import com.pomina.webapp.grant_approval.dto.request.MasterGroupUserCreateDto;
 import com.pomina.webapp.grant_approval.dto.request.MasterGroupUserRequestDto;
 import com.pomina.webapp.grant_approval.dto.request.MasterGroupUserUpdateDto;
+import com.pomina.webapp.grant_approval.dto.response.MasterGroupUserOrderOneResponseDto;
 import com.pomina.webapp.grant_approval.dto.response.MasterGroupUserResponseDto;
 import com.pomina.webapp.grant_approval.service.MasterGroupUserService;
 import jakarta.validation.Valid;
@@ -93,6 +94,12 @@ public class MasterGroupUserController extends BaseController<MasterGroupUserCre
     @DeleteMapping(ApiConstants.ApiMasterGroupUser.DELETE_LIST)
     public ResponseEntity<ApiResponse<Integer>> deleteList(@RequestBody List<Integer> idList) {
         return ResponseHandler.success(masterGroupUserService.deleteList(idList));
+    }
+
+    @GetMapping(ApiConstants.ApiMasterGroupUser.GET_ORDER_ONE_USERS_BY_GROUP)
+    public ResponseEntity<ApiResponse<List<MasterGroupUserOrderOneResponseDto>>> getOrderOneUsersByGroup(
+            @PathVariable("groupUserCode") String groupUserCode) {
+        return ResponseHandler.success(masterGroupUserService.getOrderOneUsersByGroupCode(groupUserCode));
     }
 
 }

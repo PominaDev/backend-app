@@ -19,6 +19,7 @@ import java.util.List;
 @RestController
 @RequestMapping(ApiConstants.ApiWarranty.BASE)
 @RequiredArgsConstructor
+
 public class ProductWarrantyController {
 
     private final WarrantyService warrantyService;
@@ -39,8 +40,11 @@ public class ProductWarrantyController {
     public ResponseEntity<ApiResponse<PageResponse<WarrantyInfoHistory>>> filterWarrantyInfoHistory(@Valid @ModelAttribute PageRequest pageRequest,
                                                                                                     @RequestParam(required = false) List<String> filter,
                                                                                                     @RequestParam(required = false) String isValid,
+                                                                                                    @RequestParam(required = false) String status,
                                                                                                     @RequestParam(required = false) String sort) {
         Boolean isValidBool = (isValid == null || isValid.isBlank()) ? null : Boolean.parseBoolean(isValid);
-        return ResponseHandler.success(warrantyService.filterWarrantyInfoHistory(pageRequest, true, filter, isValidBool, sort));
+
+
+        return ResponseHandler.success(warrantyService.filterWarrantyInfoHistory(pageRequest, true, filter, isValidBool, status, sort));
     }
 }

@@ -2,6 +2,7 @@ package com.pomina.webapp.grant_approval.dto.response;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.pomina.common.model.BaseEntity;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -10,6 +11,7 @@ import java.util.List;
 
 @Getter
 @Setter
+@Builder
 public class MasterGroupUserResponseDto{
     private Integer masterGroupUserId;
     private String masterGroupUserCode;

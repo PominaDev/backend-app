@@ -1,6 +1,8 @@
 package com.pomina.commonservices.excel.controller;
 
 import com.pomina.common.constant.ApiConstants;
+import com.pomina.commonservices.excel.entity.WarrantyInfoHistoryExport;
+import com.pomina.commonservices.excel.service.ProductWarrantyExportService;
 import com.pomina.commonservices.excel.service.SysUserExportService;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
@@ -17,6 +19,7 @@ import java.util.List;
 public class ExcelController {
 
     private final SysUserExportService sysUserExportService;
+    private final ProductWarrantyExportService productWarrantyExportService;
 
     @GetMapping(ApiConstants.ApiExcel.EXPORT_INFORMATION_USER)
     public void exportInformationUsers(
@@ -24,5 +27,15 @@ public class ExcelController {
             @RequestParam(required = false) List<String> roleNames,
             @RequestParam(required = false) List<String> filter) {
         sysUserExportService.exportUsers(response, roleNames, filter);
+    }
+
+    @GetMapping(ApiConstants.ApiExcel.EXPORT_INFORMATION_WARRANTY)
+    public void exportInformationWarrantyUsers(
+            HttpServletResponse response,
+            @RequestParam(required = false) List<String> filter,
+            @RequestParam(required = false) Boolean isValid,
+            @RequestParam(required = false) String status
+    ) {
+        productWarrantyExportService.exportWarranty(response, isValid, filter, status, true);
     }
 }

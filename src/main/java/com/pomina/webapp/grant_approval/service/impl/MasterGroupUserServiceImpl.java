@@ -4,6 +4,7 @@ import com.pomina.common.model.PageRequest;
 import com.pomina.common.model.PageResponse;
 import com.pomina.webapp.grant_approval.converter.MasterGroupUserConverter;
 import com.pomina.webapp.grant_approval.dto.request.MasterGroupUserRequestDto;
+import com.pomina.webapp.grant_approval.dto.response.MasterGroupUserOrderOneResponseDto;
 import com.pomina.webapp.grant_approval.dto.response.MasterGroupUserResponseDto;
 import com.pomina.webapp.grant_approval.entity.MasterGroupUser;
 import com.pomina.webapp.grant_approval.mapper.MasterGroupUserMapper;
@@ -12,6 +13,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -120,5 +122,19 @@ public class MasterGroupUserServiceImpl implements MasterGroupUserService {
     @Override
     public Integer deleteList(List<Integer> idList) {
         return masterGroupUserMapper.softDeleteList(idList);
+    }
+
+    @Override
+    public List<MasterGroupUserOrderOneResponseDto> getOrderOneUsersByGroupCode(String groupCode) {
+        List<MasterGroupUser> entities = masterGroupUserMapper.findOrderOneUsersByGroupCode(groupCode);
+        return entities.stream()
+                .map(e -> MasterGroupUserOrderOneResponseDto.builder()
+                        .masterGroupUserCode(e.getMasterGroupUserCode())
+                        .masterGroupUserName(e.getMasterGroupUserName())
+                        .masterGroupUserOrder(e.getMasterGroupUserOrder())
+                        .userId(String.valueOf(e.getUserId()))
+                        .build()
+                )
+                .toList();
     }
 }

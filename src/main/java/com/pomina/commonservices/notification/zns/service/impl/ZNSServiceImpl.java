@@ -112,7 +112,7 @@ public class ZNSServiceImpl implements ZNSService {
 
         MultiValueMap<String, String> formData = buildRequestBodyOaAccessToken();
 
-        OaAccessTokenResponse oaAccessTokenResponse = sendToOaAccessTokenGateway(header, formData);
+        OaAccessTokenResponse oaAccessTokenResponse = callApiOaAccessToken(header, formData);
 
         if (oaAccessTokenResponse != null
                 && oaAccessTokenResponse.getAccessToken() != null
@@ -224,7 +224,7 @@ public class ZNSServiceImpl implements ZNSService {
         return formData;
     }
 
-    private OaAccessTokenResponse sendToOaAccessTokenGateway(HttpHeaders headers, MultiValueMap<String, String> formData) {
+    private OaAccessTokenResponse callApiOaAccessToken(HttpHeaders headers, MultiValueMap<String, String> formData) {
         HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(formData, headers);
         String url = zaloZnsConfig.getUrlRefreshToken();
 
@@ -285,8 +285,8 @@ public class ZNSServiceImpl implements ZNSService {
 
         ZaloOaToken zaloOaToken = ZaloOaToken.builder()
                 .accessToken(response.getAccessToken())
-                .refreshToken(response.getAccessToken())
-                .expiresIn(response.getAccessToken())
+                .refreshToken(response.getRefreshToken())
+                .expiresIn(response.getExpiresIn())
                 .build();
         AuditUtil.insert(zaloOaToken);
 

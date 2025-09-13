@@ -9,5 +9,7 @@ public class ActivationWarrantyRequestDto {
 
     private Boolean isValid;
 
+    private String status;
+
     private String noted;
 }
