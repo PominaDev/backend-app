@@ -49,7 +49,7 @@ public class OtpService {
 
     private final ZNSService znsService;
 
-    private static final String PREFIX = "otp_request:";
+    private static final String PREFIX = "[OTP]:";
 
     /**
      * Gửi mã OTP xác thực
@@ -88,10 +88,10 @@ public class OtpService {
         String otpToken = UUID.randomUUID().toString();
 
         // Save Redis
-        saveOtp(phoneNumber, otpToken, TimeUnit.MINUTES.toSeconds(60)); // 1 Phút
+        saveOtp(phoneNumber, otpCode, otpToken, TimeUnit.MINUTES.toSeconds(60)); // 1 Phút
 
         return OtpResponse.builder()
-                .status(true)
+                .otp(otpCode)
                 .otpToken(otpToken)
                 .build();
     }
@@ -107,8 +107,11 @@ public class OtpService {
         String phoneNumber = verifyOtpRequest.getPhoneNumber();
         String phoneNumberNormalize = PhoneUtil.normalizePhoneNumber(phoneNumber);
 
-        //Get redis
-
+        // Get Redis and verify OTP
+        boolean isVerifyStoredOtp = verifyOtpWithOtpRedis(phoneNumber, verifyOtpRequest.getOtp(), verifyOtpRequest.getOtpToken());
+        if (!isVerifyStoredOtp) {
+            throw new AppException(ErrorCode.OTP_FAILED);
+        }
 
         if (!PhoneUtil.isValidPhoneNumber(phoneNumberNormalize)) {
             throw new AppException(ErrorCode.INVALID_PHONE_NUMBER);
@@ -183,16 +186,29 @@ public class OtpService {
         return sysUser;
     }
 
+    private boolean verifyOtpWithOtpRedis(String phoneNumber, String otp, String otpToken) {
+
+        String storedOtp = getOtp(phoneNumber);
+        if (storedOtp == null) {
+            throw new AppException(ErrorCode.OTP_EXPIRED);
+        }
+
+        return storedOtp.equals(otp + otpToken);
+    }
+
     // Redis flow
-    private void saveOtp(String phoneNumber, String otpToken, long ttlSeconds) {
+    private void saveOtp(String phoneNumber, String otp, String otpToken, long ttlSeconds) {
         redisTemplate.opsForValue().set(
-                PREFIX + phoneNumber,
-                otpToken,
+                PREFIX + phoneNumber, otp + otpToken,
                 Duration.ofSeconds(ttlSeconds)
         );
     }
 
     private void deleteOtp(String phoneNumber, String otpToken) {
         redisTemplate.delete(PREFIX + phoneNumber + otpToken);
+    }
+
+    private String getOtp(String phoneNumber) {
+        return redisTemplate.opsForValue().get(PREFIX + phoneNumber);
     }
 }
