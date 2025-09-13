@@ -18,6 +18,8 @@
         <result property="dateUpload" column="date_upload"/>
         <result property="deptUpload" column="dept_upload"/>
         <result property="userUpload" column="user_upload"/>
+        <result property="urlGoogledriv" column="url_googledriv"/>
+        <result property="urlYoutube" column="url_youtube"/>
         <result property="status" column="status"/>
         <result property="note" column="noted"/>
         <result property="createdAt" column="created_at"/>
@@ -42,6 +44,8 @@
                date_upload,
                dept_upload,
                user_upload,
+               url_googledriv,
+               url_youtube,
                status,
                noted,
                created_at,
@@ -69,6 +73,8 @@
                date_upload,
                dept_upload,
                user_upload,
+               url_googledriv,
+               url_youtube,
                status,
                noted,
                created_at,
@@ -96,6 +102,8 @@
         date_upload,
         dept_upload,
         user_upload,
+        url_googledriv,
+        url_youtube,
         status,
         noted,
         created_at,
@@ -111,7 +119,7 @@
         LIMIT #{limit} OFFSET #{offset}
     </select>
 
-    <insert id="insert" useGeneratedKeys="true" keyProperty="uChinhSachParentId">
+    <insert id="insert">
         /* INSERT - u_chinh_sach_parent */
         INSERT INTO u_chinh_sach_parent (u_chinh_sach_parent_type,
                                          u_chinh_sach_parent_code,
@@ -125,6 +133,8 @@
                                          date_upload,
                                          dept_upload,
                                          user_upload,
+                                         url_googledriv,
+                                         url_youtube,
                                          status,
                                          noted,
                                          created_at,
@@ -144,6 +154,8 @@
                 #{dateUpload},
                 #{deptUpload},
                 #{userUpload},
+                #{urlGoogledriv},
+                #{urlYoutube},
                 #{status},
                 #{note},
                 #{createdAt},
@@ -156,26 +168,62 @@
     <update id="update">
         /* UPDATE - u_chinh_sach_parent */
         UPDATE u_chinh_sach_parent
-        SET u_chinh_sach_parent_type = #{uChinhSachParentType},
-            u_chinh_sach_parent_code = #{uChinhSachParentCode},
-            u_chinh_sach_parent_name = #{uChinhSachParentName},
-            user_id                  = #{userId},
-            master_group_user_code   = #{masterGroupUserCode},
-            u_day_begin              = #{uDayBegin},
-            u_day_end                = #{uDayEnd},
-            u_status                 = #{uStatus},
-            u_description            = #{uDescription},
-            date_upload              = #{dateUpload},
-            dept_upload              = #{deptUpload},
-            user_upload              = #{userUpload},
-            status                   = #{status},
-            noted                    = #{note},
-            created_at               = #{createdAt},
-            created_by               = #{createdBy},
-            updated_at               = #{updatedAt},
-            updated_by               = #{updatedBy}
+        <set>
+            <if test="uChinhSachParentType != null and uChinhSachParentType != ''">
+                u_chinh_sach_parent_type = #{uChinhSachParentType},
+            </if>
+            <if test="uChinhSachParentCode != null and uChinhSachParentCode != ''">
+                u_chinh_sach_parent_code = #{uChinhSachParentCode},
+            </if>
+            <if test="uChinhSachParentName != null and uChinhSachParentName != ''">
+                u_chinh_sach_parent_name = #{uChinhSachParentName},
+            </if>
+            <if test="userId != null">
+                user_id = #{userId},
+            </if>
+            <if test="masterGroupUserCode != null and masterGroupUserCode != ''">
+                master_group_user_code = #{masterGroupUserCode},
+            </if>
+            <if test="uDayBegin != null">
+                u_day_begin = #{uDayBegin},
+            </if>
+            <if test="uDayEnd != null">
+                u_day_end = #{uDayEnd},
+            </if>
+            <if test="uStatus != null and uStatus != ''">
+                u_status = #{uStatus},
+            </if>
+            <if test="uDescription != null and uDescription != ''">
+                u_description = #{uDescription},
+            </if>
+            <if test="dateUpload != null">
+                date_upload = #{dateUpload},
+            </if>
+            <if test="deptUpload != null and deptUpload != ''">
+                dept_upload = #{deptUpload},
+            </if>
+            <if test="userUpload != null and userUpload != ''">
+                user_upload = #{userUpload},
+            </if>
+            <if test="urlGoogledriv != null and urlGoogledriv != ''">
+                url_googledriv = #{urlGoogledriv},
+            </if>
+            <if test="urlYoutube != null and urlYoutube != ''">
+                url_youtube = #{urlYoutube},
+            </if>
+            <if test="status != null and status != ''">
+                status = #{status},
+            </if>
+            <if test="note != null and note != ''">
+                noted = #{note},
+            </if>
+            <if test="updatedBy != null and updatedBy != ''">
+                updated_by = #{updatedBy}
+            </if>
+            updated_at = NOW()
+        </set>
         WHERE u_chinh_sach_parent_id = #{uChinhSachParentId}
-          AND is_deleted = 0
+        AND is_deleted = 0
     </update>
 
     <delete id="deleteById">
@@ -222,6 +270,8 @@
         date_upload,
         dept_upload,
         user_upload,
+        url_googledriv,
+        url_youtube,
         status,
         noted,
         created_at,
@@ -244,6 +294,8 @@
             #{e.dateUpload},
             #{e.deptUpload},
             #{e.userUpload},
+            #{e.urlGoogledriv},
+            #{e.urlYoutube},
             #{e.status},
             #{e.note},
             #{e.createdAt},

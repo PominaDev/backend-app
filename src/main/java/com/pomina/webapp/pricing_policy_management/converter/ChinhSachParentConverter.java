@@ -24,6 +24,9 @@ public interface ChinhSachParentConverter extends BaseConverter<ChinhSachParentR
     // Mapping from updateDto to RequestDto
     ChinhSachParentRequestDto toChinhSachParentRequestDto(ChinhSachParentUpdateDto updateDto);
 
+    // Mapping from requestDto  to Entity
+    ChinhSachParent toEntity(ChinhSachParentRequestDto requestDto);
+
     @Mapping(target = "uChinhSachParentName", source = "tenChinhSach")
     @Mapping(target = "deptUpload", source = "phongBan")
     @Mapping(target = "userUpload", source = "nguoiLap")

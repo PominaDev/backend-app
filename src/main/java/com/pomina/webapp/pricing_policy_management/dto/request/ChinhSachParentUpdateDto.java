@@ -22,4 +22,6 @@ public class ChinhSachParentUpdateDto {
     private LocalDateTime dateUpload;
     private String deptUpload;
     private String userUpload;
+    private String urlGoogledriv;
+    private String urlYoutube;
 }
