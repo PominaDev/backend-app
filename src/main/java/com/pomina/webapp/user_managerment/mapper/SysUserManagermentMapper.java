@@ -12,7 +12,7 @@ public interface SysUserManagermentMapper {
 
     List<SysUser> findAll();
 
-    List<SysUser> findAllPaged(@Param("filter") List<String> filter, Integer limit, Integer offset);
+    List<SysUser> findAllPaged(@Param("filter") List<String> filter, @Param("roleIds") List<Integer> roIds, Integer limit, Integer offset);
 
     Integer countAllWithFilter(@Param("filter") List<String> filter);
 
@@ -31,4 +31,6 @@ public interface SysUserManagermentMapper {
     List<Integer> getListUserIdByPhoneNumber(String phoneNumber);
 
     List<Integer> findUserIdsByPhoneNumberExcludingId(String phoneNumber, String userId);
+
+    List<SysUser> findAllFilter(@Param("filter") List<String> filter, @Param("roleIds") List<Integer> roleIds);
 }

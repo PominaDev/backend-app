@@ -11,7 +11,9 @@ import com.pomina.commonservices.user_management.entity.SysRole;
 import com.pomina.commonservices.user_management.mapper.RoleMapper;
 import com.pomina.commonservices.user_management.service.RoleService;
 import org.springframework.stereotype.Service;
+import org.springframework.util.ObjectUtils;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -80,5 +82,20 @@ public class RoleServiceImpl implements RoleService {
             return roleConverter.toResponseList(roleList);
         }
         return null;
+    }
+
+    @Override
+    public List<SysRole> findByRoleNames(List<String> roleName) {
+        List<SysRole> roleListNew = new ArrayList<>();
+        List<SysRole> roleList = roleMapper.findAll();
+        if (!ObjectUtils.isEmpty(roleList) && !ObjectUtils.isEmpty(roleName)) {
+            for (SysRole sysRole : roleList) {
+                if (roleName.contains(sysRole.getRoleName())) {
+                    roleListNew.add(sysRole);
+                }
+            }
+            return roleListNew;
+        }
+        return List.of();
     }
 }

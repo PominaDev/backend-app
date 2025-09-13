@@ -7,10 +7,9 @@ import com.pomina.security.sysmodel.LoginResponse;
 import com.pomina.security.sysmodel.otp_based.OtpRequest;
 import com.pomina.security.sysmodel.otp_based.OtpResponse;
 import com.pomina.security.sysmodel.otp_based.VerifyOtpRequest;
-import com.pomina.security.sysservice.AuthService;
+import com.pomina.security.sysservice.OtpService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -22,15 +21,15 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class OtpController {
 
-    private final AuthService authService;
+    private final OtpService otpService;
 
-    @PostMapping(path = ApiConstants.ApiAuth.OTP_SEND, consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(path = ApiConstants.ApiAuth.OTP_SEND)
     public ResponseEntity<ApiResponse<OtpResponse>> sendOtp(@Valid @RequestBody OtpRequest otpRequest) {
-        return ResponseHandler.success(authService.sendOtp(otpRequest));
+        return ResponseHandler.success(otpService.sendOtp(otpRequest));
     }
 
-    @PostMapping(path = ApiConstants.ApiAuth.OTP_VERIFY, consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(path = ApiConstants.ApiAuth.OTP_VERIFY)
     public ResponseEntity<ApiResponse<LoginResponse>> verifyOtp(@Valid @RequestBody VerifyOtpRequest verifyOtpRequest) {
-        return ResponseHandler.success(authService.verifyOtp(verifyOtpRequest));
+        return ResponseHandler.success(otpService.verifyOtp(verifyOtpRequest));
     }
 }

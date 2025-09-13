@@ -223,4 +223,12 @@ public class ApiConstants {
 
         private ApiCategory() {}
     }
+
+    // Exccel
+    public static final class ApiExcel {
+        public static final String BASE = VERSION_V1 + "/excel";
+        public static final String EXPORT_INFORMATION_USER = "/export/information-users";
+
+        private ApiExcel() {}
+    }
 }

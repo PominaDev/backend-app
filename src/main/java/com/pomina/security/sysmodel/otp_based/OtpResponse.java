@@ -9,5 +9,7 @@ import lombok.Setter;
 @Builder
 public class OtpResponse {
 
-    private Boolean status;
+    private String otp;
+
+    private String otpToken;
 }

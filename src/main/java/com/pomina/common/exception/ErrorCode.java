@@ -26,6 +26,7 @@ public enum ErrorCode {
     LOCATION_NOT_FOUND("4000", "Không tìm thấy vị trí"),
     GOOGLE_API_ERROR("4001", "Lỗi từ Google Geocode API"),
     VONAGE_ERROR("4002", "Lỗi từ Vonage SMS API"),
+    ZALO_ZNS_ERROR("4003", "Lỗi từ Zalo ZNS"),
 
     // ===== 3000 - Dữ liệu không hợp lệ =====
     INVALID_PHONE_NUMBER("3000", "Sai định dạng số điện thoại"),
@@ -40,6 +41,8 @@ public enum ErrorCode {
     FILE_PROCESSING_ERROR("3102", "Failed to read file"),
     FILE_TOO_LARGE("3103", "File too LARGE"),
     INVALID_FILE_TYPE("3104", "INVALID_FILE_TYPE"),
+    EXPORT_EXCEL_FAILED("3105", "Export Excel failed"),
+    EXCEL_FILE_NOT_FOUND("3106", "Excel file not found"),
 
     // ===== 2000 - Không tìm thấy / Đã tồn tại =====
     USER_NOT_FOUND("2000", "Người dùng không tồn tại"),

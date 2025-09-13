@@ -1,7 +1,10 @@
 package com.pomina.commonservices.excel.service;
 
 import com.alibaba.excel.EasyExcel;
+import com.alibaba.excel.ExcelWriter;
 import com.alibaba.excel.context.AnalysisContext;
+import com.alibaba.excel.write.metadata.WriteSheet;
+import com.alibaba.excel.write.metadata.fill.FillWrapper;
 import com.pomina.common.exception.AppException;
 import com.pomina.common.exception.ErrorCode;
 import com.pomina.commonservices.excel.config.ExcelConfig;
@@ -14,9 +17,11 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.InputStream;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -165,6 +170,56 @@ public class ExcelService {
         } catch (Exception e) {
             log.error("Simple import Excel error: ", e);
             throw new AppException(ErrorCode.IMPORT_EXCEL_FAILED);
+        }
+    }
+
+    /**
+     * Xuất file excel với template
+     *
+     * @param response     {@link HttpServletResponse}
+     * @param dataList     Dữ liệu cần ghi vào file excel
+     * @param templatePath Đường dẫn file template excel
+     * @param fileName     Tên file excel khi xuất
+     * @param variables    Metadata khác như: Nguời yêu cầu, thời gian xuất file
+     */
+    public <T> void exportExcelWithTemplate(HttpServletResponse response,
+                                            List<T> dataList,
+                                            String templatePath,
+                                            String fileName,
+                                            Map<String, Object> variables) {
+        try {
+            response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+            response.setCharacterEncoding("utf-8");
+            String encodedFileName = URLEncoder.encode(fileName, "UTF-8").replaceAll("\\+", "%20");
+            response.setHeader("Content-disposition", "attachment;filename*=utf-8''" + encodedFileName + ".xlsx");
+
+            InputStream templateStream = this.getClass().getClassLoader().getResourceAsStream(templatePath);
+            if (templateStream == null) {
+                log.error("Excel file not found");
+                throw new AppException(ErrorCode.EXCEL_FILE_NOT_FOUND);
+            }
+
+            ExcelWriter excelWriter = EasyExcel.write(response.getOutputStream())
+                    .withTemplate(templateStream)
+                    .build();
+
+            WriteSheet writeSheet = EasyExcel.writerSheet().build();
+
+            // Fill biến đơn lẻ
+            if (variables != null && !variables.isEmpty()) {
+                excelWriter.fill(variables, writeSheet);
+            }
+
+            // Fill list data với FillWrapper
+            if (dataList != null && !dataList.isEmpty()) {
+                excelWriter.fill(new FillWrapper("list", dataList), writeSheet);
+            }
+
+            excelWriter.finish();
+
+        } catch (Exception e) {
+            log.error("Export Excel with template error: ", e);
+            throw new AppException(ErrorCode.EXPORT_EXCEL_FAILED);
         }
     }
 }
