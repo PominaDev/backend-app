@@ -27,6 +27,7 @@ public interface WarrantyService extends BaseService<WarrantyRequestDto, Warrant
             boolean forAdmin,
             List<String> filter,
             Boolean isValid,
+            String status,
             String sort
     );
 
