@@ -134,7 +134,7 @@ public class WarrantyServiceImpl implements WarrantyService {
 
     @CustomDataSource(DataSourceType.SLAVE)
     @Override
-    public List<WarrantyInfoHistory> findAllWarrantyDetailWithFilter(List<String> filter, boolean isValid, boolean forAdmin) {
+    public List<WarrantyInfoHistory> findAllWarrantyDetailWithFilter(List<String> filter, Boolean isValid, boolean forAdmin) {
         Integer userId = forAdmin ? null : getCurrentUserId();
         return warrantyMapper.findAllWarrantyDetailWithFilter(filter, isValid, userId);
     }

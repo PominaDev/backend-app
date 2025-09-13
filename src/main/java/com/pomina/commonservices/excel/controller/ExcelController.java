@@ -33,7 +33,7 @@ public class ExcelController {
     public void exportInformationWarrantyUsers(
             HttpServletResponse response,
             @RequestParam(required = false) List<String> filter,
-            @RequestParam(required = false) boolean isValid) {
+            @RequestParam(required = false) Boolean isValid) {
         productWarrantyExportService.exportWarranty(response, isValid, filter, true); ;
     }
 }

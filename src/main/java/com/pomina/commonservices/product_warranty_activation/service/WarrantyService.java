@@ -30,5 +30,5 @@ public interface WarrantyService extends BaseService<WarrantyRequestDto, Warrant
             String sort
     );
 
-    List<WarrantyInfoHistory> findAllWarrantyDetailWithFilter(List<String> filter, boolean isValid, boolean forAdmin);
+    List<WarrantyInfoHistory> findAllWarrantyDetailWithFilter(List<String> filter, Boolean isValid, boolean forAdmin);
 }
