@@ -29,8 +29,8 @@ public class ProductWarrantyExportService {
     private final ExcelService excelService;
     private final SysUserManagermentServiceImpl sysUserService;
 
-    public void exportWarranty(HttpServletResponse response, Boolean isValid, List<String> filter, boolean forAdmin){
-        List<WarrantyInfoHistory> warrantyInfoHistoryList = warrantyService.findAllWarrantyDetailWithFilter(filter, isValid, forAdmin);
+    public void exportWarranty(HttpServletResponse response, Boolean isValid, List<String> filter, String status, boolean forAdmin){
+        List<WarrantyInfoHistory> warrantyInfoHistoryList = warrantyService.findAllWarrantyDetailWithFilter(filter, isValid, status, forAdmin);
 
         // Gán STT
         AtomicInteger counter = new AtomicInteger(1);
