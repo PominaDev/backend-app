@@ -5,6 +5,7 @@ import com.pomina.common.exception.ErrorCode;
 import com.pomina.common.model.PageRequest;
 import com.pomina.common.model.PageResponse;
 import com.pomina.common.utils.AuditUtil;
+import com.pomina.security.service.SysUserService;
 import com.pomina.webapp.pricing_policy_management.converter.ChinhSachParentConverter;
 import com.pomina.webapp.pricing_policy_management.dto.request.ChinhSachParentRequestDto;
 import com.pomina.webapp.pricing_policy_management.dto.response.ChinhSachParentResponseDto;
@@ -14,7 +15,6 @@ import com.pomina.webapp.pricing_policy_management.service.ChinhSachParentServic
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.awt.desktop.AppEvent;
 import java.util.List;
 
 @Service
@@ -23,30 +23,39 @@ public class ChinhSachParentServiceImpl implements ChinhSachParentService {
 
     // Dependency injection
     private final ChinhSachParentMapper chinhSachParentMapper;
+
     private final ChinhSachParentConverter chinhSachParentConverter;
+
+    private final SysUserService sysUserService;
 
     @Override
     public int create(ChinhSachParentRequestDto dto) {
+
         // Kiểm tra nếu người dùng không truyền gì vào.
         if (dto == null) {
             throw new AppException(ErrorCode.INVALID_REQUEST);
         }
+
         ChinhSachParent chinhSachParent = chinhSachParentConverter.toEntity(dto);
-        // sey Audit trước khi insert
+
+        // set Audit trước khi insert
         AuditUtil.insert(chinhSachParent);
         return chinhSachParentMapper.insert(chinhSachParent);
     }
 
     @Override
     public int update(Integer id, ChinhSachParentRequestDto dto) {
+
         // kiem tra chinh sach can update co tồn tại không
         boolean exist  = chinhSachParentMapper.existsById(id);
         if (!exist) {
             throw new AppException(ErrorCode.POLICY_NOT_FOUND);
         }
+
         // Convert Dto to Entity && update
         ChinhSachParent chinhSachParentUpdate = chinhSachParentConverter.toEntity(dto);
         chinhSachParentUpdate.setUChinhSachParentId(id);
+
         // set Audit truoc khi update
         AuditUtil.update(chinhSachParentUpdate);
         return chinhSachParentMapper.update(chinhSachParentUpdate);

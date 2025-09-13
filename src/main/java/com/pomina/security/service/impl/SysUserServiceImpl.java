@@ -8,6 +8,7 @@ import com.pomina.common.utils.AuditUtil;
 import com.pomina.commonservices.location.dto.request.LocationRequestDto;
 import com.pomina.commonservices.location.dto.response.LocationResponseDto;
 import com.pomina.commonservices.location.service.LocationService;
+import com.pomina.security.config.JwtAuthentication;
 import com.pomina.security.mapper.SysUserMapper;
 import com.pomina.security.model.SysUser;
 import com.pomina.security.service.SysUserService;
@@ -18,7 +19,6 @@ import com.pomina.webapp.master_location_managerment.mapper.MasterLocationMapper
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Objects;
@@ -109,5 +109,16 @@ public class SysUserServiceImpl implements SysUserService {
                 .isActive(user.getIsActive())
                 .location(locationResponseDto)
                 .build();
+    }
+
+    public String getCurUsername() {
+
+        Integer userId = JwtAuthentication.getCurrentUserId();
+        if (userId == null) return "anonymous";
+
+        SysUser sysUser = userMapper.findByUserId(userId);
+        if (sysUser == null) return "anonymous";
+
+        return sysUser.getUsername();
     }
 }

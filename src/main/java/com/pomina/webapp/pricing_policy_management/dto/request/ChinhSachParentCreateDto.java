@@ -9,26 +9,39 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 public class ChinhSachParentCreateDto {
-    @JsonProperty("uChinhSachParentId")
-    private Integer uChinhSachParentId;
+
+    @JsonProperty("uChinhSachParentType")
     private String uChinhSachParentType;
+
     @JsonProperty("uChinhSachParentCode")
     private String uChinhSachParentCode;
+
     @JsonProperty("uChinhSachParentName")
     private String uChinhSachParentName;
+
     private Integer userId;
+
     private String masterGroupUserCode;
+
     @JsonProperty("uDayBegin")
     private LocalDateTime uDayBegin;
+
     @JsonProperty("uDayEnd")
     private LocalDateTime uDayEnd;
+
     @JsonProperty("uStatus")
     private String uStatus;
+
     @JsonProperty("uDescription")
     private String uDescription;
+
     private LocalDateTime dateUpload;
+
     private String deptUpload;
+
     private String userUpload;
+
     private String urlGoogledriv;
+
     private String urlYoutube;
 }

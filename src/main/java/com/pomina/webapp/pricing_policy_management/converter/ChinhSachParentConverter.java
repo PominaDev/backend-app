@@ -19,12 +19,16 @@ import java.time.format.DateTimeFormatter;
 public interface ChinhSachParentConverter extends BaseConverter<ChinhSachParentRequestDto, ChinhSachParentResponseDto, ChinhSachParent> {
 
     // Mapping from createDto to RequestDto
+    @Mapping(target = "uChinhSachParentType", source = "chinhSachParentType")
+    @Mapping(target = "uStatus", source = "statusU")
     ChinhSachParentRequestDto toChinhSachParentRequestDto(ChinhSachParentCreateDto createDto);
 
     // Mapping from updateDto to RequestDto
     ChinhSachParentRequestDto toChinhSachParentRequestDto(ChinhSachParentUpdateDto updateDto);
 
     // Mapping from requestDto  to Entity
+    @Mapping(target = "uChinhSachParentType", source = "chinhSachParentType")
+    @Mapping(target = "uStatus", source = "statusU")
     ChinhSachParent toEntity(ChinhSachParentRequestDto requestDto);
 
     @Mapping(target = "uChinhSachParentName", source = "tenChinhSach")
