@@ -3,6 +3,7 @@ package com.pomina.app.product_warranty_activation_scanning.service.impl;
 import com.pomina.app.product_warranty_activation_scanning.dto.request.ScanProductWarrantyRequestDto;
 import com.pomina.app.product_warranty_activation_scanning.dto.response.ScanProductWarrantyResponseDto;
 import com.pomina.app.product_warranty_activation_scanning.service.ScanProductWarrantyService;
+import com.pomina.common.enums.ScanProductWarrantyMessage;
 import com.pomina.common.exception.AppException;
 import com.pomina.common.exception.ErrorCode;
 import com.pomina.commonservices.location.dto.request.LocationRequestDto;
@@ -67,19 +68,23 @@ public class ScanProductWarrantyServiceImpl implements ScanProductWarrantyServic
             }
 
             warrantyInfoHistory = warrantyMapper.findWarrantyDetailByMaCuonTon(maCuonTon);
+            String message = isValidLocation ? "" : ScanProductWarrantyMessage.INVALID.getMessage();
 
             return ScanProductWarrantyResponseDto.builder()
                     .resultInserted(resultInserted)
                     .productDetailResponseDto(warrantyInfoHistory)
+                    .message(message)
                     .build();
         } else {
             // quét lần 2
             // Kiểm tra chủ sỡ hữu sản phẩm
             Integer userId = warrantyInfoHistory.getUserId();
             if (!userIdCurr.equals(userId)) throw new AppException(ErrorCode.INVALID_OWN_PRODUCT);
-
+            // nếu isValid = false (quét lần đầu không hợp lệ) -> trả message
+            String message = warrantyInfoHistory.getIsValid() ? "" : ScanProductWarrantyMessage.INVALID.getMessage();
             return ScanProductWarrantyResponseDto.builder()
                     .productDetailResponseDto(warrantyInfoHistory)
+                    .message(message)
                     .build();
         }
     }
