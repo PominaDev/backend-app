@@ -228,6 +228,7 @@ public class ApiConstants {
     public static final class ApiExcel {
         public static final String BASE = VERSION_V1 + "/excel";
         public static final String EXPORT_INFORMATION_USER = "/export/information-users";
+        public static final String EXPORT_INFORMATION_WARRANTY = "/export/information-warranty";
 
         private ApiExcel() {}
     }

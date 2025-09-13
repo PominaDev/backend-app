@@ -1,5 +1,7 @@
 package com.pomina.commonservices.product_warranty_activation.service.impl;
 
+import com.pomina.common.config.datasources.CustomDataSource;
+import com.pomina.common.config.datasources.DataSourceType;
 import com.pomina.common.model.PageRequest;
 import com.pomina.common.model.PageResponse;
 import com.pomina.commonservices.product_warranty_activation.dto.custom_mapper.WarrantyInfoHistory;
@@ -128,5 +130,12 @@ public class WarrantyServiceImpl implements WarrantyService {
             direction = "ASC";
         }
         return column + " " + direction;
+    }
+
+    @CustomDataSource(DataSourceType.SLAVE)
+    @Override
+    public List<WarrantyInfoHistory> findAllWarrantyDetailWithFilter(List<String> filter, boolean isValid, boolean forAdmin) {
+        Integer userId = forAdmin ? null : getCurrentUserId();
+        return warrantyMapper.findAllWarrantyDetailWithFilter(filter, isValid, userId);
     }
 }
