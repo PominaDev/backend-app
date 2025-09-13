@@ -264,6 +264,7 @@
         FROM master_group_user
         WHERE master_group_user_code = #{groupCode}
           AND master_group_user_order = 1
+          AND is_deleted = 0
     </select>
 
 
