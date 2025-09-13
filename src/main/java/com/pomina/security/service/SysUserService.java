@@ -10,4 +10,6 @@ public interface SysUserService {
     Optional<SysUser> findByUserName(String userName);
 
     RegisterResponse registerUser(RegisterRequest registerRequest);
+
+    String getCurUsername();
 }

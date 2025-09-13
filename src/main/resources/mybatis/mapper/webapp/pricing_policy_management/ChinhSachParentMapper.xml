@@ -218,7 +218,7 @@
                 noted = #{note},
             </if>
             <if test="updatedBy != null and updatedBy != ''">
-                updated_by = #{updatedBy}
+                updated_by = #{updatedBy},
             </if>
             updated_at = NOW()
         </set>

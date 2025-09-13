@@ -36,10 +36,20 @@ public class ChinhSachParentServiceImpl implements ChinhSachParentService {
             throw new AppException(ErrorCode.INVALID_REQUEST);
         }
 
+        // Check ngày bắt đầu phải < ngày kết thúc
+        if (dto.getDayBegin() != null && dto.getDayEnd() != null &&
+        !dto.getDayBegin().isBefore(dto.getDayEnd())) {
+            throw new AppException(ErrorCode.INVALID_DATE_RANGE);
+        }
+
         ChinhSachParent chinhSachParent = chinhSachParentConverter.toEntity(dto);
 
         // set Audit trước khi insert
         AuditUtil.insert(chinhSachParent);
+
+        // set user_upload
+        chinhSachParent.setUserUpload(sysUserService.getCurUsername());
+
         return chinhSachParentMapper.insert(chinhSachParent);
     }
 
@@ -47,9 +57,15 @@ public class ChinhSachParentServiceImpl implements ChinhSachParentService {
     public int update(Integer id, ChinhSachParentRequestDto dto) {
 
         // kiem tra chinh sach can update co tồn tại không
-        boolean exist  = chinhSachParentMapper.existsById(id);
+        boolean exist = chinhSachParentMapper.existsById(id);
         if (!exist) {
             throw new AppException(ErrorCode.POLICY_NOT_FOUND);
+        }
+
+        // Check ngày bắt đầu phải < ngày kết thúc
+        if (dto.getDayBegin() != null && dto.getDayEnd() != null &&
+        !dto.getDayBegin().isBefore(dto.getDayEnd())) {
+            throw new AppException(ErrorCode.INVALID_DATE_RANGE);
         }
 
         // Convert Dto to Entity && update
@@ -58,6 +74,7 @@ public class ChinhSachParentServiceImpl implements ChinhSachParentService {
 
         // set Audit truoc khi update
         AuditUtil.update(chinhSachParentUpdate);
+
         return chinhSachParentMapper.update(chinhSachParentUpdate);
     }
 
@@ -72,6 +89,7 @@ public class ChinhSachParentServiceImpl implements ChinhSachParentService {
 
     @Override
     public PageResponse<ChinhSachParentResponseDto> search(PageRequest pageRequest) {
+
         // lay data theo phân trang & filter
         List<ChinhSachParent> chinhSachParentList = chinhSachParentMapper.findAllPaged(
                 pageRequest.getOffset(),
@@ -80,6 +98,7 @@ public class ChinhSachParentServiceImpl implements ChinhSachParentService {
         if (chinhSachParentList == null || chinhSachParentList.isEmpty()) {
             return PageResponse.empty(pageRequest.getPage(), pageRequest.getSize());
         }
+
         // convert from dto to entity
         List<ChinhSachParentResponseDto> chinhSachParentResponse = chinhSachParentConverter.toResponseList(chinhSachParentList);
 
@@ -94,12 +113,6 @@ public class ChinhSachParentServiceImpl implements ChinhSachParentService {
 
     @Override
     public int delete(Integer id) {
-        ChinhSachParent chinhSachParent = chinhSachParentMapper.findById(id);
-        if (chinhSachParent == null) {
-            throw new AppException(ErrorCode.POLICY_NOT_FOUND);
-        }
-        // set audit
-        AuditUtil.softDelete(chinhSachParent, null);
         return chinhSachParentMapper.softDeleteById(id);
     }
 }

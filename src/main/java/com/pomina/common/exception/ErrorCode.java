@@ -35,6 +35,7 @@ public enum ErrorCode {
     INVALID_EMAIL_FORMAT("3002", "Định dạng email không hợp lệ"),
     INVALID_LAT_LONG("3003", "Tọa độ không hợp lệ"),
     INVALID_OWN_PRODUCT("3004", "Sản phẩm này không thuộc quyền sở hữu của bạn!"),
+    INVALID_DATE_RANGE("30005", "Ngày bắt đầu phải nhỏ hơn ngày kết thúc"),
 
     // ===== 3100 - Excel
     IMPORT_EXCEL_FAILED("3100", "Import Excel failed"),

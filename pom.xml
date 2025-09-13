@@ -101,7 +101,7 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-aop</artifactId>
         </dependency>
-<!--        API Nominatim for location feature-->
+        <!--        API Nominatim for location feature-->
         <!--        <dependency>-->
         <!--            <groupId>fr.dudie</groupId>-->
         <!--            <artifactId>nominatim-api</artifactId>-->
@@ -112,13 +112,13 @@
             <artifactId>jjwt</artifactId>
             <version>0.12.6</version>
         </dependency>
-<!--        API Firebase to send notification -->
+        <!--        API Firebase to send notification -->
         <dependency>
             <groupId>com.google.firebase</groupId>
             <artifactId>firebase-admin</artifactId>
             <version>9.4.3</version>
         </dependency>
-<!--        Bucket4J to Rate Limiter-->
+        <!--        Bucket4J to Rate Limiter-->
         <dependency>
             <groupId>com.github.vladimir-bukhtoyarov</groupId>
             <artifactId>bucket4j-core</artifactId>
@@ -141,13 +141,13 @@
             <artifactId>spring-dotenv</artifactId>
             <version>4.0.0</version>
         </dependency>
-<!--        Easy Excel-->
+        <!--        Easy Excel-->
         <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>easyexcel</artifactId>
             <version>4.0.3</version>
         </dependency>
-<!--        Cloudinary-->
+        <!--        Cloudinary-->
         <dependency>
             <groupId>com.cloudinary</groupId>
             <artifactId>cloudinary-http5</artifactId>
@@ -162,6 +162,16 @@
             <groupId>io.github.cdimascio</groupId>
             <artifactId>dotenv-java</artifactId>
             <version>2.2.4</version>
+        </dependency>
+        <dependency>
+            <groupId>com.jayway.jsonpath</groupId>
+            <artifactId>json-path</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+            <scope>test</scope>
         </dependency>
     </dependencies>
 

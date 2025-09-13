@@ -1,6 +1,5 @@
 package com.pomina.webapp.pricing_policy_management.dto.request;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -10,30 +9,23 @@ import java.time.LocalDateTime;
 @Setter
 public class ChinhSachParentCreateDto {
 
-    @JsonProperty("uChinhSachParentType")
-    private String uChinhSachParentType;
+    private String chinhSachParentType;
 
-    @JsonProperty("uChinhSachParentCode")
-    private String uChinhSachParentCode;
+    private String chinhSachParentCode;
 
-    @JsonProperty("uChinhSachParentName")
-    private String uChinhSachParentName;
+    private String chinhSachParentName;
 
     private Integer userId;
 
     private String masterGroupUserCode;
 
-    @JsonProperty("uDayBegin")
-    private LocalDateTime uDayBegin;
+    private LocalDateTime dayBegin;
 
-    @JsonProperty("uDayEnd")
-    private LocalDateTime uDayEnd;
+    private LocalDateTime dayEnd;
 
-    @JsonProperty("uStatus")
-    private String uStatus;
+    private String statusU;
 
-    @JsonProperty("uDescription")
-    private String uDescription;
+    private String description;
 
     private LocalDateTime dateUpload;
 

@@ -110,7 +110,7 @@ public class SysUserServiceImpl implements SysUserService {
                 .location(locationResponseDto)
                 .build();
     }
-
+    @Override
     public String getCurUsername() {
 
         Integer userId = JwtAuthentication.getCurrentUserId();
