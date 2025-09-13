@@ -1,5 +1,6 @@
 package com.pomina.commonservices.notification.zns.model.entity;
 
+import com.pomina.common.model.BaseEntity;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -11,7 +12,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class ZaloOaToken {
+public class ZaloOaToken extends BaseEntity {
 
     private Long id;
 

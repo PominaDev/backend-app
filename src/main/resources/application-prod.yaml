@@ -88,10 +88,10 @@ cloudinary:
 zalo:
   zns:
     url:
-      send: "null"
-      refresh-token: "null"
-    app-id: "null"
-    secret-key: "null"
+      send: "https://business.openapi.zalo.me/message/template"
+      refresh-token: "https://oauth.zaloapp.com/v4/oa/access_token"
+    app-id: "2874441264369477807"
+    secret-key: "mwJGZLC5KLaXIqJLUg2N"
 
 management:
   endpoints:

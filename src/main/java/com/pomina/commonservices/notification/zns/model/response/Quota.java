@@ -5,11 +5,9 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class ZaloZNSResponse {
+public class Quota {
 
-    private int error;
+    private String dailyQuota;
 
-    private String message;
-
-    private Data data;
+    private String remainingQuota;
 }
