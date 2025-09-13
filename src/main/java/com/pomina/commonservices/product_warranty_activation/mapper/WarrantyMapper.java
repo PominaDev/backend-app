@@ -22,5 +22,5 @@ public interface WarrantyMapper extends BaseMapper<Warranty> {
 
     List<WarrantyInfoHistory> filterWarrantyDetail(@Param("filter") List<String> filter, @Param("isValid") Boolean isValid, @Param("status") String status, @Param("orderByClause") String orderByClause, @Param("offset") int offset, @Param("limit") int limit, @Param("paging") PageRequest pageRequest, @Param("userId") Integer userId);
 
-    List<WarrantyInfoHistory> findAllWarrantyDetailWithFilter(@Param("filter") List<String> filter, @Param("isValid") Boolean isValid, @Param("userId") Integer userId);
+    List<WarrantyInfoHistory> findAllWarrantyDetailWithFilter(@Param("filter") List<String> filter, @Param("isValid") Boolean isValid, @Param("status") String status, @Param("userId") Integer userId);
 }

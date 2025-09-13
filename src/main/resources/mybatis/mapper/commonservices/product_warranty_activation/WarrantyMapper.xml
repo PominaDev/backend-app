@@ -403,8 +403,8 @@
     </select>
 
     <select id="findAllWarrantyDetailWithFilter" resultMap="WarrantyInfoResultMap">
-        -- findAllWarrantyDetail
         WITH warranty_data AS (
+        -- findAllWarrantyDetail
         SELECT
         us.user_id,
         us.ho_va_ten,
@@ -440,6 +440,7 @@
         fn_convert_utc_to_tz(to_warranty_an_mon,'+07:00')     AS to_warranty_an_mon,
 
         wr.is_valid,
+        wr.status,
         wr.noted,
         wr.created_at
         FROM u_warranty wr
@@ -466,6 +467,9 @@
             </if>
             <if test="isValid != null">
                 AND is_valid = #{isValid}
+            </if>
+            <if test="status != null and status != ''">
+                AND status = #{status}
             </if>
         </where>
     </select>
