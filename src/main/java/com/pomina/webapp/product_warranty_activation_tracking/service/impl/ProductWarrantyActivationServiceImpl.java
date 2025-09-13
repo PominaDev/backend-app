@@ -38,6 +38,9 @@ public class ProductWarrantyActivationServiceImpl implements ProductWarrantyActi
 
         warrantyInfo.setWarrantyId(warrantyId);
         warrantyInfo.setIsValid(activationWarrantyRequestDto.getIsValid());
+        warrantyInfo.setStatus(
+                Objects.nonNull(activationWarrantyRequestDto.getStatus()) ? activationWarrantyRequestDto.getStatus() : "Chưa xem"
+        );
         warrantyInfo.setNote(activationWarrantyRequestDto.getNoted());
 
         return warrantyMapper.update(warrantyInfo);
