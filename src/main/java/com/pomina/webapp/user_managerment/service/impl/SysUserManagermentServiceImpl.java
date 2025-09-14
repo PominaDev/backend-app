@@ -1,7 +1,5 @@
 package com.pomina.webapp.user_managerment.service.impl;
 
-import com.pomina.common.config.datasources.CustomDataSource;
-import com.pomina.common.config.datasources.DataSourceType;
 import com.pomina.common.model.PageResponse;
 import com.pomina.commonservices.location.entity.Location;
 import com.pomina.commonservices.location.mapper.LocationMapper;
@@ -203,7 +201,7 @@ public class SysUserManagermentServiceImpl implements SysUserManagermentService 
                 .build();
     }
 
-    @CustomDataSource(DataSourceType.SLAVE)
+
     @Override
     public List<SysUser> findAllFilter(List<String> filter, List<Integer> roleIds) {
         return sysUserManagermentMapper.findAllFilter(filter, roleIds);

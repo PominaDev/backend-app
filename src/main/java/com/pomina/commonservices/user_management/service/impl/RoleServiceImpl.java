@@ -1,7 +1,5 @@
 package com.pomina.commonservices.user_management.service.impl;
 
-import com.pomina.common.config.datasources.CustomDataSource;
-import com.pomina.common.config.datasources.DataSourceType;
 import com.pomina.common.model.PageRequest;
 import com.pomina.common.model.PageResponse;
 import com.pomina.commonservices.user_management.converter.RoleConverter;
@@ -29,14 +27,14 @@ public class RoleServiceImpl implements RoleService {
         this.roleConverter = roleConverter;
     }
 
-    @CustomDataSource(DataSourceType.MASTER)
+
     @Override
     public int create(RoleRequestDto dto) {
         SysRole role = roleConverter.toEntity(dto);
         return roleMapper.insert(role);
     }
 
-    @CustomDataSource(DataSourceType.MASTER)
+
     @Override
     public int update(Integer id, RoleRequestDto dto) {
         SysRole role = roleConverter.toEntity(dto);
@@ -44,14 +42,14 @@ public class RoleServiceImpl implements RoleService {
         return roleMapper.update(role);
     }
 
-    @CustomDataSource(DataSourceType.SLAVE)
+
     @Override
     public RoleResponseDto getById(Integer id) {
         SysRole role = roleMapper.findById(id);
         return role != null ? roleConverter.toResponse(role) : null;
     }
 
-    @CustomDataSource(DataSourceType.SLAVE)
+
     @Override
     public PageResponse<RoleResponseDto> search(PageRequest pageRequest) {
         List<SysRole> roleList = roleMapper.findAllPaged(pageRequest.getOffset(),
@@ -69,7 +67,7 @@ public class RoleServiceImpl implements RoleService {
         return PageResponse.createPaged(roleResponse, pageRequest.getPage(), pageRequest.getSize(), totalElements);
     }
 
-    @CustomDataSource(DataSourceType.MASTER)
+
     @Override
     public int delete(Integer id) {
         return roleMapper.deleteById(id);

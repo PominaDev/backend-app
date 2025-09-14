@@ -1,7 +1,5 @@
 package com.pomina.security.sysservice;
 
-import com.pomina.common.config.datasources.CustomDataSource;
-import com.pomina.common.config.datasources.DataSourceType;
 import com.pomina.common.exception.AppException;
 import com.pomina.common.exception.ErrorCode;
 import com.pomina.common.utils.NumberUtil;
@@ -167,12 +165,12 @@ public class OtpService {
                 .build();
     }
 
-    @CustomDataSource(DataSourceType.SLAVE)
+
     private Optional<SysUser> getSysUserByPhone(String phoneNumber) {
         return Optional.ofNullable(sysUserMapper.findByUserName(phoneNumber));
     }
 
-    @CustomDataSource(DataSourceType.MASTER)
+
     private SysUser createNewUser(String phoneNumber) {
         SysUser sysUser = new SysUser();
         sysUser.setUsername(phoneNumber);

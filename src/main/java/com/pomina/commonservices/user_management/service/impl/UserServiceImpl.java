@@ -1,7 +1,5 @@
 package com.pomina.commonservices.user_management.service.impl;
 
-import com.pomina.common.config.datasources.CustomDataSource;
-import com.pomina.common.config.datasources.DataSourceType;
 import com.pomina.common.model.PageRequest;
 import com.pomina.common.model.PageResponse;
 import com.pomina.commonservices.user_management.converter.UserConverter;
@@ -24,14 +22,14 @@ public class UserServiceImpl implements UserService {
 
     private final UserConverter userConverter;
 
-    @CustomDataSource(DataSourceType.MASTER)
+
     @Override
     public int create(UserRequestDto dto) {
         SysUser user = userConverter.toEntity(dto);
         return userMapper.insert(user);
     }
 
-    @CustomDataSource(DataSourceType.MASTER)
+
     @Override
     public int update(Integer userId, UserRequestDto dto) {
         SysUser user = userConverter.toEntity(dto);
@@ -39,14 +37,14 @@ public class UserServiceImpl implements UserService {
         return userMapper.update(user);
     }
 
-    @CustomDataSource(DataSourceType.SLAVE)
+
     @Override
     public UserResponseDto getById(Integer userId) {
         SysUser user = userMapper.findById(userId);
         return user != null ? userConverter.toResponse(user) : null;
     }
 
-    @CustomDataSource(DataSourceType.SLAVE)
+
     @Override
     public PageResponse<UserResponseDto> search(PageRequest pageRequest) {
         List<SysUser> userList = userMapper.findAllPaged(pageRequest.getOffset(),
@@ -64,13 +62,13 @@ public class UserServiceImpl implements UserService {
         return PageResponse.createPaged(userResponse, pageRequest.getPage(), pageRequest.getSize(), totalElements);
     }
 
-    @CustomDataSource(DataSourceType.MASTER)
+
     @Override
     public int delete(Integer userId) {
         return userMapper.softDeleteById(userId);
     }
 
-    @CustomDataSource(DataSourceType.MASTER)
+
     @Override
     public int active(Integer userId) {
         return userMapper.softDeleteById(userId);

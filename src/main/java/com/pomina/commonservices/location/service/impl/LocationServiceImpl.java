@@ -1,7 +1,5 @@
 package com.pomina.commonservices.location.service.impl;
 
-import com.pomina.common.config.datasources.CustomDataSource;
-import com.pomina.common.config.datasources.DataSourceType;
 import com.pomina.common.exception.AppException;
 import com.pomina.common.exception.ErrorCode;
 import com.pomina.common.model.PageRequest;
@@ -54,7 +52,7 @@ public class LocationServiceImpl implements LocationService {
         return 0;
     }
 
-    @CustomDataSource(DataSourceType.MASTER)
+
     @Override
     public LocationResponseDto registerLocation(LocationRequestDto request) {
         if (request == null) {
@@ -116,7 +114,7 @@ public class LocationServiceImpl implements LocationService {
         return part1 + " " + part2;
     }
 
-    @CustomDataSource(DataSourceType.MASTER)
+
     @Override
     public CheckLocationResponse checkLocation(LocationRequestDto request) {
         if (request == null) {

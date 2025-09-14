@@ -1,7 +1,5 @@
 package com.pomina.security.service.impl;
 
-import com.pomina.common.config.datasources.CustomDataSource;
-import com.pomina.common.config.datasources.DataSourceType;
 import com.pomina.common.exception.AppException;
 import com.pomina.common.exception.ErrorCode;
 import com.pomina.common.utils.AuditUtil;
@@ -18,7 +16,6 @@ import com.pomina.webapp.master_location_managerment.mapper.MasterLocationMapper
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Objects;
@@ -36,7 +33,7 @@ public class SysUserServiceImpl implements SysUserService {
 
     private final MasterLocationMapper masterLocationMapper;
 
-    @CustomDataSource(DataSourceType.MASTER)
+
     @Override
     public Optional<SysUser> findByUserName(String userName) {
         SysUser userLogin = userMapper.getUserLogin(userName);
@@ -44,7 +41,7 @@ public class SysUserServiceImpl implements SysUserService {
         return Optional.empty();
     }
 
-    @CustomDataSource(DataSourceType.MASTER)
+
     @Transactional(rollbackFor = Exception.class)
     @Override
     public RegisterResponse registerUser(RegisterRequest registerRequest) {
