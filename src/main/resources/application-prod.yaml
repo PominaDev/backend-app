@@ -9,7 +9,6 @@ server:
 
 spring:
   datasource:
-
     master:
       url: jdbc:mariadb://proxysql:6033/pomina_master_db?useUnicode=true&characterEncoding=utf8mb4&serverTimezone=Asia/Ho_Chi_Minh
       username: appuser
@@ -50,7 +49,7 @@ spring:
   data:
     redis:
       host: prod-redis
-      port: 7783
+      port: 6379
       timeout: 5000
       lettuce:
         pool:
