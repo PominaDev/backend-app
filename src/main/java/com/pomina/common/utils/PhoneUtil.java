@@ -17,6 +17,13 @@ public class PhoneUtil {
     }
 
     /**
+     * Kiểm tra có phải số điện thoại
+     */
+    public static boolean isPhoneNumber(String str) {
+        return str != null && str.matches("^[0-9]{10,11}$");
+    }
+
+    /**
      * Chuẩn hóa số điện thoại người dùng nhập thành định dạng E.164.
      * Hỗ trợ các định dạng như: 03XXX, 843XXX, +843XXX
      */
