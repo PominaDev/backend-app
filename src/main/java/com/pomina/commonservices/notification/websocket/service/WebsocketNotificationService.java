@@ -4,11 +4,13 @@ import com.pomina.commonservices.notification.websocket.dto.NotificationRequestD
 import com.pomina.commonservices.notification.websocket.entity.Notification;
 import com.pomina.commonservices.notification.websocket.mapper.WebsocketNotificationMapper;
 import lombok.RequiredArgsConstructor;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
+@ConditionalOnProperty(name = "spring.websocket.enabled", havingValue = "true", matchIfMissing = true)
 public class WebsocketNotificationService {
 
     private final WebsocketNotificationMapper websocketNotificationMapper;
