@@ -27,6 +27,7 @@ public enum ErrorCode {
     GOOGLE_API_ERROR("4001", "Lỗi từ Google Geocode API"),
     VONAGE_ERROR("4002", "Lỗi từ Vonage SMS API"),
     ZALO_ZNS_ERROR("4003", "Lỗi từ Zalo ZNS"),
+    INVALID_REQUEST("4000", "Yêu cầu không hợp lệ"),
 
     // ===== 3000 - Dữ liệu không hợp lệ =====
     INVALID_PHONE_NUMBER("3000", "Sai định dạng số điện thoại"),
@@ -34,6 +35,7 @@ public enum ErrorCode {
     INVALID_EMAIL_FORMAT("3002", "Định dạng email không hợp lệ"),
     INVALID_LAT_LONG("3003", "Tọa độ không hợp lệ"),
     INVALID_OWN_PRODUCT("3004", "Sản phẩm này không thuộc quyền sở hữu của bạn!"),
+    INVALID_DATE_RANGE("30005", "Ngày bắt đầu phải nhỏ hơn ngày kết thúc"),
 
     // ===== 3100 - Excel
     IMPORT_EXCEL_FAILED("3100", "Import Excel failed"),
@@ -49,6 +51,8 @@ public enum ErrorCode {
     PRODUCT_NOT_FOUND("2000", "Không tìm thấy sản phẩm"),
     WARRANTY_NOT_FOUND("2000", "Không tìm thấy thông tin bảo hành"),
     USER_LOCATION_NOT_FOUND("2000", "Không tìm thấy vị trí người dùng"),
+    POLICY_NOT_FOUND("2000", "Chính sách không tồn tại"),
+
 
     USER_EXISTED("2003", "Người dùng đã tồn tại"),
     PRODUCT_EXISTED("2000", "Sản phẩm đã tồn tại"),
