@@ -15,7 +15,6 @@ import com.pomina.commonservices.product_warranty_activation.entity.Warranty;
 import com.pomina.commonservices.product_warranty_activation.mapper.WarrantyMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
@@ -32,8 +31,7 @@ public class ScanProductWarrantyServiceImpl implements ScanProductWarrantyServic
     private final LocationService locationService;
 
     @Override
-    // TODO: Locking by Redis
-    @Transactional(rollbackFor = Exception.class, isolation = Isolation.SERIALIZABLE)
+    @Transactional(rollbackFor = Exception.class)
     public ScanProductWarrantyResponseDto activateByQrCode(ScanProductWarrantyRequestDto scanProductWarrantyRequestDto) {
 
         String maCuonTon = scanProductWarrantyRequestDto.getMaCuonTon();

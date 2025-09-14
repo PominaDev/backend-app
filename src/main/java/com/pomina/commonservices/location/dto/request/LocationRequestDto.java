@@ -30,6 +30,5 @@ public class LocationRequestDto {
     private Double longitude;
 
     @JsonIgnore
-    //Bán kính tạm thời
-    private Double radius = 2000.0;
+    private Double radius;
 }
