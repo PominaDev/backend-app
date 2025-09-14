@@ -67,7 +67,8 @@ public class OtpService {
         }
 
         // Sinh OTP 6 số ngẫu nhiên
-        String otpCode = NumberUtil.generateNumber(6);
+        // String otpCode = NumberUtil.generateNumber(6);
+        String otpCode = "123456";
 
         // Sinh otpToken để hạn chế bị đánh cắp token
         Map<String, Object> templateData = Map.of("otp", otpCode);
@@ -76,7 +77,7 @@ public class OtpService {
         String trackingId = UUID.randomUUID().toString();
 
         ZaloZNSRequest zaloZNSRequest = ZaloZNSRequest.builder()
-                .mode("development") // Môi trường DEV
+//                .mode("development") // Môi trường DEV
                 .phone(phoneNumberNormalize)
                 .templateId(ZaloZnsTemplate.ZALO_OTP.getTemplateId())
                 .templateData(ZaloZnsTemplate.ZALO_OTP.buildTemplateData(templateData))

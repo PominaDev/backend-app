@@ -6,6 +6,7 @@ import com.pomina.app.product_warranty_activation_scanning.service.ScanProductWa
 import com.pomina.common.enums.ScanProductWarrantyMessage;
 import com.pomina.common.exception.AppException;
 import com.pomina.common.exception.ErrorCode;
+import com.pomina.common.utils.PhoneUtil;
 import com.pomina.commonservices.location.dto.request.LocationRequestDto;
 import com.pomina.commonservices.location.dto.response.CheckLocationResponse;
 import com.pomina.commonservices.location.dto.response.LocationResponseDto;
@@ -43,6 +44,11 @@ public class ScanProductWarrantyServiceImpl implements ScanProductWarrantyServic
 
         WarrantyInfoHistory warrantyInfoHistory = warrantyMapper.findWarrantyDetailByMaCuonTon(maCuonTon);
         if (Objects.isNull(warrantyInfoHistory)) throw new AppException(ErrorCode.PRODUCT_NOT_FOUND);
+
+        boolean isPhoneNumber = PhoneUtil.isPhoneNumber(warrantyInfoHistory.getPhoneNumber());
+        if (!isPhoneNumber) {
+            warrantyInfoHistory.setPhoneNumber("-");
+        }
 
         // quét lần đầu
         if (Objects.isNull(warrantyInfoHistory.getFromWarrantyAnMon())) {
