@@ -63,7 +63,7 @@ spring:
 
 security:
   jwt:
-    access-token-expiration: 1296000000      # 15 phút
+    access-token-expiration: 900000      # 15 phút
     refresh-token-expiration: 1296000000   # 15 ngày
     secret-key: ${JWT_SECRET_KEY}
   encryption:
