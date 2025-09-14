@@ -9,11 +9,20 @@ server:
 
 spring:
   datasource:
-    url: jdbc:mariadb://proxysql:6033/pomina_master_db?useUnicode=true&characterEncoding=utf8mb4&serverTimezone=Asia/Ho_Chi_Minh
-    username: appuser
-    password: "app@pomina@999XxX!"
-    driver-class-name: org.mariadb.jdbc.Driver
-    type: com.zaxxer.hikari.HikariDataSource
+
+    master:
+      url: jdbc:mariadb://proxysql:6033/pomina_master_db?useUnicode=true&characterEncoding=utf8mb4&serverTimezone=Asia/Ho_Chi_Minh
+      username: appuser
+      password: 'app@pomina@999XxX!'
+      driver-class-name: org.mariadb.jdbc.Driver
+      type: com.zaxxer.hikari.HikariDataSource
+
+    slave:
+      url: jdbc:mariadb://proxysql:6033/pomina_master_db?useUnicode=true&characterEncoding=utf8mb4&serverTimezone=Asia/Ho_Chi_Minh
+      username: appuser
+      password: 'app@pomina@999XxX!'
+      driver-class-name: org.mariadb.jdbc.Driver
+      type: com.zaxxer.hikari.HikariDataSource
 
     hikari:
       auto-commit: false
