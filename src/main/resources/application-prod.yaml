@@ -40,8 +40,8 @@ spring:
 
   data:
     redis:
-      host: redis
-      port: 6379
+      host: prod-redis
+      port: 7783
       timeout: 5000
       lettuce:
         pool:
