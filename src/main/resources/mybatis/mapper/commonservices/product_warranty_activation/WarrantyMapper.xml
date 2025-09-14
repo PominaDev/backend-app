@@ -269,9 +269,6 @@
             <if test="userId != null">
                 AND wr.user_id = #{userId}
             </if>
-            <if test="status != null and status != ''">
-                AND wr.status = #{status}
-            </if>
         </where>
     </select>
 

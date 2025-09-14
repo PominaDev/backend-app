@@ -2,6 +2,7 @@ package com.pomina.commonservices.product_warranty_activation.service.impl;
 
 import com.pomina.common.config.datasources.CustomDataSource;
 import com.pomina.common.config.datasources.DataSourceType;
+import com.pomina.common.enums.ScanProductWarrantyMessage;
 import com.pomina.common.model.PageRequest;
 import com.pomina.common.model.PageResponse;
 import com.pomina.commonservices.product_warranty_activation.dto.custom_mapper.WarrantyInfoHistory;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import static com.pomina.security.config.JwtAuthentication.getCurrentUserId;
 
@@ -69,6 +71,10 @@ public class WarrantyServiceImpl implements WarrantyService {
         if (warrantyInfoHistories == null || warrantyInfoHistories.isEmpty()) {
             return null;
         }
+
+        warrantyInfoHistories.stream()
+                .filter(warranty -> !warranty.getIsValid()) // Lọc các bản ghi isValid == false
+                .forEach(warranty -> warranty.setMessage(ScanProductWarrantyMessage.INVALID.getMessage())); // Đặt message cho từng bản ghi
 
         // Tính tổng số lượng bản ghi
         int totalElements = warrantyMapper.countWarrantyDetail(userId);
