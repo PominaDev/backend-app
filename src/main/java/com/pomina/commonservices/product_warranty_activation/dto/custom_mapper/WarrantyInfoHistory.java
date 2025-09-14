@@ -56,4 +56,7 @@ public class WarrantyInfoHistory {
     private String status;
     private Boolean isValid;
     private String noted;
+
+    // message vtri quét k hợp lệ trong bán kính 2km
+    private String message;
 }
