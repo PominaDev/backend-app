@@ -36,6 +36,13 @@ build/
 #.env
 application-prod.yaml
 
+# Ignore application-test.yaml
+src/main/resources/application-test.yaml
+
+# Ignore test
+src/test/java/com/pomina/webapp/
+
+
 ### Log ###
 logs
 

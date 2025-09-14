@@ -1,5 +1,6 @@
 package com.pomina.commonservices.notification.websocket.config;
 
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.messaging.Message;
@@ -17,6 +18,7 @@ import org.springframework.web.socket.server.standard.ServletServerContainerFact
 
 @Configuration
 @EnableWebSocketMessageBroker
+@ConditionalOnProperty(name = "spring.websocket.enabled", havingValue = "true", matchIfMissing = true)
 public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
 
     @Override
