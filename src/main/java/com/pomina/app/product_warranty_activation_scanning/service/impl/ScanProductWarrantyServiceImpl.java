@@ -43,7 +43,9 @@ public class ScanProductWarrantyServiceImpl implements ScanProductWarrantyServic
         if (Objects.isNull(userIdCurr)) throw new AppException(ErrorCode.UNAUTHORIZED);
 
         WarrantyInfoHistory warrantyInfoHistory = warrantyMapper.findWarrantyDetailByMaCuonTon(maCuonTon);
-        if (Objects.isNull(warrantyInfoHistory)) throw new AppException(ErrorCode.PRODUCT_NOT_FOUND);
+        if (Objects.isNull(warrantyInfoHistory)) {
+            throw new AppException(ErrorCode.PRODUCT_NOT_FOUND);
+        }
 
         boolean isPhoneNumber = PhoneUtil.isPhoneNumber(warrantyInfoHistory.getPhoneNumber());
         if (!isPhoneNumber) {
@@ -72,12 +74,13 @@ public class ScanProductWarrantyServiceImpl implements ScanProductWarrantyServic
             }
 
             warrantyInfoHistory = warrantyMapper.findWarrantyDetailByMaCuonTon(maCuonTon);
-            String message = isValidLocation ? "" : ScanProductWarrantyMessage.INVALID.getMessage();
+
+            String message = Boolean.TRUE.equals(isValidLocation) ? "" : ScanProductWarrantyMessage.INVALID.getMessage();
+            warrantyInfoHistory.setMessage(message);
 
             return ScanProductWarrantyResponseDto.builder()
                     .resultInserted(resultInserted)
                     .productDetailResponseDto(warrantyInfoHistory)
-                    .message(message)
                     .build();
         } else {
             // quét lần 2
@@ -85,10 +88,11 @@ public class ScanProductWarrantyServiceImpl implements ScanProductWarrantyServic
             Integer userId = warrantyInfoHistory.getUserId();
             if (!userIdCurr.equals(userId)) throw new AppException(ErrorCode.INVALID_OWN_PRODUCT);
             // nếu isValid = false (quét lần đầu không hợp lệ) -> trả message
-            String message = warrantyInfoHistory.getIsValid() ? "" : ScanProductWarrantyMessage.INVALID.getMessage();
+            String message = Boolean.TRUE.equals(warrantyInfoHistory.getIsValid()) ? "" : ScanProductWarrantyMessage.INVALID.getMessage();
+            warrantyInfoHistory.setMessage(message);
+
             return ScanProductWarrantyResponseDto.builder()
                     .productDetailResponseDto(warrantyInfoHistory)
-                    .message(message)
                     .build();
         }
     }
