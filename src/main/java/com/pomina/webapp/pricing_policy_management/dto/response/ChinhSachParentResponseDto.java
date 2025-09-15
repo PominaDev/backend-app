@@ -1,5 +1,6 @@
 package com.pomina.webapp.pricing_policy_management.dto.response;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -9,25 +10,26 @@ import java.time.LocalDateTime;
 @Setter
 public class ChinhSachParentResponseDto {
 
-    private Integer chinhSachParentId;
+    private Integer uChinhSachParentId;
 
-    private String chinhSachParentType;
+    private String uChinhSachParentType;
 
-    private String chinhSachParentCode;
+    private String uChinhSachParentCode;
 
-    private String chinhSachParentName;
+    private String uChinhSachParentName;
 
     private Integer userId;
 
     private String masterGroupUserCode;
 
-    private LocalDateTime dayBegin;
+    private LocalDateTime uDayBegin;
 
-    private LocalDateTime dayEnd;
+    private LocalDateTime uDayEnd;
 
-    private String statusU;
+    private String uStatus;
 
-    private String description;
+    @JsonProperty("description")
+    private String uDescription;
 
     private LocalDateTime dateUpload;
 
