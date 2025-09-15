@@ -77,7 +77,7 @@ public class OtpService {
         String trackingId = UUID.randomUUID().toString();
 
         ZaloZNSRequest zaloZNSRequest = ZaloZNSRequest.builder()
-//                .mode("development") // Môi trường DEV
+                .mode("development") // Môi trường DEV
                 .phone(phoneNumberNormalize)
                 .templateId(ZaloZnsTemplate.ZALO_OTP.getTemplateId())
                 .templateData(ZaloZnsTemplate.ZALO_OTP.buildTemplateData(templateData))
