@@ -14,6 +14,7 @@ import com.pomina.commonservices.product_warranty_activation.dto.request.Product
 import com.pomina.commonservices.product_warranty_activation.dto.response.ProductResponseDto;
 import com.pomina.commonservices.product_warranty_activation.dto.response.VProductResponseDto;
 import com.pomina.commonservices.product_warranty_activation.service.ProductService;
+import com.pomina.commonservices.user_activity.anotation.UserAction;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -83,6 +84,7 @@ public class ProductController extends BaseController<ProductCreateDto, ProductU
 
     @Override
     @GetMapping(ApiConstants.ApiProduct.SEARCH)
+    @UserAction(actionName = "Lấy danh sách sản phẩm")
     public ResponseEntity<ApiResponse<PageResponse<ProductResponseDto>>> search(@Valid @ModelAttribute PageRequest pageRequest) {
         return ResponseHandler.success(productService.search(pageRequest));
     }

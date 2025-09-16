@@ -1,6 +1,6 @@
 package com.pomina.commonservices.user_activity.mapper;
 
-import com.pomina.commonservices.user_activity.entity.SysUserLogin;
+import com.pomina.commonservices.user_activity.model.entity.SysUserLogin;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 

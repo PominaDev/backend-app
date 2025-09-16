@@ -10,6 +10,7 @@ import com.pomina.common.model.PageRequest;
 import com.pomina.common.model.PageResponse;
 import com.pomina.commonservices.product_warranty_activation.dto.custom_mapper.WarrantyInfoHistory;
 import com.pomina.commonservices.product_warranty_activation.service.WarrantyService;
+import com.pomina.commonservices.user_activity.anotation.UserAction;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -46,6 +47,7 @@ public class ScanProductWarrantyController {
      * Có thêm sản phẩm thành công không ? và thông tin kích hoạt sản phẩm
      */
     @PostMapping(ApiConstants.ApiWarranty.ACTIVATE_BY_QR)
+    @UserAction(actionName = "Quét kích hoạt bảo hành sản phẩm")
     public ResponseEntity<ApiResponse<ScanProductWarrantyResponseDto>> activateByQrCode(@RequestBody ScanProductWarrantyRequestDto requestDto) {
         return ResponseHandler.success(scanProductWarrantyService.activateByQrCode(requestDto));
     }
@@ -60,6 +62,7 @@ public class ScanProductWarrantyController {
      * Thông tin kích hoạt sản phẩm của người dùng hiện tại
      */
     @GetMapping(ApiConstants.ApiWarranty.GET_WARRANTY_INFO_HISTORY)
+    @UserAction(actionName = "Xem lịch sử kích hoạt bản hành của người dùng hiện tại")
     public ResponseEntity<ApiResponse<PageResponse<WarrantyInfoHistory>>> getWarrantyInfoHistory(@Valid @ModelAttribute PageRequest pageRequest) {
         return ResponseHandler.success(warrantyService.getWarrantyInfoHistory(pageRequest, false));
     }

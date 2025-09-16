@@ -1,15 +1,12 @@
 package com.pomina.commonservices.user_activity.service.impl;
 
-import com.pomina.commonservices.user_activity.entity.SysUserAction;
-import com.pomina.commonservices.user_activity.entity.SysUserLogin;
+import com.pomina.common.utils.AuditUtil;
 import com.pomina.commonservices.user_activity.mapper.SysUserActionMapper;
 import com.pomina.commonservices.user_activity.mapper.SysUserLoginMapper;
+import com.pomina.commonservices.user_activity.model.dto.request.UserActionRequest;
+import com.pomina.commonservices.user_activity.model.entity.SysUserAction;
+import com.pomina.commonservices.user_activity.model.entity.SysUserLogin;
 import com.pomina.commonservices.user_activity.service.UserActivityService;
-import com.pomina.commonservices.user_activity.utils.RequestUtils;
-import com.pomina.commonservices.user_activity.utils.UAParserUtils;
-import com.pomina.security.config.JwtAuthentication;
-import com.pomina.security.service.SysUserService;
-import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
@@ -22,8 +19,6 @@ public class UserActivityServiceImpl implements UserActivityService {
 
     private final SysUserLoginMapper sysUserLoginMapper;
 
-    private final SysUserService sysUserService;
-
     @Async
     @Override
     public void logUserLogin(SysUserLogin userLogin) {
@@ -32,25 +27,19 @@ public class UserActivityServiceImpl implements UserActivityService {
 
     @Async
     @Override
-    public void logUserAction(HttpServletRequest request, String action) {
+    public void logUserAction(UserActionRequest request) {
 
         SysUserAction userAction = SysUserAction.builder()
-                .userId(JwtAuthentication.getCurrentUserId())
-                .username(sysUserService.getCurUsername())
-                .sessionId(request.getSession().getId())
-                .action(action)
-                .requestUrl(request.getRequestURI())
-                .requestMethod(request.getMethod())
-                .requestParams(RequestUtils.extractRequestParams(request))
+                .userId(request.getUserId())
+                .username(request.getUsername())
+                .sessionId(request.getSessionId())
+                .action(request.getAction())
+                .requestUrl(request.getRequestUrl())
+                .requestMethod(request.getRequestMethod())
+                .requestParams(request.getRequestParams())
                 .build();
 
-        // UA parsing
-        String userAgent = request.getHeader("User-Agent");
-        if (userAgent != null) {
-            String ua = UAParserUtils.parse(userAgent);
-            userAction.setNote(ua);
-        }
-
+        AuditUtil.insert(userAction);
         sysUserActionMapper.insert(userAction);
     }
 }

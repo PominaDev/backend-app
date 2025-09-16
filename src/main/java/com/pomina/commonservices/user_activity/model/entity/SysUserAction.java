@@ -1,4 +1,4 @@
-package com.pomina.commonservices.user_activity.entity;
+package com.pomina.commonservices.user_activity.model.entity;
 
 import com.pomina.common.model.BaseEntity;
 import lombok.AllArgsConstructor;

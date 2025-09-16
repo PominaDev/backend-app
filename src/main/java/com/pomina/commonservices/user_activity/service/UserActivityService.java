@@ -1,11 +1,11 @@
 package com.pomina.commonservices.user_activity.service;
 
-import com.pomina.commonservices.user_activity.entity.SysUserLogin;
-import jakarta.servlet.http.HttpServletRequest;
+import com.pomina.commonservices.user_activity.model.dto.request.UserActionRequest;
+import com.pomina.commonservices.user_activity.model.entity.SysUserLogin;
 
 public interface UserActivityService {
 
     void logUserLogin(SysUserLogin userLogin);
 
-    void logUserAction(HttpServletRequest request, String action);
+    void logUserAction(UserActionRequest request);
 }

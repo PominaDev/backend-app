@@ -17,7 +17,7 @@
         WHERE user_id = #{userId}
     </update>
 
-    <select id="findByUserId" resultType="com.pomina.commonservices.user_activity.entity.SysUserLogin">
+    <select id="findByUserId">
         SELECT id,
                user_id,
                username,
