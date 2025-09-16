@@ -12,4 +12,6 @@ public interface SysUserService {
     RegisterResponse registerUser(RegisterRequest registerRequest);
 
     String getCurUsername();
+
+    Integer getCurrentUserId();
 }

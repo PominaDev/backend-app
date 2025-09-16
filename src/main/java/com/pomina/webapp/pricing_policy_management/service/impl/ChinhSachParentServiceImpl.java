@@ -47,8 +47,8 @@ public class ChinhSachParentServiceImpl implements ChinhSachParentService {
         // set Audit trước khi insert
         AuditUtil.insert(chinhSachParent);
 
-        // set user_upload
-        chinhSachParent.setUserUpload(sysUserService.getCurUsername());
+        // set userId
+        chinhSachParent.setUserId(sysUserService.getCurrentUserId());
 
         return chinhSachParentMapper.insert(chinhSachParent);
     }
