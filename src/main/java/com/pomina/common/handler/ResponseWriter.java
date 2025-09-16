@@ -5,6 +5,7 @@ import com.pomina.common.exception.ErrorCode;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
 
 /**
  * Handler response error from filter authentication
@@ -27,7 +28,8 @@ public class ResponseWriter {
                 false,
                 errorCode.getMessage(),
                 code,
-                null
+                null,
+                LocalDateTime.now()
         );
 
         new ObjectMapper().writeValue(response.getWriter(), errorResponse);

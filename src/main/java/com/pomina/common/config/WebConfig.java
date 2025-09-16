@@ -1,5 +1,6 @@
 package com.pomina.common.config;
 
+import com.pomina.common.constant.ApiConstants;
 import com.pomina.commonservices.user_activity.interceptor.UserActivityInterceptor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
@@ -15,6 +16,7 @@ public class WebConfig implements WebMvcConfigurer {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(activityInterceptor)
-                .addPathPatterns("/**");
+                .addPathPatterns("/**")
+                .excludePathPatterns(ApiConstants.ApiAuthList);
     }
 }

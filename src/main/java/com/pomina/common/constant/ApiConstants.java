@@ -2,8 +2,7 @@ package com.pomina.common.constant;
 
 public class ApiConstants {
 
-    private ApiConstants() {
-    }
+    private ApiConstants() {}
 
     public static final String BASE_API = "/api";
     public static final String VERSION_V1 = BASE_API + "/v1";
@@ -20,6 +19,13 @@ public class ApiConstants {
 
         private ApiAuth() {}
     }
+
+    public static final String[] ApiAuthList = {
+            ApiAuth.BASE + ApiAuth.LOGIN,
+            ApiAuth.BASE + ApiAuth.LOGOUT,
+            ApiAuth.BASE + ApiAuth.REGISTER,
+            ApiAuth.BASE + ApiAuth.REFRESH_TOKEN
+    };
 
     public static final class ApiNotification {
         public static final String BASE = VERSION_V1 + "/notifications";
@@ -229,7 +235,6 @@ public class ApiConstants {
         private ApiCategory() {}
     }
 
-    // Exccel
     public static final class ApiExcel {
         public static final String BASE = VERSION_V1 + "/excel";
         public static final String EXPORT_INFORMATION_USER = "/export/information-users";
