@@ -1,5 +1,6 @@
-package com.pomina.webapp.sys_user_login.entity;
+package com.pomina.commonservices.user_activity.model.entity;
 
+import com.pomina.common.model.BaseEntity;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -11,23 +12,27 @@ import java.time.LocalDateTime;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class SysUserLogin {
+public class SysUserLogin extends BaseEntity {
+
     private Integer id;
+
     private Integer userId;
+
     private String username;
+
     private String fullName;
+
     private String token;
+
     private Integer action;
+
     private Integer result;
+
     private String ipAddress;
+
     private String userAgent;
+
     private LocalDateTime loginTime;
+
     private LocalDateTime logoutTime;
-    private String status;
-    private String noted;
-    private LocalDateTime createdAt;
-    private Integer createdBy;
-    private LocalDateTime updatedAt;
-    private Integer updatedBy;
-    private Boolean isDeleted;
 }
