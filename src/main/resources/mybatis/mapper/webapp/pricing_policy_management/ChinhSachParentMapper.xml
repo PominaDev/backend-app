@@ -2,7 +2,6 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.pomina.webapp.pricing_policy_management.mapper.ChinhSachParentMapper">
 
-
     <resultMap id="ChinhSachParentResultMap" type="com.pomina.webapp.pricing_policy_management.entity.ChinhSachParent">
         <!--    Base Result Map-->
         <id property="uChinhSachParentId" column="u_chinh_sach_parent_id"/>
@@ -119,7 +118,7 @@
         LIMIT #{limit} OFFSET #{offset}
     </select>
 
-    <insert id="insert">
+    <insert id="insert" useGeneratedKeys="true" keyProperty="uChinhSachParentId">
         /* INSERT - u_chinh_sach_parent */
         INSERT INTO u_chinh_sach_parent (u_chinh_sach_parent_type,
                                          u_chinh_sach_parent_code,

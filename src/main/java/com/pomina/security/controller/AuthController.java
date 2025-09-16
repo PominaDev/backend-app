@@ -39,7 +39,7 @@ public class AuthController {
     public ResponseEntity<ApiResponse<LoginResponse>> login(@RequestBody @Validated LoginRequest loginRequest,
                                                             HttpServletRequest httpServletRequest) throws AuthenticationException {
         loginRequest.setUserAgent(httpServletRequest.getHeader("User-Agent"));
-        loginRequest.setPassword(encryptionUtil.decrypt(loginRequest.getPassword()));
+        //loginRequest.setPassword(encryptionUtil.decrypt(loginRequest.getPassword()));
         return ResponseHandler.success(authService.attemptLogin(loginRequest));
     }
 
