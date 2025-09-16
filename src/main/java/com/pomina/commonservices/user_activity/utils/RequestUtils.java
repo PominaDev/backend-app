@@ -33,7 +33,7 @@ public class RequestUtils {
             byte[] buf = wrapper.getContentAsByteArray();
             if (buf.length > 0) {
                 try {
-                    return new String(buf, 0, buf.length, wrapper.getCharacterEncoding());
+                    return new String(buf, wrapper.getCharacterEncoding());
                 } catch (UnsupportedEncodingException e) {
                     return "[Unsupported Encoding]";
                 }
