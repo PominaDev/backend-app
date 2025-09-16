@@ -134,4 +134,9 @@ public class SysUserServiceImpl implements SysUserService {
 
         return sysUser.getUsername();
     }
+
+    @Override
+    public Integer getCurrentUserId() {
+        return JwtAuthentication.getCurrentUserId();
+    }
 }

@@ -43,21 +43,6 @@ public interface ChinhSachParentConverter extends BaseConverter<ChinhSachParentR
     ChinhSachParent toEntity(ChinhSachParentRequestDto requestDto);
 
     // Mapping from entity to responseDto
-    @Mapping(target = "chinhSachParentId", source = "UChinhSachParentId" )
-    @Mapping(target = "chinhSachParentType", source = "UChinhSachParentType")
-    @Mapping(target = "chinhSachParentCode", source = "UChinhSachParentCode")
-    @Mapping(target = "chinhSachParentName", source = "UChinhSachParentName")
-    @Mapping(target = "dayBegin", source = "UDayBegin")
-    @Mapping(target = "dayEnd", source = "UDayEnd")
-    @Mapping(target = "statusU", source = "UStatus")
-    @Mapping(target = "description", source = "UDescription")
-    @Mapping(target = "userId", source = "userId")
-    @Mapping(target = "masterGroupUserCode", source = "masterGroupUserCode")
-    @Mapping(target = "dateUpload", source = "dateUpload")
-    @Mapping(target = "deptUpload", source = "deptUpload")
-    @Mapping(target = "userUpload", source = "userUpload")
-    @Mapping(target = "urlGoogledriv", source = "urlGoogledriv")
-    @Mapping(target = "urlYoutube", source = "urlYoutube")
     ChinhSachParentResponseDto toResponse(ChinhSachParent entity);
 
     @Mapping(target = "uChinhSachParentName", source = "tenChinhSach")
