@@ -14,6 +14,7 @@ import com.pomina.security.sysmodel.RegisterResponse;
 import com.pomina.security.sysservice.AuthService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
+import org.apache.tomcat.websocket.AuthenticationException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -34,7 +35,7 @@ public class AuthController {
 
     @PostMapping(ApiConstants.ApiAuth.LOGIN)
     public ResponseEntity<ApiResponse<LoginResponse>> login(@RequestBody @Validated LoginRequest loginRequest,
-                                                            HttpServletRequest httpServletRequest) {
+                                                            HttpServletRequest httpServletRequest) throws AuthenticationException {
         loginRequest.setUserAgent(httpServletRequest.getHeader("User-Agent"));
         loginRequest.setPassword(encryptionUtil.decrypt(loginRequest.getPassword()));
         return ResponseHandler.success(authService.attemptLogin(loginRequest));

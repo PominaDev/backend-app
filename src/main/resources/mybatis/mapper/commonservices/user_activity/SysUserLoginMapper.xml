@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pomina.commonservices.user_activity.mapper.SysUserLoginMapper">
+
+    <insert id="insert">
+        INSERT INTO sys_user_login (user_id, username, full_name, token, action, result, ip_address, user_agent,
+                                    login_time, created_at, status, noted, created_by)
+        VALUES (#{userId}, #{username}, #{fullName}, #{token}, #{action}, #{result}, #{ipAddress}, #{userAgent},
+                #{loginTime}, #{createdAt}, #{status}, #{noted}, #{createdBy})
+    </insert>
+
+    <update id="updateLogoutTime">
+        UPDATE sys_user_login
+        SET action = #{action},
+            logout_time = #{logoutTime},
+            updated_at  = NOW()
+        WHERE user_id = #{userId}
+    </update>
+
+    <select id="findByUserId" resultType="com.pomina.commonservices.user_activity.entity.SysUserLogin">
+        SELECT id,
+               user_id,
+               username,
+               full_name,
+               token,
+               action,
+               result,
+               ip_address,
+               user_agent,
+               login_time,
+               logout_time,
+               status,
+               noted,
+               created_at,
+               created_by,
+               updated_at,
+               updated_by,
+               is_deleted
+        FROM sys_user_login
+        WHERE user_id = #{userId}
+        ORDER BY created_at DESC
+    </select>
+</mapper>
