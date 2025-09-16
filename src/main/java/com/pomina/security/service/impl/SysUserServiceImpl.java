@@ -124,18 +124,6 @@ public class SysUserServiceImpl implements SysUserService {
     }
 
     @Override
-    public String getCurUsername() {
-
-        Integer userId = JwtAuthentication.getCurrentUserId();
-        if (userId == null) return "anonymous";
-
-        SysUser sysUser = userMapper.findByUserId(userId);
-        if (sysUser == null) return "anonymous";
-
-        return sysUser.getUsername();
-    }
-
-    @Override
     public Integer getCurrentUserId() {
         return JwtAuthentication.getCurrentUserId();
     }

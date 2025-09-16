@@ -26,6 +26,8 @@
         <result column="phone_number" property="phoneNumber"/>
         <result column="password" property="password"/>
         <result column="role_name" property="roleName"/>
+        <result column="is_deleted" property="isDeleted"/>
+        <result column="is_active" property="isActive"/>
     </resultMap>
 
     <update id="update">
@@ -59,11 +61,12 @@
                u.ho_va_ten,
                u.phone_number,
                u.password,
-               r.role_name
+               r.role_name,
+               u.is_active,
+               u.is_deleted
         FROM sys_user u
                  LEFT JOIN sys_role r ON u.role_id = r.id
         WHERE u.phone_number = #{username}
-          AND u.is_active = TRUE
         LIMIT 1
     </select>
 
