@@ -46,45 +46,53 @@ public class JwtAuthentication extends OncePerRequestFilter {
                                     FilterChain filterChain)
             throws ServletException, IOException {
 
-        CachedBodyHttpServletRequest wrappedRequest = new CachedBodyHttpServletRequest(request);
+        String rawContentType = request.getContentType();
+        String baseContentType = rawContentType != null ? rawContentType.split(";")[0].trim().toLowerCase() : "";
 
-        // 1. Check user disable trước
-        if (!checkUserActive(wrappedRequest, response)) {
-            return;
+        HttpServletRequest effectiveRequest = request;
+
+        if ("application/json".equals(baseContentType)) {
+            CachedBodyHttpServletRequest wrappedRequest = new CachedBodyHttpServletRequest(request);
+
+            // Check user disable
+            if (!checkUserActive(wrappedRequest, response)) {
+                return;
+            }
+
+            effectiveRequest = wrappedRequest;
         }
 
-        // 2. Add filter for white list -> case /logout
+        // Add filter for white list -> case /logout
         if (isWhiteListPath(request.getRequestURI())) {
-            filterChain.doFilter(wrappedRequest, response);
+            filterChain.doFilter(effectiveRequest, response);
             return;
         }
 
-        // 3. Token handling
-        Optional<String> tokenOpt = extractTokenFromRequest(wrappedRequest);
+        // Token handling
+        Optional<String> tokenOpt = extractTokenFromRequest(effectiveRequest);
         if (tokenOpt.isEmpty()) {
-            filterChain.doFilter(wrappedRequest, response);
+            filterChain.doFilter(effectiveRequest, response);
             return;
         }
 
         String token = tokenOpt.get();
         DecodedJWT jwt = validateJwt(token, response);
         if (jwt == null) {
-            return; // response đã được ghi lỗi
+            return;
         }
 
+        // Check access token blacklist
         if (isAccessTokenBlacklisted(token, jwt)) {
             SecurityContextHolder.clearContext();
             response.sendError(HttpServletResponse.SC_UNAUTHORIZED);
             return;
         }
 
-        // 4. Set authentication
+        // Set authentication
         SecurityContextHolder.getContext().setAuthentication(
                 new UserPrincipalAuthenticationToken(jwtToPrincipalConverter.convert(jwt))
         );
-
-        // 5. Cho request đi tiếp
-        filterChain.doFilter(wrappedRequest, response);
+        filterChain.doFilter(effectiveRequest, response);
     }
 
     public static Integer getCurrentUserId() {
