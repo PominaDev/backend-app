@@ -1,6 +1,7 @@
 package com.pomina.security.sysmodel;
 
 import com.pomina.commonservices.location.dto.response.LocationResponseDto;
+import com.pomina.security.sysmodel.otp_based.OtpResponse;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -27,4 +28,6 @@ public class RegisterResponse {
     private Boolean isActive;
 
     private LocationResponseDto location;
+
+    private OtpResponse otpResponse;
 }

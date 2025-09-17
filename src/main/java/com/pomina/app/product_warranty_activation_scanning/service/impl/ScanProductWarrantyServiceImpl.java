@@ -6,6 +6,7 @@ import com.pomina.app.product_warranty_activation_scanning.service.ScanProductWa
 import com.pomina.common.enums.ScanProductWarrantyMessage;
 import com.pomina.common.exception.AppException;
 import com.pomina.common.exception.ErrorCode;
+import com.pomina.common.utils.PhoneUtil;
 import com.pomina.commonservices.location.dto.request.LocationRequestDto;
 import com.pomina.commonservices.location.dto.response.CheckLocationResponse;
 import com.pomina.commonservices.location.dto.response.LocationResponseDto;
@@ -15,7 +16,6 @@ import com.pomina.commonservices.product_warranty_activation.entity.Warranty;
 import com.pomina.commonservices.product_warranty_activation.mapper.WarrantyMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
@@ -32,8 +32,7 @@ public class ScanProductWarrantyServiceImpl implements ScanProductWarrantyServic
     private final LocationService locationService;
 
     @Override
-    // TODO: Locking by Redis
-    @Transactional(rollbackFor = Exception.class, isolation = Isolation.SERIALIZABLE)
+    @Transactional(rollbackFor = Exception.class)
     public ScanProductWarrantyResponseDto activateByQrCode(ScanProductWarrantyRequestDto scanProductWarrantyRequestDto) {
 
         String maCuonTon = scanProductWarrantyRequestDto.getMaCuonTon();
@@ -44,7 +43,14 @@ public class ScanProductWarrantyServiceImpl implements ScanProductWarrantyServic
         if (Objects.isNull(userIdCurr)) throw new AppException(ErrorCode.UNAUTHORIZED);
 
         WarrantyInfoHistory warrantyInfoHistory = warrantyMapper.findWarrantyDetailByMaCuonTon(maCuonTon);
-        if (Objects.isNull(warrantyInfoHistory)) throw new AppException(ErrorCode.PRODUCT_NOT_FOUND);
+        if (Objects.isNull(warrantyInfoHistory)) {
+            throw new AppException(ErrorCode.PRODUCT_NOT_FOUND);
+        }
+
+        boolean isPhoneNumber = PhoneUtil.isPhoneNumber(warrantyInfoHistory.getPhoneNumber());
+        if (!isPhoneNumber) {
+            warrantyInfoHistory.setPhoneNumber("-");
+        }
 
         // quét lần đầu
         if (Objects.isNull(warrantyInfoHistory.getFromWarrantyAnMon())) {
@@ -68,12 +74,13 @@ public class ScanProductWarrantyServiceImpl implements ScanProductWarrantyServic
             }
 
             warrantyInfoHistory = warrantyMapper.findWarrantyDetailByMaCuonTon(maCuonTon);
-            String message = isValidLocation ? "" : ScanProductWarrantyMessage.INVALID.getMessage();
+
+            String message = Boolean.TRUE.equals(isValidLocation) ? "" : ScanProductWarrantyMessage.INVALID.getMessage();
+            warrantyInfoHistory.setMessage(message);
 
             return ScanProductWarrantyResponseDto.builder()
                     .resultInserted(resultInserted)
                     .productDetailResponseDto(warrantyInfoHistory)
-                    .message(message)
                     .build();
         } else {
             // quét lần 2
@@ -81,10 +88,11 @@ public class ScanProductWarrantyServiceImpl implements ScanProductWarrantyServic
             Integer userId = warrantyInfoHistory.getUserId();
             if (!userIdCurr.equals(userId)) throw new AppException(ErrorCode.INVALID_OWN_PRODUCT);
             // nếu isValid = false (quét lần đầu không hợp lệ) -> trả message
-            String message = warrantyInfoHistory.getIsValid() ? "" : ScanProductWarrantyMessage.INVALID.getMessage();
+            String message = Boolean.TRUE.equals(warrantyInfoHistory.getIsValid()) ? "" : ScanProductWarrantyMessage.INVALID.getMessage();
+            warrantyInfoHistory.setMessage(message);
+
             return ScanProductWarrantyResponseDto.builder()
                     .productDetailResponseDto(warrantyInfoHistory)
-                    .message(message)
                     .build();
         }
     }

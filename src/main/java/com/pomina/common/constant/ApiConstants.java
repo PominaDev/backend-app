@@ -21,6 +21,13 @@ public class ApiConstants {
         private ApiAuth() {}
     }
 
+    public static final String[] ApiAuthList = {
+            ApiAuth.BASE + ApiAuth.LOGIN,
+            ApiAuth.BASE + ApiAuth.LOGOUT,
+            ApiAuth.BASE + ApiAuth.REGISTER,
+            ApiAuth.BASE + ApiAuth.REFRESH_TOKEN
+    };
+
     public static final class ApiNotification {
         public static final String BASE = VERSION_V1 + "/notifications";
         public static final String CREATE = "/create";
@@ -205,7 +212,7 @@ public class ApiConstants {
 
     public static final class ApiPolicyManagement {
         public static final String BASE = VERSION_V1 + "/policies";
-        public static final String GET_ALL = "/all";
+        public static final String GET_ALL = "";
         public static final String CREATE = "/create";
         public static final String UPDATE = "/update/{id}";
         public static final String DELETE = "/delete/{id}";
@@ -229,7 +236,6 @@ public class ApiConstants {
         private ApiCategory() {}
     }
 
-    // Exccel
     public static final class ApiExcel {
         public static final String BASE = VERSION_V1 + "/excel";
         public static final String EXPORT_INFORMATION_USER = "/export/information-users";

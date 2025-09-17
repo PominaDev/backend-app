@@ -1,7 +1,9 @@
 package com.pomina.commonservices.product_warranty_activation.service.impl;
 
+import com.pomina.common.enums.ScanProductWarrantyMessage;
 import com.pomina.common.model.PageRequest;
 import com.pomina.common.model.PageResponse;
+import com.pomina.common.utils.PhoneUtil;
 import com.pomina.commonservices.product_warranty_activation.dto.custom_mapper.WarrantyInfoHistory;
 import com.pomina.commonservices.product_warranty_activation.dto.request.WarrantyRequestDto;
 import com.pomina.commonservices.product_warranty_activation.dto.response.WarrantyResponseDto;
@@ -67,6 +69,18 @@ public class WarrantyServiceImpl implements WarrantyService {
         if (warrantyInfoHistories == null || warrantyInfoHistories.isEmpty()) {
             return null;
         }
+
+        warrantyInfoHistories.forEach(warranty -> {
+            // Kiểm tra số điện thoại
+            if (!PhoneUtil.isPhoneNumber(warranty.getPhoneNumber())) {
+                warranty.setPhoneNumber("-");
+            }
+
+            // Nếu isValid == false thì đặt message
+            if (Boolean.FALSE.equals(warranty.getIsValid())) {
+                warranty.setMessage(ScanProductWarrantyMessage.INVALID.getMessage());
+            }
+        });
 
         // Tính tổng số lượng bản ghi
         int totalElements = warrantyMapper.countWarrantyDetail(userId);

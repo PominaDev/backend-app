@@ -14,7 +14,8 @@ public enum ErrorCode {
     // ===== 5000 - Hệ thống, bảo mật, xác thực =====
     INTERNAL_ERROR("5000", "Lỗi hệ thống"),
     UNAUTHORIZED("5000", "Không có quyền truy cập"),
-    BAD_CREDENTIALS("5000", "Sai thông tin đăng nhập"),
+    BAD_CREDENTIALS("5000", "Đã sai tài khoản và mật khẩu"),
+    ACCOUNT_DISABLED("5000", "Tài khoản đã bị vô hiệu hóa"),
     TOKEN_EXPIRED("5000", "Token đã hết hạn"),
     INVALID_REFRESH_TOKEN("5000", "Lỗi refresh token"),
     INVALID_TOKEN("5000", "Token không hợp lệ"),

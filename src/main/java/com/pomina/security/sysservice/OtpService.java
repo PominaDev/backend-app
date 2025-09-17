@@ -2,7 +2,6 @@ package com.pomina.security.sysservice;
 
 import com.pomina.common.exception.AppException;
 import com.pomina.common.exception.ErrorCode;
-import com.pomina.common.utils.NumberUtil;
 import com.pomina.common.utils.PhoneUtil;
 import com.pomina.commonservices.notification.zns.enums.ZaloZnsTemplate;
 import com.pomina.commonservices.notification.zns.model.request.ZaloZNSRequest;
@@ -65,7 +64,8 @@ public class OtpService {
         }
 
         // Sinh OTP 6 số ngẫu nhiên
-        String otpCode = NumberUtil.generateNumber(6);
+        // String otpCode = NumberUtil.generateNumber(6);
+        String otpCode = "123456";
 
         // Sinh otpToken để hạn chế bị đánh cắp token
         Map<String, Object> templateData = Map.of("otp", otpCode);
@@ -86,7 +86,7 @@ public class OtpService {
         String otpToken = UUID.randomUUID().toString();
 
         // Save Redis
-        saveOtp(phoneNumber, otpCode, otpToken, TimeUnit.MINUTES.toSeconds(60)); // 1 Phút
+        saveOtp(phoneNumber, otpCode, otpToken, TimeUnit.SECONDS.toSeconds(60)); // 1 Phút
 
         return OtpResponse.builder()
                 .otp(otpCode)
@@ -105,18 +105,15 @@ public class OtpService {
         String phoneNumber = verifyOtpRequest.getPhoneNumber();
         String phoneNumberNormalize = PhoneUtil.normalizePhoneNumber(phoneNumber);
 
+        if (!PhoneUtil.isValidPhoneNumber(phoneNumberNormalize)) {
+            throw new AppException(ErrorCode.INVALID_PHONE_NUMBER);
+        }
+
         // Get Redis and verify OTP
         boolean isVerifyStoredOtp = verifyOtpWithOtpRedis(phoneNumber, verifyOtpRequest.getOtp(), verifyOtpRequest.getOtpToken());
         if (!isVerifyStoredOtp) {
             throw new AppException(ErrorCode.OTP_FAILED);
         }
-
-        if (!PhoneUtil.isValidPhoneNumber(phoneNumberNormalize)) {
-            throw new AppException(ErrorCode.INVALID_PHONE_NUMBER);
-        }
-
-        // Delete Redis
-        deleteOtp(phoneNumber, verifyOtpRequest.getOtpToken());
 
         SysUser sysUser = getSysUserByPhone(phoneNumber)
                 .orElseGet(() -> createNewUser(phoneNumber));
@@ -152,6 +149,9 @@ public class OtpService {
                         .build()
         );
 
+        // Delete Redis
+        deleteOtp(phoneNumber);
+
         return LoginResponse.builder()
                 .accessToken(accessToken)
                 .username(userPrincipal.getUsername())
@@ -185,16 +185,18 @@ public class OtpService {
     }
 
     private boolean verifyOtpWithOtpRedis(String phoneNumber, String otp, String otpToken) {
-
-        String storedOtp = getOtp(phoneNumber);
+        String key = PREFIX + phoneNumber;
+        String storedOtp = redisTemplate.opsForValue().get(key);
         if (storedOtp == null) {
             throw new AppException(ErrorCode.OTP_EXPIRED);
         }
-
+        Long ttl = redisTemplate.getExpire(key, TimeUnit.SECONDS);
+        if (ttl == null || ttl <= 0) {
+            throw new AppException(ErrorCode.OTP_EXPIRED);
+        }
         return storedOtp.equals(otp + otpToken);
     }
 
-    // Redis flow
     private void saveOtp(String phoneNumber, String otp, String otpToken, long ttlSeconds) {
         redisTemplate.opsForValue().set(
                 PREFIX + phoneNumber, otp + otpToken,
@@ -202,11 +204,7 @@ public class OtpService {
         );
     }
 
-    private void deleteOtp(String phoneNumber, String otpToken) {
-        redisTemplate.delete(PREFIX + phoneNumber + otpToken);
-    }
-
-    private String getOtp(String phoneNumber) {
-        return redisTemplate.opsForValue().get(PREFIX + phoneNumber);
+    private void deleteOtp(String phoneNumber) {
+        redisTemplate.delete(PREFIX + phoneNumber);
     }
 }

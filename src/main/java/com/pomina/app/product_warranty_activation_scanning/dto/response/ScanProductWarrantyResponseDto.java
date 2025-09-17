@@ -19,6 +19,4 @@ public class ScanProductWarrantyResponseDto {
     private Integer resultInserted;
 
     private WarrantyInfoHistory productDetailResponseDto;
-
-    private String message;
 }

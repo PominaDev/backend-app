@@ -1,10 +1,10 @@
 package com.pomina.webapp.pricing_policy_management.converter;
 
 import com.pomina.common.converter.BaseConverter;
-import com.pomina.webapp.pricing_policy_management.dto.request.excel.ChinhSachExcelHeader;
 import com.pomina.webapp.pricing_policy_management.dto.request.ChinhSachParentCreateDto;
 import com.pomina.webapp.pricing_policy_management.dto.request.ChinhSachParentRequestDto;
 import com.pomina.webapp.pricing_policy_management.dto.request.ChinhSachParentUpdateDto;
+import com.pomina.webapp.pricing_policy_management.dto.request.excel.ChinhSachExcelHeader;
 import com.pomina.webapp.pricing_policy_management.dto.response.ChinhSachParentResponseDto;
 import com.pomina.webapp.pricing_policy_management.entity.ChinhSachParent;
 import org.mapstruct.Mapper;
@@ -43,21 +43,6 @@ public interface ChinhSachParentConverter extends BaseConverter<ChinhSachParentR
     ChinhSachParent toEntity(ChinhSachParentRequestDto requestDto);
 
     // Mapping from entity to responseDto
-    @Mapping(target = "chinhSachParentId", source = "UChinhSachParentId" )
-    @Mapping(target = "chinhSachParentType", source = "UChinhSachParentType")
-    @Mapping(target = "chinhSachParentCode", source = "UChinhSachParentCode")
-    @Mapping(target = "chinhSachParentName", source = "UChinhSachParentName")
-    @Mapping(target = "dayBegin", source = "UDayBegin")
-    @Mapping(target = "dayEnd", source = "UDayEnd")
-    @Mapping(target = "statusU", source = "UStatus")
-    @Mapping(target = "description", source = "UDescription")
-    @Mapping(target = "userId", source = "userId")
-    @Mapping(target = "masterGroupUserCode", source = "masterGroupUserCode")
-    @Mapping(target = "dateUpload", source = "dateUpload")
-    @Mapping(target = "deptUpload", source = "deptUpload")
-    @Mapping(target = "userUpload", source = "userUpload")
-    @Mapping(target = "urlGoogledriv", source = "urlGoogledriv")
-    @Mapping(target = "urlYoutube", source = "urlYoutube")
     ChinhSachParentResponseDto toResponse(ChinhSachParent entity);
 
     @Mapping(target = "uChinhSachParentName", source = "tenChinhSach")

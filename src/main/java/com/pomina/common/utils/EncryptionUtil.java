@@ -1,5 +1,6 @@
 package com.pomina.common.utils;
 
+import org.apache.tomcat.websocket.AuthenticationException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -7,8 +8,8 @@ import javax.annotation.PostConstruct;
 import javax.crypto.Cipher;
 import javax.crypto.spec.SecretKeySpec;
 import java.nio.charset.StandardCharsets;
-import java.util.Base64;
 import java.util.Arrays;
+import java.util.Base64;
 
 @Component
 public class EncryptionUtil {
@@ -44,7 +45,7 @@ public class EncryptionUtil {
         }
     }
 
-    public String decrypt(String cipherText) {
+    public String decrypt(String cipherText) throws AuthenticationException {
         try {
             Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5Padding");
             cipher.init(Cipher.DECRYPT_MODE, secretKey);
@@ -52,7 +53,7 @@ public class EncryptionUtil {
             byte[] decrypted = cipher.doFinal(decoded);
             return new String(decrypted, StandardCharsets.UTF_8);
         } catch (Exception e) {
-            throw new RuntimeException("Decryption error", e);
+            throw new AuthenticationException(e.getMessage());
         }
     }
 }

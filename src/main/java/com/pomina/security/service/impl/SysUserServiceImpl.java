@@ -12,6 +12,9 @@ import com.pomina.security.model.SysUser;
 import com.pomina.security.service.SysUserService;
 import com.pomina.security.sysmodel.RegisterRequest;
 import com.pomina.security.sysmodel.RegisterResponse;
+import com.pomina.security.sysmodel.otp_based.OtpRequest;
+import com.pomina.security.sysmodel.otp_based.OtpResponse;
+import com.pomina.security.sysservice.OtpService;
 import com.pomina.webapp.master_location_managerment.entity.MasterLocation;
 import com.pomina.webapp.master_location_managerment.mapper.MasterLocationMapper;
 import lombok.RequiredArgsConstructor;
@@ -34,6 +37,7 @@ public class SysUserServiceImpl implements SysUserService {
 
     private final MasterLocationMapper masterLocationMapper;
 
+    private final OtpService otpService;
 
     @Override
     public Optional<SysUser> findByUserName(String userName) {
@@ -78,6 +82,7 @@ public class SysUserServiceImpl implements SysUserService {
         // Gán userId cho location request
         LocationRequestDto locationRequest = registerRequest.getLocation();
         locationRequest.setUserId(user.getUserId());
+        locationRequest.setRadius(2000.0); //Bán kính tạm thời
 
         // Gọi service để tạo location
         LocationResponseDto locationResponseDto = locationService.registerLocation(locationRequest);
@@ -97,6 +102,11 @@ public class SysUserServiceImpl implements SysUserService {
         AuditUtil.update(user);
         userMapper.update(user); // cập nhật lại masterLocationCode cho user
 
+        // Send OTP Zalo ZNS
+        OtpRequest otpRequest = new OtpRequest();
+        otpRequest.setPhoneNumber(registerRequest.getPhoneNumber());
+        OtpResponse otpResponse = otpService.sendOtp(otpRequest);
+
         // Trả response
         return RegisterResponse.builder()
                 .username(user.getUsername())
@@ -106,17 +116,12 @@ public class SysUserServiceImpl implements SysUserService {
                 .roleId(user.getRoleId().toString())
                 .isActive(user.getIsActive())
                 .location(locationResponseDto)
+                .otpResponse(otpResponse)
                 .build();
     }
+
     @Override
-    public String getCurUsername() {
-
-        Integer userId = JwtAuthentication.getCurrentUserId();
-        if (userId == null) return "anonymous";
-
-        SysUser sysUser = userMapper.findByUserId(userId);
-        if (sysUser == null) return "anonymous";
-
-        return sysUser.getUsername();
+    public Integer getCurrentUserId() {
+        return JwtAuthentication.getCurrentUserId();
     }
 }
