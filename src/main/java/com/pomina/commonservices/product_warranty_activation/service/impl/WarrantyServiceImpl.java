@@ -5,6 +5,7 @@ import com.pomina.common.config.datasources.DataSourceType;
 import com.pomina.common.enums.ScanProductWarrantyMessage;
 import com.pomina.common.model.PageRequest;
 import com.pomina.common.model.PageResponse;
+import com.pomina.common.utils.DateTimeUtil;
 import com.pomina.common.utils.PhoneUtil;
 import com.pomina.commonservices.product_warranty_activation.dto.custom_mapper.WarrantyInfoHistory;
 import com.pomina.commonservices.product_warranty_activation.dto.request.WarrantyRequestDto;
@@ -14,6 +15,8 @@ import com.pomina.commonservices.product_warranty_activation.service.WarrantySer
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -98,9 +101,13 @@ public class WarrantyServiceImpl implements WarrantyService {
 
 
     @Override
-    public PageResponse<WarrantyInfoHistory> filterWarrantyInfoHistory(PageRequest pageRequest, boolean forAdmin, List<String> filter, Boolean isValid, String status, String sort) {
+    public PageResponse<WarrantyInfoHistory> filterWarrantyInfoHistory(PageRequest pageRequest, boolean forAdmin, List<String> filter, Boolean isValid, String status, String dateFrom, String dateTo, String sort) {
         Integer userId = forAdmin ? null : getCurrentUserId();
         String orderByClause = buildSortClause(sort);
+
+        LocalDateTime utcFrom = DateTimeUtil.convertVNToUTC(dateFrom);
+        LocalDateTime utcTo = DateTimeUtil.convertVNToUTC(dateTo);
+
         // Lấy danh sách lịch sử kích hoạt bảo hành với filter
         List<WarrantyInfoHistory> warrantyInfoHistories = warrantyMapper.filterWarrantyDetail(
                 filter,
@@ -110,6 +117,8 @@ public class WarrantyServiceImpl implements WarrantyService {
                 pageRequest.getOffset(),
                 pageRequest.getSize(),
                 pageRequest,
+                utcFrom,
+                utcTo,
                 userId);
 
         if (warrantyInfoHistories == null || warrantyInfoHistories.isEmpty()) {
@@ -117,7 +126,7 @@ public class WarrantyServiceImpl implements WarrantyService {
         }
 
         // Tính tổng số lượng bản ghi
-        int totalElements = warrantyMapper.countWarrantyInfoHistory(userId, filter, isValid, status);
+        int totalElements = warrantyMapper.countWarrantyInfoHistory(userId, filter, isValid, utcFrom, utcTo, status);
 
         return PageResponse.createPaged(warrantyInfoHistories, pageRequest.getPage(), pageRequest.getSize(), totalElements);
     }
@@ -151,8 +160,10 @@ public class WarrantyServiceImpl implements WarrantyService {
 
     @CustomDataSource(DataSourceType.SLAVE)
     @Override
-    public List<WarrantyInfoHistory> findAllWarrantyDetailWithFilter(List<String> filter, Boolean isValid, String status, boolean forAdmin) {
+    public List<WarrantyInfoHistory> findAllWarrantyDetailWithFilter(List<String> filter, Boolean isValid, String status, String dateFrom, String dateTo, boolean forAdmin) {
         Integer userId = forAdmin ? null : getCurrentUserId();
-        return warrantyMapper.findAllWarrantyDetailWithFilter(filter, isValid,status, userId);
+        LocalDateTime utcFrom = DateTimeUtil.convertVNToUTC(dateFrom);
+        LocalDateTime utcTo = DateTimeUtil.convertVNToUTC(dateTo);
+        return warrantyMapper.findAllWarrantyDetailWithFilter(filter, isValid, status, utcFrom, utcTo, userId);
     }
 }

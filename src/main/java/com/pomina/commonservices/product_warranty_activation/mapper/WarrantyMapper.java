@@ -7,6 +7,8 @@ import com.pomina.commonservices.product_warranty_activation.entity.Warranty;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Mapper
@@ -18,9 +20,19 @@ public interface WarrantyMapper extends BaseMapper<Warranty> {
 
     WarrantyInfoHistory findWarrantyDetailByMaCuonTon(@Param("maCuonTon") String maCuonTon);
 
-    int countWarrantyInfoHistory(@Param("userId") Integer userId, @Param("filter") List<String> filter, @Param("isValid") Boolean isValid, @Param("status") String status);
+    int countWarrantyInfoHistory(@Param("userId") Integer userId, @Param("filter") List<String> filter, @Param("isValid") Boolean isValid, @Param("dateFrom") LocalDateTime dateFrom, @Param("dateTo") LocalDateTime dateTo, @Param("status") String status);
 
-    List<WarrantyInfoHistory> filterWarrantyDetail(@Param("filter") List<String> filter, @Param("isValid") Boolean isValid, @Param("status") String status, @Param("orderByClause") String orderByClause, @Param("offset") int offset, @Param("limit") int limit, @Param("paging") PageRequest pageRequest, @Param("userId") Integer userId);
+    List<WarrantyInfoHistory> filterWarrantyDetail(
+            @Param("filter") List<String> filter,
+            @Param("isValid") Boolean isValid,
+            @Param("status") String status,
+            @Param("orderByClause") String orderByClause,
+            @Param("offset") int offset,
+            @Param("limit") int limit,
+            @Param("paging") PageRequest pageRequest,
+            @Param("dateFrom") LocalDateTime dateFrom,
+            @Param("dateTo") LocalDateTime dateTo,
+            @Param("userId") Integer userId);
 
-    List<WarrantyInfoHistory> findAllWarrantyDetailWithFilter(@Param("filter") List<String> filter, @Param("isValid") Boolean isValid, @Param("status") String status, @Param("userId") Integer userId);
+    List<WarrantyInfoHistory> findAllWarrantyDetailWithFilter(@Param("filter") List<String> filter, @Param("isValid") Boolean isValid, @Param("status") String status, @Param("dateFrom") LocalDateTime dateFrom, @Param("dateTo") LocalDateTime dateTo, @Param("userId") Integer userId);
 }

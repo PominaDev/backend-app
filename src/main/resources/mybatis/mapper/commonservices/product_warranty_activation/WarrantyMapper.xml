@@ -395,6 +395,12 @@
             <if test="status != null and status != ''">
                 AND status = #{status}
             </if>
+            <if test="dateFrom != null">
+                AND from_warranty_an_mon &gt;= #{dateFrom}
+            </if>
+            <if test="dateTo != null">
+                AND from_warranty_an_mon &lt;= #{dateTo}
+            </if>
         </where>
         <if test="orderByClause != null and orderByClause != ''">
             ORDER BY ${orderByClause}
@@ -471,6 +477,12 @@
             <if test="status != null and status != ''">
                 AND status = #{status}
             </if>
+            <if test="dateFrom != null">
+                AND from_warranty_an_mon &gt;= #{dateFrom}
+            </if>
+            <if test="dateTo != null">
+                AND from_warranty_an_mon &lt;= #{dateTo}
+            </if>
         </where>
     </select>
 
@@ -478,6 +490,7 @@
         WITH warranty_data AS (
         SELECT
         wr.u_warranty_id,
+        wr.from_warranty_an_mon,
         us.ho_va_ten,
         us.phone_number,
         pr.ten_san_pham,
@@ -511,6 +524,12 @@
             </if>
             <if test="status != null and status != ''">
                 AND status = #{status}
+            </if>
+            <if test="dateFrom != null">
+                AND from_warranty_an_mon &gt;= #{dateFrom}
+            </if>
+            <if test="dateTo != null">
+                AND from_warranty_an_mon &lt;= #{dateTo}
             </if>
         </where>
     </select>

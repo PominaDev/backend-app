@@ -11,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
@@ -29,8 +30,8 @@ public class ProductWarrantyExportService {
     private final ExcelService excelService;
     private final SysUserManagermentServiceImpl sysUserService;
 
-    public void exportWarranty(HttpServletResponse response, Boolean isValid, List<String> filter, String status, boolean forAdmin){
-        List<WarrantyInfoHistory> warrantyInfoHistoryList = warrantyService.findAllWarrantyDetailWithFilter(filter, isValid, status, forAdmin);
+    public void exportWarranty(HttpServletResponse response, Boolean isValid, List<String> filter, String status, String dateFrom, String dateTo, boolean forAdmin){
+        List<WarrantyInfoHistory> warrantyInfoHistoryList = warrantyService.findAllWarrantyDetailWithFilter(filter, isValid, status, dateFrom, dateTo, forAdmin);
 
         // Gán STT
         AtomicInteger counter = new AtomicInteger(1);
