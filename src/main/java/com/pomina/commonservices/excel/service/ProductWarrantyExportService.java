@@ -9,6 +9,8 @@ import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.util.ObjectUtils;
+
 import java.time.temporal.ChronoUnit;
 
 import java.time.LocalDateTime;
@@ -42,7 +44,7 @@ public class ProductWarrantyExportService {
                     export.setLocationAccountFull(this.handlerLocationWarranty(export.getLocationAccount01(), export.getLocationAccount02(), export.getLocationAccount03(), export.getLocationAccount04())); // xử lý địa chỉ full
                     export.setLocationWarrantyFull(this.handlerLocationWarranty(export.getLocationWarranty01(), export.getLocationWarranty02(), export.getLocationWarranty03(), export.getLocationWarranty04())); // xử lý địa chỉ full
                     export.setStatus(export.getIsValid() ? "Hợp lệ" : "Không hợp lệ");
-                    export.setHierarchyLevel(handlerRoleName(sysUserService.findById(u.getUserId()).getRoleName())); // xử lý bỏ ROLE_
+                    export.setHierarchyLevel(handlerRoleName(ObjectUtils.isEmpty(sysUserService.findById(u.getUserId())) ? "" : sysUserService.findById(u.getUserId()).getRoleName())); // xử lý bỏ ROLE_
                     export.setYearWarrantyAnMon(handlerYearWarranty(u.getFromWarrantyAnMon(), u.getToWarrantyAnMon()));
                     export.setYearWarrantyPhaiMau(handlerYearWarranty(u.getFromWarrantyAnMon(), u.getToWarrantyPhaiMau()));
                     export.setFromWarrantyAnMon(DateTimeUtil.convertToDateOnly(u.getFromWarrantyAnMon())); // bỏ giờ đi
@@ -67,13 +69,13 @@ public class ProductWarrantyExportService {
         );
 
         // Xuất file Excel dựa trên template có
-//        excelService.exportExcelWithTemplate(
-//                response,
-//                warrantyInfoHistoryExportList,
-//                "excel/information_warranty.xlsx",
-//                "Thong_tin_bao_hanh",
-//                vars
-//        );
+        excelService.exportExcelWithTemplate(
+                response,
+                warrantyInfoHistoryExportList,
+                "excel/information_warranty.xlsx",
+                "Thong_tin_bao_hanh",
+                vars
+        );
     }
 
     public String handlerLocationWarranty(String ... location){
@@ -105,7 +107,7 @@ public class ProductWarrantyExportService {
 
     public String handlerRoleName(String roleName) {
         if (roleName == null || roleName.isEmpty()) {
-            return roleName; // hoặc trả về "" tùy ý
+            return ""; // hoặc trả về "" tùy ý
         }
         String prefix = "ROLE_";
         if (roleName.startsWith(prefix)) {
