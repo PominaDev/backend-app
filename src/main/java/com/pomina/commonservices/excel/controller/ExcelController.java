@@ -4,13 +4,16 @@ import com.pomina.common.constant.ApiConstants;
 import com.pomina.commonservices.excel.entity.WarrantyInfoHistoryExport;
 import com.pomina.commonservices.excel.service.ProductWarrantyExportService;
 import com.pomina.commonservices.excel.service.SysUserExportService;
+import com.pomina.commonservices.user_activity.anotation.UserAction;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
@@ -22,6 +25,7 @@ public class ExcelController {
     private final ProductWarrantyExportService productWarrantyExportService;
 
     @GetMapping(ApiConstants.ApiExcel.EXPORT_INFORMATION_USER)
+    @UserAction(actionName = "Xuất file excel thông tin người dùng")
     public void exportInformationUsers(
             HttpServletResponse response,
             @RequestParam(required = false) List<String> roleNames,
@@ -30,12 +34,15 @@ public class ExcelController {
     }
 
     @GetMapping(ApiConstants.ApiExcel.EXPORT_INFORMATION_WARRANTY)
+    @UserAction(actionName = "Xuất file excel bảo hành")
     public void exportInformationWarrantyUsers(
             HttpServletResponse response,
             @RequestParam(required = false) List<String> filter,
             @RequestParam(required = false) Boolean isValid,
-            @RequestParam(required = false) String status
+            @RequestParam(required = false) String status,
+            @RequestParam(required = false) String dateFrom,
+            @RequestParam(required = false) String dateTo
     ) {
-        productWarrantyExportService.exportWarranty(response, isValid, filter, status, true);
+        productWarrantyExportService.exportWarranty(response, isValid, filter, status, dateFrom, dateTo, true);
     }
 }

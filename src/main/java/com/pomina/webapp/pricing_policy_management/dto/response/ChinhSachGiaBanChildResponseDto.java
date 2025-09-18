@@ -6,6 +6,9 @@ import lombok.Setter;
 @Getter
 @Setter
 public class ChinhSachGiaBanChildResponseDto {
+    private String tenChinhSach;
+    private String ngayBatDau;
+    private String ngayKetThuc;
     private Integer uChinhSachGiaBanChildId;
     private Integer uChinhSachParentId;
     private String tenSanPham;

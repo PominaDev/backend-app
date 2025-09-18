@@ -65,17 +65,16 @@ public class ChinhSachGiaBanChildServiceImpl implements ChinhSachGiaBanChildServ
 
     @Override
     public PageResponse<ChinhSachGiaBanChildResponseDto> getByUChinhSachParentId(PageRequest pageRequest, int uChinhSachParentId) {
-        List<ChinhSachGiaBanChild> chinhSachGiaBanChildList = chinhSachGiaBanChildMapper.findByUChinhSachParentId(
+        List<ChinhSachGiaBanChildResponseDto> chinhSachGiaBanChildResponse = chinhSachGiaBanChildMapper.findByUChinhSachParentId(
                 pageRequest.getOffset(),
                 pageRequest.getSize(),
                 pageRequest,
                 uChinhSachParentId);
-        if (chinhSachGiaBanChildList == null || chinhSachGiaBanChildList.isEmpty()) {
+        if (chinhSachGiaBanChildResponse == null || chinhSachGiaBanChildResponse.isEmpty()) {
             return PageResponse.empty(
                     pageRequest.getPage(),
                     pageRequest.getSize());
         }
-        List<ChinhSachGiaBanChildResponseDto> chinhSachGiaBanChildResponse = chinhSachGiaBanChildConverter.toResponseList(chinhSachGiaBanChildList);
 
         int totalElements = chinhSachGiaBanChildMapper.countFindByUChinhSachParentId(uChinhSachParentId);
 
