@@ -88,6 +88,88 @@
         <result column="is_deleted" property="isDeleted"/>
     </resultMap>
 
+    <resultMap id="ChinhSachGiaBanChildResponseDtoResultMap"
+               type="com.pomina.webapp.pricing_policy_management.dto.response.ChinhSachGiaBanChildResponseDto">
+        <!--    Base Result Map-->
+        <id column="u_chinh_sach_gia_ban_child_id" property="uChinhSachGiaBanChildId"/>
+        <result column="u_chinh_sach_parent_name" property="tenChinhSach"/>
+        <result column="u_day_begin" property="ngayBatDau"/>
+        <result column="u_day_end" property="ngayKetThuc"/>
+        <result column="u_chinh_sach_parent_id" property="uChinhSachParentId"/>
+        <result column="ten_san_pham" property="tenSanPham"/>
+        <result column="size" property="size"/>
+        <result column="gia_bang" property="giaBang"/>
+        <result column="ck_thanh_toan" property="ckThanhToan"/>
+        <result column="cs_trong_thang" property="csTrongThang"/>
+        <result column="ck_cs_1" property="ckCs1"/>
+        <result column="ck_cs_2" property="ckCs2"/>
+        <result column="ck_cs_3" property="ckCs3"/>
+        <result column="ck_cs_4" property="ckCs4"/>
+        <result column="ck_cs_5" property="ckCs5"/>
+        <result column="ck_cs_6" property="ckCs6"/>
+        <result column="ck_cs_7" property="ckCs7"/>
+        <result column="ck_cs_8" property="ckCs8"/>
+        <result column="ck_cs_9" property="ckCs9"/>
+        <result column="ck_cs_10" property="ckCs10"/>
+        <result column="l1_ck_mb" property="l1CkMb"/>
+        <result column="l1_ck_mc" property="l1CkMc"/>
+        <result column="l1_thanh_toan_truoc" property="l1ThanhToanTruoc"/>
+        <result column="l1_ho_tro_ty_trong" property="l1HoTroTyTrong"/>
+        <result column="l1_hcm" property="l1Hcm"/>
+        <result column="l1_mba" property="l1Mba"/>
+        <result column="l1_mdo" property="l1Mdo"/>
+        <result column="l1_mta" property="l1Mta"/>
+        <result column="l1_mtr" property="l1Mtr"/>
+        <result column="l1_tng" property="l1Tng"/>
+        <result column="l1_don_gia" property="l1DonGia"/>
+        <result column="l2_ck_mb" property="l2CkMb"/>
+        <result column="l2_ck_mc" property="l2CkMc"/>
+        <result column="l2_thanh_toan_truoc" property="l2ThanhToanTruoc"/>
+        <result column="l2_ho_tro_ty_trong" property="l2HoTroTyTrong"/>
+        <result column="l2_hcm" property="l2Hcm"/>
+        <result column="l2_mba" property="l2Mba"/>
+        <result column="l2_mdo" property="l2Mdo"/>
+        <result column="l2_mta" property="l2Mta"/>
+        <result column="l2_mtr" property="l2Mtr"/>
+        <result column="l2_tng" property="l2Tng"/>
+        <result column="l2_don_gia" property="l2DonGia"/>
+        <result column="l3_ck_mb" property="l3CkMb"/>
+        <result column="l3_ck_mc" property="l3CkMc"/>
+        <result column="l3_thanh_toan_truoc" property="l3ThanhToanTruoc"/>
+        <result column="l3_ho_tro_ty_trong" property="l3HoTroTyTrong"/>
+        <result column="l3_hcm" property="l3Hcm"/>
+        <result column="l3_mba" property="l3Mba"/>
+        <result column="l3_mdo" property="l3Mdo"/>
+        <result column="l3_mta" property="l3Mta"/>
+        <result column="l3_mtr" property="l3Mtr"/>
+        <result column="l3_tng" property="l3Tng"/>
+        <result column="l3_don_gia" property="l3DonGia"/>
+        <result column="l1a_ck_mb" property="l1aCkMb"/>
+        <result column="l1a_ck_mc" property="l1aCkMc"/>
+        <result column="l1a_thanh_toan_truoc" property="l1aThanhToanTruoc"/>
+        <result column="l1a_ho_tro_ty_trong" property="l1aHoTroTyTrong"/>
+        <result column="l1a_hcm" property="l1aHcm"/>
+        <result column="l1a_mba" property="l1aMba"/>
+        <result column="l1a_mdo" property="l1aMdo"/>
+        <result column="l1a_mta" property="l1aMta"/>
+        <result column="l1a_mtr" property="l1aMtr"/>
+        <result column="l1a_tng" property="l1aTng"/>
+        <result column="l1a_don_gia" property="l1aDonGia"/>
+        <result column="l1b_ck_mb" property="l1bCkMb"/>
+        <result column="l1b_ck_mc" property="l1bCkMc"/>
+        <result column="l1b_thanh_toan_truoc" property="l1bThanhToanTruoc"/>
+        <result column="l1b_ho_tro_ty_trong" property="l1bHoTroTyTrong"/>
+        <result column="l1b_hcm" property="l1bHcm"/>
+        <result column="l1b_mba" property="l1bMba"/>
+        <result column="l1b_mdo" property="l1bMdo"/>
+        <result column="l1b_mta" property="l1bMta"/>
+        <result column="l1b_mtr" property="l1bMtr"/>
+        <result column="l1b_tng" property="l1bTng"/>
+        <result column="l1b_don_gia" property="l1bDonGia"/>
+        <result column="gia_met" property="giaMet"/>
+        <result column="u_description" property="uDescription"/>
+    </resultMap>
+
     <select id="findById" resultMap="ChinhSachGiaBanChildResultMap">
         /* FIND BY ID - u_chinh_sach_gia_ban_child */
         SELECT u_chinh_sach_gia_ban_child_id,
@@ -805,9 +887,12 @@
         </foreach>
     </insert>
 
-    <select id="findByUChinhSachParentId" resultMap="ChinhSachGiaBanChildResultMap">
+    <select id="findByUChinhSachParentId" resultMap="ChinhSachGiaBanChildResponseDtoResultMap">
         /* SELECT BY UChinhSachParentId - u_chinh_sach_gia_ban_child */
-        SELECT u_chinh_sach_gia_ban_child_id,
+        SELECT u_chinh_sach_parent_name,
+               u_day_begin,
+               u_day_end,
+               u_chinh_sach_gia_ban_child_id,
                u_chinh_sach_gia_ban_child.u_chinh_sach_parent_id,
                ten_san_pham,
                `size`,

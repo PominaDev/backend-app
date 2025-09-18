@@ -20,6 +20,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -308,11 +310,11 @@ public class ChinhSachTemplateReader {
     }
 
     /**
-     * Hàm chuyển đổi kiểu dữ liệu về Double (có evaluate công thức & làm tròn lên 2 chữ số thập phân)
+     * Hàm chuyển đổi kiểu dữ liệu về Double (evaluate công thức, không bị sai số .00000000004)
      *
      * @param row      dòng dữ liệu
      * @param colIndex vị trí của cột
-     * @return giá trị kiểu Double (làm tròn lên 2 chữ số thập phân)
+     * @return giá trị kiểu Double (đã làm sạch sai số)
      */
     private Double getCellValueAsDouble(Row row, int colIndex) {
         try {
@@ -353,8 +355,11 @@ public class ChinhSachTemplateReader {
 
             if (result == null) return null;
 
-            // Làm tròn lên 2 chữ số thập phân
-            return Math.ceil(result * 100.0) / 100.0;
+            BigDecimal bd = BigDecimal.valueOf(result)
+                    .setScale(2, RoundingMode.HALF_UP)
+                    .stripTrailingZeros();
+
+            return bd.doubleValue(); // luôn trả về Double, không còn .00000000004
 
         } catch (Exception e) {
             return null;
