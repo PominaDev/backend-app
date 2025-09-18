@@ -160,4 +160,15 @@ public class JwtAuthentication extends OncePerRequestFilter {
         }
         return true;
     }
+
+    public static String getCurrentUsername() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if (auth != null && auth.isAuthenticated()) {
+            Object principal = auth.getPrincipal();
+            if (principal instanceof UserPrincipal userPrincipal) {
+                return userPrincipal.getUsername();
+            }
+        }
+        return null;
+    }
 }
