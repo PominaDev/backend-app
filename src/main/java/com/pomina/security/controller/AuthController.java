@@ -53,6 +53,7 @@ public class AuthController {
 
     @PostMapping(ApiConstants.ApiAuth.REGISTER)
     public ResponseEntity<ApiResponse<RegisterResponse>> register(@RequestBody @Validated RegisterRequest registerRequest) {
+        //loginRequest.setPassword(encryptionUtil.decrypt(loginRequest.getPassword()));
         return ResponseHandler.success(sysUserService.registerUser(registerRequest));
     }
 
