@@ -15,4 +15,10 @@ public class WarrantyInfoHistoryExport extends WarrantyInfoHistory {
     private String status;
     private String locationAccountFull;
     private String locationWarrantyFull;
+    private String hierarchyLevel;
+    private String source;
+    private String mau;
+    private String doDay;
+    private String yearWarrantyAnMon;
+    private String yearWarrantyPhaiMau;
 }
