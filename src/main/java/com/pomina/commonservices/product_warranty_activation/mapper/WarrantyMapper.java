@@ -2,6 +2,7 @@ package com.pomina.commonservices.product_warranty_activation.mapper;
 
 import com.pomina.common.mapper.BaseMapper;
 import com.pomina.common.model.PageRequest;
+import com.pomina.commonservices.excel.entity.WarrantyInfoHistoryExport;
 import com.pomina.commonservices.product_warranty_activation.dto.custom_mapper.WarrantyInfoHistory;
 import com.pomina.commonservices.product_warranty_activation.entity.Warranty;
 import org.apache.ibatis.annotations.Mapper;
@@ -34,5 +35,5 @@ public interface WarrantyMapper extends BaseMapper<Warranty> {
             @Param("dateTo") LocalDateTime dateTo,
             @Param("userId") Integer userId);
 
-    List<WarrantyInfoHistory> findAllWarrantyDetailWithFilter(@Param("filter") List<String> filter, @Param("isValid") Boolean isValid, @Param("status") String status, @Param("dateFrom") LocalDateTime dateFrom, @Param("dateTo") LocalDateTime dateTo, @Param("userId") Integer userId);
+    List<WarrantyInfoHistoryExport> findAllWarrantyDetailWithFilter(@Param("filter") List<String> filter, @Param("isValid") Boolean isValid, @Param("status") String status, @Param("dateFrom") LocalDateTime dateFrom, @Param("dateTo") LocalDateTime dateTo, @Param("userId") Integer userId);
 }

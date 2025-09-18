@@ -7,6 +7,7 @@ import com.pomina.common.model.PageRequest;
 import com.pomina.common.model.PageResponse;
 import com.pomina.common.utils.DateTimeUtil;
 import com.pomina.common.utils.PhoneUtil;
+import com.pomina.commonservices.excel.entity.WarrantyInfoHistoryExport;
 import com.pomina.commonservices.product_warranty_activation.dto.custom_mapper.WarrantyInfoHistory;
 import com.pomina.commonservices.product_warranty_activation.dto.request.WarrantyRequestDto;
 import com.pomina.commonservices.product_warranty_activation.dto.response.WarrantyResponseDto;
@@ -160,7 +161,7 @@ public class WarrantyServiceImpl implements WarrantyService {
 
     @CustomDataSource(DataSourceType.SLAVE)
     @Override
-    public List<WarrantyInfoHistory> findAllWarrantyDetailWithFilter(List<String> filter, Boolean isValid, String status, String dateFrom, String dateTo, boolean forAdmin) {
+    public List<WarrantyInfoHistoryExport> findAllWarrantyDetailWithFilter(List<String> filter, Boolean isValid, String status, String dateFrom, String dateTo, boolean forAdmin) {
         Integer userId = forAdmin ? null : getCurrentUserId();
         LocalDateTime utcFrom = DateTimeUtil.parseToLocalDateTime(dateFrom);
         LocalDateTime utcTo = DateTimeUtil.parseToLocalDateTime(dateTo);

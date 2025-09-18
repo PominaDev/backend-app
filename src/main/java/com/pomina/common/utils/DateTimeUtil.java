@@ -66,4 +66,17 @@ public class DateTimeUtil {
         return LocalDateTime.parse(dateTimeStr, FORMATTER);
     }
 
+    /**
+     * Convert String "yyyy-MM-dd HH:mm:ss" sang String "yyyy-MM-dd"
+     */
+    public static String convertToDateOnly(String dateTimeStr) {
+        if (dateTimeStr == null || dateTimeStr.isEmpty()) return null;
+
+        // Parse thành LocalDateTime
+        LocalDateTime dateTime = LocalDateTime.parse(dateTimeStr, FORMATTER);
+
+        // Lấy phần ngày
+        DateTimeFormatter dateOnlyFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        return dateTime.toLocalDate().format(dateOnlyFormatter);
+    }
 }

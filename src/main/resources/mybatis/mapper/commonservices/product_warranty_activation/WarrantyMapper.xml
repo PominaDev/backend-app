@@ -70,6 +70,52 @@
         <result column="noted" property="noted"/>
     </resultMap>
 
+    <resultMap id="WarrantyInfoExportResultMap"
+               type="com.pomina.commonservices.excel.entity.WarrantyInfoHistoryExport">
+        <result column="user_id" property="userId"/>
+        <result column="ho_va_ten" property="hoVaTen"/>
+        <result column="phone_number" property="phoneNumber"/>
+
+        <result column="ma_cuon_ton" property="maCuonTon"/>
+        <result column="ten_san_pham" property="tenSanPham"/>
+        <result column="loai_cuon" property="loaiCuon"/>
+        <result column="total_weight" property="totalWeight"/>
+        <result column="total_length" property="totalLength"/>
+        <result column="m_a_length" property="mALength"/>
+        <result column="m_b_length" property="mBLength"/>
+        <result column="m_c_length" property="mCLength"/>
+        <result column="bh_phai_mau" property="bhPhaiMau"/>
+        <result column="bh_an_mon" property="bhAnMon"/>
+
+        <result column="location_account_01" property="locationAccount01"/>
+        <result column="location_account_02" property="locationAccount02"/>
+        <result column="location_account_03" property="locationAccount03"/>
+        <result column="location_account_04" property="locationAccount04"/>
+        <result column="location_account_lat" property="locationAccountLat"/>
+        <result column="location_account_long" property="locationAccountLong"/>
+
+        <result column="u_warranty_id" property="warrantyId"/>
+        <result column="location_warranty_01" property="locationWarranty01"/>
+        <result column="location_warranty_02" property="locationWarranty02"/>
+        <result column="location_warranty_03" property="locationWarranty03"/>
+        <result column="location_warranty_04" property="locationWarranty04"/>
+        <result column="location_warranty_lat" property="locationWarrantyLat"/>
+        <result column="location_warranty_long" property="locationWarrantyLong"/>
+
+        <result column="from_warranty_an_mon" property="fromWarrantyAnMon"/>
+        <result column="to_warranty_an_mon" property="toWarrantyAnMon"/>
+        <result column="from_warranty_phai_mau" property="fromWarrantyPhaiMau"/>
+        <result column="to_warranty_phai_mau" property="toWarrantyPhaiMau"/>
+
+        <result column="khach_chon" property="source"/>
+        <result column="mau" property="mau"/>
+        <result column="do_day" property="doDay"/>
+
+        <result column="is_valid" property="isValid"/>
+        <result column="status" property="status"/>
+        <result column="noted" property="noted"/>
+    </resultMap>
+
     <insert id="insert" parameterType="com.pomina.commonservices.product_warranty_activation.entity.Warranty"
             useGeneratedKeys="true" keyProperty="warrantyId">
         INSERT INTO u_warranty (user_id,
@@ -155,10 +201,10 @@
                address05,
                country_code,
                ma_cuon_ton,
-               from_warranty_phai_mau,
-               to_warranty_phai_mau,
-               from_warranty_an_mon,
-               to_warranty_an_mon,
+               fn_convert_utc_to_tz(from_warranty_phai_mau,'+07:00') from_warranty_phai_mau,
+               fn_convert_utc_to_tz(to_warranty_phai_mau,'+07:00') to_warranty_phai_mau,
+               fn_convert_utc_to_tz(from_warranty_an_mon,'+07:00') from_warranty_an_mon,
+               fn_convert_utc_to_tz(to_warranty_an_mon,'+07:00') to_warranty_an_mon,
                status,
                noted,
                created_at,
@@ -186,10 +232,10 @@
         address05,
         country_code,
         ma_cuon_ton,
-        from_warranty_phai_mau,
-        to_warranty_phai_mau,
-        from_warranty_an_mon,
-        to_warranty_an_mon,
+        fn_convert_utc_to_tz(from_warranty_phai_mau,'+07:00') from_warranty_phai_mau,
+        fn_convert_utc_to_tz(to_warranty_phai_mau,'+07:00') to_warranty_phai_mau,
+        fn_convert_utc_to_tz(from_warranty_an_mon,'+07:00') from_warranty_an_mon,
+        fn_convert_utc_to_tz(to_warranty_an_mon,'+07:00') to_warranty_an_mon,
         status,
         noted,
         created_at,
@@ -236,10 +282,10 @@
         wr.latitude AS location_warranty_lat,
         wr.longitude AS location_warranty_long,
 
-        wr.from_warranty_phai_mau,
-        wr.to_warranty_phai_mau,
-        wr.from_warranty_an_mon,
-        wr.to_warranty_an_mon,
+        fn_convert_utc_to_tz(from_warranty_phai_mau,'+07:00') from_warranty_phai_mau,
+        fn_convert_utc_to_tz(to_warranty_phai_mau,'+07:00') to_warranty_phai_mau,
+        fn_convert_utc_to_tz(from_warranty_an_mon,'+07:00') from_warranty_an_mon,
+        fn_convert_utc_to_tz(to_warranty_an_mon,'+07:00') to_warranty_an_mon,
         wr.is_valid,
         wr.status,
         wr.noted
@@ -306,10 +352,10 @@
         wr.latitude AS location_warranty_lat,
         wr.longitude AS location_warranty_long,
 
-        wr.from_warranty_phai_mau,
-        wr.to_warranty_phai_mau,
-        wr.from_warranty_an_mon,
-        wr.to_warranty_an_mon,
+        fn_convert_utc_to_tz(from_warranty_phai_mau,'+07:00') from_warranty_phai_mau,
+        fn_convert_utc_to_tz(to_warranty_phai_mau,'+07:00') to_warranty_phai_mau,
+        fn_convert_utc_to_tz(from_warranty_an_mon,'+07:00') from_warranty_an_mon,
+        fn_convert_utc_to_tz(to_warranty_an_mon,'+07:00') to_warranty_an_mon,
         wr.is_valid,
         wr.status,
         wr.noted
@@ -358,10 +404,10 @@
         wr.latitude  AS location_warranty_lat,
         wr.longitude AS location_warranty_long,
 
-        wr.from_warranty_phai_mau,
-        wr.to_warranty_phai_mau,
-        wr.from_warranty_an_mon,
-        wr.to_warranty_an_mon,
+        fn_convert_utc_to_tz(from_warranty_phai_mau,'+07:00') from_warranty_phai_mau,
+        fn_convert_utc_to_tz(to_warranty_phai_mau,'+07:00') to_warranty_phai_mau,
+        fn_convert_utc_to_tz(from_warranty_an_mon,'+07:00') from_warranty_an_mon,
+        fn_convert_utc_to_tz(to_warranty_an_mon,'+07:00') to_warranty_an_mon,
 
         wr.is_valid,
         wr.status,
@@ -408,7 +454,7 @@
         LIMIT #{limit} OFFSET #{offset}
     </select>
 
-    <select id="findAllWarrantyDetailWithFilter" resultMap="WarrantyInfoResultMap">
+    <select id="findAllWarrantyDetailWithFilter" resultMap="WarrantyInfoExportResultMap">
         WITH warranty_data AS (
         -- findAllWarrantyDetail
         SELECT
@@ -440,10 +486,14 @@
         wr.latitude  AS location_warranty_lat,
         wr.longitude AS location_warranty_long,
 
-        wr.from_warranty_phai_mau,
-        wr.to_warranty_phai_mau,
-        wr.from_warranty_an_mon,
-        wr.to_warranty_an_mon,
+        fn_convert_utc_to_tz(from_warranty_phai_mau,'+07:00') from_warranty_phai_mau,
+        fn_convert_utc_to_tz(to_warranty_phai_mau,'+07:00') to_warranty_phai_mau,
+        fn_convert_utc_to_tz(from_warranty_an_mon,'+07:00') from_warranty_an_mon,
+        fn_convert_utc_to_tz(to_warranty_an_mon,'+07:00') to_warranty_an_mon,
+
+        pr.khach_chon,
+        pr.mau,
+        pr.do_day,
 
         wr.is_valid,
         wr.status,
