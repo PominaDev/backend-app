@@ -67,7 +67,7 @@ public class SysUserServiceImpl implements SysUserService {
             throw new AppException(ErrorCode.FAILED_ENCODED_PASSWORD);
         }
 
-        // Tạo mới SysUser (chưa có location)
+        // Tạo mới SysUser
         SysUser user = new SysUser();
         user.setUsername(registerRequest.getUsername());
         user.setPhoneNumber(registerRequest.getPhoneNumber());
@@ -80,7 +80,7 @@ public class SysUserServiceImpl implements SysUserService {
         AuditUtil.insert(user);
 
         // Insert để lấy được userId
-        userMapper.insert(user); // sau insert thì user.getUserId() mới có giá trị
+        userMapper.insert(user);
 
         // Gán userId cho location request
         LocationRequestDto locationRequest = registerRequest.getLocation();

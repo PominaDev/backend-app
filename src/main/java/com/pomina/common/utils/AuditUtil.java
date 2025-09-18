@@ -8,11 +8,14 @@ import java.time.LocalDateTime;
 
 public class AuditUtil {
 
-    private AuditUtil() {}
+    private AuditUtil() {
+    }
 
     private static final Integer DEFAULT_USER = -8386; // Default user id
 
     private static final boolean DEFAULT_IS_DELETED = false;
+
+    private static final String DEFAULT_USERNAME = "SYSTEM";
 
     public static LocalDateTime now() {
         return LocalDateTime.now();
@@ -95,5 +98,11 @@ public class AuditUtil {
     private static void applyInsertInfo(BaseEntity entity) {
         entity.setCreatedAt(now());
         entity.setCreatedBy(getDefaultUser());
+    }
+
+    public static String getDefaultUsername() {
+        String username = JwtAuthentication.getCurrentUsername();
+        if (username == null || username.isEmpty()) return DEFAULT_USERNAME;
+        return username;
     }
 }
