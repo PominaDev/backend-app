@@ -29,6 +29,7 @@ import javax.sql.DataSource;
         "com.pomina.commonservices.notification.websocket.mapper",
         "com.pomina.commonservices.notification.zns.mapper",
         "com.pomina.commonservices.user_activity.mapper",
+        "com.pomina.commonservices.marketing_pr_chinh_sach.mapper"
 })
 public class MybatisConfig {
 
