@@ -43,6 +43,6 @@ public class ProductWarrantyActivationServiceImpl implements ProductWarrantyActi
         );
         warrantyInfo.setNote(activationWarrantyRequestDto.getNoted());
 
-        return warrantyMapper.update(warrantyInfo);
+        return warrantyMapper.updateWarranty(warrantyInfo);
     }
 }
