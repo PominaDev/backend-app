@@ -28,6 +28,7 @@ public enum ErrorCode {
     GOOGLE_API_ERROR("4001", "Lỗi từ Google Geocode API"),
     VONAGE_ERROR("4002", "Lỗi từ Vonage SMS API"),
     ZALO_ZNS_ERROR("4003", "Lỗi từ Zalo ZNS"),
+    ZALO_ZNS_ACCOUNT_NOT_EXIST_ERROR("4004", "Lỗi tài khoản Zalo không tồn tại"),
     INVALID_REQUEST("4000", "Yêu cầu không hợp lệ"),
 
     // ===== 3000 - Dữ liệu không hợp lệ =====

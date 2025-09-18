@@ -5,6 +5,7 @@ import com.pomina.common.exception.ErrorCode;
 import com.pomina.common.utils.PhoneUtil;
 import com.pomina.commonservices.notification.zns.enums.ZaloZnsTemplate;
 import com.pomina.commonservices.notification.zns.model.request.ZaloZNSRequest;
+import com.pomina.commonservices.notification.zns.model.response.ZaloZNSResponse;
 import com.pomina.commonservices.notification.zns.service.ZNSService;
 import com.pomina.security.config.JwtIssuer;
 import com.pomina.security.config.UserPrincipal;
@@ -23,6 +24,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Duration;
 import java.util.Collection;
@@ -54,6 +56,7 @@ public class OtpService {
      * @param otpRequest {@link OtpRequest}
      * @return {@link OtpResponse}
      */
+    @Transactional(rollbackFor = Exception.class)
     public OtpResponse sendOtp(OtpRequest otpRequest) {
 
         String phoneNumber = otpRequest.getPhoneNumber();
@@ -80,7 +83,12 @@ public class OtpService {
                 .templateData(ZaloZnsTemplate.ZALO_OTP.buildTemplateData(templateData))
                 .trackingId(trackingId)
                 .build();
-        znsService.sendZaloZNS(zaloZNSRequest);
+        ZaloZNSResponse zaloZNSResponse = znsService.sendZaloZNS(zaloZNSRequest);
+
+        if (zaloZNSResponse != null
+                && zaloZNSResponse.getMessage().equalsIgnoreCase(ErrorCode.ZALO_ZNS_ACCOUNT_NOT_EXIST_ERROR.getMessage())) {
+            return null;
+        }
 
         // Sinh otpToken để hạn chế bị đánh cắp token
         String otpToken = UUID.randomUUID().toString();

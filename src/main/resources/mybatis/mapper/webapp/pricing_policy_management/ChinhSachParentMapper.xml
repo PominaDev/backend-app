@@ -17,7 +17,6 @@
         <result property="dateUpload" column="date_upload"/>
         <result property="deptUpload" column="dept_upload"/>
         <result property="userUpload" column="user_upload"/>
-        <result property="urlGoogledriv" column="url_googledriv"/>
         <result property="urlYoutube" column="url_youtube"/>
         <result property="status" column="status"/>
         <result property="note" column="noted"/>
@@ -43,7 +42,6 @@
                date_upload,
                dept_upload,
                user_upload,
-               url_googledriv,
                url_youtube,
                status,
                noted,
@@ -72,7 +70,6 @@
                date_upload,
                dept_upload,
                user_upload,
-               url_googledriv,
                url_youtube,
                status,
                noted,
@@ -101,7 +98,6 @@
         date_upload,
         dept_upload,
         user_upload,
-        url_googledriv,
         url_youtube,
         status,
         noted,
@@ -132,7 +128,6 @@
                                          date_upload,
                                          dept_upload,
                                          user_upload,
-                                         url_googledriv,
                                          url_youtube,
                                          status,
                                          noted,
@@ -153,7 +148,6 @@
                 #{dateUpload},
                 #{deptUpload},
                 #{userUpload},
-                #{urlGoogledriv},
                 #{urlYoutube},
                 #{status},
                 #{note},
@@ -203,9 +197,6 @@
             </if>
             <if test="userUpload != null and userUpload != ''">
                 user_upload = #{userUpload},
-            </if>
-            <if test="urlGoogledriv != null and urlGoogledriv != ''">
-                url_googledriv = #{urlGoogledriv},
             </if>
             <if test="urlYoutube != null and urlYoutube != ''">
                 url_youtube = #{urlYoutube},
@@ -269,7 +260,6 @@
         date_upload,
         dept_upload,
         user_upload,
-        url_googledriv,
         url_youtube,
         status,
         noted,
@@ -293,7 +283,6 @@
             #{e.dateUpload},
             #{e.deptUpload},
             #{e.userUpload},
-            #{e.urlGoogledriv},
             #{e.urlYoutube},
             #{e.status},
             #{e.note},
