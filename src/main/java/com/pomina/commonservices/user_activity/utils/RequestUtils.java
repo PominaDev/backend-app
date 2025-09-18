@@ -1,5 +1,6 @@
 package com.pomina.commonservices.user_activity.utils;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.web.util.ContentCachingRequestWrapper;
 
@@ -9,6 +10,10 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class RequestUtils {
+
+    private static final ObjectMapper objectMapper = new ObjectMapper();
+
+    private static final String CACHED_BODY_ATTR = "CACHED_REQUEST_BODY";
 
     /**
      *
