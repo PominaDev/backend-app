@@ -46,15 +46,13 @@ public class JwtAuthentication extends OncePerRequestFilter {
                                     FilterChain filterChain)
             throws ServletException, IOException {
 
-        String rawContentType = request.getContentType();
-        String baseContentType = rawContentType != null ? rawContentType.split(";")[0].trim().toLowerCase() : "";
-
         HttpServletRequest effectiveRequest = request;
+        String requestUrl = effectiveRequest.getRequestURI();
 
-        if ("application/json".equals(baseContentType)) {
+        // Check user disable
+        if ("/api/v1/auth/login".equals(requestUrl)) {
+
             CachedBodyHttpServletRequest wrappedRequest = new CachedBodyHttpServletRequest(request);
-
-            // Check user disable
             if (!checkUserActive(wrappedRequest, response)) {
                 return;
             }
@@ -63,7 +61,7 @@ public class JwtAuthentication extends OncePerRequestFilter {
         }
 
         // Add filter for white list -> case /logout
-        if (isWhiteListPath(request.getRequestURI())) {
+        if (isWhiteListPath(requestUrl)) {
             filterChain.doFilter(effectiveRequest, response);
             return;
         }
