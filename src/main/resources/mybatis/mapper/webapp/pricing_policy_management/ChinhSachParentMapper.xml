@@ -17,7 +17,6 @@
         <result property="dateUpload" column="date_upload"/>
         <result property="deptUpload" column="dept_upload"/>
         <result property="userUpload" column="user_upload"/>
-        <result property="urlYoutube" column="url_youtube"/>
         <result property="status" column="status"/>
         <result property="note" column="noted"/>
         <result property="createdAt" column="created_at"/>
@@ -42,7 +41,6 @@
                date_upload,
                dept_upload,
                user_upload,
-               url_youtube,
                status,
                noted,
                created_at,
@@ -70,7 +68,6 @@
                date_upload,
                dept_upload,
                user_upload,
-               url_youtube,
                status,
                noted,
                created_at,
@@ -98,7 +95,6 @@
         date_upload,
         dept_upload,
         user_upload,
-        url_youtube,
         status,
         noted,
         created_at,
@@ -128,7 +124,6 @@
                                          date_upload,
                                          dept_upload,
                                          user_upload,
-                                         url_youtube,
                                          status,
                                          noted,
                                          created_at,
@@ -148,7 +143,6 @@
                 #{dateUpload},
                 #{deptUpload},
                 #{userUpload},
-                #{urlYoutube},
                 #{status},
                 #{note},
                 #{createdAt},
@@ -197,9 +191,6 @@
             </if>
             <if test="userUpload != null and userUpload != ''">
                 user_upload = #{userUpload},
-            </if>
-            <if test="urlYoutube != null and urlYoutube != ''">
-                url_youtube = #{urlYoutube},
             </if>
             <if test="status != null and status != ''">
                 status = #{status},
@@ -260,7 +251,7 @@
         date_upload,
         dept_upload,
         user_upload,
-        url_youtube,
+
         status,
         noted,
         created_at,
@@ -283,7 +274,6 @@
             #{e.dateUpload},
             #{e.deptUpload},
             #{e.userUpload},
-            #{e.urlYoutube},
             #{e.status},
             #{e.note},
             #{e.createdAt},
