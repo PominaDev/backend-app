@@ -105,8 +105,8 @@ public class WarrantyServiceImpl implements WarrantyService {
         Integer userId = forAdmin ? null : getCurrentUserId();
         String orderByClause = buildSortClause(sort);
 
-        LocalDateTime utcFrom = DateTimeUtil.convertVNToUTC(dateFrom);
-        LocalDateTime utcTo = DateTimeUtil.convertVNToUTC(dateTo);
+        LocalDateTime utcFrom = DateTimeUtil.parseToLocalDateTime(dateFrom);
+        LocalDateTime utcTo = DateTimeUtil.parseToLocalDateTime(dateTo);
 
         // Lấy danh sách lịch sử kích hoạt bảo hành với filter
         List<WarrantyInfoHistory> warrantyInfoHistories = warrantyMapper.filterWarrantyDetail(
@@ -162,8 +162,8 @@ public class WarrantyServiceImpl implements WarrantyService {
     @Override
     public List<WarrantyInfoHistory> findAllWarrantyDetailWithFilter(List<String> filter, Boolean isValid, String status, String dateFrom, String dateTo, boolean forAdmin) {
         Integer userId = forAdmin ? null : getCurrentUserId();
-        LocalDateTime utcFrom = DateTimeUtil.convertVNToUTC(dateFrom);
-        LocalDateTime utcTo = DateTimeUtil.convertVNToUTC(dateTo);
+        LocalDateTime utcFrom = DateTimeUtil.parseToLocalDateTime(dateFrom);
+        LocalDateTime utcTo = DateTimeUtil.parseToLocalDateTime(dateTo);
         return warrantyMapper.findAllWarrantyDetailWithFilter(filter, isValid, status, utcFrom, utcTo, userId);
     }
 }

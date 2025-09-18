@@ -58,5 +58,12 @@ public class DateTimeUtil {
         return dateTime.format(FORMATTER);
     }
 
+    /**
+     * Convert String sang LocalDateTime (format yyyy-MM-dd HH:mm:ss)
+     */
+    public static LocalDateTime parseToLocalDateTime(String dateTimeStr) {
+        if (dateTimeStr == null || dateTimeStr.isEmpty()) return null;
+        return LocalDateTime.parse(dateTimeStr, FORMATTER);
+    }
 
 }
