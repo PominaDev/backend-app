@@ -52,8 +52,8 @@ public class AuthController {
     }
 
     @PostMapping(ApiConstants.ApiAuth.REGISTER)
-    public ResponseEntity<ApiResponse<RegisterResponse>> register(@RequestBody @Validated RegisterRequest registerRequest) {
-        //loginRequest.setPassword(encryptionUtil.decrypt(loginRequest.getPassword()));
+    public ResponseEntity<ApiResponse<RegisterResponse>> register(@RequestBody @Validated RegisterRequest registerRequest) throws AuthenticationException {
+        registerRequest.setPassword(encryptionUtil.decrypt(registerRequest.getPassword()));
         return ResponseHandler.success(sysUserService.registerUser(registerRequest));
     }
 
