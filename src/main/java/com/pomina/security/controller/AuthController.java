@@ -39,7 +39,7 @@ public class AuthController {
     public ResponseEntity<ApiResponse<LoginResponse>> login(@RequestBody @Validated LoginRequest loginRequest,
                                                             HttpServletRequest httpServletRequest) throws AuthenticationException {
         loginRequest.setUserAgent(httpServletRequest.getHeader("User-Agent"));
-        //loginRequest.setPassword(encryptionUtil.decrypt(loginRequest.getPassword()));
+        loginRequest.setPassword(encryptionUtil.decrypt(loginRequest.getPassword()));
         return ResponseHandler.success(authService.attemptLogin(loginRequest));
     }
 
@@ -52,7 +52,8 @@ public class AuthController {
     }
 
     @PostMapping(ApiConstants.ApiAuth.REGISTER)
-    public ResponseEntity<ApiResponse<RegisterResponse>> register(@RequestBody @Validated RegisterRequest registerRequest) {
+    public ResponseEntity<ApiResponse<RegisterResponse>> register(@RequestBody @Validated RegisterRequest registerRequest) throws AuthenticationException {
+        registerRequest.setPassword(encryptionUtil.decrypt(registerRequest.getPassword()));
         return ResponseHandler.success(sysUserService.registerUser(registerRequest));
     }
 

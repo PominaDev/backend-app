@@ -60,6 +60,7 @@ public class WebSecurityConfig {
 
             // DEPLOYED FRONTEND
             "https://pomina-flat-steel.vercel.app",
+            "http://mytonpomina.com",
 
             // NGROK
             "https://d8b0b708bf2f.ngrok-free.app"
