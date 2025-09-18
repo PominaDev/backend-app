@@ -11,7 +11,7 @@ import com.pomina.commonservices.marketing_pr_chinh_sach.dto.response.MarketingP
 import com.pomina.commonservices.marketing_pr_chinh_sach.entity.MarketingPrChinhSach;
 import com.pomina.commonservices.marketing_pr_chinh_sach.mapper.MarketingPrChinhSachMapper;
 import com.pomina.commonservices.marketing_pr_chinh_sach.service.MarketingPrChinhSachService;
-import com.pomina.security.service.SysUserService;
+import com.pomina.security.config.JwtAuthentication;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -25,8 +25,6 @@ public class MarketingPrChinhSachServiceImpl implements MarketingPrChinhSachServ
     private final MarketingPrChinhSachMapper marketingPrChinhSachMapper;
 
     private final MarketingPrChinhSachConverter marketingPrChinhSachConverter;
-
-    private final SysUserService sysUserService;
 
     @Override
     public int create(MarketingPrChinhSachRequestDto dto) {
@@ -48,7 +46,7 @@ public class MarketingPrChinhSachServiceImpl implements MarketingPrChinhSachServ
         AuditUtil.insert(marketingPrChinhSach);
 
         // set userUpload
-        marketingPrChinhSach.setUserUpload(sysUserService.getCurUsername());
+        marketingPrChinhSach.setUserUpload(AuditUtil.getDefaultUsername());
 
         return marketingPrChinhSachMapper.insert(marketingPrChinhSach);
     }

@@ -25,8 +25,6 @@ public class MarketingPrChinhSachResponseDto {
 
     private String masterLocationCode;
 
-    private String status;
-
     private String userUpload;
 
     private String uStatus;
