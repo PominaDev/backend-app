@@ -1,16 +1,19 @@
 package com.pomina.commonservices.product_warranty_activation.dto.custom_mapper;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.pomina.common.model.BaseEntity;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
+
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class WarrantyInfoHistory {
+public class WarrantyInfoHistory extends BaseEntity {
     // User Info
     private Integer userId;
     private String hoVaTen;
@@ -59,4 +62,7 @@ public class WarrantyInfoHistory {
 
     // message vtri quét k hợp lệ trong bán kính 2km
     private String message;
+
+    // Ngày bán
+    private LocalDateTime soldDate;
 }

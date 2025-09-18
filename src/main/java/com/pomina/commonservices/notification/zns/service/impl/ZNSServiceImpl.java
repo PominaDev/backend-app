@@ -86,6 +86,15 @@ public class ZNSServiceImpl implements ZNSService {
                 // Retry lại với access token mới
                 return sendZaloZNS(request, oaAccessTokenResponse.getAccessToken(), true);
             }
+        }
+        // Nếu API Zalo response : Lỗi tài khoản Zalo không tồn tại
+        else if (zaloZNSResponse.getError() == -118
+                || "Zalo account not existed".equalsIgnoreCase(zaloZNSResponse.getMessage())) {
+            return ZaloZNSResponse.builder()
+                    .error(Integer.parseInt(ErrorCode.ZALO_ZNS_ACCOUNT_NOT_EXIST_ERROR.getCode()))
+                    .message(ErrorCode.ZALO_ZNS_ACCOUNT_NOT_EXIST_ERROR.getMessage())
+                    .data(null)
+                    .build();
         } else if (zaloZNSResponse.getData() == null) {
             throw new AppException(ErrorCode.ZALO_ZNS_ERROR);
         }

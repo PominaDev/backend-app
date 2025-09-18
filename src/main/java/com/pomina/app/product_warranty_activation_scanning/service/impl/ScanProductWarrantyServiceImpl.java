@@ -99,6 +99,7 @@ public class ScanProductWarrantyServiceImpl implements ScanProductWarrantyServic
 
     private int insertWarranty(ScanProductWarrantyRequestDto scanProductWarrantyRequestDto, Integer userIdCurr, WarrantyInfoHistory warrantyInfoHistory, LocationResponseDto locationResponseDto, Boolean isValidLocation) {
         LocalDateTime timeNow = LocalDateTime.now();
+        LocalDateTime soldDate = warrantyInfoHistory.getSoldDate();
 
         // insert warranty
         Warranty warranty = Warranty.builder()
@@ -113,9 +114,9 @@ public class ScanProductWarrantyServiceImpl implements ScanProductWarrantyServic
                 .countryCode(locationResponseDto.getCountryCode())
                 .maCuonTon(scanProductWarrantyRequestDto.getMaCuonTon())
                 .fromWarrantyPhaiMau(timeNow)
-                .toWarrantyPhaiMau(LocalDateTime.now().plusYears(warrantyInfoHistory.getBhPhaiMau()))
+                .toWarrantyPhaiMau(soldDate.plusYears(warrantyInfoHistory.getBhPhaiMau()))
                 .fromWarrantyAnMon(timeNow)
-                .toWarrantyAnMon(LocalDateTime.now().plusYears(warrantyInfoHistory.getBhAnMon()))
+                .toWarrantyAnMon(soldDate.plusYears(warrantyInfoHistory.getBhAnMon()))
                 .build();
 
         // Fix tạm lỗi audit

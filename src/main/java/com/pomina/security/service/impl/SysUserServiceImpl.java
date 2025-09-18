@@ -67,6 +67,17 @@ public class SysUserServiceImpl implements SysUserService {
             throw new AppException(ErrorCode.FAILED_ENCODED_PASSWORD);
         }
 
+        boolean isActiveUser = true;
+
+        // Send OTP Zalo ZNS
+        OtpRequest otpRequest = new OtpRequest();
+        otpRequest.setPhoneNumber(registerRequest.getPhoneNumber());
+        OtpResponse otpResponse = otpService.sendOtp(otpRequest);
+
+        if (otpResponse == null) {
+            isActiveUser = false;
+        }
+
         // Tạo mới SysUser
         SysUser user = new SysUser();
         user.setUsername(registerRequest.getUsername());
@@ -75,7 +86,7 @@ public class SysUserServiceImpl implements SysUserService {
         user.setHoVaTen(registerRequest.getHoVaTen());
         user.setMaSoThue(registerRequest.getMaSoThue());
         user.setRoleId(registerRequest.getRoleId() != null ? registerRequest.getRoleId() : 7);
-        user.setIsActive(true);
+        user.setIsActive(isActiveUser);
 
         AuditUtil.insert(user);
 
@@ -104,11 +115,6 @@ public class SysUserServiceImpl implements SysUserService {
         user.setMasterLocationCode(masterLocation.getMasterLocationCode());
         AuditUtil.update(user);
         userMapper.update(user); // cập nhật lại masterLocationCode cho user
-
-        // Send OTP Zalo ZNS
-        OtpRequest otpRequest = new OtpRequest();
-        otpRequest.setPhoneNumber(registerRequest.getPhoneNumber());
-        OtpResponse otpResponse = otpService.sendOtp(otpRequest);
 
         // Trả response
         return RegisterResponse.builder()
