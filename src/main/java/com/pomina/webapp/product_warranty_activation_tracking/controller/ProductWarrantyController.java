@@ -41,10 +41,12 @@ public class ProductWarrantyController {
                                                                                                     @RequestParam(required = false) List<String> filter,
                                                                                                     @RequestParam(required = false) String isValid,
                                                                                                     @RequestParam(required = false) String status,
+                                                                                                    @RequestParam(required = false) String dateFrom,
+                                                                                                    @RequestParam(required = false) String dateTo,
                                                                                                     @RequestParam(required = false) String sort) {
         Boolean isValidBool = (isValid == null || isValid.isBlank()) ? null : Boolean.parseBoolean(isValid);
 
 
-        return ResponseHandler.success(warrantyService.filterWarrantyInfoHistory(pageRequest, true, filter, isValidBool, status, sort));
+        return ResponseHandler.success(warrantyService.filterWarrantyInfoHistory(pageRequest, true, filter, isValidBool, status, dateFrom, dateTo, sort));
     }
 }
