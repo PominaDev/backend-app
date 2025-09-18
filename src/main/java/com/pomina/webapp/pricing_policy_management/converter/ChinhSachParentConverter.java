@@ -38,8 +38,6 @@ public interface ChinhSachParentConverter extends BaseConverter<ChinhSachParentR
     @Mapping(target = "dateUpload", source = "dateUpload")
     @Mapping(target = "deptUpload", source = "deptUpload")
     @Mapping(target = "userUpload", source = "userUpload")
-    @Mapping(target = "urlGoogledriv", source = "urlGoogledriv")
-    @Mapping(target = "urlYoutube", source = "urlYoutube")
     ChinhSachParent toEntity(ChinhSachParentRequestDto requestDto);
 
     // Mapping from entity to responseDto
