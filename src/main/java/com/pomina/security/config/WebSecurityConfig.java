@@ -1,6 +1,5 @@
 package com.pomina.security.config;
 
-import com.pomina.common.utils.AuditContextFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
