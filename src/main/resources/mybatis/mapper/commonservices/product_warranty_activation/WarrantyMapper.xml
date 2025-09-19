@@ -458,6 +458,16 @@
         LIMIT #{limit} OFFSET #{offset}
     </select>
 
+    <update id="updateWarranty" >
+        -- Update warranty only status, noted and isValid
+        UPDATE u_warranty
+        SET is_valid   = #{isValid},
+            status     = #{status},
+            noted      = #{note},
+            updated_at = NOW()
+        WHERE u_warranty_id = #{warrantyId}
+    </update>
+
     <select id="findAllWarrantyDetailWithFilter" resultMap="WarrantyInfoExportResultMap">
         WITH warranty_data AS (
         -- findAllWarrantyDetail

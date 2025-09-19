@@ -56,12 +56,13 @@ public class WebSecurityConfig {
             "http://172.16.30.49:7777",
             "http://113.161.131.140:7777",
 
-            "http://113.161.131.140:7778/",
-            "http://113.161.131.140:7788/",
+            "http://113.161.131.140:7778",
+            "http://113.161.131.140:7788",
 
             // DEPLOYED FRONTEND
             "https://pomina-flat-steel.vercel.app",
             "http://mytonpomina.com",
+            "https://mytonpomina.com",
 
             // NGROK
             "https://d8b0b708bf2f.ngrok-free.app"

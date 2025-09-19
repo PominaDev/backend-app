@@ -33,7 +33,10 @@ public interface WarrantyMapper extends BaseMapper<Warranty> {
             @Param("paging") PageRequest pageRequest,
             @Param("dateFrom") LocalDateTime dateFrom,
             @Param("dateTo") LocalDateTime dateTo,
-            @Param("userId") Integer userId);
+            @Param("userId") Integer userId
+    );
+
+    int updateWarranty(Warranty warranty);
 
     List<WarrantyInfoHistoryExport> findAllWarrantyDetailWithFilter(@Param("filter") List<String> filter, @Param("isValid") Boolean isValid, @Param("status") String status, @Param("dateFrom") LocalDateTime dateFrom, @Param("dateTo") LocalDateTime dateTo, @Param("userId") Integer userId);
 }
