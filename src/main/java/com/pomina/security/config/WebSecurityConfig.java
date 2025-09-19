@@ -57,6 +57,7 @@ public class WebSecurityConfig {
 
             "http://113.161.131.140:7778",
             "http://113.161.131.140:7788",
+            "https://113.161.131.140:7788",
 
             // DEPLOYED FRONTEND
             "https://pomina-flat-steel.vercel.app",
@@ -92,7 +93,7 @@ public class WebSecurityConfig {
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
         configuration.setAllowedOrigins(WHITE_LIST_CORS);
-        configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE"));
+        configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         configuration.setAllowedHeaders(List.of("*"));
         configuration.setAllowCredentials(true);
 
