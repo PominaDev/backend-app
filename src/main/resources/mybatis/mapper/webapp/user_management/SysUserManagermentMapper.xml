@@ -307,7 +307,8 @@
     <!-- Thêm user -->
     <insert id="insert" parameterType="com.pomina.webapp.user_managerment.entity.SysUser" useGeneratedKeys="true"
             keyProperty="userId">
-        INSERT INTO sys_user (username,
+        INSERT INTO sys_user (-- insert.sys_user
+                              username,
                               password,
                               ho_va_ten,
                               phone_number,
@@ -320,11 +321,9 @@
                               old_id,
                               status,
                               noted,
-                              created_at,
-                              created_by,
-                              updated_at,
-                              updated_by,
-                              is_deleted)
+                              is_deleted,
+                              <include refid="com.pomina.common.audit.SqlFragments.InsertAuditCols"/>
+                            )
         VALUES (#{username},
                 #{password},
                 #{hoVaTen},
@@ -339,16 +338,15 @@
                 #{oldId},
                 #{status},
                 #{note},
-                NOW(),
-                #{createdBy},
-                NOW(),
-                #{updatedBy},
-                false)
+                false,
+                <include refid="com.pomina.common.audit.SqlFragments.InsertAuditVals"/>
+                )
     </insert>
 
     <!-- Cập nhật user -->
     <update id="update" parameterType="com.pomina.webapp.user_managerment.entity.SysUser">
         UPDATE sys_user
+        -- update.sys_user
         SET
         username = #{username},
         <if test="password != null and password !='' ">
@@ -366,8 +364,7 @@
         old_id = #{oldId},
         status = #{status},
         noted = #{note},
-        updated_at = NOW(),
-        updated_by = #{updatedBy}
+        <include refid="com.pomina.common.audit.SqlFragments.UpdateAuditSet"/>
         WHERE user_id = #{userId}
     </update>
 

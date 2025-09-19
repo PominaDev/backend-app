@@ -1,5 +1,6 @@
 package com.pomina.security.config;
 
+import com.pomina.common.utils.AuditContextFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -70,6 +71,7 @@ public class WebSecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http, CustomAuthenticationEntryPoint customAuthenticationEntryPoint) throws Exception {
         return http
                 .addFilterBefore(jwtAuthentication, UsernamePasswordAuthenticationFilter.class)
+                .addFilterAfter(jwtAuthentication, JwtAuthentication.class)
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .csrf(AbstractHttpConfigurer::disable)
                 .formLogin(AbstractHttpConfigurer::disable)

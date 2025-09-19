@@ -16,5 +16,9 @@ spring:
 
 mybatis:
   config-location: classpath:/mybatis/configuration/mybatis-config.xml
-  mapper-locations: classpath:/mybatis/mapper/**/**/*.xml
+  mapper-locations:
+    - classpath:/mybatis/mapper/_audit-sql.xml
+    - classpath:/mybatis/mapper/**/**/*.xml
   executor-type: batch
+  configuration:
+    map-underscore-to-camel-case: true
