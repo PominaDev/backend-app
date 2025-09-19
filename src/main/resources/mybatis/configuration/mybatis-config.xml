@@ -3,5 +3,9 @@
 <configuration>
     <settings>
         <setting name="mapUnderscoreToCamelCase" value="true"/>
+        <!-- Tối ưu prepared statement: dùng lại statement cho hiệu năng tốt hơn -->
+        <setting name="defaultExecutorType" value="REUSE"/>
+        <!-- Tăng tốc độ trả kết quả khi có nhiều cột -->
+        <setting name="autoMappingUnknownColumnBehavior" value="WARNING"/>
     </settings>
 </configuration>
