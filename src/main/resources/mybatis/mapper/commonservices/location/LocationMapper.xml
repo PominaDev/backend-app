@@ -62,11 +62,9 @@
                                 radius,
                                 status,
                                 noted,
-                                created_at,
-                                created_by,
-                                updated_at,
-                                updated_by,
-                                is_deleted)
+                                is_deleted,
+                                <include refid="com.pomina.common.audit.SqlFragments.InsertAuditCols"/>
+                                )
         VALUES (#{userId},
                 #{latitude},
                 #{longitude},
@@ -80,11 +78,9 @@
                 #{radius},
                 #{status},
                 #{note},
-                NOW(),
-                #{createdBy},
-                NOW(),
-                #{updatedBy},
-                #{isDeleted})
+                #{isDeleted},
+                <include refid="com.pomina.common.audit.SqlFragments.InsertAuditVals"/>
+                )
     </insert>
 
     <update id="update">
@@ -101,9 +97,8 @@
             radius       = #{radius},
             status       = #{status},
             noted        = #{note},
-            updated_at   = NOW(),
-            updated_by   = #{updatedBy},
-            is_deleted   = #{isDeleted}
+            is_deleted   = #{isDeleted},
+            <include refid="com.pomina.common.audit.SqlFragments.UpdateAuditSet"/>
         WHERE user_id = #{userId}
     </update>
 
